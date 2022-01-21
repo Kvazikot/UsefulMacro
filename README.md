@@ -20,7 +20,7 @@ https://www.murgee.com/auto-mouse-click/
 ![Screenshot](https://github.com/Kvazikot/UsefulMacro/blob/master/AUTOCLIKER_SCREENSHOT2.png)
 
 Если вы хотите полную премиум версию, то вам надо установить Пайтон https://www.python.org/downloads/
-И тогда будет доступен третья нога это [скрипт shuffle.py] (https://raw.githubusercontent.com/Kvazikot/UsefulMacro/f1d8e13f6aefbb200f837bf0b9a125193c4d07ab/shuffle.py)
+И тогда будет доступен третья нога это [скрипт shuffle.py](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/f1d8e13f6aefbb200f837bf0b9a125193c4d07ab/shuffle.py)
 Скрипт shuffle.py перемешивает строки текстового файла и делает так чтобы они шли в случайном порядке. 
 
 Видео урок
