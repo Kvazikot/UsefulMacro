@@ -16,7 +16,7 @@ https://www.murgee.com/auto-mouse-click/
 Открываю блокнот с ключевыми словами [keywords_youtube.txt](https://github.com/Kvazikot/UsefulMacro/blob/master/keywords_youtube.txt) в левой части экрана (комбинация клавиш WIN + CAPS LOCK + LEFT)
 Открываю браузер хром в правой части экрана (комбинация клавиш WIN + CAPS LOCK + RIGHT)
 7. Комбинация ctr + alt + f6 - запуск макроса
-8. Комбинация ctr + alt + f6 - пауза \ пуск
+8. Комбинация ctr + alt + f7 - пауза \ пуск
 ![Screenshot](https://github.com/Kvazikot/UsefulMacro/blob/master/AUTOCLIKER_SCREENSHOT2.png)
 
 Видео урок
