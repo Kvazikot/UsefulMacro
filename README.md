@@ -11,7 +11,7 @@ https://www.murgee.com/auto-mouse-click/
 Для этого я разделяю экран на две части, по горизонтали пополам.
 Открываю блокнот с ключевыми словами keywords_youtube.txt в левой части экрана (комбинация клавиш WIN + CAPS LOCK + LEFT)
 Открываю браузер хром в правой части экрана (комбинация клавиш WIN + CAPS LOCK + RIGHT)
-![Screenshot](https://github.com/Kvazikot/UsefulMacro/blob/master/AUTOCLIKER_SCREENSHOT.png)
+![Screenshot](https://github.com/Kvazikot/UsefulMacro/blob/master/AUTOCLIKER_SCREENSHOT2.png)
 
 Видео урок
 https://youtu.be/CgkG_xl4GiE
