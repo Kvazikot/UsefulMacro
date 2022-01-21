@@ -1,5 +1,7 @@
 # UsefulMacro
 
+Макрос работает на разрешении экрана Full HD т.е. 1980x1080
+
 1. Для запуска макроса вам потребуется программа. AutoMouseClick by MurGee.com
 https://www.murgee.com/auto-mouse-click/
 
