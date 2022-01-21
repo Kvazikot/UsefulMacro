@@ -13,7 +13,7 @@ https://www.murgee.com/auto-mouse-click/
 5. В окне Macrorecorder выбираете файл макроса youtube5_SPLITSCREEN.macrorecording
 6. Разделяете экран как на скриншоте.
 Для этого я разделяю экран на две части, по горизонтали пополам.
-Открываю блокнот с ключевыми словами keywords_youtube.txt в левой части экрана (комбинация клавиш WIN + CAPS LOCK + LEFT)
+Открываю блокнот с ключевыми словами [keywords_youtube.txt](https://github.com/Kvazikot/UsefulMacro/blob/master/keywords_youtube.txt) в левой части экрана (комбинация клавиш WIN + CAPS LOCK + LEFT)
 Открываю браузер хром в правой части экрана (комбинация клавиш WIN + CAPS LOCK + RIGHT)
 ![Screenshot](https://github.com/Kvazikot/UsefulMacro/blob/master/AUTOCLIKER_SCREENSHOT2.png)
 
