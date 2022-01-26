@@ -55,7 +55,7 @@ https://www.murgee.com/auto-mouse-click/
 Уберите панель закладок Chrome или firefox, если вы ее используете.
 1. Подготовте окна браузера и блокнота как для 1-ого макроса 
 2. В проводнике windows (ctrl + E) забейте в адресную строку %USERPROFILE%
-3. Положите скрипт перемешивающий строки [shuffle_clipboard.vbs](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/shuffle_clipboard.vbs) в каталог %USERPROFILE%
+3. Положите скрипт перемешивающий строки [shuffle_clipboard.vbs](https://github.com/Kvazikot/UsefulMacro/raw/master/shuffle_clipboard.vbs) в каталог %USERPROFILE%
 4. Откройте ключевые слова в блокноте (Notepad.exe или Notepad++)
 5. Запустите [youtube_search_by_list_shuffle.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list_shuffle.mamc) кнопкой Start
 
