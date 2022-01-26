@@ -11,7 +11,6 @@ https://youtu.be/CgkG_xl4GiE
 
 1. Для запуска макроса вам потребуется программа. AutoMouseClick by MurGee.com
 https://www.murgee.com/auto-mouse-click/
-
 2. Запустите Auto Mouse Click by MurGee.com
 3. Нажимаете кнопку Start.  
 4. Выбираете из выпадающего меню Macrorecorder
@@ -60,6 +59,9 @@ https://www.murgee.com/auto-mouse-click/
 * [список "общеупотребимые английские слова"](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube/keywords_youtube.txt)
 
 
-
+## Пара слов о Auto Mouse Click
+Отличный инструмент. В идеале функционал этой софтины хотелось бы перевести в полностью свободный софт. 
+Т.е. с открытым кодом, записывайтесь в волонтеры free software foundation и дерзайте.
+В крайнем случае можно было бы сделать ПРЕОБРАЗОВАТЕЛЬ скрипта .mamc в эквивалентный пайтоновский скрипт.
 
 
