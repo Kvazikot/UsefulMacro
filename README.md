@@ -1,6 +1,11 @@
 # UsefulMacro
 
+## Первый сценарий для youtube (макрос)
+
 Макрос работает на разрешении экрана Full HD т.е. 1980x1080
+
+Смотрите видео урок
+https://youtu.be/CgkG_xl4GiE
 
 Для закачки мароса кликните [здесь](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube5_SPLITSCREEN.macrorecording)
 
@@ -55,8 +60,6 @@ https://www.murgee.com/auto-mouse-click/
 * [список "общеупотребимые английские слова"](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube/keywords_youtube.txt)
 
 
-Видео урок
-https://youtu.be/CgkG_xl4GiE
 
 
 
