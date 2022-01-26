@@ -55,7 +55,7 @@ https://www.murgee.com/auto-mouse-click/
 
 Для запуска макроса вам потребуется программа AutoMouseClick by MurGee.com 
 Ее можно скачать здесь https://www.murgee.com/auto-mouse-click/
-1. Запустите Auto Mouse Click by MurGee.com
+1. Установите Auto Mouse Click by MurGee.com
 2. Разделяете экран как на скриншоте. Для этого я разделяю экран на две части, по горизонтали пополам. Открываю блокнот(Notepad.exe) в левой части экрана (комбинация клавиш WIN + CAPS LOCK + LEFT) Открываю браузер хром в правой части экрана (комбинация клавиш WIN + CAPS LOCK + RIGHT)
 3. Откройте ключевые слова в блокноте (Notepad.exe или Notepad++)
 4. В проводнике windows (Win + E) забейте в адресную строку %USERPROFILE%
