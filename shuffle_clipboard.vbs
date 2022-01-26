@@ -22,9 +22,11 @@ Function AddingToList
     ' coll.Add "Watermelon"
 	' coll.Add "Orange"
 	' Splitting contents of clipboard by words
-	a=Split(text,vbLf)
+	a=Split(text,  Chr(13))
 	For each x in a
-		coll.Add x
+		If Len(x) > 2 Then
+		   coll.Add x
+		End if
 	Next 
 	For i = 0 To coll.Count - 1
 		objDictionary.Add i, -1 
@@ -62,29 +64,23 @@ Next
 Dim i
 Dim text2
 
-text2 = " "
+text2 = ""
 
 For i = 0 To coll_shuffled.Count - 1
-	text2 = text2 + coll_shuffled(i) 
+  text2 = text2 + coll_shuffled(i) + vbCrLf
 Next
 
-' Wscript.Echo text2
-
-' a = MsgBox(text2,3,"Press Enter Blease" )
+Wscript.echo text2
 
 Set WShshell = CreateObject("WScript.Shell")
 Set fso = CreateObject("Scripting.FileSystemObject")
 Set oShell = CreateObject( "WScript.Shell" )
 user=oShell.ExpandEnvironmentStrings("%UserName%")
 tmp_folder=oShell.ExpandEnvironmentStrings("%TMP%")
-' Set wshSystemEnv = WShshell.Environment( "TMP" ) 
-' Wscript.Echo tmp_folder
-Dim a
-'Set a = fso.CreateTextFile(tmp_folder + "\\1.txt", True)
-'a.WriteLine(utfStr)
-'a.WriteLine("a")
-'a.WriteLine("b")
-'a.WriteLine("c")
+If fso.FileExists(tmp_folder + "\\1.txt") Then 
+  fso.DeleteFile tmp_folder + "\\1.txt"
+End If 
+
 Dim utfStr
 Set stream = CreateObject("ADODB.Stream")
 stream.Open
@@ -95,10 +91,4 @@ stream.WriteText text2
 stream.SaveToFile tmp_folder + "\\1.txt", 2
 stream.Close
 
-
-If coll_shuffled.Count > 0 Then 
-	For i = 0 To coll_shuffled.Count - 1	
-		' a.WriteLine(StrConv(coll_shuffled(i),vbFromUnicode))
-	Next	
-End If	
 
