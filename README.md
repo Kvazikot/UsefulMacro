@@ -23,9 +23,6 @@ https://www.murgee.com/auto-mouse-click/
 8. Комбинация ctr + alt + f7 - пауза \ пуск
 ![Screenshot](https://github.com/Kvazikot/UsefulMacro/blob/master/AUTOCLIKER_SCREENSHOT2.png)
 
-Если вы хотите полную премиум версию, то вам надо установить Пайтон https://www.python.org/downloads/
-И тогда будет доступен третья нога это [скрипт shuffle.py](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/f1d8e13f6aefbb200f837bf0b9a125193c4d07ab/shuffle.py)
-Скрипт shuffle.py перемешивает строки текстового файла и делает так чтобы они шли в случайном порядке. 
 
 ### Известные проблемы этого макроса:
 Иногда изза девиации мышки, робот попадает не туда. Промах по цели так сказать.
