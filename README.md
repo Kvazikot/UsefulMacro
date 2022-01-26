@@ -43,10 +43,13 @@ https://www.murgee.com/auto-mouse-click/
 Работает несколько побыстрее предыдущего
 
 ## Списки 
-в каталоге youtube этого репозитория содержаться списки для поиска
-[список "сленг поколения z"](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube/z_gen_slang.txt)
-[список "фанат Unity"](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube/unity_fan_list.txt)
-[список "общеупотребимые англиские слова"](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube/keywords_youtube.txt)
+в каталоге youtube этого репозитория содержаться списки для поиска:
+
+* [список "сленг поколения z"](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube/z_gen_slang.txt)
+* [список "фанат Unity"](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube/unity_fan_list.txt)
+* [список "общеупотребимые англиские слова"](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube/keywords_youtube.txt)
+
+
 Видео урок
 https://youtu.be/CgkG_xl4GiE
 
