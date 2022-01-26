@@ -52,11 +52,14 @@ https://www.murgee.com/auto-mouse-click/
 
 ## Третий сценарий для youtube с перемешиванием списка.
 Сценарий работает на разрешении экрана Full HD т.е. 1980x1080
+Уберите панель закладок Chrome или firefox, если вы ее используете.
 1. Подготовте окна браузера и блокнота как для 1-ого макроса 
 2. В проводнике windows (ctrl + E) забейте в адресную строку %USERPROFILE%
 3. Положите скрипт перемешивающий строки [shuffle_clipboard.vbs](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/shuffle_clipboard.vbs) в каталог %USERPROFILE%
-4. Запустите [youtube_search_by_list_shuffle.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list_shuffle.mamc) кнопкой Start
+4. Откройте ключевые слова в блокноте (Notepad.exe или Notepad++)
+5. Запустите [youtube_search_by_list_shuffle.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list_shuffle.mamc) кнопкой Start
 
+Примечание: Если вы как и я используете Notepad++. ТО удостоверьтесь что в настройках выставлено тихое(quiet) обновление файла
 
 ## Четвертый сценарий для youtube. Работа сразу с несколькими окнами параллельно
 ![image](https://github.com/Kvazikot/UsefulMacro/blob/master/4_window_mode.png)
