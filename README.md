@@ -51,7 +51,7 @@ https://www.murgee.com/auto-mouse-click/
 ![image](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube_search_by_list.png)
 Запуск кнопкой Start
 
-## Третий сценарий для youtube. Работа сразу с 4 окнами
+## Третий сценарий для youtube. Работа сразу с несколькими окнами параллельно
 ![image](https://github.com/Kvazikot/UsefulMacro/blob/master/4_window_mode.png)
 В данный момент наша доблесная команда трудится не покладая рук над новой версией
 сценария который будет работать с несколькими окнами ютьюба.
