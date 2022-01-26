@@ -5,7 +5,7 @@
 
 Макрос работает на разрешении экрана Full HD т.е. 1980x1080
 
-Смотрите видео урок
+Смотрите видео урок``
 https://youtu.be/CgkG_xl4GiE
 
 Для закачки мароса кликните [здесь](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube5_SPLITSCREEN.macrorecording)
@@ -54,7 +54,7 @@ https://www.murgee.com/auto-mouse-click/
 Сценарий работает на разрешении экрана Full HD т.е. 1980x1080
 Уберите панель закладок Chrome или firefox, если вы ее используете.
 1. Подготовте окна браузера и блокнота как для 1-ого макроса 
-2. В проводнике windows (ctrl + E) забейте в адресную строку %USERPROFILE%
+2. В проводнике windows (Win + E) забейте в адресную строку %USERPROFILE%
 3. Положите скрипт перемешивающий строки [shuffle_clipboard.vbs](https://github.com/Kvazikot/UsefulMacro/raw/master/shuffle_clipboard.vbs) в каталог %USERPROFILE%
 4. Проверьте что расширение у файла shuffle_clipboard.vbs именно .vbs, а не txt, иначе он не запустится.
 5. Откройте ключевые слова в блокноте (Notepad.exe или Notepad++)
