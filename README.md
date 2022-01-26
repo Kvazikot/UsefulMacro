@@ -35,7 +35,18 @@ https://www.murgee.com/auto-mouse-click/
 Клики будут происходить мгновенно, т.е. без движения курсора мыши. Без использования Macros Recorder.
 Работаем в три смены. 
 
+## Второй сценарий для youtube
+[сценарий 2](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube_search_by_list.mamc)
+Это уже не макрос, а сценарий.
+Он работает без иммитации траектории мыши как у реального пользователя.
+Этот сценарий основывается на клике в случайную точку внутри прямоугольного окна.
+Работает несколько побыстрее предыдущего
 
+## Списки 
+в каталоге youtube этого репозитория содержаться списки для поиска
+[список "сленг поколения z"](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube/z_gen_slang.txt)
+[список "фанат Unity"](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube/unity_fan_list.txt)
+[список "общеупотребимые англиские слова"](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube/keywords_youtube.txt)
 Видео урок
 https://youtu.be/CgkG_xl4GiE
 
