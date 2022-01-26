@@ -36,11 +36,13 @@ https://www.murgee.com/auto-mouse-click/
 Работаем в три смены. 
 
 ## Второй сценарий для youtube
-[сценарий 2](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube_search_by_list.mamc)
+[сценарий 2](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list.mamc)
 Это уже не макрос, а сценарий.
 Он работает без иммитации траектории мыши как у реального пользователя.
 Этот сценарий основывается на клике в случайную точку внутри прямоугольного окна.
 Работает несколько побыстрее предыдущего
+Он делает случайны скролл результатов поиска. Вы можете выставить задержи и настроить скрипт сами.
+Или быть может у вас получиться что-то болеее интересное, я был бы рад если кто-то из вас поделился своими результатами с сообществом
 
 ![image](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube_search_by_list.png)
 Запуск кнопкой Start
