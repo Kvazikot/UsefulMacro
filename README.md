@@ -54,7 +54,7 @@ https://www.murgee.com/auto-mouse-click/
 Сценарий работает на разрешении экрана Full HD т.е. 1980x1080
 
 Для запуска макроса вам потребуется программа AutoMouseClick by MurGee.com 
-Ее можно скачать здесь https://www.murgee.com/auto-mouse-click/
+Ее можно [скачать](https://www.murgee.com/auto-mouse-click/download/setup.exe) здесь https://www.murgee.com/auto-mouse-click/
 1. Установите Auto Mouse Click by MurGee.com
 2. Разделяете экран как на скриншоте. Для этого я разделяю экран на две части, по горизонтали пополам. Открываю блокнот(Notepad.exe) в левой части экрана (комбинация клавиш WIN + CAPS LOCK + LEFT) Открываю браузер хром в правой части экрана (комбинация клавиш WIN + CAPS LOCK + RIGHT)
 3. Откройте ключевые слова в блокноте (Notepad.exe или Notepad++)
