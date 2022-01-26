@@ -38,6 +38,7 @@ https://www.murgee.com/auto-mouse-click/
 
 ## Второй сценарий для youtube
 [сценарий 2](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list.mamc)
+Сценарий работает на разрешении экрана Full HD т.е. 1980x1080
 Это уже не макрос, а сценарий.
 Он работает без иммитации траектории мыши как у реального пользователя.
 Этот сценарий основывается на клике в случайную точку внутри прямоугольного окна.
@@ -49,6 +50,7 @@ https://www.murgee.com/auto-mouse-click/
 Запуск кнопкой Start
 
 ## Третий сценарий для youtube с перемешиванием списка.
+Сценарий работает на разрешении экрана Full HD т.е. 1980x1080
 1. Подготовте окна браузера и блокнота как для 1-ого макроса 
 2. В проводнике windows (ctrl + E) забейте в адресную строку %USERPROFILE%
 3. Положите скрипт перемешивающий строки [shuffle_clipboard.vbs](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/shuffle_clipboard.vbs) в каталог %USERPROFILE%
@@ -59,6 +61,7 @@ https://www.murgee.com/auto-mouse-click/
 ![image](https://github.com/Kvazikot/UsefulMacro/blob/master/4_window_mode.png)
 В данный момент наша доблесная команда трудится не покладая рук над новой версией
 сценария который будет работать с несколькими окнами ютьюба.
+В планах также адаптация под другие разрешения экрана отличные от Full HD 1980x1080
 
 ## Списки 
 в каталоге youtube этого репозитория содержаться списки для поиска:
