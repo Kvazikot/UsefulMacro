@@ -51,7 +51,17 @@ https://www.murgee.com/auto-mouse-click/
 ![image](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube_search_by_list.png)
 Запуск кнопкой Start
 
-## Третий сценарий для youtube. Работа сразу с несколькими окнами параллельно
+## Третий сценарий для youtube с перемешиванием списка.
+[скачать скрипт 3](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list_shuffle.mamc)
+Для запуска этого сценария нужно скачать этот скрипт на visual basic.
+Он перемешивает строки.
+0. Подготовте окна браузера и блокнота как для 1-ого макроса 
+1. В проводнике windows (ctrl + E) забейте в адресную строку %USERPROFILE%
+2. Положите скрипт перемешивающий строки [shuffle_clipboard.vbs](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/shuffle_clipboard.vbs) в каталог %USERPROFILE%
+3. Запустите [youtube_search_by_list_shuffle.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list_shuffle.mamc) кнопкой Start
+
+
+## Четвертый сценарий для youtube. Работа сразу с несколькими окнами параллельно
 ![image](https://github.com/Kvazikot/UsefulMacro/blob/master/4_window_mode.png)
 В данный момент наша доблесная команда трудится не покладая рук над новой версией
 сценария который будет работать с несколькими окнами ютьюба.
