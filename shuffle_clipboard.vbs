@@ -67,10 +67,10 @@ Dim text2
 text2 = ""
 
 For i = 0 To coll_shuffled.Count - 1
-  text2 = text2 + coll_shuffled(i) + vbCrLf
+  text2 = text2 + coll_shuffled(i) + Chr(13)
 Next
 
-Wscript.echo text2
+'Wscript.echo text2
 
 Set WShshell = CreateObject("WScript.Shell")
 Set fso = CreateObject("Scripting.FileSystemObject")
