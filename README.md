@@ -53,12 +53,16 @@ https://www.murgee.com/auto-mouse-click/
 ## Третий сценарий для youtube с перемешиванием списка.
 Сценарий работает на разрешении экрана Full HD т.е. 1980x1080
 Уберите панель закладок Chrome или firefox, если вы ее используете.
-1. Подготовте окна браузера и блокнота как для 1-ого макроса 
-2. В проводнике windows (Win + E) забейте в адресную строку %USERPROFILE%
-3. Положите скрипт перемешивающий строки [shuffle_clipboard.vbs](https://github.com/Kvazikot/UsefulMacro/raw/master/shuffle_clipboard.vbs) в каталог %USERPROFILE%
-4. Проверьте что расширение у файла shuffle_clipboard.vbs именно .vbs, а не txt, иначе он не запустится.
-5. Откройте ключевые слова в блокноте (Notepad.exe или Notepad++)
-6. Запустите [youtube_search_by_list_shuffle.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list_shuffle.mamc) кнопкой Start
+
+Для запуска макроса вам потребуется программа AutoMouseClick by MurGee.com 
+Ее можно скачать здесь https://www.murgee.com/auto-mouse-click/
+1. Запустите Auto Mouse Click by MurGee.com
+2. Разделяете экран как на скриншоте. Для этого я разделяю экран на две части, по горизонтали пополам. Открываю блокнот(Notepad.exe) в левой части экрана (комбинация клавиш WIN + CAPS LOCK + LEFT) Открываю браузер хром в правой части экрана (комбинация клавиш WIN + CAPS LOCK + RIGHT)
+3. Откройте ключевые слова в блокноте (Notepad.exe или Notepad++)
+4. В проводнике windows (Win + E) забейте в адресную строку %USERPROFILE%
+5. Положите скрипт перемешивающий строки [shuffle_clipboard.vbs](https://github.com/Kvazikot/UsefulMacro/raw/master/shuffle_clipboard.vbs) в каталог %USERPROFILE%
+6. Проверьте что расширение у файла shuffle_clipboard.vbs именно .vbs, а не txt, иначе он не запустится.
+7. Запустите [youtube_search_by_list_shuffle.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list_shuffle.mamc) кнопкой Start
 
 Примечание: Если вы как и я используете Notepad++. ТО удостоверьтесь что в настройках выставлено тихое(quiet) обновление файла
 
