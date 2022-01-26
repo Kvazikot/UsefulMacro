@@ -42,6 +42,9 @@ https://www.murgee.com/auto-mouse-click/
 Этот сценарий основывается на клике в случайную точку внутри прямоугольного окна.
 Работает несколько побыстрее предыдущего
 
+![image](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube_search_by_list.png)
+Запуск кнопкой Start
+
 ## Списки 
 в каталоге youtube этого репозитория содержаться списки для поиска:
 
