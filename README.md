@@ -61,7 +61,7 @@ https://www.murgee.com/auto-mouse-click/
 4. В проводнике windows (Win + E) забейте в адресную строку %USERPROFILE%
 5. Положите скрипт перемешивающий строки [shuffle_clipboard.vbs](https://github.com/Kvazikot/UsefulMacro/raw/master/shuffle_clipboard.vbs) в каталог %USERPROFILE%
 6. Проверьте что расширение у файла shuffle_clipboard.vbs именно .vbs, а не txt, иначе он не запустится.
-7. Запустите [youtube_search_by_list_shuffle.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list_shuffle.mamc) кнопкой Start
+7. Запустите [youtube_search_by_list_shuffle_v2.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list_shuffle_v2.mamc) кнопкой Start
 8. Уберите панель закладок Chrome или firefox, если вы ее используете.
 
 Примечание: Если вы как и я используете Notepad++. ТО удостоверьтесь что в настройках выставлено тихое(quiet) обновление файла
