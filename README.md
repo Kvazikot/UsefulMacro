@@ -38,7 +38,7 @@ https://www.murgee.com/auto-mouse-click/
 Работаем в три смены. 
 
 ## Второй сценарий для youtube
-[сценарий 2](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list.mamc)
+[сценарий 2](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list_shuffle_v2.mamc)
 Сценарий работает на разрешении экрана Full HD т.е. 1980x1080
 Это уже не макрос, а сценарий.
 Он работает без иммитации траектории мыши как у реального пользователя.
