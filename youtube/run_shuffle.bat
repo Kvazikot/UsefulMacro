@@ -1,2 +1,0 @@
-python shuffle.py
-pause
