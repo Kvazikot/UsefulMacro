@@ -5,7 +5,7 @@
 
 Макрос работает на разрешении экрана Full HD т.е. 1980x1080
 
-Смотрите видео урок``
+Смотрите мой видео урок
 https://youtu.be/CgkG_xl4GiE
 
 Для закачки мароса кликните [здесь](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube5_SPLITSCREEN.macrorecording)
