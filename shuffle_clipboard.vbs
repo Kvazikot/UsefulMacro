@@ -179,9 +179,9 @@ text2 = ""
 For i = 0 To coll_shuffled.Count - 1
   random_number = Rnd()   ' Initialize random-number generator
   line = coll_shuffled(i)
-  'if (i mod 3) = 0  Then
+  if (i mod 2) = 0  Then
     line = AddSpellingErrors(coll_shuffled(i))
-  'End If
+  End If
   text2 = text2 + line + Chr(13)
 Next
 
