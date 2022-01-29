@@ -66,7 +66,7 @@ https://www.murgee.com/auto-mouse-click/
 
 Этот вариант [youtube_search_by_list_shuffle_v2_signout](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list_shuffle_v2_signout%20.mamc) работает только без sign in т.е. анонимно. Проверено для в Edge и Chrome.
 
-Примечание: Если вы как и я используете Notepad++. ТО удостоверьтесь что в настройках выставлено тихое(quiet) обновление файла
+Примечание: Если вы как и я используете Notepad++. ТО удостоверьтесь что в настройках выставлено тихое(slient) обновление файла
 
 ## Известные проблемы этого скрипта
 Иногда может быть заблокирован временный файл. 
