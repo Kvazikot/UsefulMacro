@@ -401,7 +401,7 @@ Aspartate transaminase (AST)
 Aspartic acid
 Aspergillosis
 Aspergillus fumigatus–296
-with AIDS
+
 Aspirated foreign bodies
 Aspiration pneumonia
 Aspirin toxicity
@@ -484,7 +484,7 @@ Bacillus cereus
 Bacteremia–360
 Bacteria–286
 acid-fast
-with AIDS
+
 culture of–242
 defenses (pathogenic factors) of–238
 diarrhea due to
@@ -544,7 +544,7 @@ Band neutrophil
 Bargaining stage of grief
 Barrett esophagus
 Bartonella henselae
-with AIDS
+
 Basal cells
 Basal lamina
 Base analogs as mutagens
@@ -781,7 +781,7 @@ Campy agar
 Campylobacter jejuni
 Cancer. See also Neoplasia
 Candida albicans–294
-with AIDS
+
 Candida species
 in severe combined immunodeficiency
 Candidiasis
@@ -1225,12 +1225,12 @@ Cross-sectional study
 Croup
 CRP (C-reactive protein) in inflammation
 Cryptococcus neoformans
-with AIDS
+
 Cryptosporidiosis
 Cryptosporidium hominis
 Cryptosporidium parvum
 Cryptosporidium species
-with AIDS
+
 Crypts of Lieberkühn
 Crystal violet (CV) in Gram stain–240
 CS (Cockayne syndrome)–61–64
@@ -1274,7 +1274,7 @@ in inflammation
 Cytology
 Cytolysis-mediated
 Cytomegalovirus (CMV)–330
-with AIDS
+
 characteristics of
 clinical symptoms of
 cytopathic effects of
@@ -1615,7 +1615,7 @@ Eastern equine encephalitis virus
 EB (elementary body)
 Ebola virus
 EBV (Epstein-Barr virus)–334
-with AIDS
+
 as carcinogen
 EC50
 E-cadherin
@@ -1807,7 +1807,7 @@ Epithelium
 columnar
 EPO (erythropoietin)
 Epstein-Barr virus (EBV)–334
-with AIDS
+
 as carcinogen
 Equilibrium constant for enzymes
 Equine encephalitis virus
@@ -2059,7 +2059,7 @@ absorption) test
 Full agonists
 Full antagonists
 Fungi–298
-with AIDS
+
 classification of
 cutaneous–293
 dimorphic
@@ -2562,7 +2562,7 @@ nonketotic syndrome)
 HHV-6 (human herpesvirus 6)
 HHV-7 (human herpesvirus 7)
 HHV-8 (human herpesvirus 8)
-with AIDS
+
 as carcinogen
 Hib (Haemophilus influenzae serotype b),
 261–262
@@ -2597,7 +2597,7 @@ Histone acetylation–40
 Histone acetyltransferase (HAT)
 Histone deacetylase (HDAC)
 Histoplasma capsulatum–288
-with AIDS
+
 HIV. See Human immunodeficiency virus
 (HIV)
 Hives
@@ -2639,7 +2639,7 @@ Hot tub folliculitis
 acid)
 HPV (human papillomavirus)–334,
 366
-with AIDS
+
 as carcinogen
 HPV (human papillomavirus) vaccine
 HRRP (Hospital Readmissions Reduction
@@ -2657,7 +2657,7 @@ Human factors engineering
 Human herpesvirus 6 (HHV-6)
 Human herpesvirus 7 (HHV-7)
 Human herpesvirus 8 (HHV-8)
-with AIDS
+
 as carcinogen
 Human immunodeficiency virus (HIV),
 341–345
@@ -2684,7 +2684,7 @@ associated diseases,
 414–416
 Human papillomavirus (HPV)–334,
 365
-with AIDS
+
 as carcinogen
 Human papillomavirus (HPV) vaccine
 Human T-cell lymphotropic virus type 1
@@ -3039,7 +3039,7 @@ Japanese encephalitis virus
 Jarisch-Herxheimer reaction
 Jaundice
 JC virus
-with AIDS
+
 Job syndrome–216
 Jock itch
 Joint(s)
@@ -3252,7 +3252,7 @@ Lipoxins
 12-Lipoxygenase (12-LOX)
 Liquefactive necrosis
 Listeria monocytogenes
-with AIDS
+
 Listeriosis
 Lithium carbonate
 Lithocholate
@@ -3338,7 +3338,7 @@ M1 checkpoint
 MAC (membrane attack complex)
 MAC (Mycobacterium avium complex),
 278–279
-with AIDS
+
 MacConkey agar
 Macrolides
 Macrophage(s)–13
@@ -3347,7 +3347,7 @@ Macrophage colony-stimulating factor
 Macula adherens
 MAI (Mycobacterium avium-intracellulare),
 276–279
-with AIDS
+
 Main-stem bronchi
 Maintenance dose–423
 Major basic protein
@@ -3697,16 +3697,16 @@ Mycobacterium–279
 stains for
 Mycobacterium avium complex (MAC),
 278–279
-with AIDS
+
 Mycobacterium avium-intracellulare (MAI),
 276–279
-with AIDS
+
 Mycobacterium kansasii
 Mycobacterium leprae
 Mycobacterium marinum
 Mycobacterium scrofulaceum
 Mycobacterium tuberculosis–278
-with AIDS
+
 Mycocides
 Mycolic acid
 Mycology–298
@@ -3898,7 +3898,7 @@ NNT (number needed to treat)
 NO (nitric oxide)
 in inflammation
 Nocardia
-Nocardia asteroides with AIDS
+Nocardia asteroides 
 Nodes of Ranvier
 NOE (otitis media with no effusion)
 Noncompetitive antagonists
@@ -4505,7 +4505,7 @@ UTIs due to
 Proto-oncogenes
 Protoporphyrin IX
 Protozoa–301
-with AIDS
+
 classification of
 CNS
 hematologic–300
@@ -5374,7 +5374,7 @@ Toxins–238
 Toxocara canis
 Toxoid vaccines
 Toxoplasma gondii
-with AIDS
+
 Toxoplasmosis during pregnancy
 TP (true-positive)
 tPA (tissue plasminogen activator) toxicity
@@ -5622,7 +5622,7 @@ Varicella–329
 Varicella zoster immune globulin (VZIG)
 Varicella-zoster virus (VZV),
 328–329
-with AIDS
+
 Variola
 Vascular cell adhesion molecule 1 (VCAM-1)
 in extravasation
@@ -5662,7 +5662,7 @@ Viropexis
 Virulence
 Virulence factors–238
 Virus(es)–355
-with AIDS
+
 arthropod-borne
 basic structure of–312
 as carcinogenic agents
@@ -5790,7 +5790,7 @@ Vulvovaginitis
 VUR (vesicoureteral reflux)
 VZIG (varicella zoster immune globulin)
 VZV (varicella-zoster virus)–329
-with AIDS
+
 W
 W antigen
 “Waiter’s tip,” 25
