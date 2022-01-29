@@ -176,6 +176,7 @@ Dim text2
 
 text2 = ""
 
+' shuffle strings
 For i = 0 To coll_shuffled.Count - 1
   random_number = Rnd()   ' Initialize random-number generator
   line = coll_shuffled(i)
