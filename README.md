@@ -84,7 +84,7 @@ https://www.murgee.com/auto-mouse-click/
 * [список "психический"](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/youtube/mentalist_list.txt)
 * [список "смелость города берет"](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/youtube/courage_list.txt)
 * [список "новости политики"](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/youtube/search_news_list.txt)
-* [список "im not a man of two many faces"](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube/medical_search_list.txt)
+* [список "im not a man of two many faces"](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube/medical_search_list_rus.txt)
 
 ## Пара слов о Auto Mouse Click
 Отличный инструмент. В идеале функционал этой софтины хотелось бы перевести в полностью свободный софт. 
