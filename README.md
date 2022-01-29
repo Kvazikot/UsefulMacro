@@ -82,8 +82,8 @@ https://www.murgee.com/auto-mouse-click/
 * [список "общеупотребимые английские слова"](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube/keywords_youtube.txt)
 * [список "водопроводчик"](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube/plumber_keywords.txt)
 * [список "психический"](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/youtube/mentalist_list.txt)
-* [список "смелость города берет"]("https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/youtube/courage_list.txt")
-* [список "новости политики"]("https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/youtube/search_news_list.txt")
+* [список "смелость города берет"](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/youtube/courage_list.txt)
+* [список "новости политики"](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/youtube/search_news_list.txt)
 
 
 ## Пара слов о Auto Mouse Click
