@@ -159,7 +159,7 @@ Function AddSpellingErrors(in_text)
   'strString = "As a bitwise operator, And returns 1 if the compared bits in both expressions are 1"
   strString = in_text
   
-  Do While i < Len(strString) + 1
+  Do While i < Len(strString) 
   	wi = Mid(strString,i-1,1)
     wi_1 = Mid(strString,i,1)
 	str_add = ""
@@ -179,7 +179,7 @@ Function AddSpellingErrors(in_text)
 	str = str + str_add
 	i = i + 2
   Loop 
-  AddSpellingErrors = str + Mid(in_text,Len(in_text)-1,1)
+  AddSpellingErrors = str 
 End Function  
 
 
@@ -207,12 +207,12 @@ Dim text2
 text2 = ""
 If crc_from_file = crc_of_clipboard Then
 	For i = 0 To coll_shuffled.Count - 1  
-	   text2 = text2 + coll_shuffled(i)
+	   text2 = text2 + coll_shuffled(i) + Chr(10)
 	Next   
 Else 
    ' Wscript.Echo "Aplying spelling errors"
 	For i = 0 To coll_shuffled.Count - 1  
-	   text2 = text2 + AddSpellingErrors( coll_shuffled(i) )
+	   text2 = text2 + AddSpellingErrors( coll_shuffled(i) ) + Chr(10)
 	Next   	
 End If	
 
@@ -226,6 +226,7 @@ For i = 0 To coll0.Count - 1
    text = text + coll0(i)
 Next   
 
+Wscript.echo "cols: " & coll_shuffled.Count
 'Wscript.echo "1 line of file: " + Hex(Crc32(text2))
 
 'write crc from file if exist
@@ -252,13 +253,13 @@ If fso.FileExists(tmp_folder + "\\1.txt") Then
 End If 
 
 Dim utfStr
-Set stream = CreateObject("ADODB.Stream")
-stream.Open
-stream.Type     = 2 'text
-stream.Position = 0
-stream.Charset  = "utf-8"
-stream.WriteText text2
-stream.SaveToFile tmp_folder + "\\1.txt", 2
-stream.Close
+Set stream2 = CreateObject("ADODB.Stream")
+stream2.Open
+stream2.Type     = 2 'text
+stream2.Position = 0
+stream2.Charset  = "utf-8"
+stream2.WriteText text2
+stream2.SaveToFile tmp_folder + "\\1.txt", 2
+stream2.Close
 
 
