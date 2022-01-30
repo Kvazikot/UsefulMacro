@@ -168,7 +168,7 @@ Function AddSpellingErrors(in_text)
     wi_1 = Mid(strString,i,1)
 	str_add = ""
     random_number = Int( 100 * Rnd()  )  ' 0-100	
-	If (random_number < 5) and (wi_1 <> " ") Then	' probability of delete 0.25
+	If (random_number < 25) and (wi_1 <> " ") Then	' probability of delete 0.25
 	  str_add = wi_1	  
 	End If
 	If (random_number > 85) and (wi_1 <> " ") Then	 ' probability of insert 0.25 
