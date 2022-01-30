@@ -210,7 +210,7 @@ If crc_from_file = crc_of_clipboard Then
 	   text2 = text2 + coll_shuffled(i)
 	Next   
 Else 
-    Wscript.Echo "Aplying spelling errors"
+   ' Wscript.Echo "Aplying spelling errors"
 	For i = 0 To coll_shuffled.Count - 1  
 	   text2 = text2 + AddSpellingErrors( coll_shuffled(i) )
 	Next   	
