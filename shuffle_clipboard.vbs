@@ -226,7 +226,7 @@ For i = 0 To coll0.Count - 1
    text = text + coll0(i)
 Next   
 
-Wscript.echo "cols: " & coll_shuffled.Count
+'Wscript.echo "cols: " & coll_shuffled.Count
 'Wscript.echo "1 line of file: " + Hex(Crc32(text2))
 
 'write crc from file if exist
