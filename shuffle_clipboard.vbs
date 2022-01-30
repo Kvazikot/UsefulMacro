@@ -221,7 +221,11 @@ Set objFile = objFSO.CreateTextFile(outFile,True)
 For i = 0 To coll_shuffled.Count - 1
   random_number = Rnd()   ' Initialize random-number generator
   line = coll_shuffled(i)
-  line = AddSpellingErrors(coll_shuffled(i))
+  crc = Crc32(line)
+  if not crcD.Exists(crc) Then
+    line = AddSpellingErrors(coll_shuffled(i))
+	crc = Crc32(line)
+  End if
   objFile.Write Crc32(line) & vbCrLf
   text2 = text2 + line + Chr(13)
 Next
