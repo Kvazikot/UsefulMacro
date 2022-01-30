@@ -1,10 +1,12 @@
 Dim Response, nValue
 
 Set coll = CreateObject("System.Collections.ArrayList")
+Set coll0 = CreateObject("System.Collections.ArrayList")
 Set coll_shuffled = CreateObject("System.Collections.ArrayList")
 
 Set objHTML = CreateObject("htmlfile")
-text = objHTML.ParentWindow.ClipboardData.GetData("text")
+' take clipboard text
+text = objHTML.ParentWindow.ClipboardData.GetData("text") 
 Set d = CreateObject("Scripting.Dictionary")
 Set crcD = CreateObject("Scripting.Dictionary")
 Set WShshell = CreateObject("WScript.Shell")
@@ -12,16 +14,23 @@ Set fso = CreateObject("Scripting.FileSystemObject")
 Set oShell = CreateObject( "WScript.Shell" )
 user=oShell.ExpandEnvironmentStrings("%UserName%")
 tmp_folder=oShell.ExpandEnvironmentStrings("%TMP%")
+crc_of_clipboard = "0000AA00"
+crc_from_file = "0000AA00"
 
-' take input from backup because in clipboard spelling errors from previuos run
-' If fso.FileExists(tmp_folder + "\\1_bak.txt") Then 
-  ' Set file = fso.OpenTextFile (tmp_folder + "\\1_bak.txt", 1)
-  ' row = 0
-  ' Do Until file.AtEndOfStream
-    ' text2 = text2 + file.Readline
-  ' Loop
-  ' file.Close
-' End If
+'read crc from file if exist
+If fso.FileExists(tmp_folder + "\\iluminati_file.txt") Then 
+	Set stream = CreateObject("ADODB.Stream")
+	stream.Open
+	stream.Type     = 2 'text
+	stream.Position = 0
+	stream.Charset  = "utf-8"
+	stream.LoadFromFile tmp_folder + "\\iluminati_file.txt"
+	crc_from_file = stream.ReadText 
+	stream.Close
+End If
+
+'Wscript.Echo crc_of_clipboard
+'Wscript.Quit
 
 ' insertions of adjastment keys
 d("a") = "swqz"
@@ -49,7 +58,6 @@ d("v") = "ijml"
 d("b") = "oki;"
 d("m") = "ytfv"
 d(",") = "hkun"
-
 d(";") = "l'op"
 d("'") = "[p;]"
 d("я") = "фычс"
@@ -105,43 +113,31 @@ Dim l
     lCRC = &HFFFFFFFF
     For l = 1 To Len(psString)
         lCRC = alCRCTable(((lCRC And &HFFFF) Xor Asc(Mid(psString, l, 1))) And &HFF) Xor shr(lCRC, 8)
-    Next ' l
+    Next 
     lCRC = lCRC Xor &HFFFFFFFF
     
     Crc32 = lCRC
 End Function
-
-'read crc file
-Set objFS=CreateObject("Scripting.FileSystemObject")
-strFile = tmp_folder + "\\crc_file.txt"
-Set objFile = objFS.OpenTextFile(strFile)
-Do Until objFile.AtEndOfStream
-    strLine = objFile.ReadLine
-    crcD(Crc32(strLine)) = 1
-Loop
-objFile.Close
 
 Dim objDictionary
 Set objDictionary = CreateObject("Scripting.Dictionary")
 objDictionary.CompareMode = vbTextCompare
 
 Function AddingToList
-    ' Add items
-    ' coll.Add "Apple" 
-    ' coll.Add "Watermelon"
-	' coll.Add "Orange"
-	' Splitting contents of clipboard by ws
-	a=Split(text,  Chr(13))
+	a=Split(text,  Chr(10) )
 	For each x in a
 		If Len(x) > 2 Then
 		   coll.Add x
+		   coll0.Add x
 		End if
 	Next 
-	For i = 0 To coll.Count - 1
-		objDictionary.Add i, -1 
-    Next
 
 End Function
+
+' Calculating crc of clipboard
+crc_of_clipboard = Hex(Crc32(text))
+' Wscript.Echo crc_of_clipboard
+'Wscript.Quit
 
 Function PrintToImmediateWindow(coll)
 
@@ -209,42 +205,47 @@ Dim i
 Dim text2
 
 text2 = ""
+If crc_from_file = crc_of_clipboard Then
+	For i = 0 To coll_shuffled.Count - 1  
+	   text2 = text2 + coll_shuffled(i)
+	Next   
+Else 
+    Wscript.Echo "Aplying spelling errors"
+	For i = 0 To coll_shuffled.Count - 1  
+	   text2 = text2 + AddSpellingErrors( coll_shuffled(i) )
+	Next   	
+End If	
 
-Set objFSO=CreateObject("Scripting.FileSystemObject")
+'Wscript.Echo "crc from clipboard not equals to 1.txt crc. Adding spelling errors"
+'Wscript.Echo "crc_from_file = " & crc_from_file
+'Wscript.Echo "crc_of_clipboard = " & crc_of_clipboard
 
-' open crc file
-outFile=tmp_folder + "\\crc_file.txt"
-Set objFile = objFSO.CreateTextFile(outFile,True)
 
-' write stings to file
-' write crc to crc file
-For i = 0 To coll_shuffled.Count - 1
-  random_number = Rnd()   ' Initialize random-number generator
-  line = coll_shuffled(i)
-  crc = Crc32(line)
-  if not crcD.Exists(crc) Then
-    line = AddSpellingErrors(coll_shuffled(i))
-	crc = Crc32(line)
-  End if
-  objFile.Write Crc32(line) & vbCrLf
-  text2 = text2 + line + Chr(13)
-Next
+text = ""
+For i = 0 To coll0.Count - 1
+   text = text + coll0(i)
+Next   
 
-' close crc file
-objFile.Close
+'Wscript.echo "1 line of file: " + Hex(Crc32(text2))
 
-' RestoreFile()
+'write crc from file if exist
+If fso.FileExists(tmp_folder + "\\iluminati_file.txt") Then 
+  fso.DeleteFile tmp_folder + "\\iluminati_file.txt"
+End If  
 
-'text = AddSpellingErrors(text2)
+Set stream = CreateObject("ADODB.Stream")
+stream.Open
+stream.Type     = 2 'text
+stream.Position = 0
+stream.Charset  = "utf-8"
+stream.WriteText Hex(Crc32(text2))
+stream.SaveToFile tmp_folder + "\\iluminati_file.txt", 2
+stream.Close
+
+
 
 'Wscript.echo text
 'Wscript.echo text2
-
-
-
-' If fso.FileExists(tmp_folder + "\\1.txt") Then 
-  ' fso.CopyFile tmp_folder + "\\1.txt", tmp_folder + "\\1_bak.txt"
-' End If 
 
 If fso.FileExists(tmp_folder + "\\1.txt") Then 
   fso.DeleteFile tmp_folder + "\\1.txt"
