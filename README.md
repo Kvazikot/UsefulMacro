@@ -101,6 +101,10 @@ https://www.murgee.com/auto-mouse-click/
 
 Списки вопросов по астрономии и инженерингу я взял с quora.com по ключевому слову: 
 "NASA" "System enginering" "Electrical Enginering" "Linux"
+Для вычленения вопросов из вывода поисковика quora цезарь чикен макнагетс дарит вам скрипт
+[quora_extract_questions.vbs](https://github.com/Kvazikot/UsefulMacro/blob/master/quora_extract_questions.vbs)
+Он берет на входе строку из буффера обмена, выделяет вопросы и запускает блокнот с ними
+
 Медицинские симптомы взяты из Оксфордовского мед справочника и википедии.
 Мед справочник лежит на z-lib.org 
 
