@@ -31,6 +31,9 @@
 
 Этот вариант [youtube_search_by_list_shuffle_v2_signout](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list_shuffle_v2_signout%20.mamc) работает только без sign in т.е. анонимно. Проверено для в Edge и Chrome.
 
+Если вам не нравится что программа вносит случаные ошибки в ваш файл, 
+то используйте [версию shuffle_clipboard.vbs без spelling errors](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/6ac0ab5b5273aacfde10d046d6bdb9488677f378/shuffle_clipboard.vbs)
+
 Примечание: Если вы как и я используете Notepad++. ТО удостоверьтесь что в настройках выставлено тихое(slient) обновление файла
 
 ## Известные проблемы этого скрипта
