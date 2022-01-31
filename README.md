@@ -104,6 +104,12 @@ https://www.murgee.com/auto-mouse-click/
 Для вычленения вопросов из вывода поисковика quora цезарь чикен макнагетс дарит вам скрипт
 [quora_extract_questions.vbs](https://github.com/Kvazikot/UsefulMacro/blob/master/quora_extract_questions.vbs)
 Он берет на входе строку из буффера обмена, выделяет вопросы и запускает блокнот с ними
+1. Заходите на [квору](https://www.quora.com/search?q=engine%20repair)
+2. Забиваете в поиск интересующий термин
+3. ctrl + a, ctrl + c
+4. запускаете [quora_extract_questions.vbs](https://github.com/Kvazikot/UsefulMacro/blob/master/quora_extract_questions.vbs)
+5. дальше можно их скармливать ютубу или любому другому поисковику
+
 
 Медицинские симптомы взяты из Оксфордовского мед справочника и википедии.
 Мед справочник лежит на z-lib.org 
