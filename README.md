@@ -96,7 +96,13 @@ https://www.murgee.com/auto-mouse-click/
 * [список "психический"](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/youtube/mentalist_list.txt)
 * [список "смелость города берет"](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/youtube/courage_list.txt)
 * [список "новости политики"](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/youtube/search_news_list.txt)
+* [список "Astronomy!! the stars!!"](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube/astronomy_the_stars_list.txt)
 * [список "im not a man of two many faces"](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube/medical_search_list_rus.txt)
+
+Списки вопросов по астрономии и инженерингу я взял с quora.com по ключевому слову: 
+"NASA" "System enginering" "Electrical Enginering" "Linux"
+Медицинские симптомы взяты из Оксфордовского мед справочника и википедии.
+Мед справочник лежит на z-lib.org 
 
 ## Пара слов о Auto Mouse Click
 Отличный инструмент. В идеале функционал этой софтины хотелось бы перевести в полностью свободный софт. 
