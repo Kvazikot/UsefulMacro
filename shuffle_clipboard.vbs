@@ -51,12 +51,14 @@ d("y") = "ytfv"
 d("u") = "hkun"
 d("i") = "ijml"
 d("o") = "oki;"
+d("p") = "ol-;"
 d("z") = "axsx"
 d("x") = "cdsz"
 d("c") = "ccnx"
 d("v") = "ijml"
 d("b") = "oki;"
-d("m") = "ytfv"
+d("m") = "ytf "
+d("n") = "bhmj"
 d(",") = "hkun"
 d(";") = "l'op"
 d("'") = "[p;]"
@@ -89,6 +91,10 @@ d("г") = "олше"
 d("ш") = "олдщ"
 d("щ") = "лдщн"
 d("з") = "джхх"
+For Each objKey In d
+  d(UCase(objKey)) = UCase(d(objKey))
+Next
+  
 ' Do something with the text
 ' text = replace(text, "you ", "you and your dog ")
 
@@ -164,14 +170,16 @@ Function AddSpellingErrors(in_text)
     wi_1 = Mid(strString,i,1)
 	str_add = ""
     random_number = Int( 100 * Rnd()  )  ' 0-100	
-	If (random_number < 25) and (wi_1 <> " ") Then	' probability of delete 0.25
+	If (random_number < 10) and (wi_1 <> " ") Then	' probability of delete 0.25
 	  str_add = wi_1	  
 	End If
-	If (random_number > 85) and (wi_1 <> " ") Then	 ' probability of insert 0.25 
+	If (random_number > 95) and (wi_1 <> " ") Then	 ' probability of insert 0.25 
 	  if  d.Exists(wi_1) Then
 		 n = 1 + (random_number mod 3)
 	     str_add = Mid(d(wi_1),n,1) & wi_1 & wi
-	  End If	
+      'Else 
+	  '   str_add = " " & wi
+	  End If
 	End If
 	If StrComp("",str_add) = 0 Then
 	  str_add = wi & wi_1
