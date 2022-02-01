@@ -46,7 +46,7 @@
 
 
 ## Четвертый сценарий для youtube. Работа сразу с несколькими окнами параллельно
-![image](https://github.com/Kvazikot/UsefulMacro/blob/master/4_window_mode.png)
+![image](http://intelligentonlinetools.com/blog/wp-content/uploads/2017/07/Kmeans-CLustering-S1-dataset--300x211.png)
 В данный момент наша доблесная команда трудится не покладая рук над новой версией
 сценария который будет работать с несколькими окнами ютьюба.
 В планах также адаптация под другие разрешения экрана отличные от Full HD 1980x1080
