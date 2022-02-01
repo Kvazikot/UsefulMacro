@@ -170,15 +170,16 @@ Function AddSpellingErrors(in_text)
     wi_1 = Mid(strString,i,1)
 	str_add = ""
     random_number = Int( 100 * Rnd()  )  ' 0-100	
-	If (random_number < 10) and (wi_1 <> " ") Then	' probability of delete 0.25
+	If (random_number < 7) and (wi_1 <> " ") Then	' probability of delete 0.25
 	  str_add = wi_1	  
 	End If
 	If (random_number > 95) and (wi_1 <> " ") Then	 ' probability of insert 0.25 
 	  if  d.Exists(wi_1) Then
 		 n = 1 + (random_number mod 3)
 	     str_add = Mid(d(wi_1),n,1) & wi_1 & wi
-      'Else 
-	  '   str_add = " " & wi
+      Else 
+	     n = 1 + (random_number mod 8)
+	     str_add = Mid("aleuvnshb",n,1) & wi
 	  End If
 	End If
 	If StrComp("",str_add) = 0 Then
