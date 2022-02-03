@@ -96,11 +96,13 @@
 Т.е. с открытым кодом, записывайтесь в волонтеры free software foundation и дерзайте.
 В крайнем случае можно было бы сделать ПРЕОБРАЗОВАТЕЛЬ скрипта .mamc в эквивалентный пайтоновский скрипт.
 Не хватает остро нехватает условных переходов, хотябы в функции RegExp я бы сделал опреатор goto № 
+Экспорт и импорт пива в cvs я бы сделал тоже поаккуратнее.
 Но это минимальные импрувменты, а в целом программа простая и гениальная.
 
 ## Дополнительные сценарии
 Еще в этом репозитории есть:
 * Поиск в яндексе [yandex__search_shuffle_v0.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/yandex__search_shuffle_v0.mamc)
+* Поиск в яндексе [yandex_news_search_shuffle_v0.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/yandex_news_search_shuffle_v0.mamc)
 * [скрипт obi_stroi_hypermarket.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/obi_stroi_hypermarket.mamc)
 для поиска разных стройматериалов на сайте гипермаркета OBI он работает со [этим](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/youtube/obi_list.txt) списком
 
