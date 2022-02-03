@@ -107,6 +107,8 @@
 * [скрипт obi_stroi_hypermarket.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/obi_stroi_hypermarket.mamc)
 для поиска разных стройматериалов на сайте гипермаркета OBI он работает со [этим](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/youtube/obi_list.txt) списком
 
+Известная проблема с яндексом. Иногда скрипт закрывает все вкладки и всете с ними окно браузера.
+Лечится это пока созданием нескольих окон комбинацией ctrl + N
 
 ## Выводы по ютьюбу
 НА данный омент 11.46 1.31.2022 у меня получился телевизор который сам преключает каналы.
