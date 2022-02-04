@@ -28,7 +28,6 @@
 6. Положите скрипт перемешивающий строки [shuffle_clipboard.vbs](https://github.com/Kvazikot/UsefulMacro/raw/master/shuffle_clipboard.vbs) в каталог %USERPROFILE%
 7. Проверьте что расширение у файла shuffle_clipboard.vbs именно .vbs, а не txt, иначе он не запустится.
 8. Запустите [youtube_search_by_list_shuffle_v2.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list_shuffle_v2.mamc) кнопкой Start или комбинацией ctrl + alt + F6
-9. Уберите панель закладок Chrome или firefox, если вы ее используете.
 
 Этот вариант [youtube_search_by_list_shuffle_v2_signout](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list_shuffle_v2_signout%20.mamc) работает только без sign in т.е. анонимно. Проверено для в Edge и Chrome.
 
