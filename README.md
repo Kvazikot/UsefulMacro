@@ -75,7 +75,7 @@
 [quora_extract_questions.vbs](https://github.com/Kvazikot/UsefulMacro/blob/master/quora_extract_questions.vbs)
 Он берет на входе строку из буффера обмена, выделяет вопросы и запускает блокнот с ними
 
-## Как быстро получить список воросов в области в которой вы полный дилетант.
+## Как быстро получить список вопросов в области в которой вы полный дилетант.
 1. Заходите на [квору](https://www.quora.com/search?q=engine%20repair)
 2. Забиваете в поиск интересующий термин
 3. ctrl + a, ctrl + c
