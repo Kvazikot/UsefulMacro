@@ -14,9 +14,11 @@
 
 ![image](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube_search_by_list.png)
 рис 1. Режим разделенного пополам экрана (справа - блокнот, слева - браузер с youtube)
+Запуск кнопкой Start или комбинацией ctrl + alt + F6
+
 ![image](https://github.com/Kvazikot/UsefulMacro/blob/master/yotube_player_mode.png)
 рис 2. Youtube player mode (ширина видео = 1/2 ширины экрана)
-Запуск кнопкой Start
+
 
 ## Третий сценарий для youtube с перемешиванием списка.
 Сценарий работает на разрешении экрана Full HD т.е. 1980x1080
