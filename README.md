@@ -13,6 +13,9 @@
 Или быть может у вас получиться что-то болеее интересное, я был бы рад если кто-то из вас поделился своими результатами с сообществом
 
 ![image](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube_search_by_list.png)
+рис 1. Режим разделенного пополам экрана (справа - блокнот, слева - браузер с youtube)
+![image](https://github.com/Kvazikot/UsefulMacro/blob/master/yotube_player_mode.png)
+рис 2. Youtube player mode (ширина видео = 1/2 ширины экрана)
 Запуск кнопкой Start
 
 ## Третий сценарий для youtube с перемешиванием списка.
