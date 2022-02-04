@@ -22,12 +22,13 @@
 Ее можно [скачать](https://www.murgee.com/auto-mouse-click/download/setup.exe) здесь https://www.murgee.com/auto-mouse-click/
 1. Установите Auto Mouse Click by MurGee.com
 2. Разделяете экран как на скриншоте. Для этого я разделяю экран на две части, по горизонтали пополам. Открываю блокнот(Notepad.exe) в левой части экрана (комбинация клавиш WIN + CAPS LOCK + LEFT) Открываю браузер хром в правой части экрана (комбинация клавиш WIN + CAPS LOCK + RIGHT)
-3. Откройте ключевые слова в блокноте (Notepad.exe или Notepad++)
-4. В проводнике windows (Win + E) забейте в адресную строку %USERPROFILE%
-5. Положите скрипт перемешивающий строки [shuffle_clipboard.vbs](https://github.com/Kvazikot/UsefulMacro/raw/master/shuffle_clipboard.vbs) в каталог %USERPROFILE%
-6. Проверьте что расширение у файла shuffle_clipboard.vbs именно .vbs, а не txt, иначе он не запустится.
-7. Запустите [youtube_search_by_list_shuffle_v2.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list_shuffle_v2.mamc) кнопкой Start или комбинацией ctrl + alt + F6
-8. Уберите панель закладок Chrome или firefox, если вы ее используете.
+3. В youtube плеере сделайте так чтобы рекомендуемые видео были внизу (т.е. чтобы видеоокно по ширине было в половину ширины экрана)
+4. Откройте ключевые слова в блокноте (Notepad.exe или Notepad++)
+5. В проводнике windows (Win + E) забейте в адресную строку %USERPROFILE%
+6. Положите скрипт перемешивающий строки [shuffle_clipboard.vbs](https://github.com/Kvazikot/UsefulMacro/raw/master/shuffle_clipboard.vbs) в каталог %USERPROFILE%
+7. Проверьте что расширение у файла shuffle_clipboard.vbs именно .vbs, а не txt, иначе он не запустится.
+8. Запустите [youtube_search_by_list_shuffle_v2.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list_shuffle_v2.mamc) кнопкой Start или комбинацией ctrl + alt + F6
+9. Уберите панель закладок Chrome или firefox, если вы ее используете.
 
 Этот вариант [youtube_search_by_list_shuffle_v2_signout](https://github.com/Kvazikot/UsefulMacro/raw/master/youtube_search_by_list_shuffle_v2_signout%20.mamc) работает только без sign in т.е. анонимно. Проверено для в Edge и Chrome.
 
