@@ -16,7 +16,7 @@
 рис 1. Режим разделенного пополам экрана (справа - блокнот, слева - браузер с youtube)
 Запуск кнопкой Start или комбинацией ctrl + alt + F6
 
-![image](https://github.com/Kvazikot/UsefulMacro/blob/master/yotube_player_mode.png)
+![image](https://github.com/Kvazikot/UsefulMacro/blob/master/yotube_player_mode2.png)
 рис 2. Youtube player mode (ширина видео = 1/2 ширины экрана)
 
 
