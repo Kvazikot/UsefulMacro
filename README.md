@@ -110,6 +110,7 @@
 * Поиск в яндексе [yandex__search_shuffle_v0.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/yandex__search_shuffle_v0.mamc)
 * Поиск в яндексе [yandex_news_search_shuffle_v0.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/yandex_news_search_shuffle_v0.mamc)
 * [скрипт obi_stroi_hypermarket.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/obi_stroi_hypermarket.mamc)
+* [скрипт для поиска работы в head hunter](https://github.com/Kvazikot/UsefulMacro/raw/master/shit_head_hunter.mamc)
 для поиска разных стройматериалов на сайте гипермаркета OBI он работает со [этим](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/youtube/obi_list.txt) списком
 
 Известная проблема с яндексом. Иногда скрипт закрывает все вкладки и всете с ними окно браузера.
