@@ -6,17 +6,20 @@ Set coll = CreateObject("System.Collections.ArrayList")
 Set coll_shuffled = CreateObject("System.Collections.ArrayList")
 Set keywords = CreateObject("System.Collections.ArrayList")
 Set questions = CreateObject("System.Collections.ArrayList")
-Set objHTML = CreateObject("htmlfile")
-text = objHTML.ParentWindow.ClipboardData.GetData("text")
+text = ReadClipboardData()
 Set WShshell = CreateObject("WScript.Shell")
 Set fso = CreateObject("Scripting.FileSystemObject")
 Set oShell = CreateObject( "WScript.Shell" )
 user=oShell.ExpandEnvironmentStrings("%UserName%")
-tmp_folder=oShell.ExpandEnvironmentStrings("%TMP%")
+tmp_folder=oShell.ExpandEnvironmentStrings("%USERPROFILE%")
 
 arg1 = ""
 arg2 = ""
 
+Function ReadClipboardData()
+	Set objHTML = CreateObject("htmlfile")
+	ReadClipboardData = objHTML.ParentWindow.ClipboardData.GetData("text")
+End Function
 
 Function ParseWorldList(text, coll, sep)
 	If Len(text) = 0 Then Wscript.Quit
@@ -34,6 +37,9 @@ text1 = ""
 Function LoadKeywords()
 	Set fso = CreateObject("Scripting.FileSystemObject")
 	'read keywords from file if its exist
+	If arg2 = "clip" Then
+	  text1 = ReadClipboardData()
+	End If
 	If fso.FileExists(arg2) Then 
 		Set stream = CreateObject("ADODB.Stream")
 		stream.Open
@@ -56,7 +62,7 @@ Function select_rand_word()
 	sep = Chr(10)
 	ParseWorldList text1, keywords, sep
 	'Wscript.Echo text1
-	Wscript.Echo "number of keywords: " & keywords.Count
+	'Wscript.Echo "number of keywords: " & keywords.Count
 	' select random keyword and copy it to clipboard
 	Randomize
 	n = Int( Rnd() * keywords.Count + 1)
@@ -69,16 +75,13 @@ Function extract_quora_questions()
 	Set coll = CreateObject("System.Collections.ArrayList")
 	Set coll_shuffled = CreateObject("System.Collections.ArrayList")
 
-	Set objHTML = CreateObject("htmlfile")
-	text = objHTML.ParentWindow.ClipboardData.GetData("text")
-
 	Dim oRE, oMatches
 	Set oRE = New RegExp
-	oRE.Pattern = "[(]more[)]([\r\n\w ]+)?" 
+	oRE.Pattern = "([\w\S ]+[?])[\r\n]+" 
 	oRE.Global = True
 	Set oMatches = oRE.Execute(text)
 	For Each oMatch In oMatches
-	  text2 = text2 + Mid(text, oMatch.FirstIndex + 7, oMatch.Length - 5) 
+	  text2 = text2 + oMatch.Value
 	Next
 
 	If fso.FileExists(tmp_folder + "\\1.txt") Then 
@@ -95,8 +98,8 @@ Function extract_quora_questions()
 	stream.SaveToFile tmp_folder + "\\quora_questions.txt", 2
 	stream.Close
 
-	Set objShell = CreateObject("Shell.Application")
-	objShell.ShellExecute "notepad", tmp_folder + "\\quora_questions.txt", "", "runas", 1
+	'Set objShell = CreateObject("Shell.Application")
+	'objShell.ShellExecute "notepad", tmp_folder + "\\quora_questions.txt", "", "runas", 1
 End Function
 
 Function select_quora_question()
@@ -136,8 +139,8 @@ Function select_quora_question()
 	stream.SaveToFile tmp_folder + "\\selected_questions.txt", 2
 	stream.Close
 
-	Set objShell = CreateObject("Shell.Application")
-	objShell.ShellExecute "notepad", tmp_folder + "\\selected_questions.txt", "", "runas", 1
+	'Set objShell = CreateObject("Shell.Application")
+	'objShell.ShellExecute "notepad", tmp_folder + "\\selected_questions.txt", "", "runas", 1
 
 End Function
 
@@ -148,7 +151,7 @@ If WScript.Arguments.Length = 0 Then
   str = str + Chr(13) + "this will select random word from a list contained in file c:\common_english_shuffled.txt with separator line end"
   str = str + Chr(13) + "example2:" + Chr(13) + Chr(13)  +  " unknow_genius.vbs extract_quora_questions c:\common_english_shuffled.txt"
   str = str + Chr(13) + "this will parse quora search results page contained in clipboard in plain text format (not html!) and copies questions to file %TMP%/quora_questions.txt "
-  Wscript.Echo str
+  'Wscript.Echo str
 End If
 
 ' parse first argumetn -function name
@@ -160,6 +163,7 @@ If WScript.Arguments.Length > 1 Then
 	arg2 = WScript.Arguments.Item(1)
 End If
 
+
 'Wscript.Echo arg1
 'Wscript.Echo arg2
 LoadKeywords()
@@ -167,7 +171,7 @@ LoadKeywords()
 If arg1 = "select_rand_word" Then select_rand_word()
 If arg1 = "extract_quora_questions" Then extract_quora_questions()
 If arg1 = "select_quora_question" Then select_quora_question()
-
+extract_quora_questions()
 Wscript.Quit
 
 
