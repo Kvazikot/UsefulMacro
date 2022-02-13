@@ -171,7 +171,7 @@ LoadKeywords()
 If arg1 = "select_rand_word" Then select_rand_word()
 If arg1 = "extract_quora_questions" Then extract_quora_questions()
 If arg1 = "select_quora_question" Then select_quora_question()
-extract_quora_questions()
+
 Wscript.Quit
 
 
