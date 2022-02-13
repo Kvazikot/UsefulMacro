@@ -105,15 +105,25 @@
 Копирование строчек скрипта
 Но это минимальные импрувменты, а в целом программа простая и гениальная.
 
+## Автоматический поиск работы на head hunter
+Скрипт отсылает ваше резюме случайным работтодателям на сайте hh.ru
+По теории вероятности можно подсчитать что если вы каждый день будете рассылать свое резюме 200 разным работодателям, 
+200 это лимит за сутки на сайте hh.ru.
+![image](https://github.com/Kvazikot/UsefulMacro/blob/master/hh_screenshot.png)
+
+* [скрипт для поиска работы в head hunter](https://github.com/Kvazikot/UsefulMacro/raw/master/shit_head_hunter.mamc)
+* [скрипт для поиска работы в head hunter с генерацией url](https://github.com/Kvazikot/UsefulMacro/raw/master/shit_head_hunter_wit_hurl_generation.mamc)
+* (требуется скинуть папку  Images to Search On Screen в %APPDATA% но на один уровень выше) и [gen_url_hh.vbs](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/gen_url_hh.vbs)  в каталог %USERPROFILE%
+
+Для hh работает только в разрешении 1920x1080 и на 100% зуме страницы. Поскольку там поиск картинки "Откликнуться" и он не нейросетевой
+
+
+
 ## Дополнительные сценарии
 Еще в этом репозитории есть:
 * Поиск в яндексе [yandex__search_shuffle_v0.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/yandex__search_shuffle_v0.mamc)
 * Поиск в яндексе [yandex_news_search_shuffle_v0.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/yandex_news_search_shuffle_v0.mamc)
 * [скрипт obi_stroi_hypermarket.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/obi_stroi_hypermarket.mamc) для поиска разных стройматериалов на сайте гипермаркета OBI он работает со [этим](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/youtube/obi_list.txt) списком
-* [скрипт для поиска работы в head hunter](https://github.com/Kvazikot/UsefulMacro/raw/master/shit_head_hunter.mamc)
-* [скрипт для поиска работы в head hunter с генерацией url](https://github.com/Kvazikot/UsefulMacro/raw/master/shit_head_hunter_wit_hurl_generation.mamc)
-* (требуется скинуть папку  Images to Search On Screen в %APPDATA% но на один уровень выше) и [gen_url_hh.vbs](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/gen_url_hh.vbs)  в каталог %USERPROFILE%
-* Для hh работает только в разрешении 1920x1080 и на 100% зуме страницы. Поскольку там поиск картинки "Откликнуться" и он не нейросетевой
 * vlc_random_pitch - скрипт для vlc который периодически меняет основную частоту звука, чтобы не было понятно у какго какой социальный статус.
 
 
