@@ -113,6 +113,7 @@
 * [скрипт для поиска работы в head hunter](https://github.com/Kvazikot/UsefulMacro/raw/master/shit_head_hunter.mamc)
 * [скрипт для поиска работы в head hunter с генерацией url](https://github.com/Kvazikot/UsefulMacro/raw/master/shit_head_hunter_wit_hurl_generation.mamc)
 * (требуется скинуть папку  Images to Search On Screen в %APPDATA% но на один уровень выше) и [gen_url_hh.vbs](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/gen_url_hh.vbs)  в каталог %USERPROFILE%
+* Для hh работает только в разрешении 1920x1080 и на 100% зуме страницы. Поскольку там поиск картинки "Откликнуться" и он не нейросетевой
 * vlc_random_pitch - скрипт для vlc который периодически меняет основную частоту звука, чтобы не было понятно у какго какой социальный статус.
 
 
