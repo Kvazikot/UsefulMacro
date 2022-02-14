@@ -1,5 +1,24 @@
 # UsefulMacro
-Цель этого репозитория: Исследовательская. Исследовать алгоритмы ютьюба.
+Цель этого репозитория: Исследовательская. 
+
+## Автоматический поиск работы на head hunter
+Скрипт отсылает ваше резюме случайным работтодателям на сайте hh.ru
+По теории вероятности вы увеличите шансы найти работу если каждый день будете рассылать свое резюме 200 разным работодателям. 
+200 это лимит за сутки на сайте hh.ru. Причем не важно даже что они вам предлагают.
+![image](https://github.com/Kvazikot/UsefulMacro/blob/master/hh_screenshot.png)
+
+Для hh работает только в разрешении 1920x1080 и на 100% зуме страницы. Поскольку там поиск картинки "Откликнуться" и он не нейросетевой
+Для запуска сценария вам потребуется программа AutoMouseClick by MurGee.com 
+Ее можно [скачать](https://www.murgee.com/auto-mouse-click/download/setup.exe) здесь https://www.murgee.com/auto-mouse-click/
+1. Установите Auto Mouse Click by MurGee.com
+2. Откройте в браузере сайт hh.ru
+3. Скиньте папку ["Images to Search On Screen"](https://github.com/Kvazikot/UsefulMacro/archive/refs/heads/master.zip) в %APPDATA%, но на один уровень выше
+4. В проводнике windows (Win + E) забейте в адресную строку %USERPROFILE%
+5. Положите скрипт генерирующий url-адреса [gen_url_hh.vbs](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/gen_url_hh.vbs) в каталог %USERPROFILE%
+6. Откройте файл [gen_url_hh.vbs](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/gen_url_hh.vbs) блокнотом  
+7. Найдите строчку url = "https://hh.ru/search/vacancy?resume=170669dfff0865af3b0039ed1f6b6d3752674b&page=" 
+8. Замените "170669dfff0865af3b0039ed1f6b6d3752674b" на id своего резюме
+9. Запустите [скрипт shit_head_hunter_wit_hurl_generation.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/shit_head_hunter_wit_hurl_generation.mamc)кнопкой Start или комбинацией ctrl + alt + F6
 
 
 ## Второй сценарий для youtube
@@ -104,26 +123,6 @@
 Экспорт и импорт пива в cvs я бы сделал тоже поаккуратнее.
 Копирование строчек скрипта
 Но это минимальные импрувменты, а в целом программа простая и гениальная.
-
-## Автоматический поиск работы на head hunter
-Скрипт отсылает ваше резюме случайным работтодателям на сайте hh.ru
-По теории вероятности вы увеличите шансы найти работу если каждый день будете рассылать свое резюме 200 разным работодателям. 
-200 это лимит за сутки на сайте hh.ru. Причем не важно даже что они вам предлагают.
-![image](https://github.com/Kvazikot/UsefulMacro/blob/master/hh_screenshot.png)
-
-Для hh работает только в разрешении 1920x1080 и на 100% зуме страницы. Поскольку там поиск картинки "Откликнуться" и он не нейросетевой
-Для запуска сценария вам потребуется программа AutoMouseClick by MurGee.com 
-Ее можно [скачать](https://www.murgee.com/auto-mouse-click/download/setup.exe) здесь https://www.murgee.com/auto-mouse-click/
-1. Установите Auto Mouse Click by MurGee.com
-2. Откройте в браузере сайт hh.ru
-3. Скиньте папку ["Images to Search On Screen"](https://github.com/Kvazikot/UsefulMacro/archive/refs/heads/master.zip) в %APPDATA%, но на один уровень выше
-4. В проводнике windows (Win + E) забейте в адресную строку %USERPROFILE%
-5. Положите скрипт генерирующий url-адреса [gen_url_hh.vbs](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/gen_url_hh.vbs) в каталог %USERPROFILE%
-6. Откройте файл [gen_url_hh.vbs](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/gen_url_hh.vbs) блокнотом  
-7. Найдите строчку url = "https://hh.ru/search/vacancy?resume=170669dfff0865af3b0039ed1f6b6d3752674b&page=" 
-8. Замените "170669dfff0865af3b0039ed1f6b6d3752674b" на id своего резюме
-9. Запустите [скрипт shit_head_hunter_wit_hurl_generation.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/shit_head_hunter_wit_hurl_generation.mamc)кнопкой Start или комбинацией ctrl + alt + F6
-
 
 
 ## Дополнительные сценарии
