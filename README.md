@@ -5,6 +5,7 @@
 Скрипт отсылает ваше резюме случайным работтодателям на сайте hh.ru
 По теории вероятности вы увеличите шансы найти работу если каждый день будете рассылать свое резюме 200 разным работодателям. 
 200 это лимит за сутки на сайте hh.ru. Причем не важно даже что они вам предлагают.
+
 ![image](https://github.com/Kvazikot/UsefulMacro/blob/master/hh_screenshot.png)
 
 Для hh работает только в разрешении 1920x1080 и на 100% зуме страницы. Поскольку там поиск картинки "Откликнуться" и он не нейросетевой
@@ -18,7 +19,7 @@
 6. Откройте файл [gen_url_hh.vbs](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/gen_url_hh.vbs) блокнотом  
 7. Найдите строчку url = "https://hh.ru/search/vacancy?resume=170669dfff0865af3b0039ed1f6b6d3752674b&page=" 
 8. Замените "170669dfff0865af3b0039ed1f6b6d3752674b" на id своего резюме
-9. Запустите [скрипт shit_head_hunter_wit_hurl_generation.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/shit_head_hunter_wit_hurl_generation.mamc)кнопкой Start или комбинацией ctrl + alt + F6
+9. Запустите [скрипт shit_head_hunter_wit_hurl_generation.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/shit_head_hunter_wit_hurl_generation.mamc) кнопкой Start или комбинацией ctrl + alt + F6
 
 
 ## Второй сценарий для youtube
