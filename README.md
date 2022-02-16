@@ -20,8 +20,7 @@
 7. Найдите строчку HH_ID = "170669dfff0865af3b0039ed1f6b6d3752674b"
 8. Замените "170669dfff0865af3b0039ed1f6b6d3752674b" на id своего резюме
 9. Нажмите ctrl + S
-10. Если ctrl + S не сработал, зайдите в меню файл - > Сохранить
-11. Запустите [скрипт shit_head_hunter_wit_hurl_generation.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/shit_head_hunter_wit_hurl_generation.mamc) кнопкой Start или комбинацией ctrl + alt + F6
+10. Запустите [скрипт shit_head_hunter_wit_hurl_generation.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/shit_head_hunter_wit_hurl_generation.mamc) кнопкой Start или комбинацией ctrl + alt + F6
 
 
 ## Второй сценарий для youtube
