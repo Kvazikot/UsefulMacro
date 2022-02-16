@@ -1,3 +1,6 @@
+' укажите здесь идентификатор своего резюме 
+HH_ID = "170669dfff0865af3b0039ed1f6b6d3752674b"
+
 If WScript.Arguments.Length > 0 Then
    input = WScript.stdin.ReadAll()
    WScript.stdout.write Mid(input, 2, Len(input)-5)   
@@ -14,7 +17,7 @@ End Function
 
 Randomize ' Initialize random-number generator
 page_number = Int((10) * Rnd() + 1 )   
-url = "https://hh.ru/search/vacancy?resume=170669dfff0865af3b0039ed1f6b6d3752674b&page=" & page_number
+url = "https://hh.ru/search/vacancy?resume=" & HH_ID & "&page=" & page_number
 copy2clip(url)
 
 
