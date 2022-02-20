@@ -91,6 +91,7 @@
 * [список "смелость города берет"](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/youtube/courage_list.txt)
 * [список "новости политики"](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/youtube/search_news_list.txt)
 * [список "Astronomy, a star"](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube/astronomy_the_stars_list.txt)
+* [вопросы из mail.ru по термину "конфуцианство"](https://otvet.mail.ru/search/%D0%BA%D0%BE%D0%BD%D1%84%D1%83%D1%86%D0%B8%D0%B0%D0%BD%D1%81%D1%82%D0%B2%D0%BE/)
 * [список "im not a man of two many faces"](https://github.com/Kvazikot/UsefulMacro/blob/master/youtube/medical_search_list_rus.txt)
 
 Списки вопросов по астрономии и инженерингу я взял с quora.com по ключевому слову: 
