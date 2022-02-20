@@ -220,8 +220,10 @@
 ```
 
 [![image](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/KANZI.png)](https://youtu.be/wRM7vTrIIis)
-
 рис 44. Интерфейс Канзи
+
+![image](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/IMAGES/KANZI_BOARD.png)
+рис 45. Интерфейс Канзи
 
 ## Дальнейшие планы
 В этой работе применяются классические варварские методы. 
