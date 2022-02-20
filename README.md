@@ -220,6 +220,9 @@
 
 рис 34. Форма выбора вопроса
 ```
+[![image](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/IMAGES/time_capsule_lang_gui.png)
+рис 64. Форма выбора вопроса
+
 
 [![image](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/KANZI.png)](https://youtu.be/wRM7vTrIIis)
 рис 44. Интерфейс Канзи
