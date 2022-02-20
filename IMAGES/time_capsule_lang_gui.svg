@@ -29,7 +29,7 @@
      showgrid="true"
      inkscape:zoom="0.88480074"
      inkscape:cx="271.81261"
-     inkscape:cy="543.62523"
+     inkscape:cy="814.87274"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
      inkscape:window-x="-8"
@@ -328,9 +328,9 @@
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect11633);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="111.08398"
          y="742.3604"
-         id="tspan87896"><tspan
+         id="tspan88003"><tspan
            dx="0 25.429688 25.429688"
-           id="tspan87894">32%</tspan></tspan></text>
+           id="tspan88001">32%</tspan></tspan></text>
     <image
        width="72.760414"
        height="107.95"
@@ -3602,7 +3602,7 @@ AABJRU5ErkJggg==
          transform="matrix(1.8678179,0,0,2.7732674,27.33045,-391.82828)"><tspan
            x="7.9436269"
            y="159.25525"
-           id="tspan87898">ВОДА</tspan></text>
+           id="tspan88005">ВОДА</tspan></text>
       <image
          width="40.653076"
          height="61.522121"
@@ -3646,7 +3646,7 @@ AABJRU5ErkJggg==
          id="tspan74183"
          style="stroke-width:0.264583"
          x="99.985611"
-         y="231.09816">What</tspan></text>
+         y="231.09816">Что</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -3657,7 +3657,7 @@ AABJRU5ErkJggg==
          id="tspan76767"
          style="stroke-width:0.264583"
          x="102.03826"
-         y="253.86716">How </tspan></text>
+         y="253.86716">Как </tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -3668,7 +3668,7 @@ AABJRU5ErkJggg==
          id="tspan79813"
          style="stroke-width:0.264583"
          x="68.507416"
-         y="241.32657">Build</tspan></text>
+         y="241.32657">Дело</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:6.87651px;line-height:1.25;font-family:sans-serif;fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:0.171913"
@@ -6466,7 +6466,7 @@ LMtfKmHxr3vhy1K8/EX7Wt4p75TvRfn/ASioVUhaPizfAAAAAElFTkSuQmCC
        transform="matrix(1.3632014,0,0,2.2663108,-28.634085,-191.72003)"><tspan
          x="7.9436269"
          y="159.25525"
-         id="tspan87900">      ПЛУГ</tspan></text>
+         id="tspan88007">      ПЛУГ</tspan></text>
     <rect
        style="mix-blend-mode:normal;fill:url(#linearGradient18073);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.265;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect3680"
