@@ -220,7 +220,8 @@
 
 рис 34. Форма выбора вопроса
 ```
-[![image](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/IMAGES/time_capsule_lang_gui.png)
+![image](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/IMAGES/time_capsule_lang_gui.png)
+
 рис 64. Форма выбора вопроса
 
 
