@@ -102,10 +102,10 @@
 Он берет на входе строку из буффера обмена, выделяет вопросы и запускает блокнот с ними
 
 ## Как быстро получить список вопросов в области в которой вы полный дилетант.
-1. Заходите на [квору](https://www.quora.com/search?q=engine%20repair)
+1. Заходите на [квору](https://www.quora.com/search?q=engine%20repair) или на [mail.ru вопросы](https://otvet.mail.ru/search/%D0%BA%D0%B0%D0%BA_%D0%BF%D0%BE%D0%B7%D0%BD%D0%B0%D0%BA%D0%BE%D0%BC%D0%B8%D1%82%D1%81%D1%8F_%D1%81_%D0%B6%D0%B5%D0%BD%D1%89%D0%B8%D0%BD%D0%BE%D0%B9/)
 2. Забиваете в поиск интересующий термин
 3. ctrl + a, ctrl + c
-4. запускаете мой супер пупер огненный скрипт [quora_extract_questions.vbs](https://github.com/Kvazikot/UsefulMacro/blob/master/quora_extract_questions.vbs)
+4. запускаете мой супер пупер огненный скрипт [extract_questions.vbs](https://github.com/Kvazikot/UsefulMacro/blob/master/extract_questions.vbs)
 5. дальше можно их скармливать ютубу или любому другому поисковику
 6. для полноты эксперимента советую загребать оттудава вопросы из абсолютно неизвестной вам области знания
 
