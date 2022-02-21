@@ -268,7 +268,7 @@ crc32 Возможно заменится на хеши отдельных ст�
 Заранее благодарю, 3↑3↑3 поклонов 
 
 
-![image](https://github.com/Kvazikot/UsefulMacro/blob/master/donate.png)
+![image](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/IMAGES/qrcode.png)
 
 QR-code для отправления Bitcoin
 
