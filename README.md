@@ -149,6 +149,8 @@
 * [скрипт obi_stroi_hypermarket.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/obi_stroi_hypermarket.mamc) для поиска разных стройматериалов на сайте гипермаркета OBI он работает со [этим](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/youtube/obi_list.txt) списком
 * vlc_random_pitch - скрипт для vlc который периодически меняет основную частоту звука, чтобы не было понятно у какго какой социальный статус.
 * [rutracker_org downloader](https://github.com/Kvazikot/UsefulMacro/raw/master/rutracker_org_torrent_downloader.mamc)
+* [piratebay downloader (adapted for qbittorrent)](https://github.com/Kvazikot/UsefulMacro/raw/master/piratebay_qbittorrent_downloader.mamc)
+* [Поиск в duck duck go](https://github.com/Kvazikot/UsefulMacro/raw/master/duck_duck%20.mamc)
 
 
 Известная проблема с яндексом. Иногда скрипт закрывает все вкладки и всете с ними окно браузера.
