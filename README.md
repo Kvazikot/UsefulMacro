@@ -143,11 +143,12 @@
 В конечных скриптах лучше обойтись без использования пайтона если использовать сохраненные кластеры, готовые датасеты и частотные таблицы.
 
 ## Дополнительные сценарии
-Еще в этом репозитории есть:
+Еще в этом репозитории есть следущие сценарии (все они работают тоже с перемешиванием списка):
 * Поиск в яндексе [yandex__search_shuffle_v0.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/yandex__search_shuffle_v0.mamc)
 * Поиск в яндексе [yandex_news_search_shuffle_v0.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/yandex_news_search_shuffle_v0.mamc)
 * [скрипт obi_stroi_hypermarket.mamc](https://github.com/Kvazikot/UsefulMacro/raw/master/obi_stroi_hypermarket.mamc) для поиска разных стройматериалов на сайте гипермаркета OBI он работает со [этим](https://raw.githubusercontent.com/Kvazikot/UsefulMacro/master/youtube/obi_list.txt) списком
 * vlc_random_pitch - скрипт для vlc который периодически меняет основную частоту звука, чтобы не было понятно у какго какой социальный статус.
+* [rutracker.org downloader](https://github.com/Kvazikot/UsefulMacro/raw/master/rutracker_org_torrent_downloader.mamc)
 
 
 Известная проблема с яндексом. Иногда скрипт закрывает все вкладки и всете с ними окно браузера.
