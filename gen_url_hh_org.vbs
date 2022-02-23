@@ -23,10 +23,27 @@ Set oShell = CreateObject( "WScript.Shell" )
 ' create script settings folder if it not exists
 folder_name=Split(WScript.ScriptName, ".")(0)
 cmd="cmd /c mkdir " & """" & tmp_folder & "\" & folder_name & """" 
-settings_path = tmp_folder & "\" & folder_name & "\" & folder_name & ".settings"
+settings_path = tmp_folder & "\" & folder_name 
+settings_file = settings_path & "\" & folder_name & ".settings"
 oShell.run  cmd
 'WScript.Echo settings_path
 
+Function AppentTextFile(filename, text2)
+	Dim utfStr
+
+	Set stream = CreateObject("ADODB.Stream")
+	stream.Open
+	stream.Charset  = "utf-8"
+	If fso.FileExists(filename) Then 	
+		stream.LoadFromFile filename
+	End If
+	stream.Type     = 2 'text
+	stream.Position = 0
+	stream.Position = stream.Size
+	stream.WriteText text2
+	stream.SaveToFile filename, 2
+	stream.Close
+End Function
 
 Function ParseDict(d, textdata)
 	lines=Split(textdata, Chr(10))
@@ -77,6 +94,14 @@ Function WriteDict(d, filename)
 	stream.Close
 End Function
 
+Function UpdateDict(d, filename)
+	text2 = ""
+	For Each objKey In d
+		text2 = text2 & objKey & "=" & d(objKey) & + Chr(10)
+	Next
+	AppentTextFile filename, text2	
+End Function
+
 Function StrConv(Text,SourceCharset,DestCharset)
   Set Stream=CreateObject("ADODB.Stream")
   Stream.Type=2
@@ -96,7 +121,7 @@ End Function
 
 '--------------- MAKE ITERATION (update state) -----------------------------
 SetLocale 1049
-ReadDict settings, settings_path
+ReadDict settings, settings_file
 Set o = settings
 'If no prevoius settings 
 if o("n_cycle") = "" Then
@@ -110,11 +135,11 @@ if o("number_of_pages") = o("current_page") Then
 	o("letter") =  o("letter") + 1
 End If
 
-WriteDict o, settings_path
+WriteDict o, settings_file
 
 '------------------- EXTRACT URLS FROM HTML SOURCE OF A PAGE --------------
 html = ReadClipboardData()
-employers = CreateObject(Scripting.Dictionary) 
+Set employers = CreateObject("Scripting.Dictionary") 
 '1. найти строку вида /employer/4114876
 Dim oRE, oMatches
 Set oRE = New RegExp
@@ -144,6 +169,7 @@ For Each oMatch In oMatches
 Next
 Wscript.Echo text2
 
+UpdateDict employers, settings_path + "\employers.txt"
  
 Wscript.Quit
 
