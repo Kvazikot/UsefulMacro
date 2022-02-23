@@ -114,7 +114,7 @@ WriteDict o, settings_path
 
 '------------------- EXTRACT URLS FROM HTML SOURCE OF A PAGE --------------
 html = ReadClipboardData()
- 
+employers = CreateObject(Scripting.Dictionary) 
 '1. найти строку вида /employer/4114876
 Dim oRE, oMatches
 Set oRE = New RegExp
@@ -125,13 +125,22 @@ For Each oMatch In oMatches
   'text2 = text2 + oMatch.Value  
   WScript.stdout.writeline 	oMatch.Value  
   id = oMatch.Value
-  WScript.stdout.writeline 	Mid(html, oMatch.FirstIndex - 8, 200)
+  'WScript.stdout.writeline 	Mid(html, oMatch.FirstIndex - 8, 200)
   '2. откатится на -8 по строке
   chunk = Mid(html, oMatch.FirstIndex - 8, 200) 
   '3. parse_a_tag
-  company = parse_a_tag(chunk) 
-  '4. add dictioary key employers
-  employers(id) = company  
+  Dim oRE1, oMatches1
+  Set oRE1 = New RegExp
+  oRE1.Pattern = ">([\S ]+)</a>" 
+  oRE1.Global = True
+  Set oMatches1 = oRE1.Execute(chunk)  
+  For Each m in oMatches1
+	company = Mid(chunk, m.FirstIndex+2, Len(m.Value)-5)  
+	WScript.stdout.writeline company
+	'4. add dictioary key employers
+    employers(id) = company  
+  Next
+
 Next
 Wscript.Echo text2
 
