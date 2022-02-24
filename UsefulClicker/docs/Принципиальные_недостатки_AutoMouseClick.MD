@@ -30,16 +30,17 @@ visual basic.
 14. Не понимает переменные среды, например %TMP%
 15. Нет оператора goto
 16. Нет арифметических функций
+17.
 
 
 [LA1] List of actions
 --------------------------------
-Hot key
-Press Key
-Left click
-Right click
-Scroll down
-Scroll up
-Launch program
-Image search
-Type Comment
+* Hot key
+* Press Key
+* Left click
+* Right click
+* Scroll down
+* Scroll up
+* Launch program
+* Image search
+* Type Comment
