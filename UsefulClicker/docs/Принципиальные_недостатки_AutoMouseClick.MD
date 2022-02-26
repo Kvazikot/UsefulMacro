@@ -43,3 +43,6 @@ visual basic.
 * Launch program
 * Image search
 * Type Comment
+
+# Возможные фичи 
+1. Поиск кнопок без необходимости обводить их в пямоугольную область пикселей
