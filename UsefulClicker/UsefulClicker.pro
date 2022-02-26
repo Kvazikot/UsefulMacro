@@ -65,14 +65,23 @@ LIBS+=-L$$OPENCV_451_PATH\\build_mingw\\lib\\ -lopencv_shape453.dll
 
 
 SOURCES += main.cpp \
+    areaselectordialog.cpp \
     dspmodule.cpp \
+    imagesearchdialog.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    areaselectordialog.h \
     dspmodule.h \
+    imagesearchdialog.h \
     mainwindow.h
 
 # install
 
 FORMS += \
+    areaselectordialog.ui \
+    imagesearchdialog.ui \
     mainwindow.ui
+
+RESOURCES += \
+    res.qrc

@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>green_check_mark.png</file>
+        <file>red_check_mark.png</file>
+    </qresource>
+</RCC>

@@ -4,7 +4,9 @@
 
 #ifndef QT_NO_OPENGL
 #include "mainwindow.h"
-#include  "mainwidget.h"
+#include "imagesearchdialog.h"
+#include "areaselectordialog.h"
+
 #endif
 
 int main(int argc, char *argv[])
@@ -18,8 +20,10 @@ int main(int argc, char *argv[])
     app.setApplicationName("cube");
     app.setApplicationVersion("0.1");
 #ifndef QT_NO_OPENGL
-    MainWindow mainwindow;
-    mainwindow.show();
+    //MainWindow mainwindow;
+    //mainwindow.show();
+    ImageSearchDialog dlg;
+    dlg.show();
 #else
     QLabel note("OpenGL Support required");
     note.show();
