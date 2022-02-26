@@ -101,8 +101,46 @@ void AreaSelectorDialog::mouseReleaseEvent(QMouseEvent *event)
 {
     dragStarted = false;
     event->accept();
-    selectedRect.setTopLeft(startWndCoords);
-    selectedRect.setBottomRight(prevMouseCoords);
+    QPoint p = startWndCoords - prevMouseCoords;
+
+    //selectedRect.setTopLeft(startWndCoords);
+    //selectedRect.setBottomRight(prevMouseCoords);
+    selectedRect = QRect();
+
+    // 1 case
+    if( (startWndCoords.x() - prevMouseCoords.x()) < 0 )
+        if( (prevMouseCoords.y() - startWndCoords.y()) > 0 )
+        {
+            selectedRect.setTopLeft(startWndCoords);
+            selectedRect.setBottomRight(prevMouseCoords);
+        }
+
+    // 2 case
+    if( (startWndCoords.x() - prevMouseCoords.x()) < 0 )
+        if( (prevMouseCoords.y() - startWndCoords.y()) < 0 )
+        {
+            selectedRect.setBottomLeft(startWndCoords);
+            selectedRect.setTopRight(prevMouseCoords);
+        }
+
+    // 3 case
+    if( (startWndCoords.x() - prevMouseCoords.x()) > 0 )
+        if( (startWndCoords.y() - prevMouseCoords.y()) < 0 )
+        {
+            selectedRect.setTopRight(startWndCoords);
+            selectedRect.setBottomLeft(prevMouseCoords);
+        }
+
+    // 4 case
+    if( (startWndCoords.x() - prevMouseCoords.x()) < 0 )
+        if( (startWndCoords.y() - prevMouseCoords.y()) > 0 )
+        {
+            selectedRect.setBottomLeft(startWndCoords);
+            selectedRect.setTopRight(prevMouseCoords);
+        }
+
+
+
     emit sigSetRect(selectedRect);
     if(fullscreenMode) close();
 }
