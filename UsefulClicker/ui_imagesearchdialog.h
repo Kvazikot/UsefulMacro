@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAbstractButton>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QLabel>
@@ -37,6 +38,7 @@ public:
     QPushButton *pushButton_5;
     QLabel *label_9;
     QPushButton *pushButton_3;
+    QComboBox *screenSelector;
 
     void setupUi(QDialog *ImageSearchDialog)
     {
@@ -112,6 +114,11 @@ public:
 "color: rgb(81, 81, 81);\n"
 ""));
         pushButton_3->setCheckable(false);
+        screenSelector = new QComboBox(ImageSearchDialog);
+        screenSelector->addItem(QString());
+        screenSelector->addItem(QString());
+        screenSelector->setObjectName(QString::fromUtf8("screenSelector"));
+        screenSelector->setGeometry(QRect(610, 370, 101, 24));
 
         retranslateUi(ImageSearchDialog);
         QObject::connect(buttonBox, &QDialogButtonBox::accepted, ImageSearchDialog, qOverload<>(&QDialog::accept));
@@ -127,7 +134,7 @@ public:
         label->setText(QCoreApplication::translate("ImageSearchDialog", "<html><head/><body><p align=\"center\">Image Search Tool</p><p align=\"center\"><span style=\" font-size:10pt; font-weight:700;\">Screen Resolution is 1920x1024</span></p><p align=\"center\"><span style=\" font-size:10pt; font-weight:700;\"><br/></span></p></body></html>", nullptr));
         pushButton_2->setText(QCoreApplication::translate("ImageSearchDialog", "Test Click", nullptr));
         label_2->setText(QString());
-        label_3->setText(QCoreApplication::translate("ImageSearchDialog", "<html><head/><body><p align=\"center\"><span style=\" font-weight:700;\">Search Area Rectangle: </span></p><p>x0 = 100</p><p>y0 = 100</p><p>width = 400</p><p>height = 600</p></body></html>", nullptr));
+        label_3->setText(QCoreApplication::translate("ImageSearchDialog", "<html><head/><body><p align=\"center\"><span style=\" font-weight:700;\">Search Area Rectangle: </span></p><p>x0 = %1</p><p>y0 = %2</p><p>width = %3</p><p>height = %4</p></body></html>", nullptr));
         pushButton_4->setText(QCoreApplication::translate("ImageSearchDialog", "Select Target \n"
 "From Image  File", nullptr));
         label_4->setText(QCoreApplication::translate("ImageSearchDialog", "<html><head/><body><p><span style=\" font-weight:700;\">Coordinates found.</span></p><p><span style=\" font-weight:700;\">X = 345 Y = 456</span></p><p><br/></p></body></html>", nullptr));
@@ -139,6 +146,9 @@ public:
 "From Screen", nullptr));
         label_9->setText(QCoreApplication::translate("ImageSearchDialog", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:700;\">OR</span></p></body></html>", nullptr));
         pushButton_3->setText(QCoreApplication::translate("ImageSearchDialog", "Find", nullptr));
+        screenSelector->setItemText(0, QCoreApplication::translate("ImageSearchDialog", "screen 0", nullptr));
+        screenSelector->setItemText(1, QCoreApplication::translate("ImageSearchDialog", "screen 1", nullptr));
+
     } // retranslateUi
 
 };

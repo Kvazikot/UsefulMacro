@@ -112,7 +112,7 @@ background-color: rgb(46, 47, 48);</string>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Search Area Rectangle: &lt;/span&gt;&lt;/p&gt;&lt;p&gt;x0 = 100&lt;/p&gt;&lt;p&gt;y0 = 100&lt;/p&gt;&lt;p&gt;width = 400&lt;/p&gt;&lt;p&gt;height = 600&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Search Area Rectangle: &lt;/span&gt;&lt;/p&gt;&lt;p&gt;x0 = %1&lt;/p&gt;&lt;p&gt;y0 = %2&lt;/p&gt;&lt;p&gt;width = %3&lt;/p&gt;&lt;p&gt;height = %4&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_4">
@@ -262,6 +262,26 @@ color: rgb(81, 81, 81);
    <property name="checkable">
     <bool>false</bool>
    </property>
+  </widget>
+  <widget class="QComboBox" name="screenSelector">
+   <property name="geometry">
+    <rect>
+     <x>610</x>
+     <y>370</y>
+     <width>101</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>screen 0</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>screen 1</string>
+    </property>
+   </item>
   </widget>
  </widget>
  <resources/>
