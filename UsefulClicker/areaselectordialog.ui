@@ -22,25 +22,7 @@
   <property name="styleSheet">
    <string notr="true"/>
   </property>
-  <widget class="Canvas_Label" name="label" native="true">
-   <property name="geometry">
-    <rect>
-     <x>60</x>
-     <y>40</y>
-     <width>291</width>
-     <height>251</height>
-    </rect>
-   </property>
-  </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>Canvas_Label</class>
-   <extends>QWidget</extends>
-   <header>canvas_label.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

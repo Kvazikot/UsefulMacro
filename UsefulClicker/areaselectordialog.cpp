@@ -45,9 +45,9 @@ void AreaSelectorDialog::setScreen(int n)
 
 void AreaSelectorDialog::selectByWindow()
 {
-    ui->label->setVisible(true);
-    Canvas_Label* label = (Canvas_Label*)ui->label;
-    label->setMarkedImage();
+    //ui->label->setVisible(true);
+    //Canvas_Label* label = (Canvas_Label*)ui->label;
+    //label->setMarkedImage();
 
 }
 
@@ -56,7 +56,7 @@ void AreaSelectorDialog::slotFullScreen()
 
     QScreen* screen = QGuiApplication::screens()[screenNum];
     setGeometry(screen->geometry());
-    ui->label->setGeometry(screen->geometry());
+    //ui->label->setGeometry(screen->geometry());
     setCursor(Qt::CrossCursor);
 
 }
@@ -65,7 +65,7 @@ void AreaSelectorDialog::fullScreen()
 {
     fullscreenMode = true;
     show();
-    ui->label->setVisible(false);
+    //ui->label->setVisible(false);
     QTimer::singleShot(500, this, SLOT(slotFullScreen()));
 }
 
