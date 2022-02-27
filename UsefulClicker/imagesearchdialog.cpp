@@ -52,7 +52,9 @@ void ImageSearchDialog::slotAreaSelected(QRect rect)
     ui->label_3->setText(text);
     areaImg.create(screenshot.height(), screenshot.width(), CV_8UC4);
     cv::Mat mat(screenshot.height(), screenshot.width(),CV_8UC4, screenshot.bits());
-    areaImg = mat;
+    cv::Rect rect1(rect.left(),rect.top(),rect.width(),rect.height());
+    areaImg = cv::Mat(mat, rect1);;
+    imshow("areaImg", areaImg);
 }
 
 void ImageSearchDialog::slotTargetSelected(QRect rect)
@@ -71,7 +73,7 @@ void ImageSearchDialog::slotTargetSelected(QRect rect)
     targetImg = cv::Mat(mat, rect1);
     //copy data to cv matrix
     //memcpy(targetImg.data, screenshot.data_ptr().data(), sizeof(int) * screenshot.width() * screenshot.height());
-    imshow("areaImg", targetImg);
+    imshow("targetImg", targetImg);
 
 }
 

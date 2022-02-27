@@ -26,6 +26,7 @@ AreaSelectorDialog::AreaSelectorDialog(QWidget *parent) :
     bg_image.fill(QColor(100,100,100,200));
     //ui->label->setPixmap(QPixmap::fromImage(bg_image));
     screenNum = 0;
+    fullscreenMode = false;
 
     QPushButton* done_button = new QPushButton(this);
     done_button->setGeometry(0,0,100,100);
@@ -84,6 +85,7 @@ void AreaSelectorDialog::selectTargetImage()
 {
     //QDesktopWidget* desktop = QApplication::desktop();
     int screenNum = 0;
+    fullscreenMode = false;
     QScreen* screen = QGuiApplication::screens()[screenNum];
     setGeometry(screen->geometry());
 
@@ -237,6 +239,9 @@ void AreaSelectorDialog::paintEvent(QPaintEvent* event)
 
 void AreaSelectorDialog::on_doneButton_clicked()
 {
+   selectedRect = geometry();
+   emit sigSetRect(selectedRect);
    close();
+
 }
 
