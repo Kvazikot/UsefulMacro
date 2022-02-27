@@ -19,7 +19,7 @@ CXXFLAGS      = -fno-keep-inline-dllexport -std=c++17 -O2 -O3 -msse4.1 -mssse3 -
 INCPATH       = -I. -I/include -I-L -Ie:/opencv/modules/core/include -I-L -Ie:/opencv/build_mingw/modules -I-L -Ie:/opencv/build_mingw -I-L -Ie:/opencv/include/opencv2 -I-L -Ie:/opencv/include -I-L -Ie:/opencv/modules/calib3d/include -I-L -Ie:/opencv/modules/calib3d/include -I-L -Ie:/opencv/modules/core/include -I-L -Ie:/opencv/modules/dnn/include -I-L -Ie:/opencv/modules/features2d/include -I-L -Ie:/opencv/modules/flann/include -I-L -Ie:/opencv/modules/highgui/include -I-L -Ie:/opencv/modules/imgcodecs/include -I-L -Ie:/opencv/modules/imgproc/include -I-L -Ie:/opencv/modules/videoio/include -I-L -Ie:/opencv/modules/video/include -I-L -Ie:/opencv/modules/gapi/include -I-L -Ie:/opencv/modules/objdetect/include -I-L -Ie:/opencv/modules/photo/include -I-L -Ie:/opencv/opencv_contrib-4.x/modules/shape/include -I-L -Ie:/opencv/modules/ml/include -I-L -Ie:/opencv/modules/stitching/include -I../../../../Qt/6.2.3/mingw_64/include -I../../../../Qt/6.2.3/mingw_64/include/QtOpenGLWidgets -I../../../../Qt/6.2.3/mingw_64/include/QtWidgets -I../../../../Qt/6.2.3/mingw_64/include/QtOpenGL -I../../../../Qt/6.2.3/mingw_64/include/QtGui -I../../../../Qt/6.2.3/mingw_64/include/QtCore -Irelease -I. -I/include -I../../../../Qt/6.2.3/mingw_64/mkspecs/win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-s -Wl,-subsystem,windows -mthreads
-LIBS        =        -luser32 -Le:\opencv\build_mingw\lib -lopencv_core453.dll -lopencv_ml453.dll -lopencv_flann453.dll -lopencv_imgproc453.dll -lopencv_photo453.dll -lopencv_features2d453.dll -lopencv_imgcodecs453.dll -lopencv_videoio453.dll -lopencv_highgui453.dll -lopencv_calib3d453.dll -lopencv_objdetect453.dll -lopencv_stitching453.dll -lopencv_dnn453.dll -lopencv_video453.dll -lopencv_shape453.dll C:\Qt\6.2.3\mingw_64\lib\libQt6OpenGLWidgets.a C:\Qt\6.2.3\mingw_64\lib\libQt6Widgets.a C:\Qt\6.2.3\mingw_64\lib\libQt6OpenGL.a C:\Qt\6.2.3\mingw_64\lib\libQt6Gui.a C:\Qt\6.2.3\mingw_64\lib\libQt6Core.a -lmingw32 C:\Qt\6.2.3\mingw_64\lib\libQt6EntryPoint.a -lshell32  
+LIBS        =        -luser32 -lgdi32 -Le:\opencv\build_mingw\lib -lopencv_core453.dll -lopencv_ml453.dll -lopencv_flann453.dll -lopencv_imgproc453.dll -lopencv_photo453.dll -lopencv_features2d453.dll -lopencv_imgcodecs453.dll -lopencv_videoio453.dll -lopencv_highgui453.dll -lopencv_calib3d453.dll -lopencv_objdetect453.dll -lopencv_stitching453.dll -lopencv_dnn453.dll -lopencv_video453.dll -lopencv_shape453.dll C:\Qt\6.2.3\mingw_64\lib\libQt6OpenGLWidgets.a C:\Qt\6.2.3\mingw_64\lib\libQt6Widgets.a C:\Qt\6.2.3\mingw_64\lib\libQt6OpenGL.a C:\Qt\6.2.3\mingw_64\lib\libQt6Gui.a C:\Qt\6.2.3\mingw_64\lib\libQt6Core.a -lmingw32 C:\Qt\6.2.3\mingw_64\lib\libQt6EntryPoint.a -lshell32  
 QMAKE         = C:\Qt\6.2.3\mingw_64\bin\qmake.exe
 DEL_FILE      = del
 CHK_DIR_EXISTS= if not exist
@@ -962,6 +962,10 @@ release/areaselectordialog.o: areaselectordialog.cpp ../../../../Qt/6.2.3/mingw_
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QSizeF \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/QTransform \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qnativeinterface.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/QScreen \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QTimer \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qtimer.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qbasictimer.h \
 		areaselectordialog.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QDialog \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qdialog.h \
@@ -994,7 +998,111 @@ release/areaselectordialog.o: areaselectordialog.cpp ../../../../Qt/6.2.3/mingw_
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qlabel.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qframe.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpicture.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextdocument.h
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextdocument.h \
+		e:/opencv/include/opencv2/opencv.hpp \
+		e:/opencv/build_mingw/opencv2/opencv_modules.hpp \
+		e:/opencv/modules/core/include/opencv2/core.hpp \
+		e:/opencv/modules/core/include/opencv2/core/cvdef.h \
+		e:/opencv/modules/core/include/opencv2/core/version.hpp \
+		e:/opencv/build_mingw/cvconfig.h \
+		e:/opencv/modules/core/include/opencv2/core/hal/interface.h \
+		e:/opencv/modules/core/include/opencv2/core/cv_cpu_dispatch.h \
+		e:/opencv/build_mingw/cv_cpu_config.h \
+		e:/opencv/modules/core/include/opencv2/core/cv_cpu_helper.h \
+		e:/opencv/modules/core/include/opencv2/core/hal/msa_macros.h \
+		e:/opencv/modules/core/include/opencv2/core/fast_math.hpp \
+		e:/opencv/modules/core/include/opencv2/core/base.hpp \
+		e:/opencv/modules/core/include/opencv2/core/cvstd.hpp \
+		e:/opencv/modules/core/include/opencv2/core/cvstd_wrapper.hpp \
+		e:/opencv/modules/core/include/opencv2/core/neon_utils.hpp \
+		e:/opencv/modules/core/include/opencv2/core/vsx_utils.hpp \
+		e:/opencv/modules/core/include/opencv2/core/check.hpp \
+		e:/opencv/modules/core/include/opencv2/core/traits.hpp \
+		e:/opencv/modules/core/include/opencv2/core/matx.hpp \
+		e:/opencv/modules/core/include/opencv2/core/saturate.hpp \
+		e:/opencv/modules/core/include/opencv2/core/types.hpp \
+		e:/opencv/modules/core/include/opencv2/core/mat.hpp \
+		e:/opencv/modules/core/include/opencv2/core/bufferpool.hpp \
+		e:/opencv/modules/core/include/opencv2/core/mat.inl.hpp \
+		e:/opencv/modules/core/include/opencv2/core/persistence.hpp \
+		e:/opencv/modules/core/include/opencv2/core/operations.hpp \
+		e:/opencv/modules/core/include/opencv2/core/cvstd.inl.hpp \
+		e:/opencv/modules/core/include/opencv2/core/utility.hpp \
+		e:/opencv/modules/core/include/opencv2/core/utils/instrumentation.hpp \
+		e:/opencv/modules/core/include/opencv2/core/utils/tls.hpp \
+		e:/opencv/modules/core/include/opencv2/core/optim.hpp \
+		e:/opencv/modules/core/include/opencv2/core/ovx.hpp \
+		e:/opencv/modules/calib3d/include/opencv2/calib3d.hpp \
+		e:/opencv/modules/features2d/include/opencv2/features2d.hpp \
+		e:/opencv/modules/flann/include/opencv2/flann/miniflann.hpp \
+		e:/opencv/modules/flann/include/opencv2/flann/defines.h \
+		e:/opencv/modules/flann/include/opencv2/flann/config.h \
+		e:/opencv/modules/core/include/opencv2/core/affine.hpp \
+		e:/opencv/modules/dnn/include/opencv2/dnn.hpp \
+		e:/opencv/modules/dnn/include/opencv2/dnn/dnn.hpp \
+		e:/opencv/modules/core/include/opencv2/core/async.hpp \
+		e:/opencv/modules/dnn/include/opencv2/dnn/version.hpp \
+		e:/opencv/modules/dnn/include/opencv2/dnn/dict.hpp \
+		e:/opencv/modules/dnn/include/opencv2/dnn/layer.hpp \
+		e:/opencv/modules/dnn/include/opencv2/dnn/dnn.inl.hpp \
+		e:/opencv/modules/dnn/include/opencv2/dnn/utils/inference_engine.hpp \
+		e:/opencv/modules/flann/include/opencv2/flann.hpp \
+		e:/opencv/modules/flann/include/opencv2/flann/flann_base.hpp \
+		e:/opencv/modules/flann/include/opencv2/flann/general.h \
+		e:/opencv/modules/flann/include/opencv2/flann/matrix.h \
+		e:/opencv/modules/flann/include/opencv2/flann/params.h \
+		e:/opencv/modules/flann/include/opencv2/flann/any.h \
+		e:/opencv/modules/flann/include/opencv2/flann/saving.h \
+		e:/opencv/modules/flann/include/opencv2/flann/nn_index.h \
+		e:/opencv/modules/flann/include/opencv2/flann/result_set.h \
+		e:/opencv/modules/flann/include/opencv2/flann/all_indices.h \
+		e:/opencv/modules/flann/include/opencv2/flann/kdtree_index.h \
+		e:/opencv/modules/flann/include/opencv2/flann/dynamic_bitset.h \
+		e:/opencv/modules/flann/include/opencv2/flann/dist.h \
+		e:/opencv/modules/flann/include/opencv2/flann/heap.h \
+		e:/opencv/modules/flann/include/opencv2/flann/allocator.h \
+		e:/opencv/modules/flann/include/opencv2/flann/random.h \
+		e:/opencv/modules/flann/include/opencv2/flann/kdtree_single_index.h \
+		e:/opencv/modules/flann/include/opencv2/flann/kmeans_index.h \
+		e:/opencv/modules/flann/include/opencv2/flann/logger.h \
+		e:/opencv/modules/flann/include/opencv2/flann/composite_index.h \
+		e:/opencv/modules/flann/include/opencv2/flann/linear_index.h \
+		e:/opencv/modules/flann/include/opencv2/flann/hierarchical_clustering_index.h \
+		e:/opencv/modules/flann/include/opencv2/flann/lsh_index.h \
+		e:/opencv/modules/flann/include/opencv2/flann/lsh_table.h \
+		e:/opencv/modules/flann/include/opencv2/flann/autotuned_index.h \
+		e:/opencv/modules/flann/include/opencv2/flann/ground_truth.h \
+		e:/opencv/modules/flann/include/opencv2/flann/index_testing.h \
+		e:/opencv/modules/flann/include/opencv2/flann/timer.h \
+		e:/opencv/modules/flann/include/opencv2/flann/sampling.h \
+		e:/opencv/modules/highgui/include/opencv2/highgui.hpp \
+		e:/opencv/modules/imgcodecs/include/opencv2/imgcodecs.hpp \
+		e:/opencv/modules/videoio/include/opencv2/videoio.hpp \
+		e:/opencv/modules/imgproc/include/opencv2/imgproc.hpp \
+		e:/opencv/modules/imgproc/include/opencv2/imgproc/segmentation.hpp \
+		e:/opencv/modules/ml/include/opencv2/ml.hpp \
+		e:/opencv/modules/ml/include/opencv2/ml/ml.inl.hpp \
+		e:/opencv/modules/objdetect/include/opencv2/objdetect.hpp \
+		e:/opencv/modules/objdetect/include/opencv2/objdetect/detection_based_tracker.hpp \
+		e:/opencv/modules/photo/include/opencv2/photo.hpp \
+		e:/opencv/modules/stitching/include/opencv2/stitching.hpp \
+		e:/opencv/modules/stitching/include/opencv2/stitching/warpers.hpp \
+		e:/opencv/modules/stitching/include/opencv2/stitching/detail/warpers.hpp \
+		e:/opencv/modules/core/include/opencv2/core/cuda.hpp \
+		e:/opencv/modules/core/include/opencv2/core/cuda_types.hpp \
+		e:/opencv/modules/core/include/opencv2/core/cuda.inl.hpp \
+		e:/opencv/modules/stitching/include/opencv2/stitching/detail/warpers_inl.hpp \
+		e:/opencv/modules/stitching/include/opencv2/stitching/detail/matchers.hpp \
+		e:/opencv/modules/stitching/include/opencv2/stitching/detail/motion_estimators.hpp \
+		e:/opencv/modules/stitching/include/opencv2/stitching/detail/util.hpp \
+		e:/opencv/modules/stitching/include/opencv2/stitching/detail/util_inl.hpp \
+		e:/opencv/modules/stitching/include/opencv2/stitching/detail/camera.hpp \
+		e:/opencv/modules/stitching/include/opencv2/stitching/detail/exposure_compensate.hpp \
+		e:/opencv/modules/stitching/include/opencv2/stitching/detail/seam_finders.hpp \
+		e:/opencv/modules/stitching/include/opencv2/stitching/detail/blenders.hpp \
+		e:/opencv/modules/video/include/opencv2/video.hpp \
+		e:/opencv/modules/video/include/opencv2/video/tracking.hpp \
+		e:/opencv/modules/video/include/opencv2/video/background_segm.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\areaselectordialog.o areaselectordialog.cpp
 
 release/dspmodule.o: dspmodule.cpp ../../../../Qt/6.2.3/mingw_64/include/QtCore/QObject \
@@ -1370,11 +1478,25 @@ release/imagesearchdialog.o: imagesearchdialog.cpp areaselectordialog.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/qinputmethod.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qlocale.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/qguiapplication_platform.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QComboBox \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qcombobox.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qstyleoption.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qvalidator.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qregularexpression.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qslider.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qabstractslider.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qstyle.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtabbar.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtabwidget.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qrubberband.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qframe.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qabstractitemmodel.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QDialogButtonBox \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QLabel \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qlabel.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qframe.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpicture.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextdocument.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QPushButton \

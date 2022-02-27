@@ -5,6 +5,9 @@
 #include "windows.h"
 #include "areaselectordialog.h"
 #include "ui_areaselectordialog.h"
+#include <opencv2/opencv.hpp>
+
+using namespace cv;
 
 AreaSelectorDialog::AreaSelectorDialog(QWidget *parent) :
     QDialog(parent),
@@ -56,30 +59,24 @@ void AreaSelectorDialog::fullScreen()
     QTimer::singleShot(500, this, SLOT(slotFullScreen()));
 }
 
+
+QPixmap AreaSelectorDialog::makeScreenshot()
+{
+    //makeScreenshot();
+    QScreen* screen = QGuiApplication::screens()[screenNum];
+    screenshot = screen->grabWindow(0,0,0,screen->geometry().width(), screen->geometry().height());
+    return screenshot;
+    //screenshot.save("screenshot.png");
+
+}
+
 void AreaSelectorDialog::selectTargetImage()
 {
     //QDesktopWidget* desktop = QApplication::desktop();
     int screenNum = 0;
     QScreen* screen = QGuiApplication::screens()[screenNum];
     setGeometry(screen->geometry());
-    /*
-    QPixmap screenGrab = screen->grabWindow(desktop->winId(),
-        m_selectionRect.x(), m_selectionRect.y(), m_selectionRect.width(), m_selectionRect.height());
-    QImage image = screenGrab.toImage();
-    int numPixel = image.width() * image.height();
-    int sumR = 0;
-    int sumG = 0;
-    int sumB = 0;
 
-    for (int x = 0; x < image.width(); ++x) {
-        for (int y = 0; y < image.height(); ++y) {
-            QColor color = image.pixel(x, y);
-            sumR += color.red();
-            sumG += color.green();
-            sumB += color.blue();
-        }
-    }
-    */
 }
 
 void AreaSelectorDialog::showEvent(QShowEvent* event)
@@ -106,39 +103,37 @@ void AreaSelectorDialog::mouseReleaseEvent(QMouseEvent *event)
     //selectedRect.setTopLeft(startWndCoords);
     //selectedRect.setBottomRight(prevMouseCoords);
     selectedRect = QRect();
-
     // 1 case
-    if( (startWndCoords.x() - prevMouseCoords.x()) < 0 )
-        if( (prevMouseCoords.y() - startWndCoords.y()) > 0 )
-        {
-            selectedRect.setTopLeft(startWndCoords);
-            selectedRect.setBottomRight(prevMouseCoords);
-        }
+     if( (startWndCoords.x() - prevMouseCoords.x()) < 0 )
+         if( (prevMouseCoords.y() - startWndCoords.y()) > 0 )
+         {
+             selectedRect.setTopLeft(startWndCoords);
+             selectedRect.setBottomRight(prevMouseCoords);
+         }
 
-    // 2 case
-    if( (startWndCoords.x() - prevMouseCoords.x()) < 0 )
-        if( (prevMouseCoords.y() - startWndCoords.y()) < 0 )
-        {
-            selectedRect.setBottomLeft(startWndCoords);
-            selectedRect.setTopRight(prevMouseCoords);
-        }
+     // 2 case
+     if( (startWndCoords.x() - prevMouseCoords.x()) < 0 )
+         if( (prevMouseCoords.y() - startWndCoords.y()) < 0 )
+         {
+             selectedRect.setBottomLeft(startWndCoords);
+             selectedRect.setTopRight(prevMouseCoords);
+         }
 
-    // 3 case
-    if( (startWndCoords.x() - prevMouseCoords.x()) > 0 )
-        if( (startWndCoords.y() - prevMouseCoords.y()) < 0 )
-        {
-            selectedRect.setTopRight(startWndCoords);
-            selectedRect.setBottomLeft(prevMouseCoords);
-        }
+     // 3 case
+     if( (startWndCoords.x() - prevMouseCoords.x()) > 0 )
+         if( (startWndCoords.y() - prevMouseCoords.y()) < 0 )
+         {
+             selectedRect.setTopRight(startWndCoords);
+             selectedRect.setBottomLeft(prevMouseCoords);
+         }
 
-    // 4 case
-    if( (startWndCoords.x() - prevMouseCoords.x()) < 0 )
-        if( (startWndCoords.y() - prevMouseCoords.y()) > 0 )
-        {
-            selectedRect.setBottomLeft(startWndCoords);
-            selectedRect.setTopRight(prevMouseCoords);
-        }
-
+     // 4 case
+     if( (startWndCoords.x() - prevMouseCoords.x()) < 0 )
+         if( (startWndCoords.y() - prevMouseCoords.y()) > 0 )
+         {
+             selectedRect.setBottomLeft(startWndCoords);
+             selectedRect.setTopRight(prevMouseCoords);
+         }
 
 
     emit sigSetRect(selectedRect);

@@ -17,6 +17,7 @@ class AreaSelectorDialog : public QDialog
 public:
     QPoint startWndCoords;
     QPoint prevMouseCoords;
+    QPixmap screenshot;
     QRect  selectedRect;
     bool dragStarted;
     bool fullscreenMode;
@@ -31,6 +32,7 @@ public:
     void selectTargetImage();
     void setScreen(int n);
     void fullScreen();
+    QPixmap makeScreenshot();
     ~AreaSelectorDialog();
 
 signals:

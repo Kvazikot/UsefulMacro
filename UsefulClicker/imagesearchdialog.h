@@ -2,6 +2,7 @@
 #define IMAGESEARCHDIALOG_H
 
 #include <QDialog>
+#include <opencv2/opencv.hpp>
 
 namespace Ui {
 class ImageSearchDialog;
@@ -15,6 +16,8 @@ public:
     QStringList labels_text_templ;
     QRect selectedTargetRect;
     QRect selectedAreaRect;
+    QImage screenshot;
+    cv::Mat   targetImg, areaImg;
     explicit ImageSearchDialog(QWidget *parent = nullptr);
     ~ImageSearchDialog();
 

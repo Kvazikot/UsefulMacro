@@ -42,7 +42,7 @@ INCLUDEPATH+=-L "$$OPENCV_451_PATH\\modules\\stitching\\include"
 #INCLUDEPATH+=-L "$$OPENCV_451_PATH\\modules\\videoio\\include"
 #INCLUDEPATH+=-L "$$OPENCV_451_PATH\\modules\\world\\include"
 
-LIBS += -luser32
+LIBS += -luser32 -lgdi32
 LIBS+=-L$$OPENCV_451_PATH\\build_mingw\\lib\\ -lopencv_core453.dll
 LIBS+=-L$$OPENCV_451_PATH\\build_mingw\\lib\\ -lopencv_ml453.dll
 LIBS+=-L$$OPENCV_451_PATH\\build_mingw\\lib\\ -lopencv_flann453.dll
