@@ -2,8 +2,10 @@
 #include <QPushButton>
 #include <QScreen>
 #include <QTimer>
+#include <QPainterPath>
 #include "windows.h"
 #include "areaselectordialog.h"
+#include "canvas_label.h"
 #include "ui_areaselectordialog.h"
 #include <opencv2/opencv.hpp>
 
@@ -22,7 +24,7 @@ AreaSelectorDialog::AreaSelectorDialog(QWidget *parent) :
     ui->setupUi(this);
     QImage bg_image(300,300,QImage::Format_ARGB32);
     bg_image.fill(QColor(100,100,100,200));
-    ui->label->setPixmap(QPixmap::fromImage(bg_image));
+    //ui->label->setPixmap(QPixmap::fromImage(bg_image));
     screenNum = 0;
 
     QPushButton* done_button = new QPushButton(this);
@@ -39,6 +41,14 @@ AreaSelectorDialog::AreaSelectorDialog(QWidget *parent) :
 void AreaSelectorDialog::setScreen(int n)
 {
     screenNum = n;
+}
+
+void AreaSelectorDialog::selectByWindow()
+{
+    ui->label->setVisible(true);
+    Canvas_Label* label = (Canvas_Label*)ui->label;
+    label->setMarkedImage();
+
 }
 
 void AreaSelectorDialog::slotFullScreen()
@@ -168,16 +178,59 @@ AreaSelectorDialog::~AreaSelectorDialog()
     delete ui;
 }
 
+void AreaSelectorDialog::resizeEvent(QResizeEvent* event)
+{
+    //repaint();
+    event->accept();
+    //qDebug() << "resize";
+}
+
 void AreaSelectorDialog::paintEvent(QPaintEvent* event)
 {
-   QPainter painter(this);
+    QPainter painter(this);
 
-   selectedRect.setTopLeft(startWndCoords);
-   selectedRect.setBottomRight(prevMouseCoords);
-   painter.fillRect(selectedRect, QColor(100,255,100,255));
+    selectedRect.setTopLeft(startWndCoords);
+    selectedRect.setBottomRight(prevMouseCoords);
 
-   painter.end();
-   event->accept();
+    painter.fillRect(rect(), QColor(200,200,200,255));
+
+    if( fullscreenMode )
+      painter.fillRect(selectedRect, QColor(100,255,100,255));
+    else
+    {
+        painter.setPen(Qt::cyan);
+        painter.drawEllipse(QRectF(50,50,100,100));
+        QRectF center_rect = rect();
+        QTransform trns;
+        trns.scale(0.5,0.5);
+
+        QPointF p[2];
+        p[0] = rect().topLeft();
+        p[1] = rect().bottomRight();
+        p[0] = p[0] * trns + center_rect.center()/2;
+        p[1] = p[1] * trns + center_rect.center()/2;
+
+        //painter.drawRect()
+
+        QPainterPath path(QPointF(0,0));
+        center_rect = QRectF(p[0], p[1]);
+        path.addRect(center_rect);
+        path.addRect(rect());
+        //path.translate()
+        QPen pen;
+        pen.setWidth(5);
+        pen.setStyle(Qt::PenStyle::DashDotDotLine);
+        painter.setPen(pen);
+        painter.drawLine(center_rect.center().x(), p[0].y(),
+                         center_rect.center().x(), p[1].y());
+        painter.drawLine(p[0].x(),center_rect.center().y(),
+                         p[1].x(),center_rect.center().y());
+        painter.drawPath(path);
+    }
+
+    painter.end();
+    event->accept();
+
 }
 
 void AreaSelectorDialog::on_doneButton_clicked()

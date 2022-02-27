@@ -22,38 +22,25 @@
   <property name="styleSheet">
    <string notr="true"/>
   </property>
-  <widget class="QLabel" name="label">
+  <widget class="Canvas_Label" name="label" native="true">
    <property name="geometry">
     <rect>
      <x>60</x>
-     <y>90</y>
-     <width>221</width>
-     <height>171</height>
+     <y>40</y>
+     <width>291</width>
+     <height>251</height>
     </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::Box</enum>
-   </property>
-   <property name="lineWidth">
-    <number>3</number>
-   </property>
-   <property name="midLineWidth">
-    <number>2</number>
-   </property>
-   <property name="text">
-    <string>TextLabel</string>
-   </property>
-   <property name="margin">
-    <number>2</number>
    </property>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Canvas_Label</class>
+   <extends>QWidget</extends>
+   <header>canvas_label.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

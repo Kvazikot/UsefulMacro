@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QPaintEvent>
 #include <QMouseEvent>
+#include <QResizeEvent>
 #include <QShowEvent>
 
 namespace Ui {
@@ -29,9 +30,11 @@ public:
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void showEvent(QShowEvent* event);
+    void resizeEvent(QResizeEvent* event);
     void selectTargetImage();
     void setScreen(int n);
     void fullScreen();
+    void selectByWindow();
     QPixmap makeScreenshot();
     ~AreaSelectorDialog();
 

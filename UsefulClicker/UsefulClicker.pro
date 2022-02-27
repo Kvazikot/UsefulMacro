@@ -66,12 +66,14 @@ LIBS+=-L$$OPENCV_451_PATH\\build_mingw\\lib\\ -lopencv_shape453.dll
 
 SOURCES += main.cpp \
     areaselectordialog.cpp \
+    canvas_label.cpp \
     dspmodule.cpp \
     imagesearchdialog.cpp \
     mainwindow.cpp
 
 HEADERS += \
     areaselectordialog.h \
+    canvas_label.h \
     dspmodule.h \
     imagesearchdialog.h \
     mainwindow.h

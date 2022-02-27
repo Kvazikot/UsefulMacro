@@ -24,8 +24,8 @@ void ImageSearchDialog::on_screenAreaButton_clicked()
     dlg = new AreaSelectorDialog(this);
     dlg->setScreen(ui->screenSelector->currentIndex());
     screenshot = dlg->makeScreenshot().toImage();
-    dlg->fullscreenMode = true;
     dlg->show();
+    dlg->selectByWindow();
     connect(dlg, SIGNAL(sigSetRect(QRect)), this, SLOT(slotAreaSelected(QRect)));
 }
 
