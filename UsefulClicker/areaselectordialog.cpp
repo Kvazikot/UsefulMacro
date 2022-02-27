@@ -198,22 +198,24 @@ void AreaSelectorDialog::paintEvent(QPaintEvent* event)
       painter.fillRect(selectedRect, QColor(100,255,100,255));
     else
     {
-        painter.setPen(Qt::cyan);
-        painter.drawEllipse(QRectF(50,50,100,100));
         QRectF center_rect = rect();
         QTransform trns;
         trns.scale(0.5,0.5);
 
-        QPointF p[2];
+        QPointF p[4];
         p[0] = rect().topLeft();
         p[1] = rect().bottomRight();
         p[0] = p[0] * trns + center_rect.center()/2;
         p[1] = p[1] * trns + center_rect.center()/2;
+        p[2] = p[0] * trns + center_rect.center()/2;
+        p[3] = p[1] * trns + center_rect.center()/2;
 
         //painter.drawRect()
 
         QPainterPath path(QPointF(0,0));
         center_rect = QRectF(p[0], p[1]);
+        path.addRect(center_rect);
+        center_rect = QRectF(p[2], p[3]);
         path.addRect(center_rect);
         path.addRect(rect());
         //path.translate()
