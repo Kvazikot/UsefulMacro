@@ -53,8 +53,11 @@ void ImageSearchDialog::slotAreaSelected(QRect rect)
     areaImg.create(screenshot.height(), screenshot.width(), CV_8UC4);
     cv::Mat mat(screenshot.height(), screenshot.width(),CV_8UC4, screenshot.bits());
     cv::Rect rect1(rect.left(),rect.top(),rect.width(),rect.height());
-    areaImg = cv::Mat(mat, rect1);;
-    imshow("areaImg", areaImg);
+    areaImg = cv::Mat(mat, rect1);
+    QPixmap pix;
+    pix.load(":/green_check_mark.png");
+    ui->iconSearchArea->setPixmap(pix);
+    //imshow("areaImg", areaImg);
 }
 
 void ImageSearchDialog::slotTargetSelected(QRect rect)
@@ -71,9 +74,13 @@ void ImageSearchDialog::slotTargetSelected(QRect rect)
     cv::Mat mat(screenshot.height(), screenshot.width(),CV_8UC4, screenshot.bits());
     cv::Rect rect1(rect.left(),rect.top(),rect.width(),rect.height());
     targetImg = cv::Mat(mat, rect1);
+    QPixmap pix;
+    pix.load(":/green_check_mark.png");
+    ui->iconTargetSelected->setPixmap(pix);
+
     //copy data to cv matrix
     //memcpy(targetImg.data, screenshot.data_ptr().data(), sizeof(int) * screenshot.width() * screenshot.height());
-    imshow("targetImg", targetImg);
+    //imshow("targetImg", targetImg);
 
 }
 

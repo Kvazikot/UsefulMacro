@@ -108,6 +108,7 @@ void AreaSelectorDialog::showEvent(QShowEvent* event)
 
 void AreaSelectorDialog::mouseReleaseEvent(QMouseEvent *event)
 {
+    if(!fullscreenMode) return;
     dragStarted = false;
     event->accept();
     QPoint p = startWndCoords - prevMouseCoords;

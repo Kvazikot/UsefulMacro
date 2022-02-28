@@ -148,7 +148,7 @@ From Image  File</string>
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Coordinates found.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;X = 345 Y = 456&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QLabel" name="iconTargetSelected">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -161,7 +161,7 @@ From Image  File</string>
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>green_check_mark.png</pixmap>
+    <pixmap resource="res.qrc">:/red_check_mark.png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -180,7 +180,7 @@ From Image  File</string>
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;TARGET IMAGE  SELECTED!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_7">
+  <widget class="QLabel" name="iconSearchArea">
    <property name="geometry">
     <rect>
      <x>720</x>
@@ -193,7 +193,7 @@ From Image  File</string>
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>green_check_mark.png</pixmap>
+    <pixmap resource="res.qrc">:/red_check_mark.png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
@@ -284,7 +284,9 @@ color: rgb(81, 81, 81);
    </item>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

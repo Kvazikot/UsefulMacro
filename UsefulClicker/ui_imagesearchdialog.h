@@ -31,9 +31,9 @@ public:
     QLabel *label_3;
     QPushButton *pushButton_4;
     QLabel *label_4;
-    QLabel *label_5;
+    QLabel *iconTargetSelected;
     QLabel *label_6;
-    QLabel *label_7;
+    QLabel *iconSearchArea;
     QLabel *label_8;
     QPushButton *pushButton_5;
     QLabel *label_9;
@@ -84,19 +84,19 @@ public:
         label_4 = new QLabel(ImageSearchDialog);
         label_4->setObjectName(QString::fromUtf8("label_4"));
         label_4->setGeometry(QRect(40, 350, 151, 61));
-        label_5 = new QLabel(ImageSearchDialog);
-        label_5->setObjectName(QString::fromUtf8("label_5"));
-        label_5->setGeometry(QRect(40, 430, 41, 31));
-        label_5->setPixmap(QPixmap(QString::fromUtf8("green_check_mark.png")));
-        label_5->setScaledContents(true);
+        iconTargetSelected = new QLabel(ImageSearchDialog);
+        iconTargetSelected->setObjectName(QString::fromUtf8("iconTargetSelected"));
+        iconTargetSelected->setGeometry(QRect(40, 430, 41, 31));
+        iconTargetSelected->setPixmap(QPixmap(QString::fromUtf8(":/red_check_mark.png")));
+        iconTargetSelected->setScaledContents(true);
         label_6 = new QLabel(ImageSearchDialog);
         label_6->setObjectName(QString::fromUtf8("label_6"));
         label_6->setGeometry(QRect(110, 430, 191, 21));
-        label_7 = new QLabel(ImageSearchDialog);
-        label_7->setObjectName(QString::fromUtf8("label_7"));
-        label_7->setGeometry(QRect(720, 430, 41, 31));
-        label_7->setPixmap(QPixmap(QString::fromUtf8("green_check_mark.png")));
-        label_7->setScaledContents(true);
+        iconSearchArea = new QLabel(ImageSearchDialog);
+        iconSearchArea->setObjectName(QString::fromUtf8("iconSearchArea"));
+        iconSearchArea->setGeometry(QRect(720, 430, 41, 31));
+        iconSearchArea->setPixmap(QPixmap(QString::fromUtf8(":/red_check_mark.png")));
+        iconSearchArea->setScaledContents(true);
         label_8 = new QLabel(ImageSearchDialog);
         label_8->setObjectName(QString::fromUtf8("label_8"));
         label_8->setGeometry(QRect(520, 430, 181, 21));
@@ -138,9 +138,9 @@ public:
         pushButton_4->setText(QCoreApplication::translate("ImageSearchDialog", "Select Target \n"
 "From Image  File", nullptr));
         label_4->setText(QCoreApplication::translate("ImageSearchDialog", "<html><head/><body><p><span style=\" font-weight:700;\">Coordinates found.</span></p><p><span style=\" font-weight:700;\">X = 345 Y = 456</span></p><p><br/></p></body></html>", nullptr));
-        label_5->setText(QString());
+        iconTargetSelected->setText(QString());
         label_6->setText(QCoreApplication::translate("ImageSearchDialog", "<html><head/><body><p>TARGET IMAGE  SELECTED!</p></body></html>", nullptr));
-        label_7->setText(QString());
+        iconSearchArea->setText(QString());
         label_8->setText(QCoreApplication::translate("ImageSearchDialog", "<html><head/><body><p>SEARCH AREA SELECTED!</p></body></html>", nullptr));
         pushButton_5->setText(QCoreApplication::translate("ImageSearchDialog", "Select Target \n"
 "From Screen", nullptr));
