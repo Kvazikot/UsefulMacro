@@ -55,6 +55,8 @@ vector<vector<Point> > getCounters(Mat& TargetIn, bool andDraw)
     vector<vector<Point> > contours;
     vector<Vec4i> hierarchy;
     findContours( canny_output, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE );
+    imwrite("canny_output.bmp", canny_output);
+
     if(andDraw) drawCounters(canny_output.size(), contours);
     return contours;
 }
@@ -81,8 +83,8 @@ void DspModule::computeHaudorf()
     cv::Mat3b SearchIn = Mat3b::zeros(80,80);
     cv::Mat3b TargetIn = Mat3b::zeros(80,80);
 
-    SearchIn = imread("C:\\Images to Search On Screen\\search_area.bmp");
-    TargetIn = imread("C:\\Images to Search On Screen\\Picture to Find 1 at 2 21 2022 2 24 53 PM.bmp");
+    SearchIn = imread("C:\\Images to Search On Screen\\areaImg.bmp");
+    TargetIn = imread("C:\\Images to Search On Screen\\targetImg.bmp");
 
     vector<vector<Point> > contours1 = getCounters(TargetIn, false);
     vector<vector<Point> > contours2 = getCounters(SearchIn, false);
@@ -108,9 +110,9 @@ void DspModule::computeHaudorf()
                     int delta_width = qAbs(rect1.boundingRect().width - rect2.boundingRect().width);
                     int delta_height = qAbs(rect1.boundingRect().height - rect2.boundingRect().height);
                     if(rect1.boundingRect().width < 15) continue;
-                    if(rect1.boundingRect().width < 15) continue;
+                    if(rect1.boundingRect().height < 15) continue;
                     if(rect2.boundingRect().width < 15) continue;
-                    if(rect2.boundingRect().width < 15) continue;
+                    if(rect2.boundingRect().height < 15) continue;
 
                     Mat cutfromSearch = Mat(SearchIn, rect1.boundingRect());
                     Mat cutfromTarget = Mat(TargetIn, rect2.boundingRect());
@@ -136,6 +138,8 @@ void DspModule::computeHaudorf()
                     if(base_base > 1 )
                     {
                       contours3.push_back(contours2[j]);
+                      X = 0;//rect1.boundingRect().x;
+                      Y = 0;//rect1.boundingRect().y;
                       qDebug("area_diff %f delta_width %d delta_height %d hist_compare %f %d %d", area_diff, delta_width, delta_height, base_base, i, j);
 
                     }

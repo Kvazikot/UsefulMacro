@@ -37,7 +37,7 @@ public:
     QLabel *label_8;
     QPushButton *pushButton_5;
     QLabel *label_9;
-    QPushButton *pushButton_3;
+    QPushButton *findButton;
     QComboBox *screenSelector;
 
     void setupUi(QDialog *ImageSearchDialog)
@@ -110,14 +110,14 @@ public:
         label_9 = new QLabel(ImageSearchDialog);
         label_9->setObjectName(QString::fromUtf8("label_9"));
         label_9->setGeometry(QRect(410, 80, 51, 31));
-        pushButton_3 = new QPushButton(ImageSearchDialog);
-        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
-        pushButton_3->setEnabled(false);
-        pushButton_3->setGeometry(QRect(590, 220, 141, 101));
-        pushButton_3->setStyleSheet(QString::fromUtf8("font: 12pt \"Segoe UI\";\n"
+        findButton = new QPushButton(ImageSearchDialog);
+        findButton->setObjectName(QString::fromUtf8("findButton"));
+        findButton->setEnabled(false);
+        findButton->setGeometry(QRect(590, 220, 141, 101));
+        findButton->setStyleSheet(QString::fromUtf8("font: 12pt \"Segoe UI\";\n"
 "color: rgb(81, 81, 81);\n"
 ""));
-        pushButton_3->setCheckable(false);
+        findButton->setCheckable(false);
         screenSelector = new QComboBox(ImageSearchDialog);
         screenSelector->addItem(QString());
         screenSelector->addItem(QString());
@@ -149,7 +149,7 @@ public:
         pushButton_5->setText(QCoreApplication::translate("ImageSearchDialog", "Select Target \n"
 "From Screen", nullptr));
         label_9->setText(QCoreApplication::translate("ImageSearchDialog", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:700;\">OR</span></p></body></html>", nullptr));
-        pushButton_3->setText(QCoreApplication::translate("ImageSearchDialog", "Find", nullptr));
+        findButton->setText(QCoreApplication::translate("ImageSearchDialog", "Find", nullptr));
         screenSelector->setItemText(0, QCoreApplication::translate("ImageSearchDialog", "screen 0", nullptr));
         screenSelector->setItemText(1, QCoreApplication::translate("ImageSearchDialog", "screen 1", nullptr));
 

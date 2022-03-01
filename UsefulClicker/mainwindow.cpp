@@ -20,11 +20,12 @@ MainWindow::MainWindow(QWidget *parent) :
     qDebug() << "TargetIn w=" << TargetIn.width() << " h=" << TargetIn.height();
 
 
+
     //create dsp
     dsp = new DspModule();
     connect(dsp, SIGNAL(sigSendImage(QImage&,int)), this, SLOT(slotSetImage(QImage&,int)));
     //dsp->computeDiscreteCorrelation(SearchIn, TargetIn, Out);
-    dsp->computeHaudorf();
+    //dsp->computeHaudorf();
 
 
 }

@@ -12,6 +12,7 @@ public:
     DspModule();
     int computeDiscreteCorrelation(QImage& SearchIn, QImage& TargetIn, QImage& outImage);
     void computeHaudorf();
+    int X, Y;
 
 signals:
     void sigSendImage(QImage& image, int n_screen);

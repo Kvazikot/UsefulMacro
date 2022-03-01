@@ -17,7 +17,9 @@ public:
     QRect selectedTargetRect;
     QRect selectedAreaRect;
     QImage screenshot;
+    cv::Mat* areaImg2;
     cv::Mat   targetImg, areaImg;
+    int mouseX, mouseY;
     explicit ImageSearchDialog(QWidget *parent = nullptr);
     ~ImageSearchDialog();
 
@@ -30,6 +32,10 @@ private slots:
     void on_pushButton_5_clicked();
     void on_screenSelector_currentIndexChanged(int index);
 
+
+    void on_findButton_clicked();
+
+    void on_testClickButton_clicked();
 
 private:
     Ui::ImageSearchDialog *ui;
