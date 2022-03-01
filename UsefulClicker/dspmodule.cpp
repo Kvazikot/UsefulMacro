@@ -1,3 +1,24 @@
+/*
++ - - - + - + - -
++ - + - + copyright by Vladimir Baranov (Kvazikot)  <br>
++ - + - + email: vsbaranov83@gmail.com  <br>
++ - + - + github: https://github.com/Kvazikot/UsefulMacro/  <br>
+```
+                          )            (
+                         /(   (\___/)  )\
+                        ( #)  \ ('')| ( #
+                         ||___c\  > '__||
+                         ||**** ),_/ **'|
+                   .__   |'* ___| |___*'|
+                    \_\  |' (    ~   ,)'|
+                     ((  |' /(.  '  .)\ |
+                      \\_|_/ <_ _____> \______________
+                       /   '-, \   / ,-'      ______  \
+              b'ger   /      (//   \\)     __/     /   \
+                                          './_____/
+```
+*/
+
 #include <QObject>
 #include <cmath>
 #include <QDebug>
@@ -74,7 +95,7 @@ void drawCounters(Size image_size, vector<vector<Point> >& contours, Mat backgro
         //qDebug() << i << ". npts = " << " " << contours.size();
     }
     QString name = "Contours" + QString::number(rng.uniform(0, 25611));
-    imshow( name.toStdString(), drawing );
+    //imshow( name.toStdString(), drawing );
 }
 
 
@@ -83,8 +104,8 @@ void DspModule::computeHaudorf()
     cv::Mat3b SearchIn = Mat3b::zeros(80,80);
     cv::Mat3b TargetIn = Mat3b::zeros(80,80);
 
-    SearchIn = imread("C:\\Images to Search On Screen\\areaImg.bmp");
-    TargetIn = imread("C:\\Images to Search On Screen\\targetImg.bmp");
+    SearchIn = imread("areaImg.bmp");
+    TargetIn = imread("targetImg.bmp");
 
     vector<vector<Point> > contours1 = getCounters(TargetIn, false);
     vector<vector<Point> > contours2 = getCounters(SearchIn, false);

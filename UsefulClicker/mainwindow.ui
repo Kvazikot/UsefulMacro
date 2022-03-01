@@ -11,93 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>UsefulClicker 0.1a</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label">
-      <property name="styleSheet">
-       <string notr="true">color: rgb(255, 0, 0);
-font: 12pt &quot;Segoe UI&quot;;
-background-color: rgb(0, 0, 0);
-</string>
-      </property>
-      <property name="text">
-       <string>corelation = 100%  coordinates: x = 0 y =0</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QPushButton" name="selectTargetImageButton">
-      <property name="text">
-       <string>Select Target Image</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QPushButton" name="selectSearchImageButton">
-      <property name="text">
-       <string>Select Search Image</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="label_2">
-      <property name="frameShape">
-       <enum>QFrame::Panel</enum>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>../../../../Images to Search On Screen/Picture to Find 1 at 2 21 2022 2 24 53 PM.bmp</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QLabel" name="label_3">
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::Panel</enum>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap>../../../../Images to Search On Screen/search_area.bmp</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>980</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuCompute">
-    <property name="title">
-     <string>Compute</string>
-    </property>
-    <addaction name="actionDiscrete_Correlation"/>
-   </widget>
-   <addaction name="menuCompute"/>
+   <layout class="QGridLayout" name="gridLayout"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -111,9 +28,62 @@ background-color: rgb(0, 0, 0);
     <bool>false</bool>
    </attribute>
   </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>980</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuCompute">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionFile"/>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSave_As"/>
+   </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>About</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menuCompute"/>
+   <addaction name="menuAbout"/>
+  </widget>
   <action name="actionDiscrete_Correlation">
    <property name="text">
     <string>Discrete Correlation</string>
+   </property>
+  </action>
+  <action name="actionFile">
+   <property name="text">
+    <string>New</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open...</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionSave_As">
+   <property name="text">
+    <string>Save As...</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About...</string>
    </property>
   </action>
  </widget>
@@ -135,8 +105,25 @@ background-color: rgb(0, 0, 0);
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>menubar</sender>
+   <signal>triggered(QAction*)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>slotAbout()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>109</x>
+     <y>10</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>149</x>
+     <y>125</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>computeDCorrelation()</slot>
+  <slot>slotAbout()</slot>
  </slots>
 </ui>

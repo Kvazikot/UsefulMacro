@@ -1,6 +1,6 @@
 QT += core gui widgets opengl openglwidgets
 QMAKE_CXXFLAGS += -std=c++17
-TARGET = cube
+TARGET = UsefulClicker
 TEMPLATE = app
 QMAKE_FLAGS_RELEASE += -O3 -msse4.1 -mssse3 -msse3 -msse2 -msse
 QMAKE_CXXFLAGS_RELEASE += -O3 -msse4.1 -mssse3 -msse3 -msse2 -msse
@@ -65,6 +65,7 @@ LIBS+=-L$$OPENCV_451_PATH\\build_mingw\\lib\\ -lopencv_shape453.dll
 
 
 SOURCES += main.cpp \
+    aboutbox.cpp \
     areaselectordialog.cpp \
     canvas_label.cpp \
     dspmodule.cpp \
@@ -72,6 +73,7 @@ SOURCES += main.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    aboutbox.h \
     areaselectordialog.h \
     canvas_label.h \
     dspmodule.h \
@@ -81,6 +83,7 @@ HEADERS += \
 # install
 
 FORMS += \
+    aboutbox.ui \
     areaselectordialog.ui \
     imagesearchdialog.ui \
     mainwindow.ui

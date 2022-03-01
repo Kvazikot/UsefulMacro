@@ -1,3 +1,24 @@
+/*
++ - - - + - + - -
++ - + - + copyright by Vladimir Baranov (Kvazikot)  <br>
++ - + - + email: vsbaranov83@gmail.com  <br>
++ - + - + github: https://github.com/Kvazikot/UsefulMacro/  <br>
+```
+                          )            (
+                         /(   (\___/)  )\
+                        ( #)  \ ('')| ( #
+                         ||___c\  > '__||
+                         ||**** ),_/ **'|
+                   .__   |'* ___| |___*'|
+                    \_\  |' (    ~   ,)'|
+                     ((  |' /(.  '  .)\ |
+                      \\_|_/ <_ _____> \______________
+                       /   '-, \   / ,-'      ______  \
+              b'ger   /      (//   \\)     __/     /   \
+                                          './_____/
+```
+*/
+
 #include "areaselectordialog.h"
 #include "imagesearchdialog.h"
 #include "dspmodule.h"
@@ -85,7 +106,7 @@ void ImageSearchDialog::slotAreaSelected(QRect rect, QPointF window_offset)
     QImage imgIn= QImage((uchar*) areaImg.data, areaImg.cols, areaImg.rows, areaImg.step, QImage::Format_ARGB32);
     ui->label_2->setPixmap(QPixmap::fromImage(imgIn));
     cvtColor( areaImg, areaImg, cv::COLOR_BGRA2BGR  );
-    cv::imwrite("C:\\Images to Search On Screen\\areaImg.bmp", areaImg);
+    cv::imwrite("areaImg.bmp", areaImg);
     window_offsetG = rect.topLeft();
 
 }
@@ -124,7 +145,7 @@ void ImageSearchDialog::slotTargetSelected(QRect rect, QPointF window_offset)
     QImage imgIn= QImage((uchar*) targetImg.data, targetImg.cols, targetImg.rows, targetImg.step, QImage::Format_ARGB32);
     ui->label_2->setPixmap(QPixmap::fromImage(imgIn));
     cvtColor( targetImg, targetImg, cv::COLOR_BGRA2BGR  );
-    cv::imwrite("C:\\Images to Search On Screen\\targetImg.bmp", targetImg);
+    cv::imwrite("targetImg.bmp", targetImg);
 }
 
 

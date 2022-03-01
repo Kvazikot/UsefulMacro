@@ -13,11 +13,9 @@
 #include <QtGui/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGridLayout>
-#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
@@ -28,17 +26,18 @@ class Ui_MainWindow
 {
 public:
     QAction *actionDiscrete_Correlation;
+    QAction *actionFile;
+    QAction *actionOpen;
+    QAction *actionSave;
+    QAction *actionSave_As;
+    QAction *actionAbout;
     QWidget *centralwidget;
     QGridLayout *gridLayout;
-    QLabel *label;
-    QPushButton *selectTargetImageButton;
-    QPushButton *selectSearchImageButton;
-    QLabel *label_2;
-    QLabel *label_3;
-    QMenuBar *menubar;
-    QMenu *menuCompute;
     QStatusBar *statusbar;
     QToolBar *toolBar;
+    QMenuBar *menubar;
+    QMenu *menuCompute;
+    QMenu *menuAbout;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -47,81 +46,64 @@ public:
         MainWindow->resize(980, 682);
         actionDiscrete_Correlation = new QAction(MainWindow);
         actionDiscrete_Correlation->setObjectName(QString::fromUtf8("actionDiscrete_Correlation"));
+        actionFile = new QAction(MainWindow);
+        actionFile->setObjectName(QString::fromUtf8("actionFile"));
+        actionOpen = new QAction(MainWindow);
+        actionOpen->setObjectName(QString::fromUtf8("actionOpen"));
+        actionSave = new QAction(MainWindow);
+        actionSave->setObjectName(QString::fromUtf8("actionSave"));
+        actionSave_As = new QAction(MainWindow);
+        actionSave_As->setObjectName(QString::fromUtf8("actionSave_As"));
+        actionAbout = new QAction(MainWindow);
+        actionAbout->setObjectName(QString::fromUtf8("actionAbout"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         gridLayout = new QGridLayout(centralwidget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        label = new QLabel(centralwidget);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setStyleSheet(QString::fromUtf8("color: rgb(255, 0, 0);\n"
-"font: 12pt \"Segoe UI\";\n"
-"background-color: rgb(0, 0, 0);\n"
-""));
-
-        gridLayout->addWidget(label, 0, 0, 1, 1);
-
-        selectTargetImageButton = new QPushButton(centralwidget);
-        selectTargetImageButton->setObjectName(QString::fromUtf8("selectTargetImageButton"));
-
-        gridLayout->addWidget(selectTargetImageButton, 1, 0, 1, 1);
-
-        selectSearchImageButton = new QPushButton(centralwidget);
-        selectSearchImageButton->setObjectName(QString::fromUtf8("selectSearchImageButton"));
-
-        gridLayout->addWidget(selectSearchImageButton, 1, 1, 1, 1);
-
-        label_2 = new QLabel(centralwidget);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setFrameShape(QFrame::Panel);
-        label_2->setPixmap(QPixmap(QString::fromUtf8("../../../../Images to Search On Screen/Picture to Find 1 at 2 21 2022 2 24 53 PM.bmp")));
-        label_2->setScaledContents(true);
-        label_2->setAlignment(Qt::AlignCenter);
-
-        gridLayout->addWidget(label_2, 2, 0, 1, 1);
-
-        label_3 = new QLabel(centralwidget);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setStyleSheet(QString::fromUtf8(""));
-        label_3->setFrameShape(QFrame::Panel);
-        label_3->setPixmap(QPixmap(QString::fromUtf8("../../../../Images to Search On Screen/search_area.bmp")));
-        label_3->setScaledContents(true);
-
-        gridLayout->addWidget(label_3, 2, 1, 1, 1);
-
         MainWindow->setCentralWidget(centralwidget);
-        menubar = new QMenuBar(MainWindow);
-        menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 980, 21));
-        menuCompute = new QMenu(menubar);
-        menuCompute->setObjectName(QString::fromUtf8("menuCompute"));
-        MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
         MainWindow->setStatusBar(statusbar);
         toolBar = new QToolBar(MainWindow);
         toolBar->setObjectName(QString::fromUtf8("toolBar"));
         MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
+        menubar = new QMenuBar(MainWindow);
+        menubar->setObjectName(QString::fromUtf8("menubar"));
+        menubar->setGeometry(QRect(0, 0, 980, 21));
+        menuCompute = new QMenu(menubar);
+        menuCompute->setObjectName(QString::fromUtf8("menuCompute"));
+        menuAbout = new QMenu(menubar);
+        menuAbout->setObjectName(QString::fromUtf8("menuAbout"));
+        MainWindow->setMenuBar(menubar);
 
         menubar->addAction(menuCompute->menuAction());
-        menuCompute->addAction(actionDiscrete_Correlation);
+        menubar->addAction(menuAbout->menuAction());
+        menuCompute->addAction(actionFile);
+        menuCompute->addAction(actionOpen);
+        menuCompute->addAction(actionSave);
+        menuCompute->addAction(actionSave_As);
+        menuAbout->addSeparator();
+        menuAbout->addAction(actionAbout);
 
         retranslateUi(MainWindow);
         QObject::connect(menubar, SIGNAL(triggered(QAction*)), MainWindow, SLOT(computeDCorrelation()));
+        QObject::connect(menubar, SIGNAL(triggered(QAction*)), MainWindow, SLOT(slotAbout()));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "UsefulClicker 0.1a", nullptr));
         actionDiscrete_Correlation->setText(QCoreApplication::translate("MainWindow", "Discrete Correlation", nullptr));
-        label->setText(QCoreApplication::translate("MainWindow", "corelation = 100%  coordinates: x = 0 y =0", nullptr));
-        selectTargetImageButton->setText(QCoreApplication::translate("MainWindow", "Select Target Image", nullptr));
-        selectSearchImageButton->setText(QCoreApplication::translate("MainWindow", "Select Search Image", nullptr));
-        label_2->setText(QString());
-        label_3->setText(QString());
-        menuCompute->setTitle(QCoreApplication::translate("MainWindow", "Compute", nullptr));
+        actionFile->setText(QCoreApplication::translate("MainWindow", "New", nullptr));
+        actionOpen->setText(QCoreApplication::translate("MainWindow", "Open...", nullptr));
+        actionSave->setText(QCoreApplication::translate("MainWindow", "Save", nullptr));
+        actionSave_As->setText(QCoreApplication::translate("MainWindow", "Save As...", nullptr));
+        actionAbout->setText(QCoreApplication::translate("MainWindow", "About...", nullptr));
         toolBar->setWindowTitle(QCoreApplication::translate("MainWindow", "toolBar", nullptr));
+        menuCompute->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
+        menuAbout->setTitle(QCoreApplication::translate("MainWindow", "About", nullptr));
     } // retranslateUi
 
 };

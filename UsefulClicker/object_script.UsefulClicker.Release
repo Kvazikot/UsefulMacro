@@ -1,0 +1,14 @@
+release/main.o
+release/aboutbox.o
+release/areaselectordialog.o
+release/canvas_label.o
+release/dspmodule.o
+release/imagesearchdialog.o
+release/mainwindow.o
+release/qrc_res.o
+release/moc_aboutbox.o
+release/moc_areaselectordialog.o
+release/moc_canvas_label.o
+release/moc_dspmodule.o
+release/moc_imagesearchdialog.o
+release/moc_mainwindow.o

@@ -1,0 +1,14 @@
+debug/main.o
+debug/aboutbox.o
+debug/areaselectordialog.o
+debug/canvas_label.o
+debug/dspmodule.o
+debug/imagesearchdialog.o
+debug/mainwindow.o
+debug/qrc_res.o
+debug/moc_aboutbox.o
+debug/moc_areaselectordialog.o
+debug/moc_canvas_label.o
+debug/moc_dspmodule.o
+debug/moc_imagesearchdialog.o
+debug/moc_mainwindow.o

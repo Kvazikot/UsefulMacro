@@ -19,35 +19,28 @@
 ```
 */
 
-#include <QApplication>
-#include <QLabel>
-#include <QSurfaceFormat>
+#ifndef ABOUTBOX_H
+#define ABOUTBOX_H
 
-#ifndef QT_NO_OPENGL
-#include "mainwindow.h"
-#include "imagesearchdialog.h"
-#include "areaselectordialog.h"
+#include <QDialog>
 
-#endif
-
-int main(int argc, char *argv[])
-{
-    QApplication app(argc, argv);
-
-    QSurfaceFormat format;
-    format.setDepthBufferSize(24);
-    QSurfaceFormat::setDefaultFormat(format);
-
-    app.setApplicationName("cube");
-    app.setApplicationVersion("0.1");
-#ifndef QT_NO_OPENGL
-    MainWindow mainwindow;
-    mainwindow.show();
-    //ImageSearchDialog dlg;
-    //dlg.show();
-#else
-    QLabel note("OpenGL Support required");
-    note.show();
-#endif
-    return app.exec();
+namespace Ui {
+class AboutBox;
 }
+
+class AboutBox : public QDialog
+{
+    Q_OBJECT
+
+public:
+    explicit AboutBox(QWidget *parent = nullptr);
+    ~AboutBox();
+
+private slots:
+    void on_buttonBox_accepted();
+
+private:
+    Ui::AboutBox *ui;
+};
+
+#endif // ABOUTBOX_H
