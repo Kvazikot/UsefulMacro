@@ -138,8 +138,12 @@ void DspModule::computeHaudorf()
                     if(base_base > 1 )
                     {
                       contours3.push_back(contours2[j]);
-                      X = 0;//rect1.boundingRect().x;
-                      Y = 0;//rect1.boundingRect().y;
+                      if(int(area_diff) == 0)
+                      {
+                        X = rect1.boundingRect().x;
+                        Y = rect1.boundingRect().y;
+                      }
+
                       qDebug("area_diff %f delta_width %d delta_height %d hist_compare %f %d %d", area_diff, delta_width, delta_height, base_base, i, j);
 
                     }

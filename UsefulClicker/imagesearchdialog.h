@@ -24,8 +24,8 @@ public:
     ~ImageSearchDialog();
 
 public slots:
-    void slotAreaSelected(QRect rect);
-    void slotTargetSelected(QRect rect);
+    void slotAreaSelected(QRect rect, QPointF window_offset);
+    void slotTargetSelected(QRect rect, QPointF window_offset);
 
 private slots:
     void on_screenAreaButton_clicked();

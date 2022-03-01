@@ -151,8 +151,8 @@ void AreaSelectorDialog::mouseReleaseEvent(QMouseEvent *event)
              selectedRect.setTopRight(prevMouseCoords);
          }
 
-
-    emit sigSetRect(selectedRect);
+    QPointF p1 = geometry().topLeft();
+    emit sigSetRect(selectedRect, p1);
     if(fullscreenMode) close();
 }
 
@@ -244,7 +244,8 @@ void AreaSelectorDialog::paintEvent(QPaintEvent* event)
 void AreaSelectorDialog::on_doneButton_clicked()
 {
    selectedRect = geometry();
-   emit sigSetRect(selectedRect);
+   QPointF p = geometry().topLeft();
+   emit sigSetAreaRect(selectedRect, p);
    close();
 
 }

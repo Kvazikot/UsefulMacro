@@ -8,6 +8,7 @@
 
 static AreaSelectorDialog* dlg = 0;
 static DspModule* dsp;
+QPointF window_offsetG;
 
 ImageSearchDialog::ImageSearchDialog(QWidget *parent) :
     QDialog(parent),
@@ -32,7 +33,8 @@ void ImageSearchDialog::on_screenAreaButton_clicked()
     screenshot = dlg->makeScreenshot().toImage();
     dlg->show();
     dlg->selectByWindow();
-    connect(dlg, SIGNAL(sigSetRect(QRect)), this, SLOT(slotAreaSelected(QRect)));
+    connect(dlg, SIGNAL(sigSetAreaRect(QRect, QPointF)), this, SLOT(slotAreaSelected(QRect, QPointF)));
+
 }
 
 
@@ -44,10 +46,10 @@ void ImageSearchDialog::on_pushButton_5_clicked()
     dlg->setScreen(ui->screenSelector->currentIndex());
     screenshot = dlg->makeScreenshot().toImage();
     dlg->fullScreen();
-    connect(dlg, SIGNAL(sigSetRect(QRect)), this, SLOT(slotTargetSelected(QRect)));
+    connect(dlg, SIGNAL(sigSetRect(QRect, QPointF)), this, SLOT(slotTargetSelected(QRect, QPointF)));
 }
 
-void ImageSearchDialog::slotAreaSelected(QRect rect)
+void ImageSearchDialog::slotAreaSelected(QRect rect, QPointF window_offset)
 {
     selectedAreaRect = rect;
     QString text = "<html><head/><body><p align=\"center\"><span style=\" font-weight:700;\">Search Area Rectangle: </span></p><p>x0 = %1</p><p>y0 = %2</p><p>width = %3</p><p>height = %4</p></body></html>";//labels_text_templ[3];
@@ -56,6 +58,7 @@ void ImageSearchDialog::slotAreaSelected(QRect rect)
                 .arg(rect.width())
                 .arg(rect.height());
     ui->label_3->setText(text);
+
 
     areaImg.create(screenshot.height(), screenshot.width(), CV_8UC4);
     cv::Mat mat(screenshot.height(), screenshot.width(),CV_8UC4, screenshot.bits());
@@ -83,14 +86,13 @@ void ImageSearchDialog::slotAreaSelected(QRect rect)
     ui->label_2->setPixmap(QPixmap::fromImage(imgIn));
     cvtColor( areaImg, areaImg, cv::COLOR_BGRA2BGR  );
     cv::imwrite("C:\\Images to Search On Screen\\areaImg.bmp", areaImg);
-
+    window_offsetG = rect.topLeft();
 
 }
 
-void ImageSearchDialog::slotTargetSelected(QRect rect)
+void ImageSearchDialog::slotTargetSelected(QRect rect, QPointF window_offset)
 {
     selectedTargetRect = rect;
-    selectedAreaRect = rect;
     QString text = "<html><head/><body><p align=\"center\"><span style=\" font-weight:700;\">Search Area Rectangle: </span></p><p>x0 = %1</p><p>y0 = %2</p><p>width = %3</p><p>height = %4</p></body></html>";//labels_text_templ[3];
     text = text.arg(rect.top())
                 .arg(rect.left())
@@ -123,8 +125,6 @@ void ImageSearchDialog::slotTargetSelected(QRect rect)
     ui->label_2->setPixmap(QPixmap::fromImage(imgIn));
     cvtColor( targetImg, targetImg, cv::COLOR_BGRA2BGR  );
     cv::imwrite("C:\\Images to Search On Screen\\targetImg.bmp", targetImg);
-
-
 }
 
 
@@ -137,8 +137,11 @@ void ImageSearchDialog::on_screenSelector_currentIndexChanged(int index)
 void ImageSearchDialog::on_findButton_clicked()
 {
     dsp->computeHaudorf();
-    ui->label_4->setText(QString("Coordinates found %1 %2").arg(dsp->X + rect().x()).
-                                  arg(dsp->Y + rect().y()));
+    ui->label_4->setText(QString("<html><head/><body><p><span style=\" font-weight:700;\">Coordinates found.</span></p><p><span style=\" font-weight:700;\">X = %1 Y = %2 <br/> ofsX = %3 ofsY = %4</span></p><p><br/></p></body></html>").
+                         arg(dsp->X).
+                         arg(dsp->Y).
+                         arg(selectedAreaRect.left()).
+                         arg(selectedAreaRect.top()));
     //imshow("Target", targetImg);
     //imshow("Area", *areaImg2);
 
@@ -148,19 +151,13 @@ void ImageSearchDialog::on_findButton_clicked()
 
 void ImageSearchDialog::on_testClickButton_clicked()
 {
-    INPUT Inputs[3] = {0};
+    POINT mouse_pos;
+    GetCursorPos(&mouse_pos);
+    mouse_pos.x =  dsp->X + selectedAreaRect.left(); //+ 100
+    mouse_pos.y =  dsp->Y + selectedAreaRect.top();
+    SetCursorPos(mouse_pos.x, mouse_pos.y);
 
-    Inputs[0].type = INPUT_MOUSE;
- //   qDebug("MOUSE TO COORDINATES", );
-    Inputs[0].mi.dx = dsp->X + rect().x(); // desired X coordinate
-    Inputs[0].mi.dy = dsp->Y + rect().y(); // desired Y coordinate
-    Inputs[0].mi.dwFlags = MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE;
-
-    Inputs[1].type = INPUT_MOUSE;
-    Inputs[1].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
-
-    Inputs[2].type = INPUT_MOUSE;
-    Inputs[2].mi.dwFlags = MOUSEEVENTF_LEFTUP;
-
-    SendInput(3, Inputs, sizeof(INPUT));
+    qDebug("MOUSE POS OOO %ld %ld ", mouse_pos.x, mouse_pos.y);
+    mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_LEFTDOWN, mouse_pos.x, mouse_pos.y, 0, 0);
+    mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_LEFTUP, mouse_pos.x, mouse_pos.y, 0, 0);
 }

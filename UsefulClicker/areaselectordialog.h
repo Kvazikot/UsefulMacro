@@ -39,7 +39,8 @@ public:
     ~AreaSelectorDialog();
 
 signals:
-    void sigSetRect(QRect rect);
+    void sigSetRect(QRect rect, QPointF p);
+    void sigSetAreaRect(QRect rect, QPointF p);
 
 private slots:
     void on_doneButton_clicked();

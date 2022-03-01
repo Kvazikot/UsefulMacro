@@ -44,7 +44,7 @@ public:
     {
         if (ImageSearchDialog->objectName().isEmpty())
             ImageSearchDialog->setObjectName(QString::fromUtf8("ImageSearchDialog"));
-        ImageSearchDialog->resize(804, 519);
+        ImageSearchDialog->resize(794, 556);
         ImageSearchDialog->setStyleSheet(QString::fromUtf8("font: 12pt \"Segoe UI\";\n"
 "color: rgb(0, 85, 255);\n"
 "color: rgb(255, 255, 255);\n"
@@ -52,7 +52,7 @@ public:
         buttonBox = new QDialogButtonBox(ImageSearchDialog);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setEnabled(false);
-        buttonBox->setGeometry(QRect(310, 430, 171, 32));
+        buttonBox->setGeometry(QRect(310, 490, 171, 32));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         screenAreaButton = new QPushButton(ImageSearchDialog);
@@ -63,9 +63,9 @@ public:
         label->setGeometry(QRect(70, 0, 691, 101));
         testClickButton = new QPushButton(ImageSearchDialog);
         testClickButton->setObjectName(QString::fromUtf8("testClickButton"));
-        testClickButton->setEnabled(false);
-        testClickButton->setGeometry(QRect(220, 350, 101, 51));
-        testClickButton->setStyleSheet(QString::fromUtf8("color: rgb(98, 98, 98);"));
+        testClickButton->setEnabled(true);
+        testClickButton->setGeometry(QRect(360, 380, 101, 51));
+        testClickButton->setStyleSheet(QString::fromUtf8(""));
         label_2 = new QLabel(ImageSearchDialog);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(30, 150, 261, 181));
@@ -87,23 +87,23 @@ public:
 "font: 11pt \"Segoe UI\";"));
         label_4 = new QLabel(ImageSearchDialog);
         label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setGeometry(QRect(40, 350, 151, 61));
+        label_4->setGeometry(QRect(40, 350, 241, 121));
         iconTargetSelected = new QLabel(ImageSearchDialog);
         iconTargetSelected->setObjectName(QString::fromUtf8("iconTargetSelected"));
-        iconTargetSelected->setGeometry(QRect(40, 430, 41, 31));
+        iconTargetSelected->setGeometry(QRect(40, 490, 41, 31));
         iconTargetSelected->setPixmap(QPixmap(QString::fromUtf8(":/red_check_mark.png")));
         iconTargetSelected->setScaledContents(true);
         label_6 = new QLabel(ImageSearchDialog);
         label_6->setObjectName(QString::fromUtf8("label_6"));
-        label_6->setGeometry(QRect(110, 430, 191, 21));
+        label_6->setGeometry(QRect(110, 490, 191, 21));
         iconSearchArea = new QLabel(ImageSearchDialog);
         iconSearchArea->setObjectName(QString::fromUtf8("iconSearchArea"));
-        iconSearchArea->setGeometry(QRect(720, 430, 41, 31));
+        iconSearchArea->setGeometry(QRect(720, 490, 41, 31));
         iconSearchArea->setPixmap(QPixmap(QString::fromUtf8(":/red_check_mark.png")));
         iconSearchArea->setScaledContents(true);
         label_8 = new QLabel(ImageSearchDialog);
         label_8->setObjectName(QString::fromUtf8("label_8"));
-        label_8->setGeometry(QRect(520, 430, 181, 21));
+        label_8->setGeometry(QRect(520, 490, 181, 21));
         pushButton_5 = new QPushButton(ImageSearchDialog);
         pushButton_5->setObjectName(QString::fromUtf8("pushButton_5"));
         pushButton_5->setGeometry(QRect(480, 70, 191, 51));
