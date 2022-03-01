@@ -26,7 +26,7 @@ public:
     QDialogButtonBox *buttonBox;
     QPushButton *screenAreaButton;
     QLabel *label;
-    QPushButton *pushButton_2;
+    QPushButton *testClickButton;
     QLabel *label_2;
     QLabel *label_3;
     QPushButton *pushButton_4;
@@ -61,14 +61,18 @@ public:
         label = new QLabel(ImageSearchDialog);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(70, 0, 691, 101));
-        pushButton_2 = new QPushButton(ImageSearchDialog);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setEnabled(false);
-        pushButton_2->setGeometry(QRect(220, 350, 101, 51));
-        pushButton_2->setStyleSheet(QString::fromUtf8("color: rgb(98, 98, 98);"));
+        testClickButton = new QPushButton(ImageSearchDialog);
+        testClickButton->setObjectName(QString::fromUtf8("testClickButton"));
+        testClickButton->setEnabled(false);
+        testClickButton->setGeometry(QRect(220, 350, 101, 51));
+        testClickButton->setStyleSheet(QString::fromUtf8("color: rgb(98, 98, 98);"));
         label_2 = new QLabel(ImageSearchDialog);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(30, 150, 261, 181));
+        label_2->setFrameShape(QFrame::Box);
+        label_2->setFrameShadow(QFrame::Sunken);
+        label_2->setLineWidth(3);
+        label_2->setMidLineWidth(2);
         label_2->setPixmap(QPixmap(QString::fromUtf8("../../../../Images to Search On Screen/search_area.bmp")));
         label_2->setScaledContents(true);
         label_3 = new QLabel(ImageSearchDialog);
@@ -132,7 +136,7 @@ public:
         ImageSearchDialog->setWindowTitle(QCoreApplication::translate("ImageSearchDialog", "Dialog", nullptr));
         screenAreaButton->setText(QCoreApplication::translate("ImageSearchDialog", "Select Screen Area", nullptr));
         label->setText(QCoreApplication::translate("ImageSearchDialog", "<html><head/><body><p align=\"center\">Image Search Tool</p><p align=\"center\"><span style=\" font-size:10pt; font-weight:700;\">Screen Resolution is 1920x1024</span></p><p align=\"center\"><span style=\" font-size:10pt; font-weight:700;\"><br/></span></p></body></html>", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("ImageSearchDialog", "Test Click", nullptr));
+        testClickButton->setText(QCoreApplication::translate("ImageSearchDialog", "Test Click", nullptr));
         label_2->setText(QString());
         label_3->setText(QCoreApplication::translate("ImageSearchDialog", "<html><head/><body><p align=\"center\"><span style=\" font-weight:700;\">Search Area Rectangle: </span></p><p>x0 = %1</p><p>y0 = %2</p><p>width = %3</p><p>height = %4</p></body></html>", nullptr));
         pushButton_4->setText(QCoreApplication::translate("ImageSearchDialog", "Select Target \n"

@@ -57,6 +57,7 @@ void AreaSelectorDialog::slotFullScreen()
 
     QScreen* screen = QGuiApplication::screens()[screenNum];
     setGeometry(screen->geometry());
+
     //ui->label->setGeometry(screen->geometry());
     setCursor(Qt::CrossCursor);
 
@@ -67,6 +68,7 @@ void AreaSelectorDialog::fullScreen()
     fullscreenMode = true;
     show();
     //ui->label->setVisible(false);
+
     QTimer::singleShot(500, this, SLOT(slotFullScreen()));
 }
 
@@ -93,6 +95,7 @@ void AreaSelectorDialog::selectTargetImage()
 
 void AreaSelectorDialog::showEvent(QShowEvent* event)
 {
+    return;
     SetWindowPos
     (
         (HWND)winId(),
@@ -205,7 +208,7 @@ void AreaSelectorDialog::paintEvent(QPaintEvent* event)
         QTransform trns;
         trns.scale(0.5,0.5);
 
-        QPointF p[4];
+        QPointF p[5];
         p[0] = rect().topLeft();
         p[1] = rect().bottomRight();
         p[0] = p[0] * trns + center_rect.center()/2;

@@ -57,6 +57,13 @@ void ImageSearchDialog::slotAreaSelected(QRect rect)
     QPixmap pix;
     pix.load(":/green_check_mark.png");
     ui->iconSearchArea->setPixmap(pix);
+    cv::Size s1 = targetImg.size();
+    cv::Size s2 = areaImg.size();
+    if( s1.width != 0 && s2.width != 0)
+    {
+        ui->testClickButton->setEnabled(true);
+        ui->testClickButton->setStyleSheet("");
+    }
     //imshow("areaImg", areaImg);
 }
 
@@ -74,13 +81,25 @@ void ImageSearchDialog::slotTargetSelected(QRect rect)
     cv::Mat mat(screenshot.height(), screenshot.width(),CV_8UC4, screenshot.bits());
     cv::Rect rect1(rect.left(),rect.top(),rect.width(),rect.height());
     targetImg = cv::Mat(mat, rect1);
+
+    // set check mark
     QPixmap pix;
     pix.load(":/green_check_mark.png");
     ui->iconTargetSelected->setPixmap(pix);
 
-    //copy data to cv matrix
-    //memcpy(targetImg.data, screenshot.data_ptr().data(), sizeof(int) * screenshot.width() * screenshot.height());
-    //imshow("targetImg", targetImg);
+    // set Test click button to Enabled state
+    cv::Size s1 = targetImg.size();
+    cv::Size s2 = areaImg.size();
+    if( s1.width != 0 && s2.width != 0)
+    {
+        ui->testClickButton->setEnabled(true);
+        ui->testClickButton->setStyleSheet("");
+    }
+
+    // set target image to label
+    QImage imgIn= QImage((uchar*) targetImg.data, targetImg.cols, targetImg.rows, targetImg.step, QImage::Format_ARGB32);
+    ui->label_2->setPixmap(QPixmap::fromImage(imgIn));
+
 
 }
 
