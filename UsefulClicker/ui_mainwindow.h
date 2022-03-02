@@ -12,12 +12,13 @@
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QToolBar>
+#include <QtWidgets/QTreeView>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -25,84 +26,124 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
-    QAction *actionDiscrete_Correlation;
-    QAction *actionFile;
-    QAction *actionOpen;
-    QAction *actionSave;
-    QAction *actionSave_As;
+    QAction *exitAction;
+    QAction *insertRowAction;
+    QAction *removeRowAction;
+    QAction *insertColumnAction;
+    QAction *removeColumnAction;
+    QAction *insertChildAction;
     QAction *actionAbout;
     QWidget *centralwidget;
-    QGridLayout *gridLayout;
-    QStatusBar *statusbar;
-    QToolBar *toolBar;
+    QVBoxLayout *vboxLayout;
+    QTreeView *view;
     QMenuBar *menubar;
-    QMenu *menuCompute;
+    QMenu *fileMenu;
+    QMenu *actionsMenu;
     QMenu *menuAbout;
+    QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(980, 682);
-        actionDiscrete_Correlation = new QAction(MainWindow);
-        actionDiscrete_Correlation->setObjectName(QString::fromUtf8("actionDiscrete_Correlation"));
-        actionFile = new QAction(MainWindow);
-        actionFile->setObjectName(QString::fromUtf8("actionFile"));
-        actionOpen = new QAction(MainWindow);
-        actionOpen->setObjectName(QString::fromUtf8("actionOpen"));
-        actionSave = new QAction(MainWindow);
-        actionSave->setObjectName(QString::fromUtf8("actionSave"));
-        actionSave_As = new QAction(MainWindow);
-        actionSave_As->setObjectName(QString::fromUtf8("actionSave_As"));
+        MainWindow->resize(573, 468);
+        exitAction = new QAction(MainWindow);
+        exitAction->setObjectName(QString::fromUtf8("exitAction"));
+        insertRowAction = new QAction(MainWindow);
+        insertRowAction->setObjectName(QString::fromUtf8("insertRowAction"));
+        removeRowAction = new QAction(MainWindow);
+        removeRowAction->setObjectName(QString::fromUtf8("removeRowAction"));
+        insertColumnAction = new QAction(MainWindow);
+        insertColumnAction->setObjectName(QString::fromUtf8("insertColumnAction"));
+        removeColumnAction = new QAction(MainWindow);
+        removeColumnAction->setObjectName(QString::fromUtf8("removeColumnAction"));
+        insertChildAction = new QAction(MainWindow);
+        insertChildAction->setObjectName(QString::fromUtf8("insertChildAction"));
         actionAbout = new QAction(MainWindow);
         actionAbout->setObjectName(QString::fromUtf8("actionAbout"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        gridLayout = new QGridLayout(centralwidget);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        vboxLayout = new QVBoxLayout(centralwidget);
+        vboxLayout->setSpacing(0);
+        vboxLayout->setContentsMargins(0, 0, 0, 0);
+        vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
+        view = new QTreeView(centralwidget);
+        view->setObjectName(QString::fromUtf8("view"));
+        view->setEditTriggers(QAbstractItemView::AllEditTriggers);
+        view->setDragEnabled(true);
+        view->setAlternatingRowColors(true);
+        view->setSelectionMode(QAbstractItemView::MultiSelection);
+        view->setSelectionBehavior(QAbstractItemView::SelectItems);
+        view->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
+        view->setSortingEnabled(false);
+        view->setAnimated(false);
+        view->setAllColumnsShowFocus(true);
+
+        vboxLayout->addWidget(view);
+
         MainWindow->setCentralWidget(centralwidget);
-        statusbar = new QStatusBar(MainWindow);
-        statusbar->setObjectName(QString::fromUtf8("statusbar"));
-        MainWindow->setStatusBar(statusbar);
-        toolBar = new QToolBar(MainWindow);
-        toolBar->setObjectName(QString::fromUtf8("toolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 980, 21));
-        menuCompute = new QMenu(menubar);
-        menuCompute->setObjectName(QString::fromUtf8("menuCompute"));
+        menubar->setGeometry(QRect(0, 0, 573, 21));
+        fileMenu = new QMenu(menubar);
+        fileMenu->setObjectName(QString::fromUtf8("fileMenu"));
+        actionsMenu = new QMenu(menubar);
+        actionsMenu->setObjectName(QString::fromUtf8("actionsMenu"));
         menuAbout = new QMenu(menubar);
         menuAbout->setObjectName(QString::fromUtf8("menuAbout"));
         MainWindow->setMenuBar(menubar);
+        statusbar = new QStatusBar(MainWindow);
+        statusbar->setObjectName(QString::fromUtf8("statusbar"));
+        MainWindow->setStatusBar(statusbar);
 
-        menubar->addAction(menuCompute->menuAction());
+        menubar->addAction(fileMenu->menuAction());
+        menubar->addAction(actionsMenu->menuAction());
         menubar->addAction(menuAbout->menuAction());
-        menuCompute->addAction(actionFile);
-        menuCompute->addAction(actionOpen);
-        menuCompute->addAction(actionSave);
-        menuCompute->addAction(actionSave_As);
-        menuAbout->addSeparator();
+        fileMenu->addAction(exitAction);
+        actionsMenu->addAction(insertRowAction);
+        actionsMenu->addAction(insertColumnAction);
+        actionsMenu->addSeparator();
+        actionsMenu->addAction(removeRowAction);
+        actionsMenu->addAction(removeColumnAction);
+        actionsMenu->addSeparator();
+        actionsMenu->addAction(insertChildAction);
         menuAbout->addAction(actionAbout);
 
         retranslateUi(MainWindow);
-        QObject::connect(menubar, SIGNAL(triggered(QAction*)), MainWindow, SLOT(computeDCorrelation()));
-        QObject::connect(menubar, SIGNAL(triggered(QAction*)), MainWindow, SLOT(slotAbout()));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "UsefulClicker 0.1a", nullptr));
-        actionDiscrete_Correlation->setText(QCoreApplication::translate("MainWindow", "Discrete Correlation", nullptr));
-        actionFile->setText(QCoreApplication::translate("MainWindow", "New", nullptr));
-        actionOpen->setText(QCoreApplication::translate("MainWindow", "Open...", nullptr));
-        actionSave->setText(QCoreApplication::translate("MainWindow", "Save", nullptr));
-        actionSave_As->setText(QCoreApplication::translate("MainWindow", "Save As...", nullptr));
-        actionAbout->setText(QCoreApplication::translate("MainWindow", "About...", nullptr));
-        toolBar->setWindowTitle(QCoreApplication::translate("MainWindow", "toolBar", nullptr));
-        menuCompute->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
+        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Editable Tree Model", nullptr));
+        exitAction->setText(QCoreApplication::translate("MainWindow", "E&xit", nullptr));
+#if QT_CONFIG(shortcut)
+        exitAction->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+Q", nullptr));
+#endif // QT_CONFIG(shortcut)
+        insertRowAction->setText(QCoreApplication::translate("MainWindow", "Insert Row", nullptr));
+#if QT_CONFIG(shortcut)
+        insertRowAction->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+I, R", nullptr));
+#endif // QT_CONFIG(shortcut)
+        removeRowAction->setText(QCoreApplication::translate("MainWindow", "Remove Row", nullptr));
+#if QT_CONFIG(shortcut)
+        removeRowAction->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+R, R", nullptr));
+#endif // QT_CONFIG(shortcut)
+        insertColumnAction->setText(QCoreApplication::translate("MainWindow", "Insert Column", nullptr));
+#if QT_CONFIG(shortcut)
+        insertColumnAction->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+I, C", nullptr));
+#endif // QT_CONFIG(shortcut)
+        removeColumnAction->setText(QCoreApplication::translate("MainWindow", "Remove Column", nullptr));
+#if QT_CONFIG(shortcut)
+        removeColumnAction->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+R, C", nullptr));
+#endif // QT_CONFIG(shortcut)
+        insertChildAction->setText(QCoreApplication::translate("MainWindow", "Insert Child", nullptr));
+#if QT_CONFIG(shortcut)
+        insertChildAction->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+N", nullptr));
+#endif // QT_CONFIG(shortcut)
+        actionAbout->setText(QCoreApplication::translate("MainWindow", "About", nullptr));
+        fileMenu->setTitle(QCoreApplication::translate("MainWindow", "&File", nullptr));
+        actionsMenu->setTitle(QCoreApplication::translate("MainWindow", "&Actions", nullptr));
         menuAbout->setTitle(QCoreApplication::translate("MainWindow", "About", nullptr));
     } // retranslateUi
 

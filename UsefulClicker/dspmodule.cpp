@@ -94,8 +94,6 @@ void drawCounters(Size image_size, vector<vector<Point> >& contours, Mat backgro
         drawContours( drawing, contours, (int)i, color, 2, LINE_8, noArray(), 0 );
         //qDebug() << i << ". npts = " << " " << contours.size();
     }
-    QString name = "Contours" + QString::number(rng.uniform(0, 25611));
-    //imshow( name.toStdString(), drawing );
 }
 
 
@@ -112,13 +110,13 @@ void DspModule::computeHaudorf()
     vector<vector<Point> > contours3;
     vector<double> areas1;
     vector<double> areas2;
-    for(int i=0; i < contours1.size(); i++)
+    for(uint i=0; i < contours1.size(); i++)
         areas1.push_back( cv::contourArea(contours1[i]) );
-    for(int i=0; i < contours2.size(); i++)
+    for(uint i=0; i < contours2.size(); i++)
         areas2.push_back( cv::contourArea(contours2[i]) );
 
-    for(int i=0; i < contours1.size(); i++)
-        for(int j=0; j < contours2.size(); j++)
+    for(uint i=0; i < contours1.size(); i++)
+        for(uint j=0; j < contours2.size(); j++)
         {
           // if( contours1[i].size() == contours2[j].size() )
             {
@@ -178,114 +176,4 @@ void DspModule::computeHaudorf()
 
     drawCounters(SearchIn.size(), contours3, SearchIn);
     drawCounters(TargetIn.size(), contours1, TargetIn);
-}
-
-int DspModule::computeDiscreteCorrelation(QImage& SearchIn, QImage& TargetIn, QImage& outImage)
-{
-    unsigned int i;
-
-    __m128 X, Y, Z;
-
-    print_vector("a", a, 128);
-    print_vector("b", b, 128);
-
-    float* aa = a;
-    float* bb = b;
-    float* rrv = rv;
-
-    // произведение 2 массивов через sse
-    for( i = 0; i < 2; i++)
-    {
-        X = _mm_load_ps(aa);
-        Y = _mm_load_ps(bb);
-        Z = _mm_mul_ps(X, Y);
-        _mm_store_ps(rrv,Z);
-        aa+=4; // 4 floats per cycle
-        bb+=4; // 4 floats per cycle
-        rrv+=4; // 4 floats per cycle
-    }
-    print_vector("r", rv, 128);
-
-
-    // scan images
-    QImage SearchInSk = SearchIn;//SearchIn.scaled(SearchIn.width()/6, SearchIn.height()/6);
-    QImage TargetInSk = TargetIn;//TargetIn.scaled(TargetIn.width()/6, TargetIn.height()/6);
-
-    // создать из TargetIn изображение по размерам равное SearchIn
-    // но с размерам пиксела таким жем т.е. добавиь как бы нулевые пикселы
-
-    SearchInSk = SearchIn.scaled(SearchIn.width()/2, SearchIn.height()/2,  Qt::KeepAspectRatio, Qt::FastTransformation);
-    TargetInSk = TargetIn.scaled(TargetIn.width()/2, TargetIn.height()/2,  Qt::KeepAspectRatio, Qt::FastTransformation);
-
-    //if(TargetInSk.size().width() < 16)
-    //    TargetInSk = TargetIn.scaledToWidth(16);
-    SearchInSk.save("1.bmp");
-    TargetInSk.save("2.bmp");
-    //return 1;
-
-
-    qDebug() << "SearchInSk w=" << SearchInSk.width() << " h=" << SearchInSk.height();
-    qDebug() << "TargetInSk w=" << TargetInSk.width() << " h=" << TargetInSk.height();
-  //  qDebug() << "TargetIn w=" << TargetIn.width() << " h=" << TargetIn.height();
-
-
-    //emit sigSendImage(TargetInSk, 1);
-    //emit sigSendImage(SearchInSk, 0);
-
-    //return 1;
-    int bytesPerLine1 = SearchIn.bytesPerLine();
-    int bytesPerLine2 = TargetIn.bytesPerLine();
-    int h = TargetIn.height();
-    int w = TargetIn.width();
-    outImage = SearchIn;
-    outImage.fill(255);
-    for(int j = h; j < SearchIn.height() - h; j++)
-    {
-        aa = (float*)SearchIn.scanLine(j);
-        bb = (float*)TargetIn.scanLine(j%h);
-        rrv = (float*)outImage.scanLine(j);
-        for(int i = w; i < SearchIn.width() - w; i++)
-        {
-            double correlation = 0;
-            double max = 0.11;
-            for(int jj = 0; jj < TargetIn.height(); jj++)
-            {
-                for(int ii = 0; ii < TargetIn.width(); ii++)
-                {
-                    QRgb target_pixel = TargetIn.pixel(ii, jj);
-                    QRgb search_pixel = SearchIn.pixel(i, j);
-                    //correlation+= target_pixel * search_pixel; /// (w*h);
-                    float val = qAbs((qRed(target_pixel) - qRed(search_pixel)));
-                    if(val = 0) val = 0.9;
-                    correlation+=255./val;
-                    val = qAbs((qGreen(target_pixel) - qGreen(search_pixel)));
-                    if(val = 0) val = 0.9;
-                    correlation+=255./val;
-                    val = qAbs((qBlue(target_pixel) - qBlue(search_pixel)));
-                    if(val = 0) val = 0.9;
-                    correlation+=255./val;
-                }
-            }
-            correlation = correlation / (3 * h * w );
-            if( correlation > 255) correlation = 255;
-            if( correlation < 0) correlation = 0;
-            max = qMax(correlation, max);
-            //if( correlation > 0 )
-            //    qDebug() << "ixj " << i << " " << j;
-            outImage.setPixel(i, j, qRgb(correlation,correlation,correlation));
-
-            /*
-            X = _mm_load_ps(aa);
-            Y = _mm_load_ps(bb);
-            Z = _mm_mul_ps(X, Y);
-            _mm_store_ps(rrv,Z);
-            aa+=4; // 4 floats per cycle
-            bb+=4; // 4 floats per cycle
-            rrv+=4; // 4 floats per cycle
-            */
-        }
-    }
-    outImage.save("correlation.bmp");
-    emit sigSendImage(outImage, 0);
-    return 1;
 }

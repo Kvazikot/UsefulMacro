@@ -48,43 +48,88 @@
 **
 ****************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+/*
+    delegate.cpp
 
-#include "ui_mainwindow.h"
+    A delegate that allows the user to change integer values from the model
+    using a spin box widget.
+*/
 
-#include <QMainWindow>
+#include "delegate.h"
+#include "autocompleteeditor.h"
+#include <QTextEdit>
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+//! [0]
+FancyDelegate::FancyDelegate(QObject *parent)
+    : QStyledItemDelegate(parent)
 {
-    Q_OBJECT
+}
+//! [0]
 
-public:
-    MainWindow(QWidget *parent = nullptr);
-    //Main Action of the Application UsefulClicker
-    QAction* rightClickAction;
-    QAction* leftClickAction;
-    QAction* hotkeyAction;
-    QAction* presskeyAction;
-    QAction* scrollupAction;
-    QAction* scrolldownAction;
-    QAction* launchprogramAction;
-    QAction* imagesearchAction;
-    QAction* typecommentAction;
+//! [1]
+QWidget *FancyDelegate::createEditor(QWidget *parent,
+                                       const QStyleOptionViewItem &/* option */,
+                                       const QModelIndex &index/* index */) const
+{
+    QWidget* widget = 0;
+    if( index.column() == 0 )
+    {
+        AutocompleteEditor* comboBox = new AutocompleteEditor(parent);
+        widget = comboBox;
+    }
+    else
+    {
+        QTextEdit* text_edit = new QTextEdit(parent);
+        widget = text_edit;
+    }
 
-    QAction* playAction;
+    return widget;
+}
+//! [1]
 
+//! [2]
+void FancyDelegate::setEditorData(QWidget *editor,
+                                    const QModelIndex &index) const
+{
+    if( index.column() == 0 )
+    {
+        QString value = index.model()->data(index, Qt::EditRole).toString();
+        AutocompleteEditor *combo = static_cast<AutocompleteEditor*>(editor);
+        combo->setItemText(index.column(), qAsConst(value));
+    }
+    else
+    {
+        QTextEdit* edit = static_cast<QTextEdit*>(editor);
+        QString value = index.model()->data(index, Qt::EditRole).toString();
+        edit->setText(value);
+    }
+}
+//! [2]
 
-public slots:
-    void updateActions();
-    void about();
+//! [3]
+void FancyDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
+                                   const QModelIndex &index) const
+{
+    if( index.column() == 0 )
+    {
+        AutocompleteEditor *combo = static_cast<AutocompleteEditor*>(editor);
+        auto value = combo->itemText(index.column());
+        model->setData(index, value, Qt::EditRole);
+    }
+    else
+    {
+        QTextEdit* edit = static_cast<QTextEdit*>(editor);
+        QString value = index.model()->data(index, Qt::EditRole).toString();
+        edit->setText(value);
+    }
+}
+//! [3]
 
-private slots:
-    void insertChild();
-    bool insertColumn();
-    void insertRow();
-    bool removeColumn();
-    void removeRow();
-};
-
-#endif // MAINWINDOW_H
+//! [4]
+void FancyDelegate::updateEditorGeometry(QWidget *editor,
+                                           const QStyleOptionViewItem &option,
+                                           const QModelIndex& index/* index */) const
+{
+    editor->setGeometry(option.rect);
+}
+//! [4]

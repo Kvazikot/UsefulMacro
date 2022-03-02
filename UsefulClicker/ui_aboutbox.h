@@ -31,10 +31,15 @@ public:
         if (AboutBox->objectName().isEmpty())
             AboutBox->setObjectName(QString::fromUtf8("AboutBox"));
         AboutBox->resize(609, 256);
+        AboutBox->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 85, 0);"));
         horizontalLayout = new QHBoxLayout(AboutBox);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         textEdit = new QTextEdit(AboutBox);
         textEdit->setObjectName(QString::fromUtf8("textEdit"));
+        textEdit->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 0);\n"
+"color: rgb(196, 199, 183);"));
+        textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
         horizontalLayout->addWidget(textEdit);
 

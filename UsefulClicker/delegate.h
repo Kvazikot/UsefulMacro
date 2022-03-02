@@ -48,43 +48,29 @@
 **
 ****************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef DELEGATE_H
+#define DELEGATE_H
 
-#include "ui_mainwindow.h"
+#include <QStyledItemDelegate>
 
-#include <QMainWindow>
-
-class MainWindow : public QMainWindow, private Ui::MainWindow
+//! [0]
+class FancyDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    //Main Action of the Application UsefulClicker
-    QAction* rightClickAction;
-    QAction* leftClickAction;
-    QAction* hotkeyAction;
-    QAction* presskeyAction;
-    QAction* scrollupAction;
-    QAction* scrolldownAction;
-    QAction* launchprogramAction;
-    QAction* imagesearchAction;
-    QAction* typecommentAction;
+    FancyDelegate(QObject *parent = nullptr);
 
-    QAction* playAction;
+    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
+                          const QModelIndex &index) const override;
 
+    void setEditorData(QWidget *editor, const QModelIndex &index) const override;
+    void setModelData(QWidget *editor, QAbstractItemModel *model,
+                      const QModelIndex &index) const override;
 
-public slots:
-    void updateActions();
-    void about();
-
-private slots:
-    void insertChild();
-    bool insertColumn();
-    void insertRow();
-    bool removeColumn();
-    void removeRow();
+    void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option,
+                              const QModelIndex &index) const override;
 };
+//! [0]
 
-#endif // MAINWINDOW_H
+#endif

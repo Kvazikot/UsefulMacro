@@ -67,24 +67,35 @@ LIBS+=-L$$OPENCV_451_PATH\\build_mingw\\lib\\ -lopencv_shape453.dll
 SOURCES += main.cpp \
     aboutbox.cpp \
     areaselectordialog.cpp \
+    autocompleteeditor.cpp \
     canvas_label.cpp \
+    delegate.cpp \
     dspmodule.cpp \
     imagesearchdialog.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    simpledelegate.cpp \
+    treeitem.cpp \
+    treemodel.cpp
 
 HEADERS += \
     aboutbox.h \
     areaselectordialog.h \
+    autocompleteeditor.h \
     canvas_label.h \
+    delegate.h \
     dspmodule.h \
     imagesearchdialog.h \
-    mainwindow.h
+    mainwindow.h \
+    simpledelegate.h \
+    treeitem.h \
+    treemodel.h
 
 # install
 
 FORMS += \
     aboutbox.ui \
     areaselectordialog.ui \
+    autocompleteeditor.ui \
     imagesearchdialog.ui \
     mainwindow.ui
 

@@ -2,5 +2,9 @@
     <qresource prefix="/">
         <file>green_check_mark.png</file>
         <file>red_check_mark.png</file>
+        <file>default.txt</file>
+        <file>pause.jpg</file>
+        <file>play.jpg</file>
+        <file>stop.jpg</file>
     </qresource>
 </RCC>

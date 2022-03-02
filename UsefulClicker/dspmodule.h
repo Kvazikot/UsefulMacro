@@ -31,7 +31,6 @@ class DspModule : public QObject
 public:
 
     DspModule();
-    int computeDiscreteCorrelation(QImage& SearchIn, QImage& TargetIn, QImage& outImage);
     void computeHaudorf();
     int X, Y;
 

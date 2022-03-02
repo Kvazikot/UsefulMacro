@@ -48,43 +48,36 @@
 **
 ****************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef TREEITEM_H
+#define TREEITEM_H
 
-#include "ui_mainwindow.h"
+#include <QVariant>
+#include <QList>
 
-#include <QMainWindow>
-
-class MainWindow : public QMainWindow, private Ui::MainWindow
+//! [0]
+class TreeItem
 {
-    Q_OBJECT
-
 public:
-    MainWindow(QWidget *parent = nullptr);
-    //Main Action of the Application UsefulClicker
-    QAction* rightClickAction;
-    QAction* leftClickAction;
-    QAction* hotkeyAction;
-    QAction* presskeyAction;
-    QAction* scrollupAction;
-    QAction* scrolldownAction;
-    QAction* launchprogramAction;
-    QAction* imagesearchAction;
-    QAction* typecommentAction;
+    explicit TreeItem(const QList<QVariant> &data, TreeItem *parent = nullptr);
+    ~TreeItem();
 
-    QAction* playAction;
+    TreeItem *child(int number);
+    int childCount() const;
+    int columnCount() const;
+    QVariant data(int column) const;
+    bool insertChildren(int position, int count, int columns);
+    bool insertColumns(int position, int columns);
+    TreeItem *parent();
+    bool removeChildren(int position, int count);
+    bool removeColumns(int position, int columns);
+    int childNumber() const;
+    bool setData(int column, const QVariant &value);
 
-
-public slots:
-    void updateActions();
-    void about();
-
-private slots:
-    void insertChild();
-    bool insertColumn();
-    void insertRow();
-    bool removeColumn();
-    void removeRow();
+private:
+    QList<TreeItem *> childItems;
+    QList<QVariant> itemData;
+    TreeItem *parentItem;
 };
+//! [0]
 
-#endif // MAINWINDOW_H
+#endif // TREEITEM_H
