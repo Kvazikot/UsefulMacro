@@ -6,5 +6,6 @@
         <file>pause.jpg</file>
         <file>play.jpg</file>
         <file>stop.jpg</file>
+        <file>keyboard_icon.png</file>
     </qresource>
 </RCC>

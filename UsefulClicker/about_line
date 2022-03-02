@@ -1,0 +1,6 @@
+
+void MainWindow::slotAbout()
+{
+    AboutBox* aboutbox = new AboutBox(this);
+    aboutbox->show();
+}

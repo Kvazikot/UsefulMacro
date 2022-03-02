@@ -23,7 +23,7 @@ public:
     {
         if (AutocompleteEditor->objectName().isEmpty())
             AutocompleteEditor->setObjectName(QString::fromUtf8("AutocompleteEditor"));
-        AutocompleteEditor->resize(400, 300);
+        AutocompleteEditor->resize(287, 117);
 
         retranslateUi(AutocompleteEditor);
 
