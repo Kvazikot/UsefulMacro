@@ -1,22 +1,64 @@
 #include <QImage>
 #include <QPainter>
+#include <QWheelEvent>
 #include <QLabel>
 #include <QHBoxLayout>
 #include "autocompleteeditor.h"
 
 
+MouseButton::MouseButton(QWidget *parent)
+    : KeyboardButton(parent)
+{
+    icon_enabled = QImage(":/mouse_default.png");
+    icon_enabled = icon_enabled.scaled(50,height());
+    icon_disabled = icon_enabled;
+    //icon_disabled.invertPixels();
+    setContextMenuPolicy(Qt::PreventContextMenu);
+    repaint();
+}
+
+void MouseButton::mousePressEvent(QMouseEvent *ev)
+{
+    button = ev->button();
+    QString sequence;
+    if( ev->button() == Qt::MouseButton::LeftButton )
+    {
+        icon_enabled = QImage(":/mouse_left_click.png");
+        sequence = "Left button";
+    }
+    if( ev->button() == Qt::MouseButton::RightButton )
+    {
+        icon_enabled = QImage(":/mouse_right_click.png");
+        sequence = "Right button";
+    }
+    icon_enabled = icon_enabled.scaled(50,height());
+    setPixmap(QPixmap::fromImage(icon_enabled));
+    emit click(sequence);
+}
+
+void MouseButton::wheelEvent(QWheelEvent *event)
+{
+    event->accept();
+    icon_enabled = QImage(":/mouse_scroll.png");
+    setPixmap(QPixmap::fromImage(icon_enabled));
+}
+
 KeyboardButton::KeyboardButton(QWidget *parent)
     : QLabel(parent)
 {
-    keyboard_red = QImage(":/keyboard_icon.png");
-    keyboard_red = keyboard_red.scaled(50,height());
-    keyboard_black = keyboard_red;
-    keyboard_black.invertPixels();
     mouseOverFlag = false;
     setScaledContents(true);
-    setPixmap(QPixmap::fromImage(keyboard_black));
     setGeometry(width()-10,0,50,20);
     startTimer(101);
+}
+
+void KeyboardButton::setIcon(QString filename)
+{
+    icon_enabled = QImage(filename);
+    icon_enabled = icon_enabled.scaled(50,height());
+    icon_disabled = icon_enabled;
+    icon_disabled.invertPixels();
+    setPixmap(QPixmap::fromImage(icon_disabled));
 }
 
 void KeyboardButton::mousePressEvent(QMouseEvent *ev)
@@ -31,7 +73,7 @@ void KeyboardButton::timerEvent(QTimerEvent* event)
     event->accept();
     qDebug() << "KeyboardButton pos ";
     if( mouseOverFlag )
-        setPixmap(QPixmap::fromImage(keyboard_red));
+        setPixmap(QPixmap::fromImage(icon_enabled));
 
 }
 
@@ -46,7 +88,7 @@ void KeyboardButton::mouseMoveEvent(QMouseEvent *ev)
 
 void KeyboardButton::setDisable()
 {
-    setPixmap(QPixmap::fromImage(keyboard_black));
+    setPixmap(QPixmap::fromImage(icon_disabled));
     mouseOverFlag = false;
     qDebug() << "KeyboardButton::setDisable() ";
 }
@@ -57,13 +99,36 @@ ComboEdit::ComboEdit(QWidget *parent) :
     QLineEdit(parent)
 {
     keyboard_but = new KeyboardButton(0);
+    keyboard_but->setIcon(":/keyboard_icon.png");
+    setContextMenuPolicy(Qt::PreventContextMenu);
     connect(keyboard_but, SIGNAL(clicked()),this, SLOT(slotKeyboardClick()));
-    connect(keyboard_but, SIGNAL(updateSequence()),this, SLOT(slotSetSequence()));
+    mouse_but = new MouseButton(0);
+    mouse_but->setIcon(":/mouse_default.jpg");
+    connect(mouse_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
+
     //label->show();
     QHBoxLayout hbox((QWidget*)this->parent());
     hbox.addWidget(this);
     hbox.addWidget(keyboard_but);
+    hbox.addWidget(mouse_but);
     hbox.setStretch(0, 100);
+}
+
+void ComboEdit::wheelEvent(QWheelEvent *event)
+{
+
+    if( event->angleDelta().y() > 0 )
+        sequence = "Scroll up";
+    else
+        sequence = "Scroll down";
+    setText(sequence);
+    setStyleSheet("");
+    QLineEdit::wheelEvent(event);
+}
+
+void ComboEdit::mousePressEvent(QMouseEvent *ev)
+{
+    QLineEdit::mousePressEvent(ev);
 }
 
 void ComboEdit::keyPressEvent(QKeyEvent* event)
@@ -92,16 +157,19 @@ void ComboEdit::slotKeyboardClick()
     setStyleSheet("color: rgb(188, 188, 188);");
 }
 
-void ComboEdit::slotSetSequence()
+void ComboEdit::slotSetSequence(QString sequence)
 {
     qDebug("slot clicked slotSetSequence");
-
+    setText(sequence);
+    setStyleSheet("");
+    emit sigSetSequence(sequence);
 }
 
 
 void ComboEdit::resizeEvent(QResizeEvent* event)
 {
     keyboard_but->setGeometry(width()-keyboard_but->width()-10,1,50,15);
+    mouse_but->setGeometry(width()-keyboard_but->width()-mouse_but->width()-15,1,50,15);
     event->accept();
 }
 
@@ -134,7 +202,8 @@ AutocompleteEditor::AutocompleteEditor(QWidget *parent) :
     ComboEdit* edit = new ComboEdit(this);
     //edit->setEditable(true);
     setLineEdit(edit);
-
+    connect(edit, SIGNAL(sigSetSequence(QString)), this, SLOT(updateSequence(QString)));
+    setContextMenuPolicy(Qt::PreventContextMenu);
 
     setItemIcon(0, QIcon(":/keyboard_red.png"));
     completion_list = {"Right click",
@@ -151,6 +220,11 @@ AutocompleteEditor::AutocompleteEditor(QWidget *parent) :
                        "ctrl + V",
                       };
 
+}
+
+void AutocompleteEditor::updateSequence(QString sequence)
+{
+    setItemText(0, sequence);
 }
 
 void AutocompleteEditor::keyPressEvent(QKeyEvent* event)

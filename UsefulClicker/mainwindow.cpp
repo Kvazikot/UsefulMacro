@@ -101,6 +101,10 @@ MainWindow::MainWindow(QWidget *parent)
     view->setModel(model);
 
     view->header()->setStretchLastSection(true);
+    QHeaderView *verticalHeader = view->header();
+    verticalHeader->setSectionResizeMode(QHeaderView::Fixed);
+    verticalHeader->setDefaultSectionSize(42);
+
 
     FancyDelegate* spinbox = new FancyDelegate(view);
     view->setItemDelegate(spinbox);
@@ -110,6 +114,8 @@ MainWindow::MainWindow(QWidget *parent)
     //
     for (int column = 0; column < model->columnCount(); ++column)
         view->resizeColumnToContents(column);
+
+    view->setColumnWidth(0, 500);
 
     connect(exitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
 

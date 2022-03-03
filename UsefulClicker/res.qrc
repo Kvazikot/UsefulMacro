@@ -7,5 +7,10 @@
         <file>play.jpg</file>
         <file>stop.jpg</file>
         <file>keyboard_icon.png</file>
+        <file>vector-mouse-icon.jpg</file>
+        <file>mouse_default.png</file>
+        <file>mouse_left_click.png</file>
+        <file>mouse_right_click.png</file>
+        <file>mouse_scroll.png</file>
     </qresource>
 </RCC>

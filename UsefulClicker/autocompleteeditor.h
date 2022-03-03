@@ -13,22 +13,36 @@
 #include <QTimerEvent>
 #include <QKeyEvent>
 
+
 class KeyboardButton : public QLabel
 {
     Q_OBJECT
 public:
-    QImage keyboard_red, keyboard_black;
+    QImage icon_enabled, icon_disabled;
     explicit KeyboardButton(QWidget *parent = nullptr);
     void mousePressEvent(QMouseEvent *ev) override;
     void mouseMoveEvent(QMouseEvent *ev) override;
     void timerEvent(QTimerEvent* event) override;
     void setDisable();
     bool mouseOverFlag;
+    void setIcon(QString filename);
     virtual void paintEvent(QPaintEvent *) override;
 signals:
     void clicked();
     void updateSequence();
 
+};
+
+class MouseButton : public KeyboardButton
+{
+    Q_OBJECT
+public:
+    Qt::MouseButton button;
+    explicit MouseButton(QWidget *parent = nullptr);
+    void wheelEvent(QWheelEvent *event) override;
+    void mousePressEvent(QMouseEvent *ev) override;
+signals:
+    void click(QString button);
 };
 
 class ComboEdit : public QLineEdit
@@ -37,14 +51,22 @@ class ComboEdit : public QLineEdit
 public:
     QString sequence;
     KeyboardButton* keyboard_but;
+    MouseButton* mouse_but;
     explicit ComboEdit(QWidget *parent = nullptr);
     void resizeEvent(QResizeEvent* event);
     void mouseMoveEvent(QMouseEvent *ev) override;
     void keyPressEvent(QKeyEvent* event) override;
+    void wheelEvent(QWheelEvent *event) override;
+    void mousePressEvent(QMouseEvent *ev) override;
+
+signals:
+    void sigSetSequence(QString sequence);
 
 public slots:
     void slotKeyboardClick();
-    void slotSetSequence();
+    void slotSetSequence(QString sequence);
+
+
 //    void paintEvent(QPaintEvent *) override;
 
 };
@@ -58,6 +80,8 @@ public:
     void keyPressEvent(QKeyEvent* event);
     //void paintEvent(QPaintEvent* event);
     ~AutocompleteEditor();
+public slots:
+    void updateSequence(QString sequence);
 };
 
 #endif // AUTOCOMPLETEEDITOR_H

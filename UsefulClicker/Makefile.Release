@@ -162,13 +162,18 @@ compiler_rcc_clean:
 	-$(DEL_FILE) release\qrc_res.cpp
 release/qrc_res.cpp: res.qrc \
 		../../../../Qt/6.2.3/mingw_64/bin/rcc.exe \
+		mouse_scroll.png \
 		pause.jpg \
 		stop.jpg \
-		keyboard_icon.png \
 		green_check_mark.png \
-		play.jpg \
+		mouse_right_click.png \
 		red_check_mark.png \
-		default.txt
+		default.txt \
+		vector-mouse-icon.jpg \
+		keyboard_icon.png \
+		play.jpg \
+		mouse_default.png \
+		mouse_left_click.png
 	C:\Qt\6.2.3\mingw_64\bin\rcc.exe -name res res.qrc -o release\qrc_res.cpp
 
 compiler_moc_predefs_make_all: release/moc_predefs.h
@@ -451,13 +456,10 @@ release/moc_areaselectordialog.cpp: areaselectordialog.h \
 	C:\Qt\6.2.3\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/Vladimir/Projects/UsefulClicker/release/moc_predefs.h @release/mocinclude.opt areaselectordialog.h -o release\moc_areaselectordialog.cpp
 
 release/moc_autocompleteeditor.cpp: autocompleteeditor.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/QVector \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qvector.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qlist.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qarraydatapointer.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qarraydataops.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qarraydata.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qpair.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QLabel \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qlabel.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtguiglobal.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qglobal.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qconfig.h \
@@ -478,15 +480,27 @@ release/moc_autocompleteeditor.cpp: autocompleteeditor.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qglobalstatic.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qnumeric.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qversiontagging.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcontainertools_impl.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtgui-config.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtwidgets-config.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qframe.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qwidget.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qwindowdefs.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qobjectdefs.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qnamespace.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qtmetamacros.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qhashfunctions.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qobjectdefs_impl.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qwindowdefs_win.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qobject.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstring.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qchar.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstringview.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qbytearray.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qrefcount.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qarraydata.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qpair.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qarraydatapointer.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qarraydataops.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcontainertools_impl.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qbytearrayalgorithms.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qbytearrayview.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstringliteral.h \
@@ -495,22 +509,13 @@ release/moc_autocompleteeditor.cpp: autocompleteeditor.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qutf8stringview.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstringtokenizer.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstringbuilder.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qlist.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qhashfunctions.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qiterator.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qbytearraylist.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstringlist.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qalgorithms.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstringmatcher.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QWidget \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qwidget.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtguiglobal.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtgui-config.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtwidgets-config.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qwindowdefs.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qobjectdefs.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qobjectdefs_impl.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qwindowdefs_win.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qobject.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcoreevent.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qscopedpointer.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qmetatype.h \
@@ -579,6 +584,13 @@ release/moc_autocompleteeditor.cpp: autocompleteeditor.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QSizeF \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/QTransform \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qnativeinterface.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpicture.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextdocument.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QVector \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qvector.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QWidget \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/QResizeEvent \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/QMouseEvent \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QComboBox \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qcombobox.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
@@ -594,10 +606,16 @@ release/moc_autocompleteeditor.cpp: autocompleteeditor.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtabbar.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtabwidget.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qrubberband.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qframe.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qabstractitemmodel.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/QKeyEvent \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/QPaintEvent \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QLineEdit \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qlineedit.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextcursor.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextformat.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpen.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextoption.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QTimerEvent \
 		release/mocinclude.opt \
 		release/moc_predefs.h \
 		../../../../Qt/6.2.3/mingw_64/bin/moc.exe
@@ -2453,14 +2471,9 @@ release/areaselectordialog.o: areaselectordialog.cpp ../../../../Qt/6.2.3/mingw_
 		e:/opencv/modules/video/include/opencv2/video/background_segm.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\areaselectordialog.o areaselectordialog.cpp
 
-release/autocompleteeditor.o: autocompleteeditor.cpp autocompleteeditor.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/QVector \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qvector.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qlist.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qarraydatapointer.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qarraydataops.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qarraydata.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qpair.h \
+release/autocompleteeditor.o: autocompleteeditor.cpp ../../../../Qt/6.2.3/mingw_64/include/QtGui/QImage \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qimage.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtguiglobal.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qglobal.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qconfig.h \
@@ -2481,9 +2494,18 @@ release/autocompleteeditor.o: autocompleteeditor.cpp autocompleteeditor.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qglobalstatic.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qnumeric.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qversiontagging.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcontainertools_impl.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtgui-config.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qcolor.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qrgb.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qnamespace.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qtmetamacros.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstringlist.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qlist.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qarraydatapointer.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qarraydataops.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qarraydata.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qpair.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcontainertools_impl.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qhashfunctions.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstring.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qchar.h \
@@ -2500,28 +2522,38 @@ release/autocompleteeditor.o: autocompleteeditor.cpp autocompleteeditor.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstringbuilder.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qiterator.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qbytearraylist.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstringlist.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qalgorithms.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstringmatcher.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QWidget \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qwidget.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtguiglobal.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtgui-config.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtwidgets-config.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qrgba64.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpaintdevice.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/qwindowdefs.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qobjectdefs.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qobjectdefs_impl.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/qwindowdefs_win.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qrect.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qmargins.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsize.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qpoint.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpixelformat.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtransform.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpolygon.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qregion.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qdatastream.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qscopedpointer.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qiodevicebase.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qline.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/QPainter \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpainter.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpixmap.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsharedpointer.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qshareddata.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsharedpointer_impl.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qobject.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcoreevent.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qscopedpointer.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qmetatype.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcompare.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qvarlengtharray.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qscopeguard.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qdatastream.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qiodevicebase.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qiterable.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qmetacontainer.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcontainerinfo.h \
@@ -2529,29 +2561,19 @@ release/autocompleteeditor.o: autocompleteeditor.cpp autocompleteeditor.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qmath.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qobject_impl.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qbindingstorage.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qmargins.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpaintdevice.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qrect.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsize.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qpoint.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpalette.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qcolor.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qrgb.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qrgba64.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextoption.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpen.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/qbrush.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qimage.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpixelformat.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtransform.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpolygon.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qregion.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qline.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpixmap.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsharedpointer.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qshareddata.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsharedpointer_impl.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qfontinfo.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/qfont.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/qfontmetrics.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qfontinfo.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QLabel \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qlabel.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtwidgets-config.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qframe.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qwidget.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpalette.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qsizepolicy.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/qcursor.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/qbitmap.h \
@@ -2582,6 +2604,19 @@ release/autocompleteeditor.o: autocompleteeditor.cpp autocompleteeditor.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QSizeF \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/QTransform \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qnativeinterface.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpicture.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextdocument.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QHBoxLayout \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qboxlayout.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qlayout.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qlayoutitem.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qgridlayout.h \
+		autocompleteeditor.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QVector \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qvector.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QWidget \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/QResizeEvent \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/QMouseEvent \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QComboBox \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qcombobox.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
@@ -2597,10 +2632,14 @@ release/autocompleteeditor.o: autocompleteeditor.cpp autocompleteeditor.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtabbar.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtabwidget.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qrubberband.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qframe.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qabstractitemmodel.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/QKeyEvent \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/QPaintEvent
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/QPaintEvent \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QLineEdit \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qlineedit.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextcursor.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextformat.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QTimerEvent
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\autocompleteeditor.o autocompleteeditor.cpp
 
 release/canvas_label.o: canvas_label.cpp ../../../../Qt/6.2.3/mingw_64/include/QtGui/QPainter \
@@ -2887,21 +2926,29 @@ release/delegate.o: delegate.cpp delegate.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qframe.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qabstractitemmodel.h \
 		autocompleteeditor.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QLabel \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qlabel.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpicture.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextdocument.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QVector \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qvector.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QWidget \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/QResizeEvent \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/QMouseEvent \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QComboBox \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qcombobox.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/QKeyEvent \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/QPaintEvent \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QTextEdit \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtextedit.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qabstractscrollarea.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextdocument.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextoption.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QLineEdit \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qlineedit.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextcursor.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextformat.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpen.h
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpen.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextoption.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QTimerEvent \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QTextEdit \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtextedit.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qabstractscrollarea.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\delegate.o delegate.cpp
 
 release/dspmodule.o: dspmodule.cpp ../../../../Qt/6.2.3/mingw_64/include/QtCore/QObject \
