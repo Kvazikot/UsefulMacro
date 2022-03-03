@@ -1,6 +1,7 @@
 #include <QImage>
 #include <QPainter>
 #include <QWheelEvent>
+#include <QCoreApplication>
 #include <QLabel>
 #include <QHBoxLayout>
 #include "autocompleteeditor.h"
@@ -9,11 +10,14 @@
 MouseButton::MouseButton(QWidget *parent)
     : KeyboardButton(parent)
 {
+    /*
     icon_enabled = QImage(":/mouse_default.png");
     icon_enabled = icon_enabled.scaled(50,height());
     icon_disabled = icon_enabled;
+    */
     //icon_disabled.invertPixels();
     setContextMenuPolicy(Qt::PreventContextMenu);
+
     repaint();
 }
 
@@ -33,7 +37,8 @@ void MouseButton::mousePressEvent(QMouseEvent *ev)
     }
     icon_enabled = icon_enabled.scaled(50,height());
     setPixmap(QPixmap::fromImage(icon_enabled));
-    emit click(sequence);
+    //emit click(sequence);
+    setFocus();
 }
 
 void MouseButton::wheelEvent(QWheelEvent *event)
@@ -47,6 +52,7 @@ KeyboardButton::KeyboardButton(QWidget *parent)
     : QLabel(parent)
 {
     mouseOverFlag = false;
+    keyScanMode = false;
     setScaledContents(true);
     setGeometry(width()-10,0,50,20);
     startTimer(101);
@@ -63,9 +69,18 @@ void KeyboardButton::setIcon(QString filename)
 
 void KeyboardButton::mousePressEvent(QMouseEvent *ev)
 {
+    keyScanMode = !keyScanMode;
     mouseOverFlag = true;
+    if( keyScanMode )
+        emit clicked();
+    else
+    {
+        //emit accept();
+        QKeyEvent keyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+        QCoreApplication::sendEvent(this, &keyEvent);
+
+    }
     ev->accept();
-    emit clicked();
 }
 
 void KeyboardButton::timerEvent(QTimerEvent* event)
@@ -102,9 +117,16 @@ ComboEdit::ComboEdit(QWidget *parent) :
     keyboard_but->setIcon(":/keyboard_icon.png");
     setContextMenuPolicy(Qt::PreventContextMenu);
     connect(keyboard_but, SIGNAL(clicked()),this, SLOT(slotKeyboardClick()));
+    connect(keyboard_but, SIGNAL(accept()),this, SLOT(slotAccepted()));
+
     mouse_but = new MouseButton(0);
-    mouse_but->setIcon(":/mouse_default.jpg");
+    mouse_but->setIcon(":/mouse_default.png");
     connect(mouse_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
+    keyboard_but->setGeometry(width()-keyboard_but->width()-10,1,50,15);
+    mouse_but->setGeometry(width()-keyboard_but->width()-mouse_but->width()-15,1,50,15);
+
+    connect(QCoreApplication::instance(), SIGNAL(focusChanged(QWidget*, QWidget*)), this, SLOT(slotFocusChanged(QWidget*, QWidget*)));
+
 
     //label->show();
     QHBoxLayout hbox((QWidget*)this->parent());
@@ -112,6 +134,23 @@ ComboEdit::ComboEdit(QWidget *parent) :
     hbox.addWidget(keyboard_but);
     hbox.addWidget(mouse_but);
     hbox.setStretch(0, 100);
+}
+
+void ComboEdit::slotFocusChanged(QWidget * old, QWidget * now)
+{
+   //if(keyboard_but->keyScanMode)
+   {
+        //QKeyEvent keyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+        //QCoreApplication::sendEvent(this, &keyEvent);
+        editingFinished();
+   }
+}
+
+void ComboEdit::slotAccepted()
+{
+
+    //QKeyEvent keyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+    //QCoreApplication::sendEvent(this, &keyEvent);
 }
 
 void ComboEdit::wheelEvent(QWheelEvent *event)
@@ -134,16 +173,19 @@ void ComboEdit::mousePressEvent(QMouseEvent *ev)
 void ComboEdit::keyPressEvent(QKeyEvent* event)
 {
     event->accept();
-    Qt::KeyboardModifiers m = event->modifiers();
-    if(keyboard_but->mouseOverFlag)
+    if (keyboard_but->keyScanMode)
     {
-        sequence = "";
-        if( m.testFlag(Qt::ControlModifier) )
-           sequence="ctrl+";
-        if( m.testFlag(Qt::ControlModifier) && m.testFlag(Qt::ShiftModifier))
-           sequence="ctrl+shift+";
-        sequence+=QKeySequence(event->key()).toString();
-        setText(sequence);
+        Qt::KeyboardModifiers m = event->modifiers();
+        if(keyboard_but->mouseOverFlag)
+        {
+            sequence = "";
+            if( m.testFlag(Qt::ControlModifier) )
+               sequence="ctrl+";
+            if( m.testFlag(Qt::ControlModifier) && m.testFlag(Qt::ShiftModifier))
+               sequence="ctrl+shift+";
+            sequence+=QKeySequence(event->key()).toString();
+            setText(sequence);
+        }
     }
     setStyleSheet("");
     QLineEdit::keyPressEvent(event);

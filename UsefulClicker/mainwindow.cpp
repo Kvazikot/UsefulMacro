@@ -140,6 +140,12 @@ void MainWindow::about()
 
 }
 
+void MainWindow::mousePressEvent(QMouseEvent* event)
+{
+
+
+}
+
 void MainWindow::insertChild()
 {
     const QModelIndex index = view->selectionModel()->currentIndex();

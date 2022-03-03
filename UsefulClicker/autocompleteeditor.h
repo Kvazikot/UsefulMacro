@@ -25,10 +25,12 @@ public:
     void timerEvent(QTimerEvent* event) override;
     void setDisable();
     bool mouseOverFlag;
+    bool keyScanMode;
     void setIcon(QString filename);
     virtual void paintEvent(QPaintEvent *) override;
 signals:
     void clicked();
+    void accept();
     void updateSequence();
 
 };
@@ -52,6 +54,7 @@ public:
     QString sequence;
     KeyboardButton* keyboard_but;
     MouseButton* mouse_but;
+
     explicit ComboEdit(QWidget *parent = nullptr);
     void resizeEvent(QResizeEvent* event);
     void mouseMoveEvent(QMouseEvent *ev) override;
@@ -65,7 +68,8 @@ signals:
 public slots:
     void slotKeyboardClick();
     void slotSetSequence(QString sequence);
-
+    void slotAccepted();
+    void slotFocusChanged(QWidget* old, QWidget* now);
 
 //    void paintEvent(QPaintEvent *) override;
 

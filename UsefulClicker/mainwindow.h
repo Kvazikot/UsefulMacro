@@ -52,7 +52,7 @@
 #define MAINWINDOW_H
 
 #include "ui_mainwindow.h"
-
+#include <QMouseEvent>
 #include <QMainWindow>
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
@@ -73,6 +73,8 @@ public:
     QAction* typecommentAction;
 
     QAction* playAction;
+
+    void mousePressEvent(QMouseEvent* event);
 
 
 public slots:
