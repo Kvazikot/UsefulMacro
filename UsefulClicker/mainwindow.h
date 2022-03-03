@@ -80,6 +80,7 @@ public:
 public slots:
     void updateActions();
     void about();
+    void itemActivated(QModelIndex& index);
 
 private slots:
     void insertChild();

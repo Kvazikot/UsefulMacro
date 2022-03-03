@@ -3,6 +3,7 @@
 #include <QWheelEvent>
 #include <QCoreApplication>
 #include <QLabel>
+#include <QTimer>
 #include <QHBoxLayout>
 #include "autocompleteeditor.h"
 
@@ -35,10 +36,12 @@ void MouseButton::mousePressEvent(QMouseEvent *ev)
         icon_enabled = QImage(":/mouse_right_click.png");
         sequence = "Right button";
     }
+    //QTimer::singleShot(500,this,SIGNAL(accept()));
+
     icon_enabled = icon_enabled.scaled(50,height());
     setPixmap(QPixmap::fromImage(icon_enabled));
-    //emit click(sequence);
-    setFocus();
+    emit click(sequence);
+
 }
 
 void MouseButton::wheelEvent(QWheelEvent *event)
@@ -122,6 +125,8 @@ ComboEdit::ComboEdit(QWidget *parent) :
     mouse_but = new MouseButton(0);
     mouse_but->setIcon(":/mouse_default.png");
     connect(mouse_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
+    connect(mouse_but, SIGNAL(accept()),this, SLOT(slotAccepted()));
+
     keyboard_but->setGeometry(width()-keyboard_but->width()-10,1,50,15);
     mouse_but->setGeometry(width()-keyboard_but->width()-mouse_but->width()-15,1,50,15);
 
@@ -142,15 +147,15 @@ void ComboEdit::slotFocusChanged(QWidget * old, QWidget * now)
    {
         //QKeyEvent keyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
         //QCoreApplication::sendEvent(this, &keyEvent);
-        editingFinished();
+        //editingFinished();
    }
 }
 
 void ComboEdit::slotAccepted()
 {
 
-    //QKeyEvent keyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
-    //QCoreApplication::sendEvent(this, &keyEvent);
+    QKeyEvent keyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+    QCoreApplication::sendEvent(this, &keyEvent);
 }
 
 void ComboEdit::wheelEvent(QWheelEvent *event)
@@ -204,6 +209,7 @@ void ComboEdit::slotSetSequence(QString sequence)
     qDebug("slot clicked slotSetSequence");
     setText(sequence);
     setStyleSheet("");
+
     emit sigSetSequence(sequence);
 }
 

@@ -93,9 +93,10 @@ void FancyDelegate::setEditorData(QWidget *editor,
 {
     if( index.column() == 0 )
     {
+        AutocompleteEditor* edit = static_cast<AutocompleteEditor*>(editor);
         QString value = index.model()->data(index, Qt::EditRole).toString();
-        AutocompleteEditor *combo = static_cast<AutocompleteEditor*>(editor);
-        combo->setItemText(index.column(), qAsConst(value));
+        edit->setItemText(0, value);
+        edit->lineEdit()->setText(value);
     }
     else
     {
@@ -112,9 +113,11 @@ void FancyDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
 {
     if( index.column() == 0 )
     {
-        AutocompleteEditor *combo = static_cast<AutocompleteEditor*>(editor);
-        auto value = combo->itemText(index.column());
-        model->setData(index, value, Qt::EditRole);
+        AutocompleteEditor* edit = static_cast<AutocompleteEditor*>(editor);
+        model->setData(index, edit->currentText(), Qt::EditRole);
+        //index.model()->data()
+        //edit->setItemText(0, value);
+
     }
     else
     {

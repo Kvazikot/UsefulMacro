@@ -178,7 +178,6 @@ void ImageSearchDialog::on_testClickButton_clicked()
     mouse_pos.y =  dsp->Y + selectedAreaRect.top();
     SetCursorPos(mouse_pos.x, mouse_pos.y);
 
-    qDebug("MOUSE POS OOO %ld %ld ", mouse_pos.x, mouse_pos.y);
     mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_LEFTDOWN, mouse_pos.x, mouse_pos.y, 0, 0);
     mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_LEFTUP, mouse_pos.x, mouse_pos.y, 0, 0);
 }

@@ -58,7 +58,6 @@ void print_vector(char* name, float* a, int len)
     {
         str += QString::number(a[i]) + ",";
     }
-    qDebug() << str << "}\n" << "computed!";
 }
 
 // forward decl for very smart multistepthinking shit

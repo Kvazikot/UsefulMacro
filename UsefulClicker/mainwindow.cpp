@@ -111,6 +111,8 @@ MainWindow::MainWindow(QWidget *parent)
     //view->setItemDelegate(new SimpleDelegate(view));
     view->setEditTriggers(QAbstractItemView::EditTrigger::AllEditTriggers);
 
+    connect(view, SIGNAL(activated()), this, SLOT(itemActivated()));
+
     //
     for (int column = 0; column < model->columnCount(); ++column)
         view->resizeColumnToContents(column);
@@ -131,6 +133,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(actionAbout, &QAction::triggered, this, &MainWindow::about);
 
     updateActions();
+}
+
+void MainWindow::itemActivated(QModelIndex& index)
+{
+    qDebug();
 }
 
 void MainWindow::about()

@@ -209,7 +209,6 @@ void AreaSelectorDialog::resizeEvent(QResizeEvent* event)
 {
     //repaint();
     event->accept();
-    //qDebug() << "resize";
 }
 
 void AreaSelectorDialog::paintEvent(QPaintEvent* event)
