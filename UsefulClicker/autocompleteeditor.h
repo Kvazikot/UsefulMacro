@@ -5,18 +5,46 @@
 #include <QVector>
 #include <QWidget>
 #include <QResizeEvent>
+#include <QMouseEvent>
 #include <QComboBox>
 #include <QKeyEvent>
 #include <QPaintEvent>
 #include <QLineEdit>
+#include <QTimerEvent>
+#include <QKeyEvent>
+
+class KeyboardButton : public QLabel
+{
+    Q_OBJECT
+public:
+    QImage keyboard_red, keyboard_black;
+    explicit KeyboardButton(QWidget *parent = nullptr);
+    void mousePressEvent(QMouseEvent *ev) override;
+    void mouseMoveEvent(QMouseEvent *ev) override;
+    void timerEvent(QTimerEvent* event) override;
+    void setDisable();
+    bool mouseOverFlag;
+    virtual void paintEvent(QPaintEvent *) override;
+signals:
+    void clicked();
+    void updateSequence();
+
+};
 
 class ComboEdit : public QLineEdit
 {
     Q_OBJECT
 public:
-    QLabel* label;
+    QString sequence;
+    KeyboardButton* keyboard_but;
     explicit ComboEdit(QWidget *parent = nullptr);
     void resizeEvent(QResizeEvent* event);
+    void mouseMoveEvent(QMouseEvent *ev) override;
+    void keyPressEvent(QKeyEvent* event) override;
+
+public slots:
+    void slotKeyboardClick();
+    void slotSetSequence();
 //    void paintEvent(QPaintEvent *) override;
 
 };

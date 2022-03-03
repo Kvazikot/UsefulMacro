@@ -32,6 +32,7 @@ public:
         comboBox = new QComboBox(AreaSelectorDialog);
         comboBox->setObjectName(QString::fromUtf8("comboBox"));
         comboBox->setGeometry(QRect(100, 120, 201, 24));
+        comboBox->setStyleSheet(QString::fromUtf8("color: rgb(188, 188, 188);"));
         comboBox->setEditable(true);
         comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContentsOnFirstShow);
         comboBox->setDuplicatesEnabled(false);

@@ -2,28 +2,116 @@
 #include <QPainter>
 #include <QLabel>
 #include <QHBoxLayout>
-
 #include "autocompleteeditor.h"
+
+
+KeyboardButton::KeyboardButton(QWidget *parent)
+    : QLabel(parent)
+{
+    keyboard_red = QImage(":/keyboard_icon.png");
+    keyboard_red = keyboard_red.scaled(50,height());
+    keyboard_black = keyboard_red;
+    keyboard_black.invertPixels();
+    mouseOverFlag = false;
+    setScaledContents(true);
+    setPixmap(QPixmap::fromImage(keyboard_black));
+    setGeometry(width()-10,0,50,20);
+    startTimer(101);
+}
+
+void KeyboardButton::mousePressEvent(QMouseEvent *ev)
+{
+    mouseOverFlag = true;
+    ev->accept();
+    emit clicked();
+}
+
+void KeyboardButton::timerEvent(QTimerEvent* event)
+{
+    event->accept();
+    qDebug() << "KeyboardButton pos ";
+    if( mouseOverFlag )
+        setPixmap(QPixmap::fromImage(keyboard_red));
+
+}
+
+void KeyboardButton::paintEvent(QPaintEvent *event)
+{
+    QLabel::paintEvent(event);
+}
+
+void KeyboardButton::mouseMoveEvent(QMouseEvent *ev)
+{
+}
+
+void KeyboardButton::setDisable()
+{
+    setPixmap(QPixmap::fromImage(keyboard_black));
+    mouseOverFlag = false;
+    qDebug() << "KeyboardButton::setDisable() ";
+}
+
+
 
 ComboEdit::ComboEdit(QWidget *parent) :
     QLineEdit(parent)
 {
-    label = new QLabel(0);
-    QImage keyboard_icon(":/keyboard_icon.png");
-    keyboard_icon = keyboard_icon.scaled(50,height());
-    label->setScaledContents(true);
-    label->setPixmap(QPixmap::fromImage(keyboard_icon));
-    label->setGeometry(width()-10,0,50,20);
+    keyboard_but = new KeyboardButton(0);
+    connect(keyboard_but, SIGNAL(clicked()),this, SLOT(slotKeyboardClick()));
+    connect(keyboard_but, SIGNAL(updateSequence()),this, SLOT(slotSetSequence()));
     //label->show();
     QHBoxLayout hbox((QWidget*)this->parent());
     hbox.addWidget(this);
-    hbox.addWidget(label);
+    hbox.addWidget(keyboard_but);
+    hbox.setStretch(0, 100);
 }
+
+void ComboEdit::keyPressEvent(QKeyEvent* event)
+{
+    event->accept();
+    Qt::KeyboardModifiers m = event->modifiers();
+    if(keyboard_but->mouseOverFlag)
+    {
+        sequence = "";
+        if( m.testFlag(Qt::ControlModifier) )
+           sequence="ctrl+";
+        if( m.testFlag(Qt::ControlModifier) && m.testFlag(Qt::ShiftModifier))
+           sequence="ctrl+shift+";
+        sequence+=QKeySequence(event->key()).toString();
+        setText(sequence);
+    }
+    setStyleSheet("");
+    QLineEdit::keyPressEvent(event);
+}
+
+
+void ComboEdit::slotKeyboardClick()
+{
+    qDebug("slot clicked slotKeyboardClick");
+    setText("press hot key  ");
+    setStyleSheet("color: rgb(188, 188, 188);");
+}
+
+void ComboEdit::slotSetSequence()
+{
+    qDebug("slot clicked slotSetSequence");
+
+}
+
 
 void ComboEdit::resizeEvent(QResizeEvent* event)
 {
-    label->setGeometry(width()-label->width()-10,1,50,15);
+    keyboard_but->setGeometry(width()-keyboard_but->width()-10,1,50,15);
+    event->accept();
 }
+
+void ComboEdit::mouseMoveEvent(QMouseEvent *ev)
+{
+    ev->accept();
+    qDebug() << "pos " << ev->pos();
+    keyboard_but->setDisable();
+}
+
 
 /*
 void ComboEdit::paintEvent(QPaintEvent *event)
@@ -48,7 +136,7 @@ AutocompleteEditor::AutocompleteEditor(QWidget *parent) :
     setLineEdit(edit);
 
 
-    setItemIcon(0, QIcon(":/keyboard_icon.png"));
+    setItemIcon(0, QIcon(":/keyboard_red.png"));
     completion_list = {"Right click",
                        "Left click",
                        "Esc",
@@ -69,8 +157,8 @@ void AutocompleteEditor::keyPressEvent(QKeyEvent* event)
 {
     QVector<QString> filtered_list;
 
-    if( event->key() == Qt::Key_Backspace)  clear();
-    if( event->key() == Qt::Key_Delete)  clear();
+   // if( event->key() == Qt::Key_Backspace)  clear();
+   // if( event->key() == Qt::Key_Delete)  clear();
 
     QString text = this->currentText();
     for (QString item : completion_list) {
@@ -79,9 +167,9 @@ void AutocompleteEditor::keyPressEvent(QKeyEvent* event)
     }
     if( filtered_list.size() > 0 )
     {
-        this->clear();
+        //this->clear();
         insertItems(0, filtered_list);
-        setItemIcon(0, QIcon(":/keyboard_icon.png"));
+        setItemIcon(0, QIcon(":/keyboard_red.png"));
         showPopup();
     }
     event->accept();
