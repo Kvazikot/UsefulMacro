@@ -81,6 +81,7 @@ class AutocompleteEditor : public QComboBox
 public:
     QVector<QString> completion_list;
     explicit AutocompleteEditor(QWidget *parent = nullptr);
+    void setValue(QString value);
     void keyPressEvent(QKeyEvent* event);
     //void paintEvent(QPaintEvent* event);
     ~AutocompleteEditor();

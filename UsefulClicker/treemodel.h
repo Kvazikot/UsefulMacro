@@ -95,12 +95,12 @@ public:
                     const QModelIndex &parent = QModelIndex()) override;
     bool removeRows(int position, int rows,
                     const QModelIndex &parent = QModelIndex()) override;
+    void setupModelData(const QStringList &lines, TreeItem *parent);
+    TreeItem *rootItem;
 
 private:
-    void setupModelData(const QStringList &lines, TreeItem *parent);
     TreeItem *getItem(const QModelIndex &index) const;
 
-    TreeItem *rootItem;
 };
 //! [2]
 

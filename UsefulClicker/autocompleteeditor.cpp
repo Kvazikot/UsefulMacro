@@ -66,7 +66,7 @@ void KeyboardButton::setIcon(QString filename)
     icon_enabled = QImage(filename);
     icon_enabled = icon_enabled.scaled(50,height());
     icon_disabled = icon_enabled;
-    icon_disabled.invertPixels();
+    //icon_disabled.invertPixels();
     setPixmap(QPixmap::fromImage(icon_disabled));
 }
 
@@ -200,7 +200,7 @@ void ComboEdit::keyPressEvent(QKeyEvent* event)
 void ComboEdit::slotKeyboardClick()
 {
     qDebug("slot clicked slotKeyboardClick");
-    setText("press hot key  ");
+    setText("press the hot key sequence  ");
     setStyleSheet("color: rgb(188, 188, 188);");
 }
 
@@ -279,8 +279,8 @@ void AutocompleteEditor::keyPressEvent(QKeyEvent* event)
 {
     QVector<QString> filtered_list;
 
-   // if( event->key() == Qt::Key_Backspace)  clear();
-   // if( event->key() == Qt::Key_Delete)  clear();
+    if( event->key() == Qt::Key_Backspace)  clear();
+    if( event->key() == Qt::Key_Delete)  clear();
 
     QString text = this->currentText();
     for (QString item : completion_list) {
@@ -300,6 +300,22 @@ void AutocompleteEditor::keyPressEvent(QKeyEvent* event)
 
 AutocompleteEditor::~AutocompleteEditor()
 {
+}
+
+void AutocompleteEditor::setValue(QString value)
+{
+    ComboEdit* edit  = (ComboEdit*)lineEdit();
+    setItemText(0, value);
+    edit->setText(value);
+
+    // set buttons state
+    if( value.contains("Scroll") )
+        edit ->mouse_but->setIcon(":/mouse_scroll.png");
+    if( value.contains("Left") )
+        edit ->mouse_but->setIcon(":/mouse_left_click.png");
+    if( value.contains("Right") )
+        edit ->mouse_but->setIcon(":/mouse_right_click.png");
+
 }
 
 /*

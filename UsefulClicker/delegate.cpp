@@ -95,8 +95,7 @@ void FancyDelegate::setEditorData(QWidget *editor,
     {
         AutocompleteEditor* edit = static_cast<AutocompleteEditor*>(editor);
         QString value = index.model()->data(index, Qt::EditRole).toString();
-        edit->setItemText(0, value);
-        edit->lineEdit()->setText(value);
+        edit->setValue(value);
     }
     else
     {

@@ -80,6 +80,7 @@ public:
 public slots:
     void updateActions();
     void about();
+    void save();
     void itemActivated(QModelIndex& index);
 
 private slots:

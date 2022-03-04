@@ -131,8 +131,28 @@ MainWindow::MainWindow(QWidget *parent)
     connect(removeColumnAction, &QAction::triggered, this, &MainWindow::removeColumn);
     connect(insertChildAction, &QAction::triggered, this, &MainWindow::insertChild);
     connect(actionAbout, &QAction::triggered, this, &MainWindow::about);
+    connect(actionSave, &QAction::triggered, this, &MainWindow::save);
 
     updateActions();
+}
+
+void MainWindow::save()
+{
+    // [Collect model data to QString]
+    QString textData;
+    TreeModel *model =  (TreeModel*)view->model();
+    QStringList list;
+    model->setupModelData(list, model->rootItem);
+
+    // .txt
+    QFile txtFile("default.txt");
+    if(txtFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+
+        QTextStream out(&txtFile);
+        out << list.join("\n");
+        txtFile.close();
+    }
+
 }
 
 void MainWindow::itemActivated(QModelIndex& index)

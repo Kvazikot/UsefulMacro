@@ -33,6 +33,9 @@ public:
     QAction *removeColumnAction;
     QAction *insertChildAction;
     QAction *actionAbout;
+    QAction *actionSave;
+    QAction *actionSave_as;
+    QAction *actionOpen;
     QWidget *centralwidget;
     QVBoxLayout *vboxLayout;
     QTreeView *view;
@@ -61,6 +64,12 @@ public:
         insertChildAction->setObjectName(QString::fromUtf8("insertChildAction"));
         actionAbout = new QAction(MainWindow);
         actionAbout->setObjectName(QString::fromUtf8("actionAbout"));
+        actionSave = new QAction(MainWindow);
+        actionSave->setObjectName(QString::fromUtf8("actionSave"));
+        actionSave_as = new QAction(MainWindow);
+        actionSave_as->setObjectName(QString::fromUtf8("actionSave_as"));
+        actionOpen = new QAction(MainWindow);
+        actionOpen->setObjectName(QString::fromUtf8("actionOpen"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         vboxLayout = new QVBoxLayout(centralwidget);
@@ -99,7 +108,9 @@ public:
         menubar->addAction(fileMenu->menuAction());
         menubar->addAction(actionsMenu->menuAction());
         menubar->addAction(menuAbout->menuAction());
-        fileMenu->addAction(exitAction);
+        fileMenu->addAction(actionOpen);
+        fileMenu->addAction(actionSave);
+        fileMenu->addAction(actionSave_as);
         actionsMenu->addAction(insertRowAction);
         actionsMenu->addAction(insertColumnAction);
         actionsMenu->addSeparator();
@@ -117,7 +128,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Editable Tree Model", nullptr));
-        exitAction->setText(QCoreApplication::translate("MainWindow", "E&xit", nullptr));
+        exitAction->setText(QCoreApplication::translate("MainWindow", "Open", nullptr));
 #if QT_CONFIG(shortcut)
         exitAction->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+Q", nullptr));
 #endif // QT_CONFIG(shortcut)
@@ -142,6 +153,9 @@ public:
         insertChildAction->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+N", nullptr));
 #endif // QT_CONFIG(shortcut)
         actionAbout->setText(QCoreApplication::translate("MainWindow", "About", nullptr));
+        actionSave->setText(QCoreApplication::translate("MainWindow", "Save", nullptr));
+        actionSave_as->setText(QCoreApplication::translate("MainWindow", "Save as...", nullptr));
+        actionOpen->setText(QCoreApplication::translate("MainWindow", "Open", nullptr));
         fileMenu->setTitle(QCoreApplication::translate("MainWindow", "&File", nullptr));
         actionsMenu->setTitle(QCoreApplication::translate("MainWindow", "&Actions", nullptr));
         menuAbout->setTitle(QCoreApplication::translate("MainWindow", "About", nullptr));
