@@ -91,7 +91,6 @@ void drawCounters(Size image_size, vector<vector<Point> >& contours, Mat backgro
     {
         Scalar color = Scalar( rng.uniform(0, 256), rng.uniform(0,256), rng.uniform(0,256) );
         drawContours( drawing, contours, (int)i, color, 2, LINE_8, noArray(), 0 );
-        //qDebug() << i << ". npts = " << " " << contours.size();
     }
 }
 

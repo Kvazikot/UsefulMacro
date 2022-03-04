@@ -12,5 +12,6 @@
         <file>mouse_left_click.png</file>
         <file>mouse_right_click.png</file>
         <file>mouse_scroll.png</file>
+        <file>knights-templar-cross.png</file>
     </qresource>
 </RCC>

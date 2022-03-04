@@ -30,7 +30,6 @@ void  SimpleDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
 void  SimpleDelegate::setEditorData(QWidget *editor, const QModelIndex &index)
 {
     QString value = index.model()->data(index, Qt::EditRole).toString();
-    //qDebug() << "Value:" << value;
     QComboBox* comboBox = qobject_cast<QComboBox*>(editor);
     comboBox->setCurrentIndex(comboBox->findText(value));
 }

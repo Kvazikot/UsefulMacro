@@ -75,9 +75,7 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     simpledelegate.cpp \
     treeitem.cpp \
-    treemodel.cpp \
-    usefulinterpreter.cpp \
-    usfeulinterpreterwin.cpp
+    treemodel.cpp
 
 HEADERS += \
     aboutbox.h \
@@ -90,9 +88,7 @@ HEADERS += \
     mainwindow.h \
     simpledelegate.h \
     treeitem.h \
-    treemodel.h \
-    usefulinterpreter.h \
-    usfeulinterpreterwin.h
+    treemodel.h
 
 # install
 

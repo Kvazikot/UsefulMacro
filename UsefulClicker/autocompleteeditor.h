@@ -25,8 +25,8 @@ public:
     void timerEvent(QTimerEvent* event) override;
     void setDisable();
     bool mouseOverFlag;
-    bool keyScanMode;
-    void setIcon(QString filename);
+    bool state;
+    void setIcon(QString filename, bool invert_pixels=true, bool init_state=false);
     virtual void paintEvent(QPaintEvent *) override;
 signals:
     void clicked();
@@ -47,12 +47,24 @@ signals:
     void click(QString button);
 };
 
+class CrossButton : public KeyboardButton
+{
+    Q_OBJECT
+public:
+    explicit CrossButton(QWidget *parent = nullptr);
+    void mousePressEvent(QMouseEvent *ev) override;
+signals:
+    void click(QString button);
+};
+
+
 class ComboEdit : public QLineEdit
 {
     Q_OBJECT
 public:
     QString sequence;
     KeyboardButton* keyboard_but;
+    CrossButton* cross_but;
     MouseButton* mouse_but;
 
     explicit ComboEdit(QWidget *parent = nullptr);
@@ -66,6 +78,7 @@ signals:
     void sigSetSequence(QString sequence);
 
 public slots:
+    void slotCrossClick();
     void slotKeyboardClick();
     void slotSetSequence(QString sequence);
     void slotAccepted();

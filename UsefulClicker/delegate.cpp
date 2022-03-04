@@ -106,6 +106,19 @@ void FancyDelegate::setEditorData(QWidget *editor,
 }
 //! [2]
 
+
+bool isFiltered(QString text)
+{
+    QStringList filters = {"hot key sequence" };
+
+    for(auto f : filters )
+    {
+        if (text.contains(f)) return true;
+    }
+
+    return false;
+}
+
 //! [3]
 void FancyDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                                    const QModelIndex &index) const
@@ -113,7 +126,8 @@ void FancyDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
     if( index.column() == 0 )
     {
         AutocompleteEditor* edit = static_cast<AutocompleteEditor*>(editor);
-        model->setData(index, edit->currentText(), Qt::EditRole);
+        if(!isFiltered(edit->currentText()))
+            model->setData(index, edit->currentText(), Qt::EditRole);
         //index.model()->data()
         //edit->setItemText(0, value);
 

@@ -8,6 +8,23 @@
 #include "autocompleteeditor.h"
 
 
+CrossButton::CrossButton(QWidget *parent)
+    : KeyboardButton(parent)
+{
+    setContextMenuPolicy(Qt::PreventContextMenu);
+    repaint();
+}
+
+void CrossButton::mousePressEvent(QMouseEvent *ev)
+{
+    QString sequence;
+    icon_enabled = icon_enabled.scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio, Qt::SmoothTransformation);
+    setPixmap(QPixmap::fromImage(icon_enabled));
+    emit click(sequence);
+}
+
+//---------------------------------------------------------------------------------
+
 MouseButton::MouseButton(QWidget *parent)
     : KeyboardButton(parent)
 {
@@ -51,30 +68,37 @@ void MouseButton::wheelEvent(QWheelEvent *event)
     setPixmap(QPixmap::fromImage(icon_enabled));
 }
 
+
+//---------------------------------------------------------------------------------
+
 KeyboardButton::KeyboardButton(QWidget *parent)
     : QLabel(parent)
 {
     mouseOverFlag = false;
-    keyScanMode = false;
+    state = false;
     setScaledContents(true);
     setGeometry(width()-10,0,50,20);
     startTimer(101);
 }
 
-void KeyboardButton::setIcon(QString filename)
+void KeyboardButton::setIcon(QString filename, bool invert_pixels, bool init_state)
 {
     icon_enabled = QImage(filename);
     icon_enabled = icon_enabled.scaled(50,height());
     icon_disabled = icon_enabled;
-    //icon_disabled.invertPixels();
-    setPixmap(QPixmap::fromImage(icon_disabled));
+    if(invert_pixels)
+        icon_disabled.invertPixels();
+    if(init_state)
+        setPixmap(QPixmap::fromImage(icon_enabled));
+    else
+        setPixmap(QPixmap::fromImage(icon_disabled));
 }
 
 void KeyboardButton::mousePressEvent(QMouseEvent *ev)
 {
-    keyScanMode = !keyScanMode;
+    state = !state;
     mouseOverFlag = true;
-    if( keyScanMode )
+    if( state )
         emit clicked();
     else
     {
@@ -89,7 +113,6 @@ void KeyboardButton::mousePressEvent(QMouseEvent *ev)
 void KeyboardButton::timerEvent(QTimerEvent* event)
 {
     event->accept();
-    qDebug() << "KeyboardButton pos ";
     if( mouseOverFlag )
         setPixmap(QPixmap::fromImage(icon_enabled));
 
@@ -108,7 +131,6 @@ void KeyboardButton::setDisable()
 {
     setPixmap(QPixmap::fromImage(icon_disabled));
     mouseOverFlag = false;
-    qDebug() << "KeyboardButton::setDisable() ";
 }
 
 
@@ -117,18 +139,29 @@ ComboEdit::ComboEdit(QWidget *parent) :
     QLineEdit(parent)
 {
     keyboard_but = new KeyboardButton(0);
-    keyboard_but->setIcon(":/keyboard_icon.png");
+    keyboard_but->setIcon(":/keyboard_icon.png", true, false);
     setContextMenuPolicy(Qt::PreventContextMenu);
     connect(keyboard_but, SIGNAL(clicked()),this, SLOT(slotKeyboardClick()));
     connect(keyboard_but, SIGNAL(accept()),this, SLOT(slotAccepted()));
 
     mouse_but = new MouseButton(0);
-    mouse_but->setIcon(":/mouse_default.png");
+    mouse_but->setIcon(":/mouse_default.png", true, true);
     connect(mouse_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
     connect(mouse_but, SIGNAL(accept()),this, SLOT(slotAccepted()));
 
     keyboard_but->setGeometry(width()-keyboard_but->width()-10,1,50,15);
     mouse_but->setGeometry(width()-keyboard_but->width()-mouse_but->width()-15,1,50,15);
+
+    cross_but = new CrossButton(0);
+    cross_but->state = true;
+    cross_but->setIcon(":/knights-templar-cross.png", true, true);
+    //setContextMenuPolicy(Qt::PreventContextMenu);
+    connect(cross_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
+    connect(cross_but, SIGNAL(accept()),this, SLOT(updateSequence()));
+    cross_but->setGeometry(width()-keyboard_but->width()-mouse_but->width()-cross_but->width()-15,1,50,15);
+
+
+
 
     connect(QCoreApplication::instance(), SIGNAL(focusChanged(QWidget*, QWidget*)), this, SLOT(slotFocusChanged(QWidget*, QWidget*)));
 
@@ -136,9 +169,18 @@ ComboEdit::ComboEdit(QWidget *parent) :
     //label->show();
     QHBoxLayout hbox((QWidget*)this->parent());
     hbox.addWidget(this);
+    hbox.addWidget(cross_but);
     hbox.addWidget(keyboard_but);
     hbox.addWidget(mouse_but);
     hbox.setStretch(0, 100);
+}
+
+void ComboEdit::slotCrossClick()
+{
+    clear();
+    QKeyEvent keyEvent(QEvent::KeyPress, Qt::Key_Backspace, Qt::NoModifier);
+    QCoreApplication::sendEvent(this, &keyEvent);
+    //cross_but->setDisabled(cross_but->state);
 }
 
 void ComboEdit::slotFocusChanged(QWidget * old, QWidget * now)
@@ -178,7 +220,10 @@ void ComboEdit::mousePressEvent(QMouseEvent *ev)
 void ComboEdit::keyPressEvent(QKeyEvent* event)
 {
     event->accept();
-    if (keyboard_but->keyScanMode)
+    if( event->key() == Qt::Key_Backspace)  clear();
+    if( event->key() == Qt::Key_Delete)  clear();
+
+    if (keyboard_but->state)
     {
         Qt::KeyboardModifiers m = event->modifiers();
         if(keyboard_but->mouseOverFlag)
@@ -199,14 +244,12 @@ void ComboEdit::keyPressEvent(QKeyEvent* event)
 
 void ComboEdit::slotKeyboardClick()
 {
-    qDebug("slot clicked slotKeyboardClick");
     setText("press the hot key sequence  ");
     setStyleSheet("color: rgb(188, 188, 188);");
 }
 
 void ComboEdit::slotSetSequence(QString sequence)
 {
-    qDebug("slot clicked slotSetSequence");
     setText(sequence);
     setStyleSheet("");
 
@@ -218,13 +261,13 @@ void ComboEdit::resizeEvent(QResizeEvent* event)
 {
     keyboard_but->setGeometry(width()-keyboard_but->width()-10,1,50,15);
     mouse_but->setGeometry(width()-keyboard_but->width()-mouse_but->width()-15,1,50,15);
+    cross_but->setGeometry(width()-keyboard_but->width()-mouse_but->width()-cross_but->width()-15,1,50,15);
     event->accept();
 }
 
 void ComboEdit::mouseMoveEvent(QMouseEvent *ev)
 {
     ev->accept();
-    qDebug() << "pos " << ev->pos();
     keyboard_but->setDisable();
 }
 

@@ -10,8 +10,6 @@ release/mainwindow.o
 release/simpledelegate.o
 release/treeitem.o
 release/treemodel.o
-release/usefulinterpreter.o
-release/usfeulinterpreterwin.o
 release/qrc_res.o
 release/moc_aboutbox.o
 release/moc_areaselectordialog.o
@@ -23,5 +21,3 @@ release/moc_imagesearchdialog.o
 release/moc_mainwindow.o
 release/moc_simpledelegate.o
 release/moc_treemodel.o
-release/moc_usefulinterpreter.o
-release/moc_usfeulinterpreterwin.o

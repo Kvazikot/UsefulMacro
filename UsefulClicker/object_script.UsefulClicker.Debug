@@ -10,8 +10,6 @@ debug/mainwindow.o
 debug/simpledelegate.o
 debug/treeitem.o
 debug/treemodel.o
-debug/usefulinterpreter.o
-debug/usfeulinterpreterwin.o
 debug/qrc_res.o
 debug/moc_aboutbox.o
 debug/moc_areaselectordialog.o
@@ -23,5 +21,3 @@ debug/moc_imagesearchdialog.o
 debug/moc_mainwindow.o
 debug/moc_simpledelegate.o
 debug/moc_treemodel.o
-debug/moc_usefulinterpreter.o
-debug/moc_usfeulinterpreterwin.o

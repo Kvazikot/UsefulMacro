@@ -157,7 +157,6 @@ void MainWindow::save()
 
 void MainWindow::itemActivated(QModelIndex& index)
 {
-    qDebug();
 }
 
 void MainWindow::about()

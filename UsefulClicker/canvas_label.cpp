@@ -46,7 +46,6 @@ void Canvas_Label::paintEvent(QPaintEvent* event)
 
    painter.fillRect(rect(), QColor(10,55,10,255));
    painter.drawText(rect().center(),"RESIZE THIS WINDOW TO SELECT SEARCH AREA!");
-    qDebug() << " REPAINT ";
    painter.end();
    event->accept();
    */
