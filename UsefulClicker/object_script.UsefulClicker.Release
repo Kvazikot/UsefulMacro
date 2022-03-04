@@ -7,6 +7,7 @@ release/delegate.o
 release/dspmodule.o
 release/imagesearchdialog.o
 release/mainwindow.o
+release/screenbuttonsdetector.o
 release/simpledelegate.o
 release/treeitem.o
 release/treemodel.o
@@ -19,5 +20,6 @@ release/moc_delegate.o
 release/moc_dspmodule.o
 release/moc_imagesearchdialog.o
 release/moc_mainwindow.o
+release/moc_screenbuttonsdetector.o
 release/moc_simpledelegate.o
 release/moc_treemodel.o

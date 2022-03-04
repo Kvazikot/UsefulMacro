@@ -7,6 +7,7 @@ debug/delegate.o
 debug/dspmodule.o
 debug/imagesearchdialog.o
 debug/mainwindow.o
+debug/screenbuttonsdetector.o
 debug/simpledelegate.o
 debug/treeitem.o
 debug/treemodel.o
@@ -19,5 +20,6 @@ debug/moc_delegate.o
 debug/moc_dspmodule.o
 debug/moc_imagesearchdialog.o
 debug/moc_mainwindow.o
+debug/moc_screenbuttonsdetector.o
 debug/moc_simpledelegate.o
 debug/moc_treemodel.o

@@ -27,6 +27,7 @@
 #include "mainwindow.h"
 #include "imagesearchdialog.h"
 #include "areaselectordialog.h"
+#include "screenbuttonsdetector.h"
 
 #endif
 
@@ -40,8 +41,10 @@ int main(int argc, char *argv[])
 
     app.setApplicationName("UsefulClicker");
     app.setApplicationVersion("0.1a");
-    MainWindow mainwindow;
-    mainwindow.show();
+    //MainWindow mainwindow;
+    //mainwindow.show();
+    ScreenButtonsDetector detector;
+    detector.show();
     //ImageSearchDialog dlg;
     //dlg.show();
     return app.exec();

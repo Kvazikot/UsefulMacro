@@ -29,7 +29,7 @@ void AreaButton::mousePressEvent(QMouseEvent *ev)
     if ( ev->button() == Qt::MouseButton::LeftButton )
     {
         AreaSelectorDialog* dlg = new AreaSelectorDialog(0);
-        dlg->selectTargetImage();
+        //dlg->selectTargetImage();
         QRect curernt_geometry = dlg->geometry();
         curernt_geometry.setWidth(curernt_geometry.width()/2);
         curernt_geometry.setHeight(curernt_geometry.height()/2);
@@ -197,7 +197,7 @@ ComboEdit::ComboEdit(QWidget *parent) :
 
     cross_but = new CrossButton(0);
     cross_but->state = true;
-    cross_but->setIcon(":/knights-templar-cross.png", true, true);
+    cross_but->setIcon(":/templ_cross.png", true, true);
     //setContextMenuPolicy(Qt::PreventContextMenu);
     connect(cross_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
     connect(cross_but, SIGNAL(accept()),this, SLOT(updateSequence()));

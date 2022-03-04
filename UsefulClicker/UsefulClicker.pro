@@ -73,6 +73,7 @@ SOURCES += main.cpp \
     dspmodule.cpp \
     imagesearchdialog.cpp \
     mainwindow.cpp \
+    screenbuttonsdetector.cpp \
     simpledelegate.cpp \
     treeitem.cpp \
     treemodel.cpp
@@ -86,6 +87,7 @@ HEADERS += \
     dspmodule.h \
     imagesearchdialog.h \
     mainwindow.h \
+    screenbuttonsdetector.h \
     simpledelegate.h \
     treeitem.h \
     treemodel.h
@@ -97,7 +99,8 @@ FORMS += \
     areaselectordialog.ui \
     autocompleteeditor.ui \
     imagesearchdialog.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    screenbuttonsdetector.ui
 
 RESOURCES += \
     res.qrc

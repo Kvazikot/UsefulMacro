@@ -20,16 +20,15 @@
 */
 
 #include <QObject>
+#include <QScreen>
 #include <cmath>
+#include <QGuiApplication>
 #include <QDebug>
 #include <QPainter>
 #include <vector>
 #include <xmmintrin.h>
 #include "dspmodule.h"
 #include <malloc.h>
-#include <stdio.h>
-#include <cstdio>
-#include <cstdlib>
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
@@ -74,7 +73,7 @@ vector<vector<Point> > getCounters(Mat& TargetIn, bool andDraw)
     Canny( src_gray, canny_output, thresh, thresh*2 );
     vector<vector<Point> > contours;
     vector<Vec4i> hierarchy;
-    findContours( canny_output, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE );
+    findContours( canny_output, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE );
     imwrite("canny_output.bmp", canny_output);
 
     if(andDraw) drawCounters(canny_output.size(), contours);
@@ -95,10 +94,54 @@ void drawCounters(Size image_size, vector<vector<Point> >& contours, Mat backgro
 }
 
 
+void DspModule::detectButtons(int screen_num, QImage& in_out_image, vector<QRect>& rects)
+{
+    //makeScreenshot();
+    QScreen* screen = QGuiApplication::screens()[screen_num];
+    QImage screenshot = screen->grabWindow(0,0,0,screen->geometry().width(), screen->geometry().height()).toImage();
+    Mat areaImg;
+    areaImg.create(screenshot.height(), screenshot.width(), CV_8UC4);
+    Mat mat(screenshot.height(), screenshot.width(),CV_8UC4, screenshot.bits());
+    QRect r = screen->geometry();
+    Rect rect1(r.left(),r.top(),r.width(),r.height());
+    areaImg = Mat(mat, rect1);
+
+    Mat im_gray,canny_output;
+    cvtColor(areaImg, im_gray, COLOR_RGB2GRAY);
+    //imwrite("out.png", im_gray);
+
+    blur( im_gray, im_gray, Size(3,3) );
+    int thresh = 100;
+    Canny( im_gray, canny_output, thresh, thresh*2 );
+    Mat rect_kernel = getStructuringElement(MORPH_RECT, Size(4, 4));
+    dilate(canny_output, canny_output, rect_kernel, Point(-1, -1), 1);
+    vector<vector<Point> > contours;
+    vector<Vec4i> hierarchy;
+    findContours( canny_output, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE );
+
+    vector<double> areas;
+    //for(uint i=0; i < contours.size(); i++)
+     //   areas.push_back( contourArea(contours[i]) );
+    cvtColor(im_gray, im_gray, COLOR_GRAY2RGB);
+    RNG rng(12345);
+    for( size_t i = 0; i< contours.size(); i++ )
+    {
+        Scalar color = Scalar( rng.uniform(0, 100), rng.uniform(0,100), rng.uniform(0,100) );
+        //drawContours( canny_output, contours, (int)i, color, 2, LINE_8, noArray(), 0 );
+        cv::Rect r = minAreaRect(contours[i]).boundingRect();
+        rectangle(im_gray, r, color, 4);
+        rects.push_back(QRect(r.x,r.y,r.width,r.height));
+    }
+
+    //in_out_image = QImage((uchar*) drawing->data, drawing->cols, drawing->rows, drawing->step, QImage::Format_ARGB32);
+    imwrite("out.png", im_gray);
+
+}
+
 void DspModule::computeHaudorf()
 {
-    cv::Mat3b SearchIn = Mat3b::zeros(80,80);
-    cv::Mat3b TargetIn = Mat3b::zeros(80,80);
+    Mat3b SearchIn = Mat3b::zeros(80,80);
+    Mat3b TargetIn = Mat3b::zeros(80,80);
 
     SearchIn = imread("areaImg.bmp");
     TargetIn = imread("targetImg.bmp");
@@ -109,9 +152,9 @@ void DspModule::computeHaudorf()
     vector<double> areas1;
     vector<double> areas2;
     for(uint i=0; i < contours1.size(); i++)
-        areas1.push_back( cv::contourArea(contours1[i]) );
+        areas1.push_back( contourArea(contours1[i]) );
     for(uint i=0; i < contours2.size(); i++)
-        areas2.push_back( cv::contourArea(contours2[i]) );
+        areas2.push_back( contourArea(contours2[i]) );
 
     for(uint i=0; i < contours1.size(); i++)
         for(uint j=0; j < contours2.size(); j++)
