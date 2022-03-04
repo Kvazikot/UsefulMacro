@@ -165,6 +165,7 @@ debug/qrc_res.cpp: res.qrc \
 		mouse_scroll.png \
 		pause.jpg \
 		stop.jpg \
+		area_icon.png \
 		green_check_mark.png \
 		mouse_right_click.png \
 		red_check_mark.png \
@@ -2353,20 +2354,6 @@ debug/areaselectordialog.o: areaselectordialog.cpp ../../../../Qt/6.2.3/mingw_64
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/qinputmethod.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qlocale.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/qguiapplication_platform.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QComboBox \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qcombobox.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qstyleoption.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qabstractspinbox.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qvalidator.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qregularexpression.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qslider.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qabstractslider.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qstyle.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtabbar.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtabwidget.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qrubberband.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qabstractitemmodel.h \
 		e:/opencv/include/opencv2/opencv.hpp \
 		e:/opencv/build_mingw/opencv2/opencv_modules.hpp \
 		e:/opencv/modules/core/include/opencv2/core.hpp \
@@ -2660,7 +2647,11 @@ debug/autocompleteeditor.o: autocompleteeditor.cpp ../../../../Qt/6.2.3/mingw_64
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qlineedit.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextcursor.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextformat.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/QTimerEvent
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QTimerEvent \
+		areaselectordialog.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QDialog \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qdialog.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/QShowEvent
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\autocompleteeditor.o autocompleteeditor.cpp
 
 debug/canvas_label.o: canvas_label.cpp ../../../../Qt/6.2.3/mingw_64/include/QtGui/QPainter \

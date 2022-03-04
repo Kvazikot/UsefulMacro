@@ -13,5 +13,6 @@
         <file>mouse_right_click.png</file>
         <file>mouse_scroll.png</file>
         <file>knights-templar-cross.png</file>
+        <file>area_icon.png</file>
     </qresource>
 </RCC>

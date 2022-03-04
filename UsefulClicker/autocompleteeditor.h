@@ -47,6 +47,19 @@ signals:
     void click(QString button);
 };
 
+class AreaButton : public KeyboardButton
+{
+    Q_OBJECT
+public:
+    explicit AreaButton(QWidget *parent = nullptr);
+    void mousePressEvent(QMouseEvent *ev) override;
+public slots:
+    void areaSelected(QRect rect, QImage& rect_image);
+
+signals:
+    void click(QString button);
+};
+
 class CrossButton : public KeyboardButton
 {
     Q_OBJECT
@@ -57,7 +70,6 @@ signals:
     void click(QString button);
 };
 
-
 class ComboEdit : public QLineEdit
 {
     Q_OBJECT
@@ -66,6 +78,7 @@ public:
     KeyboardButton* keyboard_but;
     CrossButton* cross_but;
     MouseButton* mouse_but;
+    AreaButton* area_but;
 
     explicit ComboEdit(QWidget *parent = nullptr);
     void resizeEvent(QResizeEvent* event);

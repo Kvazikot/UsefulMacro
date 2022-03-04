@@ -27,6 +27,7 @@
 #include <QMouseEvent>
 #include <QResizeEvent>
 #include <QShowEvent>
+#include <QTimerEvent>
 
 namespace Ui {
 class AreaSelectorDialog;
@@ -37,6 +38,8 @@ class AreaSelectorDialog : public QDialog
     Q_OBJECT
 
 public:
+    QVector<QRectF> rectangles;
+    QImage rect_image;
     QPoint startWndCoords;
     QPoint prevMouseCoords;
     QPixmap screenshot;
@@ -50,6 +53,7 @@ public:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
+    void timerEvent(QTimerEvent* event);
     void showEvent(QShowEvent* event);
     void resizeEvent(QResizeEvent* event);
     void selectTargetImage();
@@ -62,6 +66,7 @@ public:
 signals:
     void sigSetRect(QRect rect, QPointF p);
     void sigSetAreaRect(QRect rect, QPointF p);
+    void sigSetImageRect(QRect rect, QImage& rect_image);
 
 private slots:
     void on_doneButton_clicked();

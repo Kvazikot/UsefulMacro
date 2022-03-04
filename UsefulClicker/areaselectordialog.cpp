@@ -58,6 +58,8 @@ AreaSelectorDialog::AreaSelectorDialog(QWidget *parent) :
     done_button->show();
     connect(done_button, SIGNAL(clicked()), this, SLOT(on_doneButton_clicked()));
 
+    startTimer(100);
+
 }
 
 void AreaSelectorDialog::setScreen(int n)
@@ -78,7 +80,7 @@ void AreaSelectorDialog::slotFullScreen()
 
     QScreen* screen = QGuiApplication::screens()[screenNum];
     setGeometry(screen->geometry());
-
+    rect_image = QImage(screen->geometry().width(),screen->geometry().height(), QImage::Format_ARGB32);
     //ui->label->setGeometry(screen->geometry());
     setCursor(Qt::CrossCursor);
 
@@ -111,6 +113,7 @@ void AreaSelectorDialog::selectTargetImage()
     fullscreenMode = false;
     QScreen* screen = QGuiApplication::screens()[screenNum];
     setGeometry(screen->geometry());
+    rect_image = QImage(screen->geometry().width(),screen->geometry().height(), QImage::Format_ARGB32);
 
 }
 
@@ -174,6 +177,7 @@ void AreaSelectorDialog::mouseReleaseEvent(QMouseEvent *event)
 
     QPointF p1 = geometry().topLeft();
     emit sigSetRect(selectedRect, p1);
+    emit sigSetImageRect(selectedRect, rect_image);
     if(fullscreenMode) close();
 }
 
@@ -211,6 +215,12 @@ void AreaSelectorDialog::resizeEvent(QResizeEvent* event)
     event->accept();
 }
 
+void AreaSelectorDialog::timerEvent(QTimerEvent* event)
+{
+    event->accept();
+    repaint();
+}
+
 void AreaSelectorDialog::paintEvent(QPaintEvent* event)
 {
     QPainter painter(this);
@@ -237,13 +247,32 @@ void AreaSelectorDialog::paintEvent(QPaintEvent* event)
         p[3] = p[1] * trns + center_rect.center()/2;
 
         //painter.drawRect()
-
+        rectangles.clear();
         QPainterPath path(QPointF(0,0));
         center_rect = QRectF(p[0], p[1]);
+        rectangles.append(center_rect);
         path.addRect(center_rect);
         center_rect = QRectF(p[2], p[3]);
+        rectangles.append(center_rect);
         path.addRect(center_rect);
+        rectangles.append(rect());
         path.addRect(rect());
+        QPoint pos = prevMouseCoords;// QCursor::pos();
+        //find witch rect is highlighted
+        float minArea=12121211211;
+        QRectF highlighted_rect;
+        for(auto r : rectangles)
+        {
+            if (r.contains(pos))
+            {
+                if( (r.width()*r.height()) < minArea)
+                {
+                    minArea = r.width()*r.height();
+                    highlighted_rect = r;
+                }
+            }
+        }
+
         //path.translate()
         QPen pen;
         pen.setWidth(5);
@@ -254,9 +283,17 @@ void AreaSelectorDialog::paintEvent(QPaintEvent* event)
         painter.drawLine(p[0].x(),center_rect.center().y(),
                          p[1].x(),center_rect.center().y());
         painter.drawPath(path);
+        painter.fillPath(path, Qt::red);
+
+        painter.fillRect(highlighted_rect, Qt::green);
+
     }
 
     painter.end();
+
+    //QPainter painter2(this);
+    //painter2.drawImage(rect(), rect_image);
+
     event->accept();
 
 }
