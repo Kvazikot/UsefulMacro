@@ -2,6 +2,7 @@
 #include <QPushButton>
 #include <QPainter>
 #include <QTimer>
+#include <algorithm>
 #include <opencv2/imgproc.hpp>
 #include "dspmodule.h"
 #include "screenbuttonsdetector.h"
@@ -29,21 +30,21 @@ ScreenButtonsDetector::ScreenButtonsDetector(QWidget *parent) :
     //ui->label->setScaledContents(false);
     //screenNum = 0;
     //fullscreenMode = false;
-
-    QPushButton* done_button = new QPushButton(this);
-    done_button->setGeometry(0,0,100,100);
-    QSizePolicy pol;
-    pol.setHorizontalPolicy(QSizePolicy::Minimum);
-    done_button->setSizePolicy(pol);
-    done_button->setText("done!");
-    done_button->show();
-    connect(done_button, SIGNAL(clicked()), this, SLOT(on_doneButton_clicked()));    
-
     //DspModule
     dsp = new DspModule();
-
+    kernel_size = 4;
     startTimer(10);
 
+
+}
+
+void ScreenButtonsDetector::mousePressEvent(QMouseEvent* event)
+{
+    event->accept();
+
+    //process selected rectangle
+
+    close();
 
 }
 
@@ -54,16 +55,43 @@ void ScreenButtonsDetector::mouseMoveEvent(QMouseEvent* event)
     event->accept();
 }
 
+void ScreenButtonsDetector::wheelEvent(QWheelEvent* event)
+{
+    int p = kernel_size;
+    if( event->angleDelta().y() > 0)
+       p-=1;
+    else
+        p+=1;
+
+    kernel_size = std::clamp(p, 2, 40);
+    rects.clear();
+    dsp->detectButtons(0, kernel_size, rects);
+
+}
+
 void ScreenButtonsDetector::paintEvent( QPaintEvent* event)
 {
     QPainter painter(this);
     for( auto r: rects)
     {
         if( r.contains(mpos) )
+        {
+            selected_rect = r;
             painter.fillRect(r, Qt::red);
+        }
         else
             painter.fillRect(r, Qt::green);
     }
+
+    QFont f;
+    f.setBold(true);
+    f.setPixelSize(24);
+    painter.setFont(f);
+    painter.setPen(Qt::red);
+
+
+    QString s = QString("x = %1 Select image to search. Use mouse wheel for fine tuning. ").arg(kernel_size);
+    painter.drawText(0,1000, s);
 }
 
 void ScreenButtonsDetector::timerEvent(QTimerEvent* event)
@@ -87,8 +115,7 @@ void ScreenButtonsDetector::setImage()
 
 void ScreenButtonsDetector::showEvent(QShowEvent* event)
 {
-    QImage out_image(100,100,QImage::Format_ARGB32);
-    dsp->detectButtons(0, out_image, rects);
+    dsp->detectButtons(0, kernel_size, rects);
     showFullScreen();
     //QTimer::singleShot(3000, this,  SLOT(setImage()));
 

@@ -94,11 +94,16 @@ void drawCounters(Size image_size, vector<vector<Point> >& contours, Mat backgro
 }
 
 
-void DspModule::detectButtons(int screen_num, QImage& in_out_image, vector<QRect>& rects)
+void DspModule::detectButtons(int screen_num, int kernel_size, vector<QRect>& rects)
 {
     //makeScreenshot();
     QScreen* screen = QGuiApplication::screens()[screen_num];
-    QImage screenshot = screen->grabWindow(0,0,0,screen->geometry().width(), screen->geometry().height()).toImage();
+    QImage screenshot = last_screenshot;
+    if( last_screenshot.width() != screen->geometry().width() )
+    {
+        screenshot = screen->grabWindow(0,0,0,screen->geometry().width(), screen->geometry().height()).toImage();
+        last_screenshot = screenshot;
+    }
     Mat areaImg;
     areaImg.create(screenshot.height(), screenshot.width(), CV_8UC4);
     Mat mat(screenshot.height(), screenshot.width(),CV_8UC4, screenshot.bits());
@@ -113,7 +118,7 @@ void DspModule::detectButtons(int screen_num, QImage& in_out_image, vector<QRect
     blur( im_gray, im_gray, Size(3,3) );
     int thresh = 100;
     Canny( im_gray, canny_output, thresh, thresh*2 );
-    Mat rect_kernel = getStructuringElement(MORPH_RECT, Size(4, 4));
+    Mat rect_kernel = getStructuringElement(MORPH_RECT, Size(kernel_size, kernel_size));
     dilate(canny_output, canny_output, rect_kernel, Point(-1, -1), 1);
     vector<vector<Point> > contours;
     vector<Vec4i> hierarchy;
@@ -134,7 +139,7 @@ void DspModule::detectButtons(int screen_num, QImage& in_out_image, vector<QRect
     }
 
     //in_out_image = QImage((uchar*) drawing->data, drawing->cols, drawing->rows, drawing->step, QImage::Format_ARGB32);
-    imwrite("out.png", im_gray);
+    //imwrite("out.png", im_gray);
 
 }
 

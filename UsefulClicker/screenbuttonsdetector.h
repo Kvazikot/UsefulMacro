@@ -7,6 +7,7 @@
 #include <QTimerEvent>
 #include <QMouseEvent>
 #include <QPaintEvent>
+#include <QWheelEvent>
 
 namespace Ui {
 class ScreenButtonsDetector;
@@ -20,11 +21,16 @@ public:
     explicit ScreenButtonsDetector(QWidget *parent = nullptr);
     std::vector<QRect> rects;
     QPoint mpos;
+    QRect selected_rect;
+    int kernel_size;
+
     void DetectButtons(int screenNum);
     void showEvent(QShowEvent* event);
     void timerEvent(QTimerEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
+    void mousePressEvent(QMouseEvent* event);
     void paintEvent( QPaintEvent* event);
+    void wheelEvent(QWheelEvent* event);
     ~ScreenButtonsDetector();
 
 public slots:

@@ -24,6 +24,7 @@ public:
         if (ScreenButtonsDetector->objectName().isEmpty())
             ScreenButtonsDetector->setObjectName(QString::fromUtf8("ScreenButtonsDetector"));
         ScreenButtonsDetector->resize(1938, 1098);
+        ScreenButtonsDetector->setMouseTracking(true);
         ScreenButtonsDetector->setWindowOpacity(0.400000000000000);
 
         retranslateUi(ScreenButtonsDetector);

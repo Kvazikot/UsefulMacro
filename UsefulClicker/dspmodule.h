@@ -32,10 +32,11 @@ class DspModule : public QObject
     Q_OBJECT
 public:
     std::vector<cv::Rect> text_areas;
+    QImage last_screenshot;
 
     DspModule();
     void computeHaudorf();
-    void detectButtons(int screen_num, QImage& in_out_image, std::vector<QRect>& rects);
+    void detectButtons(int screen_num, int kernel_size, std::vector<QRect>& rects);
     void findTextAreas();
     int X, Y;
 
