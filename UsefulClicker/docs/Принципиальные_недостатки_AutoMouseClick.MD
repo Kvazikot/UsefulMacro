@@ -79,6 +79,7 @@ visual basic.
 23. При импорте из xml схемы все теги <script> сохраняются в отдельные .py файлы в каталог scripts
  
  ## Стркуктура каталогов UsefulClicker
+```
 ├──  scripts
 │    ├──  youtube_search_by_list_shuffle_v2ю.py
 │    ├──  shuffle_strings.vbs
@@ -103,4 +104,4 @@ visual basic.
     ├── Screenshot_15.01._16.03.20020.jpg
  
  ## XML схема UsefulClicker
- 
+```
