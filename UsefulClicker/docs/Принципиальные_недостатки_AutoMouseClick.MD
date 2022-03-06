@@ -79,25 +79,28 @@ visual basic.
 23. При импорте из xml схемы все теги <script> сохраняются в отдельные .py файлы в каталог scripts
  
  ## Стркуктура каталогов UsefulClicker
- ..\scripts
-    youtube_search_by_list_shuffle_v2ю.py
-    shuffle_strings.vbs
-    extract_uppercase_pharazes.vbs
-    gen_url_hh.vbs
-..\docs
-   README.MD
-..\xml
-    rutracker_org_torrent_downloader.xml
-    shit_head_hunter_wit_hurl_generation.xml
-    piratebay_torrent_downloader.xml
-..\temp
-..\settings
-..\data
-..\lists
-   medical_search_list_rus.txt
-   6000_inventions_20_century_eng
-   common_english_shuffled.txt
- ..\data
+* ..\scripts
+*    youtube_search_by_list_shuffle_v2ю.py
+*    shuffle_strings.vbs
+*    extract_uppercase_pharazes.vbs
+*    gen_url_hh.vbs
+* ..\docs
+*   README.MD
+* ..\xml
+*    rutracker_org_torrent_downloader.xml
+*    shit_head_hunter_wit_hurl_generation.xml
+*    piratebay_torrent_downloader.xml
+* ..\temp
+* ..\settings
+* ..\data
+* ..\lists
+*   medical_search_list_rus.txt
+*   6000_inventions_20_century_eng
+*   common_english_shuffled.txt
+* ..\data
+* ..\images
+   Capture_15.01._16.03.20020.jpg
+   Screenshot_15.01._16.03.20020.jpg
  
  ## XML схема UsefulClicker
  
