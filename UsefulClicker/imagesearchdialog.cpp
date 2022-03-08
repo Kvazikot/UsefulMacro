@@ -2,7 +2,7 @@
 + - - - + - + - -
 + - + - + copyright by Vladimir Baranov (Kvazikot)  <br>
 + - + - + email: vsbaranov83@gmail.com  <br>
-+ - + - + github: https://github.com/Kvazikot/UsefulMacro/  <br>
++ - + - + github: https:/images//github.com/Kvazikot/UsefulMacro/  <br>
 ```
                           )            (
                          /(   (\___/)  )\
@@ -90,7 +90,7 @@ void ImageSearchDialog::slotAreaSelected(QRect rect, QPointF window_offset)
     *areaImg2 = cv::Mat(mat, rect1);
 
     QPixmap pix;
-    pix.load(":/green_check_mark.png");
+    pix.load(":/images/green_check_mark.png");
     ui->iconSearchArea->setPixmap(pix);
     cv::Size s1 = targetImg.size();
     cv::Size s2 = areaImg.size();
@@ -127,7 +127,7 @@ void ImageSearchDialog::slotTargetSelected(QRect rect, QPointF window_offset)
 
     // set check mark
     QPixmap pix;
-    pix.load(":/green_check_mark.png");
+    pix.load(":/images/green_check_mark.png");
     ui->iconTargetSelected->setPixmap(pix);
 
     // set Test click button to Enabled state

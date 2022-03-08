@@ -14,7 +14,7 @@ AreaButton::AreaButton(QWidget *parent)
     : KeyboardButton(parent)
 {
     setContextMenuPolicy(Qt::PreventContextMenu);
-    setIcon(":/area_icon.png", true, true);
+    setIcon(":/images/area_icon.png", true, true);
     repaint();
 }
 
@@ -71,7 +71,7 @@ MouseButton::MouseButton(QWidget *parent)
     : KeyboardButton(parent)
 {
     /*
-    icon_enabled = QImage(":/mouse_default.png");
+    icon_enabled = QImage(":/images/mouse_default.png");
     icon_enabled = icon_enabled.scaled(50,height());
     icon_disabled = icon_enabled;
     */
@@ -87,12 +87,12 @@ void MouseButton::mousePressEvent(QMouseEvent *ev)
     QString sequence;
     if( ev->button() == Qt::MouseButton::LeftButton )
     {
-        icon_enabled = QImage(":/mouse_left_click.png");
+        icon_enabled = QImage(":/images/mouse_left_click.png");
         sequence = "Left button";
     }
     if( ev->button() == Qt::MouseButton::RightButton )
     {
-        icon_enabled = QImage(":/mouse_right_click.png");
+        icon_enabled = QImage(":/images/mouse_right_click.png");
         sequence = "Right button";
     }
     //QTimer::singleShot(500,this,SIGNAL(accept()));
@@ -106,7 +106,7 @@ void MouseButton::mousePressEvent(QMouseEvent *ev)
 void MouseButton::wheelEvent(QWheelEvent *event)
 {
     event->accept();
-    icon_enabled = QImage(":/mouse_scroll.png");
+    icon_enabled = QImage(":/images/mouse_scroll.png");
     setPixmap(QPixmap::fromImage(icon_enabled));
 }
 
@@ -182,13 +182,13 @@ ComboEdit::ComboEdit(QWidget *parent) :
     QLineEdit(parent)
 {
     keyboard_but = new KeyboardButton(0);
-    keyboard_but->setIcon(":/keyboard_icon.png", true, false);
+    keyboard_but->setIcon(":/images/keyboard_icon.png", true, false);
     setContextMenuPolicy(Qt::PreventContextMenu);
     connect(keyboard_but, SIGNAL(clicked()),this, SLOT(slotKeyboardClick()));
     connect(keyboard_but, SIGNAL(accept()),this, SLOT(slotAccepted()));
 
     mouse_but = new MouseButton(0);
-    mouse_but->setIcon(":/mouse_default.png", true, true);
+    mouse_but->setIcon(":/images/mouse_default.png", true, true);
     connect(mouse_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
     connect(mouse_but, SIGNAL(accept()),this, SLOT(slotAccepted()));
 
@@ -197,7 +197,7 @@ ComboEdit::ComboEdit(QWidget *parent) :
 
     cross_but = new CrossButton(0);
     cross_but->state = true;
-    cross_but->setIcon(":/templ_cross.png", true, true);
+    cross_but->setIcon(":/images/templ_cross.png", true, true);
     //setContextMenuPolicy(Qt::PreventContextMenu);
     connect(cross_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
     connect(cross_but, SIGNAL(accept()),this, SLOT(updateSequence()));
@@ -206,7 +206,7 @@ ComboEdit::ComboEdit(QWidget *parent) :
 
     area_but = new AreaButton(0);
     area_but->state = true;
-    area_but->setIcon(":/area_icon.png", true, true);
+    area_but->setIcon(":/images/area_icon.png", true, true);
     //setContextMenuPolicy(Qt::PreventContextMenu);
     connect(area_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
     connect(area_but, SIGNAL(accept()),this, SLOT(updateSequence()));
@@ -349,7 +349,7 @@ AutocompleteEditor::AutocompleteEditor(QWidget *parent) :
     connect(edit, SIGNAL(sigSetSequence(QString)), this, SLOT(updateSequence(QString)));
     setContextMenuPolicy(Qt::PreventContextMenu);
 
-    setItemIcon(0, QIcon(":/keyboard_red.png"));
+    setItemIcon(0, QIcon(":/images/keyboard_red.png"));
     completion_list = {"Right click",
                        "Left click",
                        "Esc",
@@ -387,7 +387,7 @@ void AutocompleteEditor::keyPressEvent(QKeyEvent* event)
     {
         //this->clear();
         insertItems(0, filtered_list);
-        setItemIcon(0, QIcon(":/keyboard_red.png"));
+        setItemIcon(0, QIcon(":/images/keyboard_red.png"));
         showPopup();
     }
     event->accept();
@@ -406,11 +406,11 @@ void AutocompleteEditor::setValue(QString value)
 
     // set buttons state
     if( value.contains("Scroll") )
-        edit ->mouse_but->setIcon(":/mouse_scroll.png");
+        edit ->mouse_but->setIcon(":/images/mouse_scroll.png");
     if( value.contains("Left") )
-        edit ->mouse_but->setIcon(":/mouse_left_click.png");
+        edit ->mouse_but->setIcon(":/images/mouse_left_click.png");
     if( value.contains("Right") )
-        edit ->mouse_but->setIcon(":/mouse_right_click.png");
+        edit ->mouse_but->setIcon(":/images/mouse_right_click.png");
 
 }
 

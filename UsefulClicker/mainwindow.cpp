@@ -2,7 +2,7 @@
 + - - - + - + - -
 + - + - + copyright by Vladimir Baranov (Kvazikot)  <br>
 + - + - + email: vsbaranov83@gmail.com  <br>
-+ - + - + github: https://github.com/Kvazikot/UsefulMacro/  <br>
++ - + - + github: https:/images//github.com/Kvazikot/UsefulMacro/  <br>
 ```
                           )            (
                          /(   (\___/)  )\
@@ -23,7 +23,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2016 The Qt Company Ltd.
-** Contact: https://www.qt.io/licensing/
+** Contact: https:/images//www.qt.io/licensing/
 **
 ** This file is part of the examples of the Qt Toolkit.
 **
@@ -33,8 +33,8 @@
 ** accordance with the commercial license agreement provided with the
 ** Software or, alternatively, in accordance with the terms contained in
 ** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see https://www.qt.io/terms-conditions. For further
-** information use the contact form at https://www.qt.io/contact-us.
+** and conditions see https:/images//www.qt.io/terms-conditions. For further
+** information use the contact form at https:/images//www.qt.io/contact-us.
 **
 ** BSD License Usage
 ** Alternatively, you may use this file under the terms of the BSD license
@@ -74,10 +74,56 @@
 #include "treemodel.h"
 #include <QToolBar>
 #include <QFile>
+#include <QDir>
 #include <QStandardItemModel>
 #include "simpledelegate.h"
 #include "aboutbox.h"
 #include "delegate.h"
+#include "dommodel.h"
+
+void MainWindow::loadDocument()
+{
+    QString filename = QDir::currentPath() + "/xml/sheme1.xml";
+    QDomDocument document(filename);
+
+    QDomDocument doc("mydocument");
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "cannot open " << filename;
+        return;
+    }
+    if (!doc.setContent(&file)) {
+        file.close();
+        return;
+    }
+    file.close();
+
+
+    // print out the element names of all elements that are direct children
+    // of the outermost element.
+    QDomElement docElem = doc.documentElement();
+
+    QDomNode n = docElem.firstChild();
+    while(!n.isNull()) {
+        QDomElement e = n.toElement(); // try to convert the node to an element.
+        if(!e.isNull()) {
+            qDebug() << qPrintable(e.tagName()) << '\n'; // the node really is an element.
+        }
+        n = n.nextSibling();
+    }
+
+    // Here we append a new element to the end of the document
+    QDomElement elem = doc.createElement("img");
+    elem.setAttribute("src", "myimage.png");
+    docElem.appendChild(elem);
+
+    DomModel* model = new DomModel(doc);
+
+    view->setModel(model);
+
+//-----------------------------------------------------------
+}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -89,25 +135,33 @@ MainWindow::MainWindow(QWidget *parent)
     QFile file("default.txt");
     if(!file.open(QIODevice::ReadOnly))
         return;
+
     TreeModel *model = new TreeModel(headers, file.readAll(), this);
     file.close();
+
+    //----------------------------------------------------
+    loadDocument();
+//--------------------------------------------------------------------
+
     //QStandardItemModel* model = new QStandardItemModel(4, 2);
     //view->horizontalHeader()->setStretchLastSection(true);
 
     QToolBar* toolbar = new QToolBar(this);
-    toolbar->addAction(QIcon(":/play.jpg"), "Play");
+    toolbar->addAction(QIcon(":/images/play.jpg"), "Play");
     addToolBar(toolbar);
 
-    view->setModel(model);
+    //view->setModel(model);
 
     view->header()->setStretchLastSection(true);
     QHeaderView *verticalHeader = view->header();
-    verticalHeader->setSectionResizeMode(QHeaderView::Fixed);
+    verticalHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
     verticalHeader->setDefaultSectionSize(42);
+    verticalHeader->resizeSection(2, 200);
 
 
     FancyDelegate* spinbox = new FancyDelegate(view);
     view->setItemDelegate(spinbox);
+
     //view->setItemDelegate(new SimpleDelegate(view));
     view->setEditTriggers(QAbstractItemView::EditTrigger::AllEditTriggers);
 

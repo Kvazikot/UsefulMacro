@@ -48,48 +48,29 @@
 **
 ****************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef DOMITEM_H
+#define DOMITEM_H
 
-#include "ui_mainwindow.h"
-#include <QMouseEvent>
-#include <QMainWindow>
+#include <QDomNode>
+#include <QHash>
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+//! [0]
+class DomItem
 {
-    Q_OBJECT
-
 public:
-    MainWindow(QWidget *parent = nullptr);
-    //Main Action of the Application UsefulClicker
-    QAction* rightClickAction;
-    QAction* leftClickAction;
-    QAction* hotkeyAction;
-    QAction* presskeyAction;
-    QAction* scrollupAction;
-    QAction* scrolldownAction;
-    QAction* launchprogramAction;
-    QAction* imagesearchAction;
-    QAction* typecommentAction;
+    DomItem(const QDomNode &node, int row, DomItem *parent = nullptr);
+    ~DomItem();
+    DomItem *child(int i);
+    DomItem *parent();
+    QDomNode node() const;
+    int row() const;
 
-    QAction* playAction;
-
-    void mousePressEvent(QMouseEvent* event);
-    void loadDocument();
-
-
-public slots:
-    void updateActions();
-    void about();
-    void save();
-    void itemActivated(QModelIndex& index);
-
-private slots:
-    void insertChild();
-    bool insertColumn();
-    void insertRow();
-    bool removeColumn();
-    void removeRow();
+private:
+    QDomNode domNode;
+    QHash<int, DomItem *> childItems;
+    DomItem *parentItem;
+    int rowNumber;
 };
+//! [0]
 
-#endif // MAINWINDOW_H
+#endif // DOMITEM_H

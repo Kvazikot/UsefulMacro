@@ -1,10 +1,9 @@
-QT += core gui widgets opengl openglwidgets
+QT += core gui widgets opengl openglwidgets xml
 QMAKE_CXXFLAGS += -std=c++17
 TARGET = UsefulClicker
 TEMPLATE = app
 QMAKE_FLAGS_RELEASE += -O3 -msse4.1 -mssse3 -msse3 -msse2 -msse
 QMAKE_CXXFLAGS_RELEASE += -O3 -msse4.1 -mssse3 -msse3 -msse2 -msse
-
 OPENCV_451_PATH = "e:\\opencv"
 INCLUDEPATH += $$(PYTHON_PATH)\\include
 #INCLUDEPATH +=$$OPENCV_451_PATH\\dlib\\dlib\\external\\pybind11\\include\\
@@ -70,6 +69,8 @@ SOURCES += main.cpp \
     autocompleteeditor.cpp \
     canvas_label.cpp \
     delegate.cpp \
+    domitem.cpp \
+    dommodel.cpp \
     dspmodule.cpp \
     imagesearchdialog.cpp \
     mainwindow.cpp \
@@ -84,6 +85,8 @@ HEADERS += \
     autocompleteeditor.h \
     canvas_label.h \
     delegate.h \
+    domitem.h \
+    dommodel.h \
     dspmodule.h \
     imagesearchdialog.h \
     mainwindow.h \

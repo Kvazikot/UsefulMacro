@@ -212,6 +212,7 @@ Makefile: UsefulClicker.pro ../../../../Qt/6.2.3/mingw_64/mkspecs/win32-g++/qmak
 		../../../../Qt/6.2.3/mingw_64/lib/Qt6Widgets.prl \
 		../../../../Qt/6.2.3/mingw_64/lib/Qt6OpenGL.prl \
 		../../../../Qt/6.2.3/mingw_64/lib/Qt6Gui.prl \
+		../../../../Qt/6.2.3/mingw_64/lib/Qt6Xml.prl \
 		../../../../Qt/6.2.3/mingw_64/lib/Qt6Core.prl \
 		../../../../Qt/6.2.3/mingw_64/lib/Qt6EntryPoint.prl \
 		../../../../Qt/6.2.3/mingw_64/mkspecs/features/build_pass.prf \
@@ -359,6 +360,7 @@ UsefulClicker.pro:
 ../../../../Qt/6.2.3/mingw_64/lib/Qt6Widgets.prl:
 ../../../../Qt/6.2.3/mingw_64/lib/Qt6OpenGL.prl:
 ../../../../Qt/6.2.3/mingw_64/lib/Qt6Gui.prl:
+../../../../Qt/6.2.3/mingw_64/lib/Qt6Xml.prl:
 ../../../../Qt/6.2.3/mingw_64/lib/Qt6Core.prl:
 ../../../../Qt/6.2.3/mingw_64/lib/Qt6EntryPoint.prl:
 ../../../../Qt/6.2.3/mingw_64/mkspecs/features/build_pass.prf:

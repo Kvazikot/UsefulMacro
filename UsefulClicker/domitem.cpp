@@ -48,48 +48,62 @@
 **
 ****************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#include "domitem.h"
 
-#include "ui_mainwindow.h"
-#include <QMouseEvent>
-#include <QMainWindow>
+#include <QtXml>
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+//! [0]
+DomItem::DomItem(const QDomNode &node, int row, DomItem *parent)
+    : domNode(node),
+//! [0]
+      // Record the item's location within its parent.
+//! [1]
+      parentItem(parent),
+      rowNumber(row)
+{}
+//! [1]
+
+//! [2]
+DomItem::~DomItem()
 {
-    Q_OBJECT
+    qDeleteAll(childItems);
+}
+//! [2]
 
-public:
-    MainWindow(QWidget *parent = nullptr);
-    //Main Action of the Application UsefulClicker
-    QAction* rightClickAction;
-    QAction* leftClickAction;
-    QAction* hotkeyAction;
-    QAction* presskeyAction;
-    QAction* scrollupAction;
-    QAction* scrolldownAction;
-    QAction* launchprogramAction;
-    QAction* imagesearchAction;
-    QAction* typecommentAction;
+//! [3]
+QDomNode DomItem::node() const
+{
+    return domNode;
+}
+//! [3]
 
-    QAction* playAction;
+//! [4]
+DomItem *DomItem::parent()
+{
+    return parentItem;
+}
+//! [4]
 
-    void mousePressEvent(QMouseEvent* event);
-    void loadDocument();
+//! [5]
+DomItem *DomItem::child(int i)
+{
+    DomItem *childItem = childItems.value(i);
+    if (childItem)
+        return childItem;
 
+    // if child does not yet exist, create it
+    if (i >= 0 && i < domNode.childNodes().count()) {
+        QDomNode childNode = domNode.childNodes().item(i);
+        childItem = new DomItem(childNode, i, this);
+        childItems[i] = childItem;
+    }
+    return childItem;
+}
+//! [5]
 
-public slots:
-    void updateActions();
-    void about();
-    void save();
-    void itemActivated(QModelIndex& index);
-
-private slots:
-    void insertChild();
-    bool insertColumn();
-    void insertRow();
-    bool removeColumn();
-    void removeRow();
-};
-
-#endif // MAINWINDOW_H
+//! [6]
+int DomItem::row() const
+{
+    return rowNumber;
+}
+//! [6]

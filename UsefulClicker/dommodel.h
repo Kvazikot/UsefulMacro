@@ -48,48 +48,38 @@
 **
 ****************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef DOMMODEL_H
+#define DOMMODEL_H
 
-#include "ui_mainwindow.h"
-#include <QMouseEvent>
-#include <QMainWindow>
+#include <QAbstractItemModel>
+#include <QDomDocument>
+#include <QModelIndex>
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+class DomItem;
+
+//! [0]
+class DomModel : public QAbstractItemModel
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    //Main Action of the Application UsefulClicker
-    QAction* rightClickAction;
-    QAction* leftClickAction;
-    QAction* hotkeyAction;
-    QAction* presskeyAction;
-    QAction* scrollupAction;
-    QAction* scrolldownAction;
-    QAction* launchprogramAction;
-    QAction* imagesearchAction;
-    QAction* typecommentAction;
+    explicit DomModel(const QDomDocument &document, QObject *parent = nullptr);
+    ~DomModel();
 
-    QAction* playAction;
+    QVariant data(const QModelIndex &index, int role) const override;
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
+    QVariant headerData(int section, Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const override;
+    QModelIndex index(int row, int column,
+                      const QModelIndex &parent = QModelIndex()) const override;
+    QModelIndex parent(const QModelIndex &child) const override;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
-    void mousePressEvent(QMouseEvent* event);
-    void loadDocument();
-
-
-public slots:
-    void updateActions();
-    void about();
-    void save();
-    void itemActivated(QModelIndex& index);
-
-private slots:
-    void insertChild();
-    bool insertColumn();
-    void insertRow();
-    bool removeColumn();
-    void removeRow();
+private:
+    QDomDocument domDocument;
+    DomItem *rootItem;
 };
+//! [0]
 
-#endif // MAINWINDOW_H
+#endif // DOMMODEL_H
