@@ -3,6 +3,7 @@
 
 #include <QLabel>
 #include <QVector>
+#include <QHBoxLayout>
 #include <QWidget>
 #include <QResizeEvent>
 #include <QMouseEvent>
@@ -79,6 +80,8 @@ public:
     CrossButton* cross_but;
     MouseButton* mouse_but;
     AreaButton* area_but;
+    QHBoxLayout* hbox;
+    int hbox_width;
 
     explicit ComboEdit(QWidget *parent = nullptr);
     void resizeEvent(QResizeEvent* event);

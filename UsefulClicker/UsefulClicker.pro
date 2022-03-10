@@ -1,4 +1,4 @@
-QT += core gui widgets opengl openglwidgets xml
+QT += core gui widgets  xml
 QMAKE_CXXFLAGS += -std=c++17
 TARGET = UsefulClicker
 TEMPLATE = app
@@ -68,9 +68,9 @@ SOURCES += main.cpp \
     areaselectordialog.cpp \
     autocompleteeditor.cpp \
     canvas_label.cpp \
+    clickermodel.cpp \
     delegate.cpp \
     domitem.cpp \
-    dommodel.cpp \
     dspmodule.cpp \
     imagesearchdialog.cpp \
     mainwindow.cpp \
@@ -84,9 +84,9 @@ HEADERS += \
     areaselectordialog.h \
     autocompleteeditor.h \
     canvas_label.h \
+    clickermodel.h \
     delegate.h \
     domitem.h \
-    dommodel.h \
     dspmodule.h \
     imagesearchdialog.h \
     mainwindow.h \
@@ -107,3 +107,7 @@ FORMS += \
 
 RESOURCES += \
     res.qrc
+
+DISTFILES += \
+    settings/UsefulClicker.ini \
+    xml/sheme1.xml

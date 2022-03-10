@@ -74,56 +74,42 @@
 #include "treemodel.h"
 #include <QToolBar>
 #include <QFile>
+#include <QSettings>
 #include <QDir>
 #include <QStandardItemModel>
 #include "simpledelegate.h"
 #include "aboutbox.h"
 #include "delegate.h"
-#include "dommodel.h"
+#include "clickermodel.h"
+
+void MainWindow::refresh()
+{
+    loadDocument();
+    loadSettings();
+}
 
 void MainWindow::loadDocument()
 {
-    QString filename = QDir::currentPath() + "/xml/sheme1.xml";
-    QDomDocument document(filename);
 
-    QDomDocument doc("mydocument");
-    QFile file(filename);
-    if (!file.open(QIODevice::ReadOnly))
-    {
-        qDebug() << "cannot open " << filename;
-        return;
-    }
-    if (!doc.setContent(&file)) {
-        file.close();
-        return;
-    }
-    file.close();
-
-
-    // print out the element names of all elements that are direct children
-    // of the outermost element.
-    QDomElement docElem = doc.documentElement();
-
-    QDomNode n = docElem.firstChild();
-    while(!n.isNull()) {
-        QDomElement e = n.toElement(); // try to convert the node to an element.
-        if(!e.isNull()) {
-            qDebug() << qPrintable(e.tagName()) << '\n'; // the node really is an element.
-        }
-        n = n.nextSibling();
-    }
-
-    // Here we append a new element to the end of the document
-    QDomElement elem = doc.createElement("img");
-    elem.setAttribute("src", "myimage.png");
-    docElem.appendChild(elem);
-
-    DomModel* model = new DomModel(doc);
-
+    ClickerDocument* doc = new ClickerDocument( QDir::currentPath() + "/xml/sheme2.xml");
+    ClickerModel* model = new ClickerModel(*doc);
     view->setModel(model);
+}
+
+void MainWindow::loadSettings()
+{
+    // load settings
+    QString m_strWorkingPath(QDir::currentPath() + "/settings/UsefulClicker.ini");
+    QSettings * settings = 0;
+    QString strKey("common");
+    settings = new QSettings( m_strWorkingPath, QSettings::IniFormat );
+    auto hideCodeTags = settings->value( strKey + "/hideCodeTags", "r").toBool();
+    auto hideAllNonClickerTags = settings->value( strKey + "/hideAllNonClickerTags", "r").toBool();
+    qDebug() << "hideCodeTags="  << hideCodeTags << "\nhideAllNonClickerTags=" << hideAllNonClickerTags << "\n";
+
+}
 
 //-----------------------------------------------------------
-}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -142,22 +128,31 @@ MainWindow::MainWindow(QWidget *parent)
     //----------------------------------------------------
     loadDocument();
 //--------------------------------------------------------------------
+    loadSettings();
+    //set view menu checks
+
+    //--------------------------------------------------------------------
 
     //QStandardItemModel* model = new QStandardItemModel(4, 2);
     //view->horizontalHeader()->setStretchLastSection(true);
 
     QToolBar* toolbar = new QToolBar(this);
-    toolbar->addAction(QIcon(":/images/play.jpg"), "Play");
+    QAction* playAction =  toolbar->addAction(QIcon(":/images/play.jpg"), "Play");
+    QAction* refreshAction =  toolbar->addAction(QIcon(":/images/refresh-icon.png"), "Refresh");
+    connect(refreshAction, &QAction::triggered, this, &MainWindow::refresh);
     addToolBar(toolbar);
 
     //view->setModel(model);
 
-    view->header()->setStretchLastSection(true);
-    QHeaderView *verticalHeader = view->header();
-    verticalHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
-    verticalHeader->setDefaultSectionSize(42);
-    verticalHeader->resizeSection(2, 200);
-
+//    view->header()->setStretchLastSection(true);
+//    QHeaderView *verticalHeader = view->header();
+//    verticalHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
+//    verticalHeader->setDefaultSectionSize(200);
+//    //verticalHeader->resizeSection(2, 200);
+//    view->header()->resizeSections(QHeaderView::Interactive);
+//    view->header()->setMinimumSectionSize(200);
+//    view->header()->setStretchLastSection(true);
+//    view->header()->setCascadingSectionResizes(true);
 
     FancyDelegate* spinbox = new FancyDelegate(view);
     view->setItemDelegate(spinbox);
@@ -166,12 +161,15 @@ MainWindow::MainWindow(QWidget *parent)
     view->setEditTriggers(QAbstractItemView::EditTrigger::AllEditTriggers);
 
     connect(view, SIGNAL(activated()), this, SLOT(itemActivated()));
+    view->parentWidget()->setStyleSheet("QTreeView::item { padding: 10px }; white-space:pre-wrap; word-wrap:break-word" );
 
     //
     for (int column = 0; column < model->columnCount(); ++column)
-        view->resizeColumnToContents(column);
+    {
+        view->setColumnWidth(column, 500);
+    }
 
-    view->setColumnWidth(0, 500);
+
 
     connect(exitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
 

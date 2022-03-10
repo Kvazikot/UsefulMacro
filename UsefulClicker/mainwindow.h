@@ -76,11 +76,13 @@ public:
 
     void mousePressEvent(QMouseEvent* event);
     void loadDocument();
+    void loadSettings();
 
 
 public slots:
     void updateActions();
     void about();
+    void refresh();
     void save();
     void itemActivated(QModelIndex& index);
 

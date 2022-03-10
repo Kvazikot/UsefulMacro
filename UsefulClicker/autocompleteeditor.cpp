@@ -192,39 +192,30 @@ ComboEdit::ComboEdit(QWidget *parent) :
     connect(mouse_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
     connect(mouse_but, SIGNAL(accept()),this, SLOT(slotAccepted()));
 
-    keyboard_but->setGeometry(width()-keyboard_but->width()-10,1,50,15);
-    mouse_but->setGeometry(width()-keyboard_but->width()-mouse_but->width()-15,1,50,15);
-
     cross_but = new CrossButton(0);
     cross_but->state = true;
     cross_but->setIcon(":/images/templ_cross.png", true, true);
-    //setContextMenuPolicy(Qt::PreventContextMenu);
     connect(cross_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
     connect(cross_but, SIGNAL(accept()),this, SLOT(updateSequence()));
-    cross_but->setGeometry(width()-keyboard_but->width()-mouse_but->width()-cross_but->width()-15,1,50,15);
-
 
     area_but = new AreaButton(0);
     area_but->state = true;
     area_but->setIcon(":/images/area_icon.png", true, true);
-    //setContextMenuPolicy(Qt::PreventContextMenu);
     connect(area_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
     connect(area_but, SIGNAL(accept()),this, SLOT(updateSequence()));
-    area_but->setGeometry(width()-keyboard_but->width()-mouse_but->width()-cross_but->width() - area_but->width()-15,1,50,15);
-
-
-
     connect(QCoreApplication::instance(), SIGNAL(focusChanged(QWidget*, QWidget*)), this, SLOT(slotFocusChanged(QWidget*, QWidget*)));
 
+    hbox = new QHBoxLayout((QWidget*)this->parent());
+    hbox->addWidget(this);
+    hbox->addWidget(area_but);
+    hbox->addWidget(cross_but);
+    hbox->addWidget(keyboard_but);
+    hbox->addWidget(mouse_but);
+    hbox->setStretch(0, 100);
 
-    //label->show();
-    QHBoxLayout hbox((QWidget*)this->parent());
-    hbox.addWidget(this);
-    hbox.addWidget(area_but);
-    hbox.addWidget(cross_but);
-    hbox.addWidget(keyboard_but);
-    hbox.addWidget(mouse_but);
-    hbox.setStretch(0, 100);
+    QWidget* w = (QWidget*)this->parent();
+    w->setLayout(hbox);
+
 }
 
 void ComboEdit::slotCrossClick()
@@ -311,10 +302,6 @@ void ComboEdit::slotSetSequence(QString sequence)
 
 void ComboEdit::resizeEvent(QResizeEvent* event)
 {
-    keyboard_but->setGeometry(width()-keyboard_but->width()-10,1,50,15);
-    mouse_but->setGeometry(width()-keyboard_but->width()-mouse_but->width()-15,1,50,15);
-    cross_but->setGeometry(width()-keyboard_but->width()-mouse_but->width()-cross_but->width()-15,1,50,15);
-    area_but->setGeometry(width()-keyboard_but->width()-mouse_but->width()-cross_but->width() - area_but->width()-15,1,50,15);
     event->accept();
 }
 

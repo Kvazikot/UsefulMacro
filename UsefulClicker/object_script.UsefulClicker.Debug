@@ -3,9 +3,9 @@ debug/aboutbox.o
 debug/areaselectordialog.o
 debug/autocompleteeditor.o
 debug/canvas_label.o
+debug/clickermodel.o
 debug/delegate.o
 debug/domitem.o
-debug/dommodel.o
 debug/dspmodule.o
 debug/imagesearchdialog.o
 debug/mainwindow.o
@@ -18,8 +18,8 @@ debug/moc_aboutbox.o
 debug/moc_areaselectordialog.o
 debug/moc_autocompleteeditor.o
 debug/moc_canvas_label.o
+debug/moc_clickermodel.o
 debug/moc_delegate.o
-debug/moc_dommodel.o
 debug/moc_dspmodule.o
 debug/moc_imagesearchdialog.o
 debug/moc_mainwindow.o

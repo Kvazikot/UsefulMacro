@@ -36,6 +36,8 @@ public:
     QAction *actionSave;
     QAction *actionSave_as;
     QAction *actionOpen;
+    QAction *actionhideCodeTags;
+    QAction *actionhideAllNonClickerTags;
     QWidget *centralwidget;
     QVBoxLayout *vboxLayout;
     QTreeView *view;
@@ -43,13 +45,14 @@ public:
     QMenu *fileMenu;
     QMenu *actionsMenu;
     QMenu *menuAbout;
+    QMenu *menuView;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(573, 468);
+        MainWindow->resize(1276, 858);
         exitAction = new QAction(MainWindow);
         exitAction->setObjectName(QString::fromUtf8("exitAction"));
         insertRowAction = new QAction(MainWindow);
@@ -70,6 +73,12 @@ public:
         actionSave_as->setObjectName(QString::fromUtf8("actionSave_as"));
         actionOpen = new QAction(MainWindow);
         actionOpen->setObjectName(QString::fromUtf8("actionOpen"));
+        actionhideCodeTags = new QAction(MainWindow);
+        actionhideCodeTags->setObjectName(QString::fromUtf8("actionhideCodeTags"));
+        actionhideCodeTags->setCheckable(true);
+        actionhideAllNonClickerTags = new QAction(MainWindow);
+        actionhideAllNonClickerTags->setObjectName(QString::fromUtf8("actionhideAllNonClickerTags"));
+        actionhideAllNonClickerTags->setCheckable(true);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         vboxLayout = new QVBoxLayout(centralwidget);
@@ -87,19 +96,26 @@ public:
         view->setSortingEnabled(false);
         view->setAnimated(false);
         view->setAllColumnsShowFocus(true);
+        view->header()->setCascadingSectionResizes(true);
+        view->header()->setMinimumSectionSize(222);
+        view->header()->setDefaultSectionSize(222);
+        view->header()->setHighlightSections(true);
+        view->header()->setProperty("showSortIndicator", QVariant(false));
 
         vboxLayout->addWidget(view);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 573, 21));
+        menubar->setGeometry(QRect(0, 0, 1276, 21));
         fileMenu = new QMenu(menubar);
         fileMenu->setObjectName(QString::fromUtf8("fileMenu"));
         actionsMenu = new QMenu(menubar);
         actionsMenu->setObjectName(QString::fromUtf8("actionsMenu"));
         menuAbout = new QMenu(menubar);
         menuAbout->setObjectName(QString::fromUtf8("menuAbout"));
+        menuView = new QMenu(menubar);
+        menuView->setObjectName(QString::fromUtf8("menuView"));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -108,6 +124,7 @@ public:
         menubar->addAction(fileMenu->menuAction());
         menubar->addAction(actionsMenu->menuAction());
         menubar->addAction(menuAbout->menuAction());
+        menubar->addAction(menuView->menuAction());
         fileMenu->addAction(actionOpen);
         fileMenu->addAction(actionSave);
         fileMenu->addAction(actionSave_as);
@@ -119,6 +136,8 @@ public:
         actionsMenu->addSeparator();
         actionsMenu->addAction(insertChildAction);
         menuAbout->addAction(actionAbout);
+        menuView->addAction(actionhideCodeTags);
+        menuView->addAction(actionhideAllNonClickerTags);
 
         retranslateUi(MainWindow);
 
@@ -156,9 +175,12 @@ public:
         actionSave->setText(QCoreApplication::translate("MainWindow", "Save", nullptr));
         actionSave_as->setText(QCoreApplication::translate("MainWindow", "Save as...", nullptr));
         actionOpen->setText(QCoreApplication::translate("MainWindow", "Open", nullptr));
+        actionhideCodeTags->setText(QCoreApplication::translate("MainWindow", "hideCodeTags", nullptr));
+        actionhideAllNonClickerTags->setText(QCoreApplication::translate("MainWindow", "hideAllNonClickerTags", nullptr));
         fileMenu->setTitle(QCoreApplication::translate("MainWindow", "&File", nullptr));
         actionsMenu->setTitle(QCoreApplication::translate("MainWindow", "&Actions", nullptr));
         menuAbout->setTitle(QCoreApplication::translate("MainWindow", "About", nullptr));
+        menuView->setTitle(QCoreApplication::translate("MainWindow", "View", nullptr));
     } // retranslateUi
 
 };

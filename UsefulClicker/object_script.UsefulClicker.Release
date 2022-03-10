@@ -3,9 +3,9 @@ release/aboutbox.o
 release/areaselectordialog.o
 release/autocompleteeditor.o
 release/canvas_label.o
+release/clickermodel.o
 release/delegate.o
 release/domitem.o
-release/dommodel.o
 release/dspmodule.o
 release/imagesearchdialog.o
 release/mainwindow.o
@@ -18,8 +18,8 @@ release/moc_aboutbox.o
 release/moc_areaselectordialog.o
 release/moc_autocompleteeditor.o
 release/moc_canvas_label.o
+release/moc_clickermodel.o
 release/moc_delegate.o
-release/moc_dommodel.o
 release/moc_dspmodule.o
 release/moc_imagesearchdialog.o
 release/moc_mainwindow.o

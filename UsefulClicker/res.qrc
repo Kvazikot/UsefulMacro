@@ -1,18 +1,19 @@
 <RCC>
     <qresource prefix="/">
-        <file>.\images\green_check_mark.png</file>
-        <file>.\images\red_check_mark.png</file>
+        <file>images/green_check_mark.png</file>
+        <file>images/red_check_mark.png</file>
         <file>default.txt</file>
-        <file>.\images\pause.jpg</file>
-        <file>.\images\play.jpg</file>
-        <file>.\images\stop.jpg</file>
-        <file>.\images\keyboard_icon.png</file>
-        <file>.\images\vector-mouse-icon.jpg</file>
-        <file>.\images\mouse_default.png</file>
-        <file>.\images\mouse_left_click.png</file>
-        <file>.\images\mouse_right_click.png</file>
-        <file>.\images\mouse_scroll.png</file>
-        <file>.\images\knights-templar-cross.png</file>
-        <file>.\images\area_icon.png</file>
+        <file>images/pause.jpg</file>
+        <file>images/play.jpg</file>
+        <file>images/stop.jpg</file>
+        <file>images/keyboard_icon.png</file>
+        <file>images/vector-mouse-icon.jpg</file>
+        <file>images/mouse_default.png</file>
+        <file>images/mouse_left_click.png</file>
+        <file>images/mouse_right_click.png</file>
+        <file>images/mouse_scroll.png</file>
+        <file>images/knights-templar-cross.png</file>
+        <file>images/area_icon.png</file>
+        <file>images/refresh-icon.png</file>
     </qresource>
 </RCC>

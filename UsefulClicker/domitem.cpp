@@ -60,7 +60,9 @@ DomItem::DomItem(const QDomNode &node, int row, DomItem *parent)
 //! [1]
       parentItem(parent),
       rowNumber(row)
-{}
+{
+
+}
 //! [1]
 
 //! [2]
