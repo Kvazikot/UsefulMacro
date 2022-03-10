@@ -91,6 +91,7 @@ void MainWindow::refresh()
 void MainWindow::loadDocument()
 {
 
+    current_filename = QDir::currentPath() + "/xml/sheme2.xml";
     ClickerDocument* doc = new ClickerDocument( QDir::currentPath() + "/xml/sheme2.xml");
     //doc->filter(doc->firstChild());
     model = new ClickerModel(*doc);
@@ -187,18 +188,8 @@ void MainWindow::save()
 {
     // [Collect model data to QString]
     QString textData;
-    TreeModel *model =  (TreeModel*)view->model();
-    QStringList list;
-    model->setupModelData(list, model->rootItem);
-
-    // .txt
-    QFile txtFile("default.txt");
-    if(txtFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-
-        QTextStream out(&txtFile);
-        out << list.join("\n");
-        txtFile.close();
-    }
+    ClickerModel *model =  (ClickerModel*)view->model();
+    model->save(current_filename);
 
 }
 

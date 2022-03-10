@@ -140,12 +140,24 @@ bool DomItem::setData(int column, const QVariant &value)
     if(column == 2)
     {
         //QStringList attrlist = value.toString().split("=");
-         QRegularExpression re("([\\w]+)[=]([\\w\\d\"]+)");
-         QRegularExpressionMatch match = re.match(value.toString());
-         if (match.hasMatch()) {
-             QString key = match.captured(1);
-             QString value = match.captured(2);
-             node().toElement().setAttribute(key, value);
+         QRegularExpression re("([\\S]+)[=]([\\S]+)");
+
+         int pos = 0;
+         bool hasMatch = true;
+         while( hasMatch )
+         {
+             QRegularExpressionMatch match = re.match(value.toString(), pos, QRegularExpression::NormalMatch);
+             if (match.hasMatch()) {
+                 pos = match.capturedEnd(0);
+                 hasMatch = true;
+                 QString key = match.captured(1);
+                 QString value1 = match.captured(2);
+                 value1 = value1.mid(1, value1.size()-2);
+                 node().toElement().setAttribute(key, value1);
+                 qDebug() << key << " " <<  value1 << ",";
+             }
+             else
+                 hasMatch = false;
          }
 
     }

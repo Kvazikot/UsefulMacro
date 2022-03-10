@@ -110,4 +110,5 @@ RESOURCES += \
 
 DISTFILES += \
     settings/UsefulClicker.ini \
-    xml/sheme1.xml
+    xml/sheme1.xml \
+    xml/sheme2.xml

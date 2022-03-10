@@ -135,6 +135,7 @@ public:
 
     bool insertColumns(int position, int columns, const QModelIndex &parent) override;
     bool insertRows(int position, int rows, const QModelIndex &parent) override;
+    void save(QString filename);
     //bool removeColumns(int position, int columns, const QModelIndex &parent) override;
 private:
     QDomDocument domDocument;

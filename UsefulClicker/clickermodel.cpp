@@ -407,3 +407,17 @@ bool ClickerModel::removeRows(int position, int rows, const QModelIndex &parent)
 }
 */
 
+
+void  ClickerModel::save(QString filename)
+{
+    QFile f(filename);
+    //QFile f_bak(filename+".bak");
+    if( f.open(QIODevice::WriteOnly | QIODevice::Truncate))
+    {
+        QTextStream ts(&f);
+        domDocument.save(ts, 0);
+        f.close();
+    }
+
+
+}

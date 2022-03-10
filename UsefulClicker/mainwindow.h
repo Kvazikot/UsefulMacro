@@ -74,6 +74,7 @@ public:
     QAction* typecommentAction;
     QAction* playAction;
     ClickerModel* model;
+    QString current_filename;
 
     void mousePressEvent(QMouseEvent* event);
     void loadDocument();

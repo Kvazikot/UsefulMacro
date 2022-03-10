@@ -107,7 +107,8 @@ OBJECTS       = release/main.o \
 		release/moc_treemodel.o
 
 DIST          = settings/UsefulClicker.ini \
-		xml/sheme1.xml aboutbox.h \
+		xml/sheme1.xml \
+		xml/sheme2.xml aboutbox.h \
 		areaselectordialog.h \
 		autocompleteeditor.h \
 		canvas_label.h \
@@ -869,6 +870,8 @@ release/moc_clickermodel.cpp: clickermodel.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxmlglobal.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxml-config.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QModelIndex \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QSettings \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsettings.h \
 		release/mocinclude.opt \
 		release/moc_predefs.h \
 		../../../../Qt/6.2.3/mingw_64/bin/moc.exe
@@ -1639,6 +1642,15 @@ release/moc_mainwindow.cpp: mainwindow.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qlayoutitem.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qgridlayout.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QWidget \
+		clickermodel.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QAbstractItemModel \
+		../../../../Qt/6.2.3/mingw_64/include/QtXml/QDomDocument \
+		../../../../Qt/6.2.3/mingw_64/include/QtXml/qdom.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxmlglobal.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxml-config.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QModelIndex \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QSettings \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsettings.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/QMouseEvent \
 		release/mocinclude.opt \
 		release/moc_predefs.h \
@@ -2255,6 +2267,15 @@ release/main.o: main.cpp ../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QApplic
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qlayoutitem.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qgridlayout.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QWidget \
+		clickermodel.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QAbstractItemModel \
+		../../../../Qt/6.2.3/mingw_64/include/QtXml/QDomDocument \
+		../../../../Qt/6.2.3/mingw_64/include/QtXml/qdom.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxmlglobal.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxml-config.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QModelIndex \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QSettings \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsettings.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/QMouseEvent \
 		imagesearchdialog.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QDialog \
@@ -3243,9 +3264,13 @@ release/clickermodel.o: clickermodel.cpp clickermodel.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxmlglobal.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxml-config.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QModelIndex \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QSettings \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsettings.h \
 		domitem.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/QDomNode \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QHash \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QPoint \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qpoint.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/QtXml \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/QtXmlDepends \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QtCore \
@@ -3324,7 +3349,6 @@ release/clickermodel.o: clickermodel.cpp clickermodel.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qlibraryinfo.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qversionnumber.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qline.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qpoint.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qlockfile.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qloggingcategory.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qmargins.h \
@@ -3356,7 +3380,6 @@ release/clickermodel.o: clickermodel.cpp clickermodel.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsemaphore.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsequentialanimationgroup.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsequentialiterable.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsettings.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsharedmemory.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsignalmapper.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsimd.h \
@@ -3615,6 +3638,8 @@ release/domitem.o: domitem.cpp domitem.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qalgorithms.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstringmatcher.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qmath.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QPoint \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qpoint.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/QtXml \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/QtXmlDepends \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QtCore \
@@ -3722,7 +3747,6 @@ release/domitem.o: domitem.cpp domitem.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qlibraryinfo.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qversionnumber.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qline.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qpoint.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qlockfile.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qloggingcategory.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qmargins.h \
@@ -3781,7 +3805,8 @@ release/domitem.o: domitem.cpp domitem.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qwineventnotifier.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qxmlstream.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qtcoreversion.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxmlversion.h
+		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxmlversion.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QRegularExpression
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\domitem.o domitem.cpp
 
 release/dspmodule.o: dspmodule.cpp ../../../../Qt/6.2.3/mingw_64/include/QtCore/QObject \
@@ -4504,17 +4529,22 @@ release/mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qlayoutitem.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qgridlayout.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QWidget \
+		clickermodel.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QAbstractItemModel \
+		../../../../Qt/6.2.3/mingw_64/include/QtXml/QDomDocument \
+		../../../../Qt/6.2.3/mingw_64/include/QtXml/qdom.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxmlglobal.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxml-config.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QModelIndex \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QSettings \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsettings.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/QMouseEvent \
 		treemodel.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/QAbstractItemModel \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/QModelIndex \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QToolBar \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtoolbar.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QFile \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qfile.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qfiledevice.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/QSettings \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsettings.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QDir \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qdir.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qfileinfo.h \
@@ -4530,12 +4560,7 @@ release/mainwindow.o: mainwindow.cpp mainwindow.h \
 		aboutbox.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QDialog \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qdialog.h \
-		delegate.h \
-		clickermodel.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtXml/QDomDocument \
-		../../../../Qt/6.2.3/mingw_64/include/QtXml/qdom.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxmlglobal.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxml-config.h
+		delegate.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o mainwindow.cpp
 
 release/screenbuttonsdetector.o: screenbuttonsdetector.cpp ../../../../Qt/6.2.3/mingw_64/include/QtGui/QScreen \
