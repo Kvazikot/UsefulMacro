@@ -72,7 +72,7 @@ QWidget *FancyDelegate::createEditor(QWidget *parent,
                                        const QModelIndex &index/* index */) const
 {
     QWidget* widget = 0;
-    if( index.column() == 0 )
+    if( index.column() == 1 )
     {
         AutocompleteEditor* comboBox = new AutocompleteEditor(parent);
         widget = comboBox;
@@ -91,7 +91,7 @@ QWidget *FancyDelegate::createEditor(QWidget *parent,
 void FancyDelegate::setEditorData(QWidget *editor,
                                     const QModelIndex &index) const
 {
-    if( index.column() == 0 )
+    if( index.column() == 1 )
     {
         AutocompleteEditor* edit = static_cast<AutocompleteEditor*>(editor);
         QString value = index.model()->data(index, Qt::EditRole).toString();
@@ -123,7 +123,7 @@ bool isFiltered(QString text)
 void FancyDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                                    const QModelIndex &index) const
 {
-    if( index.column() == 0 )
+    if( index.column() == 1 )
     {
         AutocompleteEditor* edit = static_cast<AutocompleteEditor*>(editor);
         if(!isFiltered(edit->currentText()))
@@ -136,7 +136,7 @@ void FancyDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
     {
         QTextEdit* edit = static_cast<QTextEdit*>(editor);
         QString value = index.model()->data(index, Qt::EditRole).toString();
-        edit->setText(value);
+        model->setData(index, edit->toPlainText(), Qt::EditRole);
     }
 }
 //! [3]

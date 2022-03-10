@@ -41,6 +41,9 @@
       <property name="horizontalScrollMode">
        <enum>QAbstractItemView::ScrollPerPixel</enum>
       </property>
+      <property name="indentation">
+       <number>22</number>
+      </property>
       <property name="sortingEnabled">
        <bool>false</bool>
       </property>
@@ -54,10 +57,10 @@
        <bool>true</bool>
       </attribute>
       <attribute name="headerMinimumSectionSize">
-       <number>222</number>
+       <number>44</number>
       </attribute>
       <attribute name="headerDefaultSectionSize">
-       <number>222</number>
+       <number>44</number>
       </attribute>
       <attribute name="headerHighlightSections">
        <bool>true</bool>

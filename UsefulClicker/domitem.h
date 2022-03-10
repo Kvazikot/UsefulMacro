@@ -82,7 +82,7 @@ public:
     QDomNode node() const;
     int row() const;
     virtual int parse();
-    bool setData(int column, const QString &value);
+    bool setData(int column, const QVariant &value);
 
 
     // common parametres for every clicker node

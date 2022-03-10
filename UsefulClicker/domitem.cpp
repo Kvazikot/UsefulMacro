@@ -51,6 +51,7 @@
 #include "domitem.h"
 
 #include <QtXml>
+#include <QRegularExpression>
 
 DomItem::DomItem(const QDomNode &node, int row, DomItem *parent)
     : domNode(node),
@@ -131,8 +132,23 @@ bool DomItem::setData(int column, const QVariant &value)
     /*replace node if neccessary*/
     //QDomNode child = node().cloneNode(true);
     //child.setNodeValue(value);
-    if(column == 0)
+    if(column == 1)
         node().toElement().setTagName(value.toString());
+
+    // parse attrs
+    // example: repeat="10" x="10" y="20" delay_fixed="1000" delay_random="300"
+    if(column == 2)
+    {
+        //QStringList attrlist = value.toString().split("=");
+         QRegularExpression re("([\\w]+)[=]([\\w\\d\"]+)");
+         QRegularExpressionMatch match = re.match(value.toString());
+         if (match.hasMatch()) {
+             QString key = match.captured(1);
+             QString value = match.captured(2);
+             node().toElement().setAttribute(key, value);
+         }
+
+    }
     //node().replaceChild(child, node());
     qDebug() << "DomItem::setData" << " " <<  column << "," << value;
     return true;

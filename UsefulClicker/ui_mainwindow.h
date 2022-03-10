@@ -93,12 +93,13 @@ public:
         view->setSelectionMode(QAbstractItemView::MultiSelection);
         view->setSelectionBehavior(QAbstractItemView::SelectItems);
         view->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
+        view->setIndentation(22);
         view->setSortingEnabled(false);
         view->setAnimated(false);
         view->setAllColumnsShowFocus(true);
         view->header()->setCascadingSectionResizes(true);
-        view->header()->setMinimumSectionSize(222);
-        view->header()->setDefaultSectionSize(222);
+        view->header()->setMinimumSectionSize(44);
+        view->header()->setDefaultSectionSize(44);
         view->header()->setHighlightSections(true);
         view->header()->setProperty("showSortIndicator", QVariant(false));
 

@@ -157,10 +157,12 @@ MainWindow::MainWindow(QWidget *parent)
     view->parentWidget()->setStyleSheet("QTreeView::item { padding: 10px }; white-space:pre-wrap; word-wrap:break-word" );
 
     //
-    for (int column = 0; column < model->columnCount(); ++column)
+    for (int column = 1; column < model->columnCount(); ++column)
     {
         view->setColumnWidth(column, 500);
     }
+
+    view->setColumnWidth(0, 150);
 
 
 

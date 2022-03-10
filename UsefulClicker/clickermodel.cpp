@@ -230,8 +230,10 @@ QVariant ClickerModel::data(const QModelIndex &index, int role) const
 
     switch (index.column()) {
         case 0:
-            return node.nodeName();
+            return  QString::number(index.row()); //+ " " + QString::number(rand());//
         case 1:
+            return node.nodeName();
+        case 2:
         {
             const QDomNamedNodeMap attributeMap = node.attributes();
             QStringList attributes;
@@ -242,7 +244,7 @@ QVariant ClickerModel::data(const QModelIndex &index, int role) const
             }
             return attributes.join(' ');
         }
-        case 2:
+        case 3:
             return node.nodeValue().split('\n').join(' ');
         default:
             break;
@@ -284,10 +286,12 @@ QVariant ClickerModel::headerData(int section, Qt::Orientation orientation,
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
         switch (section) {
             case 0:
-                return tr("Name");
+                return tr("#");
             case 1:
-                return tr("Attributes");
+                return tr("Name");
             case 2:
+                return tr("Attributes");
+            case 3:
                 return tr("Value");
             default:
                 break;
