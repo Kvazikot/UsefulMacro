@@ -82,6 +82,8 @@ public:
     QDomNode node() const;
     int row() const;
     virtual int parse();
+    bool setData(int column, const QString &value);
+
 
     // common parametres for every clicker node
     // parsed in class DomItem via parse() procedure

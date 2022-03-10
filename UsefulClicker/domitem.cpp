@@ -119,3 +119,22 @@ int DomItem::parse()
 
     return 0;
 }
+
+// Parse value and set data
+// pack additional arguments to QVariant
+// QVariant( QVector<QVariant> )
+// {"LeftClick", "QPoInt(0,0)" }
+// {"RightClick", "QRect(0,0,100,100)" }
+
+bool DomItem::setData(int column, const QVariant &value)
+{
+    /*replace node if neccessary*/
+    //QDomNode child = node().cloneNode(true);
+    //child.setNodeValue(value);
+    if(column == 0)
+        node().toElement().setTagName(value.toString());
+    //node().replaceChild(child, node());
+    qDebug() << "DomItem::setData" << " " <<  column << "," << value;
+    return true;
+}
+

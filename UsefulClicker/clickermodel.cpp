@@ -217,8 +217,9 @@ QVariant ClickerModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
 
-    if (role != Qt::DisplayRole)
+    if (role != Qt::DisplayRole && role != Qt::EditRole)
         return QVariant();
+
 
     const DomItem *item = static_cast<DomItem*>(index.internalPointer());
     DomItem *item1 = (DomItem*)(index.internalPointer());
@@ -246,9 +247,25 @@ QVariant ClickerModel::data(const QModelIndex &index, int role) const
         default:
             break;
     }
-    return QVariant();
+     return item->node().nodeValue();
 }
 //! [4]
+//!
+bool ClickerModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    //if (role != Qt::EditRole)
+    //    return false;
+
+    DomItem *item1 = (DomItem*)(index.internalPointer());
+    bool result = item1->setData(index.column(), value.toString());
+
+
+    if (result)
+        emit dataChanged(index, index, {Qt::DisplayRole, Qt::EditRole});
+
+    return result;
+}
+
 
 //! [5]
 Qt::ItemFlags ClickerModel::flags(const QModelIndex &index) const
@@ -256,7 +273,7 @@ Qt::ItemFlags ClickerModel::flags(const QModelIndex &index) const
     if (!index.isValid())
         return Qt::NoItemFlags;
 
-    return QAbstractItemModel::flags(index);
+    return Qt::ItemIsEditable | QAbstractItemModel::flags(index);
 }
 //! [5]
 
@@ -334,3 +351,55 @@ int ClickerModel::rowCount(const QModelIndex &parent) const
     return parentItem->node().childNodes().count();
 }
 //! [10]
+
+
+bool ClickerModel::insertColumns(int position, int columns, const QModelIndex &parent)
+{
+    beginInsertColumns(parent, position, position + columns - 1);
+    const bool success = insertColumns(position, columns, parent);
+    endInsertColumns();
+
+    return success;
+}
+
+bool ClickerModel::insertRows(int position, int rows, const QModelIndex &parent)
+{
+    auto parentItem = static_cast<DomItem*>(parent.internalPointer());
+    if (!parentItem)
+        return false;
+
+    beginInsertRows(parent, position, position + rows - 1);
+    const bool success = insertRows(position, rows, parent);
+    endInsertRows();
+
+    return success;
+}
+
+/*
+
+bool ClickerModel::removeColumns(int position, int columns, const QModelIndex &parent)
+{
+    beginRemoveColumns(parent, position, position + columns - 1);
+    const bool success = removeColumns(position, columns);
+    endRemoveColumns();
+
+    if (rootItem->columnCount() == 0)
+        removeRows(0, rowCount());
+
+    return success;
+}
+
+bool ClickerModel::removeRows(int position, int rows, const QModelIndex &parent)
+{
+    TreeItem *parentItem = getItem(parent);
+    if (!parentItem)
+        return false;
+
+    beginRemoveRows(parent, position, position + rows - 1);
+    const bool success = parentItem->removeChildren(position, rows);
+    endRemoveRows();
+
+    return success;
+}
+*/
+

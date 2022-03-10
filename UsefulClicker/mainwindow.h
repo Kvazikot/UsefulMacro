@@ -52,6 +52,7 @@
 #define MAINWINDOW_H
 
 #include "ui_mainwindow.h"
+#include "clickermodel.h"
 #include <QMouseEvent>
 #include <QMainWindow>
 
@@ -71,8 +72,8 @@ public:
     QAction* launchprogramAction;
     QAction* imagesearchAction;
     QAction* typecommentAction;
-
     QAction* playAction;
+    ClickerModel* model;
 
     void mousePressEvent(QMouseEvent* event);
     void loadDocument();

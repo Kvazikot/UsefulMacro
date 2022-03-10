@@ -93,7 +93,7 @@ void MainWindow::loadDocument()
 
     ClickerDocument* doc = new ClickerDocument( QDir::currentPath() + "/xml/sheme2.xml");
     //doc->filter(doc->firstChild());
-    ClickerModel* model = new ClickerModel(*doc);
+    model = new ClickerModel(*doc);
     view->setModel(model);
 }
 
@@ -115,7 +115,7 @@ MainWindow::MainWindow(QWidget *parent)
     if(!file.open(QIODevice::ReadOnly))
         return;
 
-    TreeModel *model = new TreeModel(headers, file.readAll(), this);
+    //TreeModel *model = new TreeModel(headers, file.readAll(), this);
     file.close();
 
     //----------------------------------------------------

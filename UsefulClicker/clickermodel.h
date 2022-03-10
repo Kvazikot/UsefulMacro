@@ -131,7 +131,11 @@ public:
     QModelIndex parent(const QModelIndex &child) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    bool setData(const QModelIndex &index, const QVariant &value, int role) override;
 
+    bool insertColumns(int position, int columns, const QModelIndex &parent) override;
+    bool insertRows(int position, int rows, const QModelIndex &parent) override;
+    //bool removeColumns(int position, int columns, const QModelIndex &parent) override;
 private:
     QDomDocument domDocument;
     DomItem *rootItem;
