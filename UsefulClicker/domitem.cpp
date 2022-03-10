@@ -52,41 +52,29 @@
 
 #include <QtXml>
 
-//! [0]
 DomItem::DomItem(const QDomNode &node, int row, DomItem *parent)
     : domNode(node),
-//! [0]
-      // Record the item's location within its parent.
-//! [1]
       parentItem(parent),
       rowNumber(row)
 {
 
 }
-//! [1]
 
-//! [2]
 DomItem::~DomItem()
 {
     qDeleteAll(childItems);
 }
-//! [2]
 
-//! [3]
 QDomNode DomItem::node() const
 {
     return domNode;
 }
-//! [3]
 
-//! [4]
 DomItem *DomItem::parent()
 {
     return parentItem;
 }
-//! [4]
 
-//! [5]
 DomItem *DomItem::child(int i)
 {
     DomItem *childItem = childItems.value(i);
@@ -101,11 +89,33 @@ DomItem *DomItem::child(int i)
     }
     return childItem;
 }
-//! [5]
 
-//! [6]
 int DomItem::row() const
 {
     return rowNumber;
 }
-//! [6]
+
+int DomItem::parse()
+{
+    auto a = node().toElement().attribute("delay_fixed");
+    bool ok = false;
+    if(!a.isNull())
+    {
+       delay_fixed = a.toInt(&ok);
+       qDebug() << node().nodeName() << " delay_fixed = " << delay_fixed;
+    }
+
+    a = node().toElement().attribute("delay_random");
+    ok = false;
+    if(!a.isNull())
+       delay_random = a.toInt(&ok);
+
+    a = node().toElement().attribute("repeat");
+    ok = false;
+    if(!a.isNull())
+       repeat = a.toInt(&ok);
+
+
+
+    return 0;
+}

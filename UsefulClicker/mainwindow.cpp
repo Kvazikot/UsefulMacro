@@ -84,29 +84,22 @@
 
 void MainWindow::refresh()
 {
-    loadDocument();
     loadSettings();
+    loadDocument();
 }
 
 void MainWindow::loadDocument()
 {
 
     ClickerDocument* doc = new ClickerDocument( QDir::currentPath() + "/xml/sheme2.xml");
+    //doc->filter(doc->firstChild());
     ClickerModel* model = new ClickerModel(*doc);
     view->setModel(model);
 }
 
 void MainWindow::loadSettings()
 {
-    // load settings
-    QString m_strWorkingPath(QDir::currentPath() + "/settings/UsefulClicker.ini");
-    QSettings * settings = 0;
-    QString strKey("common");
-    settings = new QSettings( m_strWorkingPath, QSettings::IniFormat );
-    auto hideCodeTags = settings->value( strKey + "/hideCodeTags", "r").toBool();
-    auto hideAllNonClickerTags = settings->value( strKey + "/hideAllNonClickerTags", "r").toBool();
-    qDebug() << "hideCodeTags="  << hideCodeTags << "\nhideAllNonClickerTags=" << hideAllNonClickerTags << "\n";
-
+    ClickerSettings::getInstance()->reload();
 }
 
 //-----------------------------------------------------------

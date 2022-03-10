@@ -1,3 +1,24 @@
+/*
++ - - - + - + - -
++ - + - + copyright by Vladimir Baranov (Kvazikot)  <br>
++ - + - + email: vsbaranov83@gmail.com  <br>
++ - + - + github: https:/images//github.com/Kvazikot/UsefulMacro/  <br>
+```
+                          )            (
+                         /(   (\___/)  )\
+                        ( #)  \ ('')| ( #
+                         ||___c\  > '__||
+                         ||**** ),_/ **'|
+                   .__   |'* ___| |___*'|
+                    \_\  |' (    ~   ,)'|
+                     ((  |' /(.  '  .)\ |
+                      \\_|_/ <_ _____> \______________
+                       /   '-, \   / ,-'      ______  \
+              b'ger   /      (//   \\)     __/     /   \
+                                          './_____/
+```
+*/
+
 /****************************************************************************
 **
 ** Copyright (C) 2016 The Qt Company Ltd.
@@ -54,18 +75,45 @@
 #include <QAbstractItemModel>
 #include <QDomDocument>
 #include <QModelIndex>
+#include <QSettings>
 
 class DomItem;
+
+// -------------------------------------------------------------------------------
+
+#define _F(f) ClickerSettings::getInstance()->readFlag(f)
+
+class ClickerSettings
+{
+public:
+    static ClickerSettings instance;
+    QSettings* settings;
+    QString strKey;
+    ClickerSettings();
+    static ClickerSettings* getInstance(){return &instance;}
+    void reload();
+    bool readFlag(QString name);
+};
+
+
+
+// -------------------------------------------------------------------------------
 
 class ClickerDocument : public QDomDocument
 {
 public:
+    QDomDocument original_document;
     explicit ClickerDocument(QString filename);
+    QDomNode filter(QDomNode rootNode);
     ~ClickerDocument();
 
 };
 
-//! [0]
+
+
+
+// -------------------------------------------------------------------------------
+
 class ClickerModel : public QAbstractItemModel
 {
     Q_OBJECT

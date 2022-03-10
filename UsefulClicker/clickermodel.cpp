@@ -1,3 +1,24 @@
+/*
++ - - - + - + - -
++ - + - + copyright by Vladimir Baranov (Kvazikot)  <br>
++ - + - + email: vsbaranov83@gmail.com  <br>
++ - + - + github: https:/images//github.com/Kvazikot/UsefulMacro/  <br>
+```
+                          )            (
+                         /(   (\___/)  )\
+                        ( #)  \ ('')| ( #
+                         ||___c\  > '__||
+                         ||**** ),_/ **'|
+                   .__   |'* ___| |___*'|
+                    \_\  |' (    ~   ,)'|
+                     ((  |' /(.  '  .)\ |
+                      \\_|_/ <_ _____> \______________
+                       /   '-, \   / ,-'      ______  \
+              b'ger   /      (//   \\)     __/     /   \
+                                          './_____/
+```
+*/
+
 /****************************************************************************
 **
 ** Copyright (C) 2016 The Qt Company Ltd.
@@ -59,9 +80,8 @@ ClickerDocument::ClickerDocument(QString fullpath)
     : QDomDocument()
 {
     QString filename = fullpath;
-    QDomDocument document(filename);
 
-    QDomDocument doc;
+    QDomDocument doc(filename);
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly))
     {
@@ -70,6 +90,7 @@ ClickerDocument::ClickerDocument(QString fullpath)
     }
     if (!doc.setContent(&file)) {
         file.close();
+        qDebug() << "xml error";
         return;
     }
     file.close();
@@ -92,14 +113,76 @@ ClickerDocument::ClickerDocument(QString fullpath)
     QDomElement elem = doc.createElement("img");
     elem.setAttribute("src", "myimage.png");
     docElem.appendChild(elem);
-    QDomDocument& reference = *this;
-    reference = doc;
+    QDomDocument& this_reference = *this;
+    this_reference = doc;
+    original_document = doc;
 }
+
+QDomNode ClickerDocument::filter(QDomNode rootNode)
+{
+    QStringList filters;
+
+    if( _F("hideAllNonClickerTags") )
+    {
+        filters = {"shell", "code", "include"};
+    }
+
+    QDomDocument& this_reference = *this;
+    this_reference = original_document;
+    QDomNode n = this->firstChild();
+    while(!n.isNull()) {
+        QDomElement e = n.toElement(); // try to convert the node to an element.
+        if(!e.isNull()) {
+            for(auto f: filters)
+            {
+                if(e.tagName().contains(f))
+                {
+                    qDebug() << qPrintable(e.tagName()) << "filtered out \n"; // the node really is an element.
+                    //delete e;
+                }
+            }
+            for(int i=0; i <  e.childNodes().count(); i++)
+                filter(e.childNodes().at(i));
+        }
+        n = n.nextSibling();
+    }
+    return n;
+}
+
 
 ClickerDocument::~ClickerDocument()
 {
 
 }
+
+//----------------------------------------------------------------------------
+
+ClickerSettings ClickerSettings::instance;
+
+ClickerSettings::ClickerSettings()
+{
+    // load settings
+    QString m_strWorkingPath(QDir::currentPath() + "/settings/UsefulClicker.ini");
+    settings = 0;
+    strKey = "common";
+    settings = new QSettings( m_strWorkingPath, QSettings::IniFormat );
+}
+
+void ClickerSettings::reload()
+{
+    QString m_strWorkingPath(QDir::currentPath() + "/settings/UsefulClicker.ini");
+    QSettings* new_settings = new QSettings( m_strWorkingPath, QSettings::IniFormat );
+    QSettings* old_settings = settings;
+    settings = new_settings;
+    if(old_settings!=0)
+        delete old_settings;
+}
+
+bool ClickerSettings::readFlag(QString name)
+{
+    return settings->value( strKey + "/" + name, "r").toBool();
+}
+
 
 //----------------------------------------------------------------------------
 
@@ -109,6 +192,7 @@ ClickerModel::ClickerModel(const QDomDocument &document, QObject *parent)
       domDocument(document),
       rootItem(new DomItem(domDocument, 0))
 {
+    qDebug() << "hideCodeTags = " << _F("hideCodeTags");
 }
 //! [0]
 
@@ -137,6 +221,8 @@ QVariant ClickerModel::data(const QModelIndex &index, int role) const
         return QVariant();
 
     const DomItem *item = static_cast<DomItem*>(index.internalPointer());
+    DomItem *item1 = (DomItem*)(index.internalPointer());
+    item1->parse();
 
     const QDomNode node = item->node();
 //! [3] //! [4]
