@@ -1,5 +1,5 @@
 # Список виджетов UsefulClicker
-* TimerWidget
+* [TimerWidget](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/widgets/README.MD#timerwidget)
 * AreaButton
 * Comboedit
 * CrossButton
