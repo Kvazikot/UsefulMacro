@@ -67,6 +67,7 @@ signals:
     void sigSetRect(QRect rect, QPointF p);
     void sigSetAreaRect(QRect rect, QPointF p);
     void sigSetImageRect(QRect rect, QImage& rect_image);
+    void sigSetAreaRect(QMap<QString, QString> attrs);
 
 private slots:
     void on_doneButton_clicked();

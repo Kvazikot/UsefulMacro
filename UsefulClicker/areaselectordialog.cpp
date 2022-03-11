@@ -303,6 +303,13 @@ void AreaSelectorDialog::on_doneButton_clicked()
    selectedRect = geometry();
    QPointF p = geometry().topLeft();
    emit sigSetAreaRect(selectedRect, p);
+   QMap<QString, QString> attrs;
+   QString v = QString("QRect(%1,%2,%3,%4)").arg(selectedRect.left())
+                                            .arg(selectedRect.top())
+                                            .arg(selectedRect.width())
+                                            .arg(selectedRect.height());
+   attrs["area"] = v;
+   emit sigSetAreaRect(attrs);
    close();
 
 }

@@ -258,8 +258,9 @@ bool ClickerModel::setData(const QModelIndex &index, const QVariant &value, int 
     //if (role != Qt::EditRole)
     //    return false;
 
+    qDebug() << "ClickerModel::setData ";
     DomItem *item1 = (DomItem*)(index.internalPointer());
-    bool result = item1->setData(index.column(), value.toString());
+    bool result = item1->setData(index.column(), value.toString(), role);
 
 
     if (result)
@@ -321,6 +322,7 @@ QModelIndex ClickerModel::index(int row, int column, const QModelIndex &parent) 
         return createIndex(row, column, childItem);
     return QModelIndex();
 }
+
 //! [8]
 
 //! [9]

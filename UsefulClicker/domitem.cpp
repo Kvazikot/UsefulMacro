@@ -103,7 +103,7 @@ int DomItem::parse()
     if(!a.isNull())
     {
        delay_fixed = a.toInt(&ok);
-       qDebug() << node().nodeName() << " delay_fixed = " << delay_fixed;
+      // qDebug() << node().nodeName() << " delay_fixed = " << delay_fixed;
     }
 
     a = node().toElement().attribute("delay_random");
@@ -127,17 +127,16 @@ int DomItem::parse()
 // {"LeftClick", "QPoInt(0,0)" }
 // {"RightClick", "QRect(0,0,100,100)" }
 
-bool DomItem::setData(int column, const QVariant &value)
+bool DomItem::setData(int column, const QVariant &value, int role)
 {
     /*replace node if neccessary*/
     //QDomNode child = node().cloneNode(true);
     //child.setNodeValue(value);
-    if(column == 1)
-        node().toElement().setTagName(value.toString());
 
     // parse attrs
     // example: repeat="10" x="10" y="20" delay_fixed="1000" delay_random="300"
-    if(column == 2)
+    int n_attrs = 0;
+    if(column == 2 || column == 1)
     {
         //QStringList attrlist = value.toString().split("=");
          QRegularExpression re("([\\S]+)[=]([\\S]+)");
@@ -149,10 +148,16 @@ bool DomItem::setData(int column, const QVariant &value)
              QRegularExpressionMatch match = re.match(value.toString(), pos, QRegularExpression::NormalMatch);
              if (match.hasMatch()) {
                  pos = match.capturedEnd(0);
+                 n_attrs++;
                  hasMatch = true;
                  QString key = match.captured(1);
                  QString value1 = match.captured(2);
-                 value1 = value1.mid(1, value1.size()-2);
+                 if(value1.contains("\""))
+                    value1 = value1.mid(1, value1.size()-2);
+                 if(key.contains("\""))
+                     key = key.mid(1, value1.size()-2);
+
+                 qDebug() << "readed " << key << " " << node().toElement().attribute(key);
                  node().toElement().setAttribute(key, value1);
                  qDebug() << key << " " <<  value1 << ",";
              }
@@ -161,8 +166,11 @@ bool DomItem::setData(int column, const QVariant &value)
          }
 
     }
+    if(column == 1 || role != Qt::EditRole)
+        node().toElement().setTagName(value.toString());
+
     //node().replaceChild(child, node());
-    qDebug() << "DomItem::setData" << " " <<  column << "," << value;
+    qDebug() << "DomItem::setData" << " " <<  column << "," << value << " role " << role;
     return true;
 }
 

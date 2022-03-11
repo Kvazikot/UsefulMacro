@@ -79,7 +79,7 @@
 #include <QStandardItemModel>
 #include "simpledelegate.h"
 #include "aboutbox.h"
-#include "delegate.h"
+#include "fancydelegate.h"
 #include "clickermodel.h"
 
 void MainWindow::refresh()
@@ -139,7 +139,7 @@ MainWindow::MainWindow(QWidget *parent)
     //view->setModel(model);
 
 //    view->header()->setStretchLastSection(true);
-//    QHeaderView *verticalHeader = view->header();
+//    QHeaderView *verticalHeader = view->headerslotSetAttrs();
 //    verticalHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
 //    verticalHeader->setDefaultSectionSize(200);
 //    //verticalHeader->resizeSection(2, 200);

@@ -4,8 +4,10 @@
 #include <QCoreApplication>
 #include <QLabel>
 #include <QTimer>
+#include <QTreeView>
 #include <QHBoxLayout>
 #include "autocompleteeditor.h"
+#include "simpledelegate.h"
 #include "areaselectordialog.h"
 
 //---------------------------------------------------------------------------------
@@ -21,30 +23,33 @@ AreaButton::AreaButton(QWidget *parent)
 void AreaButton::areaSelected(QRect rect, QImage& rect_image)
 {
     QPainter painter(&rect_image);
-    painter.drawImage(geometry(), rect_image);
+    painter.drawImage(geometry(), rect_image);    
+    QMap<QString,QString> attrs;
+    QString v = QString("QRect(%1,%2,%3,%4)").arg(rect.left())
+                                             .arg(rect.top())
+                                             .arg(rect.width())
+                                             .arg(rect.height());
+    attrs["areaRect"] = v;
+    emit sendAttrs(attrs);
+
+
 }
 
 void AreaButton::mousePressEvent(QMouseEvent *ev)
 {
     if ( ev->button() == Qt::MouseButton::LeftButton )
     {
-        AreaSelectorDialog* dlg = new AreaSelectorDialog(0);
-        //dlg->selectTargetImage();
-        QRect curernt_geometry = dlg->geometry();
-        curernt_geometry.setWidth(curernt_geometry.width()/2);
-        curernt_geometry.setHeight(curernt_geometry.height()/2);
-        dlg->setGeometry(curernt_geometry);
-        dlg->show();
-        dlg->prevMouseCoords = curernt_geometry.center();
-        dlg->repaint();
-
-        //void sigSetRect(QRect rect, QPointF p);
-        //void sigSetAreaRect(QRect rect, QPointF p);
-        connect(dlg, SIGNAL(sigSetImageRect(QRect rect, QPointF p)), this, SLOT(areaSelected(QRect rect, QPointF p)));
+        //QApplication::
+        QTreeView*  view = (QTreeView*)this->parent()->parent()->parent();
+        QWidget* w = (QWidget*)this->parent();
+        //w->setVisible(false);
+        SimpleDelegate* delegate = new SimpleDelegate(view, view->itemDelegate());
+        view->setItemDelegate(delegate);
+        connect(delegate, SIGNAL(activated(const QModelIndex&)), view, SLOT(update(const QModelIndex&)) );
+        //QString sequence;
+        //emit click(sequence);
     }
 
-    QString sequence;
-    emit click(sequence);
 }
 
 
@@ -60,7 +65,7 @@ CrossButton::CrossButton(QWidget *parent)
 void CrossButton::mousePressEvent(QMouseEvent *ev)
 {
     QString sequence;
-    icon_enabled = icon_enabled.scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio, Qt::SmoothTransformation);
+    //icon_enabled = icon_enabled.scaled(200, 200, Qt::AspectRatioMode::KeepAspectRatio, Qt::SmoothTransformation);
     setPixmap(QPixmap::fromImage(icon_enabled));
     emit click(sequence);
 }
@@ -176,7 +181,7 @@ void KeyboardButton::setDisable()
 }
 
 
-//----------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------
 
 ComboEdit::ComboEdit(QWidget *parent) :
     QLineEdit(parent)
@@ -194,14 +199,13 @@ ComboEdit::ComboEdit(QWidget *parent) :
 
     cross_but = new CrossButton(0);
     cross_but->state = true;
-    cross_but->setIcon(":/images/templ_cross.png", true, true);
+    cross_but->setIcon(":/images/knights-templar-cross.png", true, true);
     connect(cross_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
     connect(cross_but, SIGNAL(accept()),this, SLOT(updateSequence()));
 
-    area_but = new AreaButton(0);
+    area_but = new AreaButton(this);
     area_but->state = true;
     area_but->setIcon(":/images/area_icon.png", true, true);
-    connect(area_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
     connect(area_but, SIGNAL(accept()),this, SLOT(updateSequence()));
     connect(QCoreApplication::instance(), SIGNAL(focusChanged(QWidget*, QWidget*)), this, SLOT(slotFocusChanged(QWidget*, QWidget*)));
 
@@ -217,6 +221,7 @@ ComboEdit::ComboEdit(QWidget *parent) :
     w->setLayout(hbox);
 
 }
+
 
 void ComboEdit::slotCrossClick()
 {
@@ -326,6 +331,8 @@ void ComboEdit::paintEvent(QPaintEvent *event)
 }
 */
 
+//---------------------------------------------------------------------------------------------------------
+
 AutocompleteEditor::AutocompleteEditor(QWidget *parent) :
     QComboBox(parent)
 {
@@ -357,6 +364,7 @@ void AutocompleteEditor::updateSequence(QString sequence)
 {
     setItemText(0, sequence);
 }
+
 
 void AutocompleteEditor::keyPressEvent(QKeyEvent* event)
 {

@@ -69,9 +69,9 @@ SOURCES += main.cpp \
     autocompleteeditor.cpp \
     canvas_label.cpp \
     clickermodel.cpp \
-    delegate.cpp \
     domitem.cpp \
     dspmodule.cpp \
+    fancydelegate.cpp \
     imagesearchdialog.cpp \
     mainwindow.cpp \
     screenbuttonsdetector.cpp \
@@ -85,9 +85,9 @@ HEADERS += \
     autocompleteeditor.h \
     canvas_label.h \
     clickermodel.h \
-    delegate.h \
     domitem.h \
     dspmodule.h \
+    fancydelegate.h \
     imagesearchdialog.h \
     mainwindow.h \
     screenbuttonsdetector.h \

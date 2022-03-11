@@ -82,7 +82,7 @@ public:
     QDomNode node() const;
     int row() const;
     virtual int parse();
-    bool setData(int column, const QVariant &value);
+    bool setData(int column, const QVariant &value, int role);
 
 
     // common parametres for every clicker node
@@ -90,6 +90,7 @@ public:
     int delay_fixed;
     int delay_random;
     int repeat;
+
 
 private:
     QDomNode domNode;

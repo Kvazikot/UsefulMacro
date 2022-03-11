@@ -31,6 +31,7 @@ public:
     virtual void paintEvent(QPaintEvent *) override;
 signals:
     void clicked();
+    void sendAttrs(QMap<QString,QString> attrs);
     void accept();
     void updateSequence();
 
@@ -109,13 +110,16 @@ class AutocompleteEditor : public QComboBox
     Q_OBJECT
 public:
     QVector<QString> completion_list;
+
     explicit AutocompleteEditor(QWidget *parent = nullptr);
     void setValue(QString value);
     void keyPressEvent(QKeyEvent* event);
+
     //void paintEvent(QPaintEvent* event);
     ~AutocompleteEditor();
 public slots:
     void updateSequence(QString sequence);
+
 };
 
 #endif // AUTOCOMPLETEEDITOR_H
