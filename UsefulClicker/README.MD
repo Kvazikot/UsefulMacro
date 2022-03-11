@@ -14,4 +14,4 @@
 hideCodeTags - прячет все кодовые теги
 hideAllNonClickerTags = оставляет только теги внутренних функций UsefulClicker
 
-Описание виджетов читай в дрокументе [widgets/README.MD](https://github.com/Kvazikot/UsefulMacro/edit/master/UsefulClicker/widgets/README.MD)
+Описание виджетов читай в дрокументе [widgets/README.MD](https://github.com/Kvazikot/UsefulMacro/tree/master/UsefulClicker/widgets#readme)
