@@ -13,6 +13,11 @@ debug/screenbuttonsdetector.o
 debug/simpledelegate.o
 debug/treeitem.o
 debug/treemodel.o
+debug/areabutton.o
+debug/comboedit.o
+debug/crossbutton.o
+debug/keyboardbutton.o
+debug/mousebutton.o
 debug/qrc_res.o
 debug/moc_aboutbox.o
 debug/moc_areaselectordialog.o
@@ -26,3 +31,8 @@ debug/moc_mainwindow.o
 debug/moc_screenbuttonsdetector.o
 debug/moc_simpledelegate.o
 debug/moc_treemodel.o
+debug/moc_areabutton.o
+debug/moc_comboedit.o
+debug/moc_crossbutton.o
+debug/moc_keyboardbutton.o
+debug/moc_mousebutton.o
