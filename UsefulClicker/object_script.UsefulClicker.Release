@@ -13,6 +13,12 @@ release/screenbuttonsdetector.o
 release/simpledelegate.o
 release/treeitem.o
 release/treemodel.o
+release/areabutton.o
+release/comboedit.o
+release/crossbutton.o
+release/keyboardbutton.o
+release/mousebutton.o
+release/xmlstreamer.o
 release/qrc_res.o
 release/moc_aboutbox.o
 release/moc_areaselectordialog.o
@@ -26,3 +32,9 @@ release/moc_mainwindow.o
 release/moc_screenbuttonsdetector.o
 release/moc_simpledelegate.o
 release/moc_treemodel.o
+release/moc_areabutton.o
+release/moc_comboedit.o
+release/moc_crossbutton.o
+release/moc_keyboardbutton.o
+release/moc_mousebutton.o
+release/moc_xmlstreamer.o

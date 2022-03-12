@@ -52,6 +52,7 @@
 
 #include <QtXml>
 #include <QRegularExpression>
+#include "xml/xmlstreamer.h"
 
 DomItem::DomItem(const QDomNode &node, int row, DomItem *parent)
     : domNode(node),

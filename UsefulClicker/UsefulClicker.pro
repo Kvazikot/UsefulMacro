@@ -77,7 +77,14 @@ SOURCES += main.cpp \
     screenbuttonsdetector.cpp \
     simpledelegate.cpp \
     treeitem.cpp \
-    treemodel.cpp
+    treemodel.cpp \
+    widgets/areabutton.cpp \
+    widgets/comboedit.cpp \
+    widgets/crossbutton.cpp \
+    widgets/keyboardbutton.cpp \
+    widgets/mousebutton.cpp \
+    xml/xmlstreamer.cpp
+    #xml/serialisationtest.cpp
 
 HEADERS += \
     aboutbox.h \
@@ -93,7 +100,14 @@ HEADERS += \
     screenbuttonsdetector.h \
     simpledelegate.h \
     treeitem.h \
-    treemodel.h
+    treemodel.h \
+    widgets/areabutton.h \
+    widgets/comboedit.h \
+    widgets/crossbutton.h \
+    widgets/keyboardbutton.h \
+    widgets/mousebutton.h \
+    xml/xmlstreamer.h
+    #xml/serialisationtest.h
 
 # install
 

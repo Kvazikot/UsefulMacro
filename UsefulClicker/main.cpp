@@ -23,13 +23,12 @@
 #include <QLabel>
 #include <QSurfaceFormat>
 
-#ifndef QT_NO_OPENGL
 #include "mainwindow.h"
 #include "imagesearchdialog.h"
 #include "areaselectordialog.h"
 #include "screenbuttonsdetector.h"
-
-#endif
+#include "xml\serialisationtest.h"
+#include "xml\xmlstreamer.h"
 
 int main(int argc, char *argv[])
 {
@@ -41,8 +40,12 @@ int main(int argc, char *argv[])
 
     app.setApplicationName("UsefulClicker");
     app.setApplicationVersion("0.1a");
-    MainWindow mainwindow;
-    mainwindow.show();
+
+    //SerialisationTest test;
+    XmlStreamer streamer;
+
+    //MainWindow mainwindow;
+    //mainwindow.show();
     //ScreenButtonsDetector detector;
     //detector.show();
     //ImageSearchDialog dlg;

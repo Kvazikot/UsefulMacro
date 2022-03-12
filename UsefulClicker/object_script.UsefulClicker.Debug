@@ -18,6 +18,7 @@ debug/comboedit.o
 debug/crossbutton.o
 debug/keyboardbutton.o
 debug/mousebutton.o
+debug/xmlstreamer.o
 debug/qrc_res.o
 debug/moc_aboutbox.o
 debug/moc_areaselectordialog.o
@@ -36,3 +37,4 @@ debug/moc_comboedit.o
 debug/moc_crossbutton.o
 debug/moc_keyboardbutton.o
 debug/moc_mousebutton.o
+debug/moc_xmlstreamer.o
