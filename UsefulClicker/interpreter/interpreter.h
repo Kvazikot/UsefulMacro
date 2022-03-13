@@ -34,42 +34,50 @@
 // Позднее я сделаю абстрактный платформонезависимый интерфейс
 // И вынесу платформозависимую часть в отдельный файл
 //-----------------------------------------------------
+struct InterpreterData
+{
+    QDomDocument defaultDocument;
+    QDomDocument& domDocument = defaultDocument;
+    QDomNode currentNode;
+    InterpreterData(){}
+    InterpreterData(QDomDocument& d, QDomNode& n)
+        :domDocument(d), currentNode(n)
+    {}
+};
 
-
-class AbstractInterpreter
+class AbstractInterpreter : public QObject
 {
     Q_OBJECT
 public:
-    AbstractInterpreter(QDomDocument& domDocument, QDomNode& currentNode);
+    AbstractInterpreter()
+        :data(InterpreterData())
+    {}
+    AbstractInterpreter(InterpreterData initData);
     void MainLoop();
-    virtual void ScrollUp(int number_scrolls);
-    virtual void ScrollDown(int number_scrolls);
-    virtual void keyDown(Qt::Key key);
-    virtual void keyUp(Qt::Key key);
-    virtual void MouseClick(QPoint coordinates, Qt::MouseButton button);
-    virtual void MouseDblClick(QPoint coordinates, Qt::MouseButton button);
-    virtual void hotKey(QVector<Qt::Key> keys);
-    virtual void type(QString string);
+    virtual void ScrollUp(int number_scrolls)=0;
+    virtual void ScrollDown(int number_scrolls)=0;
+    virtual void keyDown(Qt::Key key)=0;
+    virtual void keyUp(Qt::Key key)=0;
+    virtual void MouseClick(QPoint coordinates, Qt::MouseButton button)=0;
+    virtual void MouseDblClick(QPoint coordinates, Qt::MouseButton button)=0;
+    virtual void hotKey(QVector<Qt::Key> keys)=0;
+    virtual void type(QString string)=0;
 
 signals:
     void setCurrentNode(QDomNode& currentNode);
 
 public slots:
-    void Play();
-    void StepForward();
-    void StepBackward();
-    void Goto(QDomNode& node);
-    void Pause();
+    virtual void Play()=0;
+    virtual void StepForward()=0;
+    virtual void StepBackward()=0;
+    virtual void Goto(QDomNode& node)=0;
+    virtual void Pause()=0;
+private:
+    InterpreterData data;
+
 };
 
-struct InterpreterData
-{
-    QDomDocument& domDocument;
-    QDomNode& currentNode;
-    InterpreterData(QDomDocument& d, QDomNode& n)
-        :domDocument(d), currentNode(n)
-    {}
-};
+
 
 
 // Worker - это рабочий поток кликера
@@ -80,14 +88,11 @@ public:
     Worker(InterpreterData initData);
 
 public slots:
-    void mainLoop(const QString &);
-    void doJob(const QDomNode& job);
+    void mainLoop(const AbstractInterpreter& interpreter);
+    void doJob(const AbstractInterpreter& interpreter, const QDomNode& job);
     void pause();
 signals:
     void resultReady(const QString &result);
-
-private:
-    AbstractInterpreter interpreter;
 
 };
 
@@ -136,8 +141,8 @@ public:
 public slots:
     void handleResults(const QString &);
 signals:
-    void runMainLoop(const QString &);
-    void operate(const QDomNode& job);
+    void runMainLoop(const AbstractInterpreter& interpreter);
+    void operate(const AbstractInterpreter& interpreter, const QDomNode& job);
     void set_pause();
 };
 

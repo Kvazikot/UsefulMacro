@@ -19,14 +19,36 @@
 ```
 */
 
-
+#include <QPoint>
 #include "interpreter.h"
 
+AbstractInterpreter::AbstractInterpreter(InterpreterData initData)
+    : data(initData)
+{
 
-void Worker::doWork(const QString &parameter)
+}
+
+//-------------------------------------------------------------------------------
+
+void Worker::doJob(const AbstractInterpreter& interpreter, const QDomNode& job)
 {
     QString result;
     /* ... here is the expensive or blocking operation ... */
     emit resultReady(result);
 }
 
+void Worker::mainLoop(const AbstractInterpreter& interpreter)
+{
+
+}
+
+void Worker::pause()
+{
+
+}
+
+//-------------------------------------------------------------------------------
+void Controller::handleResults(const QString &)
+{
+
+}
