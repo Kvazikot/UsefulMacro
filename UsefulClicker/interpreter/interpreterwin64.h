@@ -2,8 +2,9 @@
 #define INTERPRETERWIN64_H
 
 #include <QObject>
-#include "interpreter.h"
 
+#include "interpreter.h"
+void hotKey(char* hot_key);
 class InterpreterWin64 : public AbstractInterpreter
 {
     Q_OBJECT
@@ -16,7 +17,7 @@ public:
     void keyUp(Qt::Key key) override;
     void MouseClick(QPoint coordinates, Qt::MouseButton button) override;
     void MouseDblClick(QPoint coordinates, Qt::MouseButton button) override;
-    void hotKey(QVector<Qt::Key> keys) override;
+    void hotKey(char* hot_key) override;
     void type(QString string) override;
 
 signals:

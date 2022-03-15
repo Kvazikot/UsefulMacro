@@ -60,7 +60,7 @@ public:
     virtual void keyUp(Qt::Key key)=0;
     virtual void MouseClick(QPoint coordinates, Qt::MouseButton button)=0;
     virtual void MouseDblClick(QPoint coordinates, Qt::MouseButton button)=0;
-    virtual void hotKey(QVector<Qt::Key> keys)=0;
+    virtual void hotKey(char* hot_key)=0;
     virtual void type(QString string)=0;
 
 signals:
