@@ -30,22 +30,27 @@
 #include "xml\serialisationtest.h"
 #include "xml\xmlstreamer.h"
 
+
+
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
 
+
+
+    QApplication app(argc, argv);
     QSurfaceFormat format;
     format.setDepthBufferSize(24);
     QSurfaceFormat::setDefaultFormat(format);
 
     app.setApplicationName("UsefulClicker");
     app.setApplicationVersion("0.1a");
-
     //SerialisationTest test;
-    XmlStreamer streamer;
+    //XmlStreamer streamer;
 
-    //MainWindow mainwindow;
-    //mainwindow.show();
+    MainWindow mainwindow;
+    mainwindow.show();
+    //InterpreterWin64 interpreter_test();
+
     //ScreenButtonsDetector detector;
     //detector.show();
     //ImageSearchDialog dlg;

@@ -77,10 +77,12 @@
 #include <QSettings>
 #include <QDir>
 #include <QStandardItemModel>
+#include <windows.h>
 #include "simpledelegate.h"
 #include "aboutbox.h"
 #include "fancydelegate.h"
 #include "clickermodel.h"
+#include "interpreter/interpreterwin64.h"
 
 void MainWindow::refresh()
 {
@@ -105,6 +107,19 @@ void MainWindow::loadSettings()
 
 //-----------------------------------------------------------
 
+void MainWindow::timerEvent(QTimerEvent* event)
+{
+    // perform some tests
+    hotKey("ctrl + a");
+    Sleep(100);
+    hotKey("ctrl + c");
+    Sleep(100);
+    hotKey("ctrl + c");
+    Sleep(100);
+
+}
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -118,6 +133,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     //TreeModel *model = new TreeModel(headers, file.readAll(), this);
     file.close();
+    startTimer(500);
+
 
     //----------------------------------------------------
     loadDocument();

@@ -45,6 +45,7 @@
 -Ie:/opencv/modules/ml/include
 -IC:/Users/Vladimir/Projects/UsefulClicker/-L
 -Ie:/opencv/modules/stitching/include
+-IC:/Users/Vladimir/Projects/UsefulClicker/interpreter
 -IC:/Qt/6.2.3/mingw_64/include
 -IC:/Qt/6.2.3/mingw_64/include/QtWidgets
 -IC:/Qt/6.2.3/mingw_64/include/QtGui

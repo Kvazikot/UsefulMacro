@@ -8,6 +8,8 @@ release/domitem.o
 release/dspmodule.o
 release/fancydelegate.o
 release/imagesearchdialog.o
+release/interpreter.o
+release/interpreterwin64.o
 release/mainwindow.o
 release/screenbuttonsdetector.o
 release/simpledelegate.o
@@ -28,6 +30,8 @@ release/moc_clickermodel.o
 release/moc_dspmodule.o
 release/moc_fancydelegate.o
 release/moc_imagesearchdialog.o
+release/moc_interpreter.o
+release/moc_interpreterwin64.o
 release/moc_mainwindow.o
 release/moc_screenbuttonsdetector.o
 release/moc_simpledelegate.o
@@ -37,4 +41,3 @@ release/moc_comboedit.o
 release/moc_crossbutton.o
 release/moc_keyboardbutton.o
 release/moc_mousebutton.o
-release/moc_xmlstreamer.o

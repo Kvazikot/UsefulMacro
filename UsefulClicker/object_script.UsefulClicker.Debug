@@ -8,6 +8,8 @@ debug/domitem.o
 debug/dspmodule.o
 debug/fancydelegate.o
 debug/imagesearchdialog.o
+debug/interpreter.o
+debug/interpreterwin64.o
 debug/mainwindow.o
 debug/screenbuttonsdetector.o
 debug/simpledelegate.o
@@ -28,6 +30,8 @@ debug/moc_clickermodel.o
 debug/moc_dspmodule.o
 debug/moc_fancydelegate.o
 debug/moc_imagesearchdialog.o
+debug/moc_interpreter.o
+debug/moc_interpreterwin64.o
 debug/moc_mainwindow.o
 debug/moc_screenbuttonsdetector.o
 debug/moc_simpledelegate.o
@@ -37,4 +41,3 @@ debug/moc_comboedit.o
 debug/moc_crossbutton.o
 debug/moc_keyboardbutton.o
 debug/moc_mousebutton.o
-debug/moc_xmlstreamer.o

@@ -40,6 +40,7 @@ INCLUDEPATH+=-L "$$OPENCV_451_PATH\\modules\\stitching\\include"
 #INCLUDEPATH+=-L "$$OPENCV_451_PATH\\modules\\video\\include"
 #INCLUDEPATH+=-L "$$OPENCV_451_PATH\\modules\\videoio\\include"
 #INCLUDEPATH+=-L "$$OPENCV_451_PATH\\modules\\world\\include"
+INCLUDEPATH+= "./interpreter"
 
 LIBS += -luser32 -lgdi32
 LIBS+=-L$$OPENCV_451_PATH\\build_mingw\\lib\\ -lopencv_core453.dll
@@ -73,6 +74,8 @@ SOURCES += main.cpp \
     dspmodule.cpp \
     fancydelegate.cpp \
     imagesearchdialog.cpp \
+    interpreter/interpreter.cpp \
+    interpreter/interpreterwin64.cpp \
     mainwindow.cpp \
     screenbuttonsdetector.cpp \
     simpledelegate.cpp \
@@ -96,6 +99,8 @@ HEADERS += \
     dspmodule.h \
     fancydelegate.h \
     imagesearchdialog.h \
+    interpreter/interpreter.h \
+    interpreter/interpreterwin64.h \
     mainwindow.h \
     screenbuttonsdetector.h \
     simpledelegate.h \

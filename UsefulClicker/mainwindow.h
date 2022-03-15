@@ -54,6 +54,7 @@
 #include "ui_mainwindow.h"
 #include "clickermodel.h"
 #include <QMouseEvent>
+#include <QTimerEvent>
 #include <QMainWindow>
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
@@ -62,6 +63,7 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    void timerEvent(QTimerEvent* event);
     //Main Action of the Application UsefulClicker
     QAction* rightClickAction;
     QAction* leftClickAction;
