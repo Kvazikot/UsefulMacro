@@ -1,83 +1,74 @@
-#define BIT(bit_no)         (1 << (bit_no))
-#define CLEAR_BIT(reg, bit_no)   (reg) &= ~BIT(bit_no)
-#define SET_BIT(reg, bit_no)   (reg) |= BIT(bit_no)
-#define CHECK_BIT(reg, bit_no)   ( (reg) & BIT(bit_no) )
-#define SWITCH_BIT(reg, bit_no)   (reg) ^= BIT(bit_no)
-
-
 #include <QDebug>
 #include <QPoint>
 #include <windef.h>
 #include "interpreter/interpreterwin64.h"
 #include <windows.h>
 
+void send_key2(QVector<WORD>& vkeys, bool keyUp)
+{
+    INPUT inputs[2];
+    ZeroMemory(inputs, sizeof(inputs));
+    // keydown events
+    int i=0;
+    for(auto key : vkeys)
+    {
+        inputs[i].type = INPUT_KEYBOARD;
+        inputs[i].ki.wVk = key;
+        if(keyUp) inputs[i].ki.dwFlags = KEYEVENTF_KEYUP;
+        i++;
+    }
+    UINT uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
+    Sleep(30);
+}
+
+void send_key3(QVector<WORD>& vkeys, bool keyUp)
+{
+    INPUT inputs[3];
+    ZeroMemory(inputs, sizeof(inputs));
+    // keydown events
+    int i=0;
+    for(auto key : vkeys)
+    {
+        inputs[i].type = INPUT_KEYBOARD;
+        inputs[i].ki.wVk = key;
+        if(keyUp) inputs[i].ki.dwFlags = KEYEVENTF_KEYUP;
+        i++;
+    }
+    UINT uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
+    Sleep(30);
+}
+
 
 void hotKey(char* hot_key)
 {
     //SendCtrlA();
     //return;
-    int n_modifiers=0;
+    QVector<WORD> vkeys;
     char c = hot_key[strlen(hot_key)-1];
-    WORD flags=0;
     SHORT code = c-32;
     code = VkKeyScanA(c);
     qDebug() << hot_key << "VkKeyScanA code =" << code;
 
     if( strstr(hot_key, "shift") !=NULL )
-    {
-        SET_BIT(flags, 1);
-        n_modifiers++;
-    }
+        vkeys.push_back(VK_SHIFT);
     if( strstr(hot_key, "ctrl") !=NULL )
-    {
-        SET_BIT(flags, 0);
-        n_modifiers++;
-    }
+        vkeys.push_back(VK_CONTROL);
     if( strstr(hot_key, "alt") !=NULL )
-    {
-        SET_BIT(flags, 2);
-        n_modifiers++;
-    }
+        vkeys.push_back(VK_MENU);
     if( strstr(hot_key, "win") !=NULL )
+        vkeys.push_back(VK_LWIN);
+    vkeys.push_back(code);
+
+    if(vkeys.size() == 2)
     {
-        SET_BIT(flags, 3);
-        n_modifiers++;
+       send_key2(vkeys, false);
+       send_key2(vkeys, true);
     }
-
-/*
-    HWND h = GetForegroundWindow();
-    qDebug() << "Send WM_HOTKEY to " << h << " window code=" << code;
-    PostMessage(h, WM_KEYDOWN, VK_CONTROL, MAKELPARAM(1,VK_CONTROL));
-    PostMessageW(h, WM_KEYDOWN,  code, MAKELPARAM(1,0x01EF));
-    //SendMessage(h, WM_KEYUP, VK_CONTROL, MAKELPARAM(1,0x01DF));
-    PostMessage(h, WM_KEYUP,  code, MAKELPARAM(1,0x01EF));
-*/
-
-    INPUT inputs[4] = {};
-    ZeroMemory(inputs, sizeof(inputs));
-
-    inputs[0].type = INPUT_KEYBOARD;
-    if( CHECK_BIT(flags, 0) )
-        inputs[0].ki.wVk = VK_CONTROL;
-    else
-        inputs[0].ki.wVk = 0;
-
-    inputs[1].type = INPUT_KEYBOARD;
-    inputs[1].ki.wVk = code;
-
-    inputs[2].type = INPUT_KEYBOARD;
-    inputs[2].ki.wVk = code;
-    inputs[2].ki.dwFlags = KEYEVENTF_KEYUP;
-
-    inputs[3].type = INPUT_KEYBOARD;
-    if( CHECK_BIT(flags, 0) )
-        inputs[3].ki.wVk = VK_CONTROL;
-    else
-        inputs[3].ki.wVk = 0;
-    inputs[3].ki.dwFlags = KEYEVENTF_KEYUP;
-
-    UINT uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
-
+    if(vkeys.size() == 3)
+    {
+        send_key3(vkeys, false);
+        send_key3(vkeys, true);
+    }
 
 }
 
