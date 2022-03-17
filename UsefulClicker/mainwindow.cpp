@@ -80,6 +80,7 @@
 #include <windows.h>
 #include "simpledelegate.h"
 #include "aboutbox.h"
+#include "domitem.h"
 #include "fancydelegate.h"
 #include "clickermodel.h"
 #include "interpreter/interpreterwin64.h"
@@ -98,6 +99,55 @@ void MainWindow::loadDocument()
     //doc->filter(doc->firstChild());
     model = new ClickerModel(*doc);
     view->setModel(model);
+    view->expandAll();
+
+}
+
+void MainWindow::hideDeadRows()
+{
+    QStringList validNodes = {"hotkey","click","dblclick","type",
+                               "keydown","keyup","scrollup","scrolldown",
+                               "func"};
+    view->setCurrentIndex(model->index(0,0));
+    QModelIndex index = view->currentIndex();
+    int n_rows = model->rowCount(index);
+    QModelIndex index2;
+    view->expandRecursively(index);
+    int cnt = 1999;
+    while(cnt > 0)
+    {
+        cnt--;
+        index2 = view->indexBelow(view->currentIndex());
+        view->setCurrentIndex(index2);
+        if (index2.isValid())
+        {
+            const DomItem* item = static_cast<DomItem*>(index2.internalPointer());
+            QDomElement  el = item->node().toElement();
+
+            qDebug() << "node " << item->node().nodeName();
+
+            if( !validNodes.contains(el.nodeName()) &&
+                    (item->node().childNodes().count() == 0) )
+                view->setRowHidden(index2.row(), index2.parent(), true);
+            else
+                view->setRowHidden(index2.row(), index2.parent(), false);
+        }
+    }
+}
+
+void MainWindow::next()
+{
+    //view->setCurrentIndex(view->currentIndex().sibling(i,0));
+    QModelIndex index = view->indexBelow(view->currentIndex());
+    if (index.isValid())
+    {
+        view->setCurrentIndex(index);
+
+    }
+
+    //view->expandRecursively(next_index);
+    //view->setCurrentIndex(next_index);
+
 }
 
 void MainWindow::loadSettings()
@@ -110,12 +160,13 @@ void MainWindow::loadSettings()
 void MainWindow::timerEvent(QTimerEvent* event)
 {
     // perform some tests
-    hotKey("ctrl + a");
+    //hotKey("ctrl + a");
+    //Sleep(100);
+    //hotKey("ctrl + c");
+    //Sleep(100);
+    //hotKey("ctrl + shift + f");
     Sleep(100);
-    hotKey("ctrl + c");
-    Sleep(100);
-    hotKey("ctrl + c");
-    Sleep(100);
+    next();
 
 }
 
@@ -141,7 +192,6 @@ MainWindow::MainWindow(QWidget *parent)
 //--------------------------------------------------------------------
     loadSettings();
     //set view menu checks
-
     //--------------------------------------------------------------------
 
     //QStandardItemModel* model = new QStandardItemModel(4, 2);
@@ -155,7 +205,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     //view->setModel(model);
 
-//    view->header()->setStretchLastSection(true);
 //    QHeaderView *verticalHeader = view->headerslotSetAttrs();
 //    verticalHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
 //    verticalHeader->setDefaultSectionSize(200);
@@ -169,7 +218,9 @@ MainWindow::MainWindow(QWidget *parent)
     view->setItemDelegate(spinbox);
 
     //view->setItemDelegate(new SimpleDelegate(view));
-    view->setEditTriggers(QAbstractItemView::EditTrigger::AllEditTriggers);
+    //view->setEditTriggers(QAbstractItemView::EditTrigger::AllEditTriggers);
+    view->header()->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
 
     connect(view, SIGNAL(activated()), this, SLOT(itemActivated()));
     view->parentWidget()->setStyleSheet("QTreeView::item { padding: 10px }; white-space:pre-wrap; word-wrap:break-word" );
@@ -178,10 +229,12 @@ MainWindow::MainWindow(QWidget *parent)
     for (int column = 1; column < model->columnCount(); ++column)
     {
         view->setColumnWidth(column, 500);
+        view->setColumnHidden(0, true);
     }
 
     view->setColumnWidth(0, 150);
 
+    hideDeadRows();
 
 
     connect(exitAction, &QAction::triggered, qApp, &QCoreApplication::quit);

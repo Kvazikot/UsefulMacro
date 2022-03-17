@@ -65,16 +65,6 @@ public:
     MainWindow(QWidget *parent = nullptr);
     void timerEvent(QTimerEvent* event);
     //Main Action of the Application UsefulClicker
-    QAction* rightClickAction;
-    QAction* leftClickAction;
-    QAction* hotkeyAction;
-    QAction* presskeyAction;
-    QAction* scrollupAction;
-    QAction* scrolldownAction;
-    QAction* launchprogramAction;
-    QAction* imagesearchAction;
-    QAction* typecommentAction;
-    QAction* playAction;
     ClickerModel* model;
     QString current_filename;
 
@@ -86,7 +76,9 @@ public:
 public slots:
     void updateActions();
     void about();
+    void next();
     void refresh();
+    void hideDeadRows();
     void save();
     void itemActivated(QModelIndex& index);
 

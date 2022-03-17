@@ -87,11 +87,11 @@ public:
         vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
         view = new QTreeView(centralwidget);
         view->setObjectName(QString::fromUtf8("view"));
-        view->setEditTriggers(QAbstractItemView::AllEditTriggers);
+        view->setEditTriggers(QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked);
         view->setDragEnabled(true);
         view->setAlternatingRowColors(true);
-        view->setSelectionMode(QAbstractItemView::MultiSelection);
-        view->setSelectionBehavior(QAbstractItemView::SelectItems);
+        view->setSelectionMode(QAbstractItemView::SingleSelection);
+        view->setSelectionBehavior(QAbstractItemView::SelectRows);
         view->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
         view->setIndentation(22);
         view->setSortingEnabled(false);
