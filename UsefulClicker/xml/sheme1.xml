@@ -31,22 +31,25 @@ start / B date
 <func name = "SetUrl" arg0="https://www.youtube.com/results?search_query=" comment="function sets url in chrome browser" >
    <arg n="0" comment="url"> https://www.youtube.com/results?search_query </arg>
    <click area="Rect(0,1,200,200)"/>
+   <click area="Rect(0,1,200,200)"/>
+   <click area="Rect(0,1,200,200)"/>
    <click x="10" y="20"/>
-   <dblclick x="10" y="20" />
-   <mouseup x="10" y="20" delay_fixed="1000" delay_random="300" repeat="10" />
-   <mousedown x="10" y="20" />
-   <hotkey> ctrl + C </hotkey>
-   <type> this is text to insert . There $(arg0) is python variable  </type>
-   <keydown arg0="F6"/>
-   <keyup arg0="F6"/>
-   <scrollup x="10" y="20"/>
-   <scrolldown />
 </func>
 
  <!--
 <main>
 <code name="init" >
 mouseX = Wave(t_cycle)
+<dblclick x="10" y="20" />
+<mouseup x="10" y="20" delay_fixed="1000" delay_random="300" repeat="10" />
+<mousedown x="10" y="20" />
+<hotkey> ctrl + C </hotkey>
+<type> this is text to insert . There $(arg0) is python variable  </type>
+<keydown arg0="F6"/>
+<keyup arg0="F6"/>
+<scrollup x="10" y="20"/>
+<scrolldown />
+
 </code>
 
 <func_call name="SetUrl" />
