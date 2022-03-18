@@ -86,6 +86,8 @@
 #include "interpreter/interpreter.h"
 #include "interpreter/interpreterwin64.h"
 
+InterpreterDaemon* daemon;
+
 void MainWindow::refresh()
 {
     loadSettings();
@@ -160,13 +162,13 @@ void MainWindow::expandChildren(QDomNode& node, const QModelIndex &index, QTreeV
 
     if(item1)
     {
-        qDebug() << __FUNCTION__ << "node below " << item1->node().nodeName();
+        //qDebug() << __FUNCTION__ << "node below " << item1->node().nodeName();
         if( item1->node() == node )
         {
             //qDebug() << __FUNCTION__ << "found my node !";
             if (index.isValid())
             {
-                view->setCurrentIndex(index);
+                view->setCurrentIndex(view->indexBelow(index));
                 return;
             }
         }
@@ -184,7 +186,7 @@ void MainWindow::next()
 {
     //view->setCurrentIndex(view->currentIndex().sibling(i,0));
     //view->indexBelow(view->currentIndex());
-    qDebug() << __FUNCTION__;
+    //qDebug() << __FUNCTION__;
     // set Mutex
     //--------------------------------------------------
     expandChildren(interpreterData.currentNode, view->currentIndex(), view);
@@ -220,6 +222,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     setupUi(this);
+    setWindowTitle("UsefulClicker");
 
     const QStringList headers({tr("#"), tr("Title"), tr("Description")});
 
@@ -261,9 +264,11 @@ MainWindow::MainWindow(QWidget *parent)
     //view->horizontalHeader()->setStretchLastSection(true);
 
     QToolBar* toolbar = new QToolBar(this);
-    QAction* playAction =  toolbar->addAction(QIcon(":/images/play.jpg"), "Play");
+    QAction* playAction =  toolbar->addAction(QIcon(":/images/stop.png"), "Stop");
     QAction* refreshAction =  toolbar->addAction(QIcon(":/images/refresh-icon.png"), "Refresh");
     connect(refreshAction, &QAction::triggered, this, &MainWindow::refresh);
+    //connect(playAction, &QAction::triggered, daemon, &InterpreterDaemon::terminate);
+    connect(playAction, &QAction::triggered, daemon, &InterpreterDaemon::stop);
     addToolBar(toolbar);
 
     //view->setModel(model);

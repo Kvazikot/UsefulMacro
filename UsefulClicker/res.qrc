@@ -15,5 +15,6 @@
         <file>images/knights-templar-cross.png</file>
         <file>images/area_icon.png</file>
         <file>images/refresh-icon.png</file>
+        <file>images/stop.png</file>
     </qresource>
 </RCC>
