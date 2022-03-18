@@ -53,6 +53,7 @@
 
 #include "ui_mainwindow.h"
 #include "clickermodel.h"
+#include "interpreter/interpreter.h"
 #include <QMouseEvent>
 #include <QTimerEvent>
 #include <QMainWindow>
@@ -65,9 +66,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     void timerEvent(QTimerEvent* event);
     //Main Action of the Application UsefulClicker
+    InterpreterData interpreterData;
     ClickerModel* model;
     QString current_filename;
-
+    void expandChildren(QDomNode& node, const QModelIndex &index, QTreeView *view);
     void mousePressEvent(QMouseEvent* event);
     void loadDocument();
     void loadSettings();
@@ -81,6 +83,7 @@ public slots:
     void hideDeadRows();
     void save();
     void itemActivated(QModelIndex& index);
+    void setNextItem(QModelIndex& index);
 
 private slots:
     void insertChild();

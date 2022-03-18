@@ -1560,6 +1560,24 @@ debug/moc_interpreter.cpp: interpreter/interpreter.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxmlglobal.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxml-config.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/QDomNode \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QModelIndex \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qabstractitemmodel.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qhash.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qvariant.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qmap.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qshareddata.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qshareddata_impl.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qdebug.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qtextstream.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstringconverter.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qset.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcontiguouscache.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsharedpointer.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsharedpointer_impl.h \
+		clickermodel.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QAbstractItemModel \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QSettings \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsettings.h \
 		debug/mocinclude.opt \
 		debug/moc_predefs.h \
 		../../../../Qt/6.2.3/mingw_64/bin/moc.exe
@@ -1642,6 +1660,24 @@ debug/moc_interpreterwin64.cpp: interpreter/interpreterwin64.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxmlglobal.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxml-config.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/QDomNode \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QModelIndex \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qabstractitemmodel.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qhash.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qvariant.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qmap.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qshareddata.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qshareddata_impl.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qdebug.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qtextstream.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstringconverter.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qset.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcontiguouscache.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsharedpointer.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsharedpointer_impl.h \
+		clickermodel.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QAbstractItemModel \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QSettings \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsettings.h \
 		debug/mocinclude.opt \
 		debug/moc_predefs.h \
 		../../../../Qt/6.2.3/mingw_64/bin/moc.exe
@@ -1841,6 +1877,9 @@ debug/moc_mainwindow.cpp: mainwindow.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QModelIndex \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QSettings \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsettings.h \
+		interpreter/interpreter.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QThread \
+		../../../../Qt/6.2.3/mingw_64/include/QtXml/QDomNode \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/QMouseEvent \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QTimerEvent \
 		debug/mocinclude.opt \
@@ -3173,6 +3212,9 @@ debug/main.o: main.cpp ../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QApplicat
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QModelIndex \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QSettings \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsettings.h \
+		interpreter/interpreter.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QThread \
+		../../../../Qt/6.2.3/mingw_64/include/QtXml/QDomNode \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/QMouseEvent \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QTimerEvent \
 		imagesearchdialog.h \
@@ -3289,8 +3331,7 @@ debug/main.o: main.cpp ../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QApplicat
 		screenbuttonsdetector.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/QWheelEvent \
 		xml/serialisationtest.h \
-		xml/xmlstreamer.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtXml/QDomNode
+		xml/xmlstreamer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o main.cpp
 
 debug/aboutbox.o: aboutbox.cpp aboutbox.h \
@@ -5272,12 +5313,13 @@ debug/interpreter.o: interpreter/interpreter.cpp ../../../../Qt/6.2.3/mingw_64/i
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qnumeric.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qversiontagging.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qtmetamacros.h \
-		interpreter/interpreter.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/QThread \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qthread.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qobject.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qobjectdefs.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qobjectdefs_impl.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QApplication \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qapplication.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtguiglobal.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtgui-config.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qtwidgets-config.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcoreapplication.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstring.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qchar.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstringview.h \
@@ -5296,6 +5338,11 @@ debug/interpreter.o: interpreter/interpreter.cpp ../../../../Qt/6.2.3/mingw_64/i
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qutf8stringview.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstringtokenizer.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstringbuilder.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcoreevent.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qobjectdefs.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qobjectdefs_impl.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qeventloop.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qobject.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qlist.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qhashfunctions.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qiterator.h \
@@ -5303,7 +5350,6 @@ debug/interpreter.o: interpreter/interpreter.cpp ../../../../Qt/6.2.3/mingw_64/i
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstringlist.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qalgorithms.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstringmatcher.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcoreevent.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qscopedpointer.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qmetatype.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcompare.h \
@@ -5318,14 +5364,68 @@ debug/interpreter.o: interpreter/interpreter.cpp ../../../../Qt/6.2.3/mingw_64/i
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qmath.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qobject_impl.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qbindingstorage.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qnativeinterface.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qdebug.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qhash.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qmap.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qshareddata.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qshareddata_impl.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qtextstream.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qstringconverter.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qset.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcontiguouscache.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsharedpointer.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsharedpointer_impl.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcoreapplication_platform.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qfuture.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qfutureinterface.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qmutex.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qresultstore.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qfuture_impl.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qthreadpool.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qthread.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qdeadlinetimer.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qelapsedtimer.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qrunnable.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qexception.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qpointer.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qvariant.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qwindowdefs.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qwindowdefs_win.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsize.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qmargins.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qcursor.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qbitmap.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpixmap.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpaintdevice.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qrect.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qcolor.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qrgb.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qrgba64.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qimage.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpixelformat.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtransform.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpolygon.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qregion.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qline.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qguiapplication.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qinputmethod.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qlocale.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qguiapplication_platform.h \
+		interpreter/interpreter.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QThread \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QObject \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/QDomDocument \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/qdom.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxmlglobal.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxml-config.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtXml/QDomNode
+		../../../../Qt/6.2.3/mingw_64/include/QtXml/QDomNode \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QModelIndex \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qabstractitemmodel.h \
+		clickermodel.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QAbstractItemModel \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QSettings \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsettings.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\interpreter.o interpreter\interpreter.cpp
 
 debug/interpreterwin64.o: interpreter/interpreterwin64.cpp ../../../../Qt/6.2.3/mingw_64/include/QtCore/QDebug \
@@ -5418,7 +5518,14 @@ debug/interpreterwin64.o: interpreter/interpreterwin64.cpp ../../../../Qt/6.2.3/
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/qdom.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxmlglobal.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtXml/qtxml-config.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtXml/QDomNode
+		../../../../Qt/6.2.3/mingw_64/include/QtXml/QDomNode \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QModelIndex \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qabstractitemmodel.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qvariant.h \
+		clickermodel.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QAbstractItemModel \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QSettings \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsettings.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\interpreterwin64.o interpreter\interpreterwin64.cpp
 
 debug/mainwindow.o: mainwindow.cpp mainwindow.h \
@@ -5615,6 +5722,9 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QModelIndex \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QSettings \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qsettings.h \
+		interpreter/interpreter.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QThread \
+		../../../../Qt/6.2.3/mingw_64/include/QtXml/QDomNode \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/QMouseEvent \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/QTimerEvent \
 		treemodel.h \
@@ -5643,11 +5753,11 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/QResizeEvent \
 		../../../../Qt/6.2.3/mingw_64/include/QtGui/QShowEvent \
 		aboutbox.h \
+		domitem.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QHash \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QPoint \
 		fancydelegate.h \
-		interpreter/interpreterwin64.h \
-		interpreter/interpreter.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/QThread \
-		../../../../Qt/6.2.3/mingw_64/include/QtXml/QDomNode
+		interpreter/interpreterwin64.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow.o mainwindow.cpp
 
 debug/screenbuttonsdetector.o: screenbuttonsdetector.cpp ../../../../Qt/6.2.3/mingw_64/include/QtGui/QScreen \

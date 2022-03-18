@@ -183,6 +183,11 @@ bool ClickerSettings::readFlag(QString name)
     return settings->value( strKey + "/" + name, "r").toBool();
 }
 
+QVariant ClickerSettings::readDefault(QString name)
+{
+    return settings->value( "defaults/" + name, "r");
+}
+
 
 //----------------------------------------------------------------------------
 

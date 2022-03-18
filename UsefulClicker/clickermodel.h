@@ -93,6 +93,7 @@ public:
     static ClickerSettings* getInstance(){return &instance;}
     void reload();
     bool readFlag(QString name);
+    QVariant readDefault(QString name);
 };
 
 

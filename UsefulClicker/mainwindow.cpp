@@ -83,6 +83,7 @@
 #include "domitem.h"
 #include "fancydelegate.h"
 #include "clickermodel.h"
+#include "interpreter/interpreter.h"
 #include "interpreter/interpreterwin64.h"
 
 void MainWindow::refresh()
@@ -101,6 +102,18 @@ void MainWindow::loadDocument()
     view->setModel(model);
     view->expandAll();
 
+    //init interpreter data
+    interpreterData.rootNode = doc->firstChild().parentNode();
+    interpreterData.currentNode = doc->firstChild().parentNode();
+    interpreterData.defaultDocument = *doc;
+    interpreterData.domDocument = *doc;
+
+}
+
+void MainWindow::setNextItem(QModelIndex& index)
+{
+    auto index2 = view->indexBelow(index);
+    view->setCurrentIndex(index2);
 }
 
 void MainWindow::hideDeadRows()
@@ -124,7 +137,7 @@ void MainWindow::hideDeadRows()
             const DomItem* item = static_cast<DomItem*>(index2.internalPointer());
             QDomElement  el = item->node().toElement();
 
-            qDebug() << "node " << item->node().nodeName();
+            //qDebug() << "node " << item->node().nodeName();
 
             if( !validNodes.contains(el.nodeName()) &&
                     (item->node().childNodes().count() == 0) )
@@ -135,15 +148,48 @@ void MainWindow::hideDeadRows()
     }
 }
 
+
+void MainWindow::expandChildren(QDomNode& node, const QModelIndex &index, QTreeView *view)
+{
+    if (!index.isValid()) {
+        return;
+    }
+
+    const QModelIndex &child = view->indexBelow(index);
+    DomItem *item1 = (DomItem*)(index.internalPointer());
+
+    if(item1)
+    {
+        qDebug() << __FUNCTION__ << "node below " << item1->node().nodeName();
+        if( item1->node() == node )
+        {
+            //qDebug() << __FUNCTION__ << "found my node !";
+            if (index.isValid())
+            {
+                view->setCurrentIndex(index);
+                return;
+            }
+        }
+    }
+    // Recursively call the function for each child node.
+    expandChildren(node, child, view);
+
+    if (!view->isExpanded(index)) {
+        view->expand(index);
+    }
+}
+
+
 void MainWindow::next()
 {
     //view->setCurrentIndex(view->currentIndex().sibling(i,0));
-    QModelIndex index = view->indexBelow(view->currentIndex());
-    if (index.isValid())
-    {
-        view->setCurrentIndex(index);
-
-    }
+    //view->indexBelow(view->currentIndex());
+    qDebug() << __FUNCTION__;
+    // set Mutex
+    //--------------------------------------------------
+    expandChildren(interpreterData.currentNode, view->currentIndex(), view);
+    //QModelIndex index;
+    //--------------------------------------------------
 
     //view->expandRecursively(next_index);
     //view->setCurrentIndex(next_index);
@@ -165,7 +211,6 @@ void MainWindow::timerEvent(QTimerEvent* event)
     //hotKey("ctrl + c");
     //Sleep(100);
     //hotKey("ctrl + shift + f");
-    Sleep(100);
     next();
 
 }
@@ -184,7 +229,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //TreeModel *model = new TreeModel(headers, file.readAll(), this);
     file.close();
-    startTimer(500);
+    startTimer(50);
 
 
     //----------------------------------------------------
@@ -192,6 +237,24 @@ MainWindow::MainWindow(QWidget *parent)
 //--------------------------------------------------------------------
     loadSettings();
     //set view menu checks
+    //--------------------------------------------------------------------
+    // Create Controller
+    // Init interpreter data
+    InterpreterWin64* interpreter = new InterpreterWin64(&interpreterData);
+
+    //connect(&controller, &Controller::sigSetNextItem, this, &MainWindow::setNextItem);
+    qDebug() << "MainWindow::guiTHread id = " << QThread::currentThreadId();
+    AbstractInterpreter* abstract_interpreter = (AbstractInterpreter*)(interpreter);
+    //qDebug() << interpreter.getData()->domDocument.documentElement().nodeName();
+    InterpreterDaemon* daemon = new InterpreterDaemon(abstract_interpreter);
+    connect(daemon, &QThread::finished, daemon, &QObject::deleteLater);
+    daemon->start();
+    //emit controller->rund(abstract_interpreter);
+
+
+    // Connect mainwindow with controller
+    // Run Main Loop
+
     //--------------------------------------------------------------------
 
     //QStandardItemModel* model = new QStandardItemModel(4, 2);
@@ -229,12 +292,12 @@ MainWindow::MainWindow(QWidget *parent)
     for (int column = 1; column < model->columnCount(); ++column)
     {
         view->setColumnWidth(column, 500);
-        view->setColumnHidden(0, true);
+        //view->setColumnHidden(0, true);
     }
 
     view->setColumnWidth(0, 150);
 
-    hideDeadRows();
+    //hideDeadRows();
 
 
     connect(exitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
