@@ -68,9 +68,9 @@ public:
     //Main Action of the Application UsefulClicker
     void traverseTree(const QModelIndex &index, QTreeView *view);
     void mousePressEvent(QMouseEvent* event);
+    void mouseMoveEvent(QMouseEvent* event);
     void loadDocument(QString filename);
     void loadSettings();
-
 
 public slots:
     void updateActions();
@@ -85,9 +85,7 @@ public slots:
 
 private slots:
     void insertChild();
-    bool insertColumn();
     void insertRow();
-    bool removeColumn();
     void removeRow();
 private:
     ClickerModel* model;

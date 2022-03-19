@@ -23,6 +23,9 @@
     </property>
     <item>
      <widget class="QTreeView" name="view">
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
       <property name="editTriggers">
        <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
       </property>
@@ -94,12 +97,9 @@
      <string>&amp;Actions</string>
     </property>
     <addaction name="insertRowAction"/>
-    <addaction name="insertColumnAction"/>
     <addaction name="separator"/>
     <addaction name="removeRowAction"/>
-    <addaction name="removeColumnAction"/>
     <addaction name="separator"/>
-    <addaction name="insertChildAction"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
@@ -198,6 +198,9 @@
   </action>
   <action name="actionhideAllNonClickerTags">
    <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="text">

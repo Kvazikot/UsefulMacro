@@ -112,7 +112,7 @@ MainWindow::MainWindow(QWidget *parent)
     //--------------------------------------------------------------------
 
     QToolBar* toolbar = new QToolBar(this);
-    playAction =  toolbar->addAction(QIcon(":/images/play.jpg"), "Play");
+    playAction =  toolbar->addAction(QIcon(":/images/play.png"), "Play");
     pauseFlag = true;
     QAction* refreshAction =  toolbar->addAction(QIcon(":/images/refresh-icon.png"), "Refresh");
     connect(refreshAction, &QAction::triggered, this, &MainWindow::refresh);
@@ -140,9 +140,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(actionsMenu, &QMenu::aboutToShow, this, &MainWindow::updateActions);
     connect(insertRowAction, &QAction::triggered, this, &MainWindow::insertRow);
-    connect(insertColumnAction, &QAction::triggered, this, &MainWindow::insertColumn);
     connect(removeRowAction, &QAction::triggered, this, &MainWindow::removeRow);
-    connect(removeColumnAction, &QAction::triggered, this, &MainWindow::removeColumn);
     connect(insertChildAction, &QAction::triggered, this, &MainWindow::insertChild);
     connect(actionAbout, &QAction::triggered, this, &MainWindow::about);
     connect(actionSave, &QAction::triggered, this, &MainWindow::save);
@@ -171,7 +169,7 @@ void MainWindow::pause()
 {
     pauseFlag = ! pauseFlag;
     if( pauseFlag )
-       playAction->setIcon(QIcon(":/images/play.jpg"));
+       playAction->setIcon(QIcon(":/images/play.png"));
     else
     {
        playAction->setIcon(QIcon(":/images/pause.jpg"));
@@ -338,77 +336,34 @@ void MainWindow::insertChild()
     updateActions();
 }
 
-bool MainWindow::insertColumn()
-{
-    QAbstractItemModel *model = view->model();
-    int column = view->selectionModel()->currentIndex().column();
-
-    // Insert a column in the parent item.
-    bool changed = model->insertColumn(column + 1);
-    if (changed)
-        model->setHeaderData(column + 1, Qt::Horizontal, QVariant("[No header]"), Qt::EditRole);
-
-
-    updateActions();
-
-    return changed;
-}
+extern void MouseClick(QPoint coordinates, Qt::MouseButton button);
 
 void MainWindow::insertRow()
 {
-    const QModelIndex index = view->selectionModel()->currentIndex();
-    QAbstractItemModel *model = view->model();
-
-    if (!model->insertRow(index.row()+1, index.parent()))
-        return;
-
-    updateActions();
-
-    for (int column = 0; column < model->columnCount(index.parent()); ++column) {
-        const QModelIndex child = model->index(index.row() + 1, column, index.parent());
-        model->setData(child, QVariant(tr("[No data]")), Qt::EditRole);
-    }
+    const QModelIndex index = view->currentIndex();
+    QRect rect = view->visualRect(index);
+    QPoint center = view->mapToGlobal(rect.center());
+    center.setY(center.y()+rect.height());
+    auto parentItem = static_cast<DomItem*>(index.internalPointer());
+    QDomNode newNode = parentItem->node().cloneNode(false);
+    parentItem->node().parentNode().toElement().insertAfter(newNode, parentItem->node());
+    save();
+    refresh();
+    MouseClick(center, Qt::MouseButton::LeftButton);
 }
-
-bool MainWindow::removeColumn()
+void MainWindow::mouseMoveEvent(QMouseEvent* event)
 {
-    QAbstractItemModel *model = view->model();
-    const int column = view->selectionModel()->currentIndex().column();
-
-    // Insert columns in each child of the parent item.
-    const bool changed = model->removeColumn(column);
-    if (changed)
-        updateActions();
-
-    return changed;
+    event->globalPosition();
 }
 
 void MainWindow::removeRow()
 {
     const QModelIndex index = view->selectionModel()->currentIndex();
     QAbstractItemModel *model = view->model();
-    if (model->removeRow(index.row(), index.parent()))
-        updateActions();
+    model->removeRow(index.row(), index.parent());
 }
 
 void MainWindow::updateActions()
 {
-    const bool hasSelection = !view->selectionModel()->selection().isEmpty();
-    removeRowAction->setEnabled(hasSelection);
-    removeColumnAction->setEnabled(hasSelection);
 
-    const bool hasCurrent = view->selectionModel()->currentIndex().isValid();
-    insertRowAction->setEnabled(hasCurrent);
-    insertColumnAction->setEnabled(hasCurrent);
-
-    if (hasCurrent) {
-        view->closePersistentEditor(view->selectionModel()->currentIndex());
-
-        const int row = view->selectionModel()->currentIndex().row();
-        const int column = view->selectionModel()->currentIndex().column();
-        if (view->selectionModel()->currentIndex().parent().isValid())
-            statusBar()->showMessage(tr("Position: (%1,%2)").arg(row).arg(column));
-        else
-            statusBar()->showMessage(tr("Position: (%1,%2) in top level").arg(row).arg(column));
-    }
 }

@@ -131,8 +131,8 @@ QVariant ClickerModel::data(const QModelIndex &index, int role) const
     }
      return item->node().nodeValue();
 }
-//! [4]
-//!
+
+
 bool ClickerModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     //if (role != Qt::EditRole)
