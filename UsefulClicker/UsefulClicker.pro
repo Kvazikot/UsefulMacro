@@ -2,6 +2,7 @@ QT += core gui widgets  xml
 QMAKE_CXXFLAGS += -std=c++17
 TARGET = UsefulClicker
 TEMPLATE = app
+UI_DIR = "./ui"
 QMAKE_FLAGS_RELEASE += -O3 -msse4.1 -mssse3 -msse3 -msse2 -msse
 QMAKE_CXXFLAGS_RELEASE += -O3 -msse4.1 -mssse3 -msse3 -msse2 -msse
 OPENCV_451_PATH = "e:\\opencv"
