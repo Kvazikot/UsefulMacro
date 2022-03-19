@@ -101,6 +101,7 @@ MainWindow::MainWindow(QWidget *parent)
     const QStringList headers({tr("#"), tr("Title"), tr("Description")});
 
     startTimer(50);
+    n_cycle = 0;
     current_filename = DEFAULT("last_sheme").toString();
     //----------------------------------------------------
     loadDocument(current_filename);
@@ -230,7 +231,7 @@ void MainWindow::hideDeadRows()
 }
 
 
-void MainWindow::expandChildren(const QModelIndex &index, QTreeView *view)
+void MainWindow::traverseTree(const QModelIndex &index, QTreeView *view)
 {
     if (!index.isValid()) {
         return;
@@ -244,15 +245,14 @@ void MainWindow::expandChildren(const QModelIndex &index, QTreeView *view)
         if (index.isValid())
         {
             view->setCurrentIndex(view->indexBelow(index));
-            //interpreter->process(node);
-            //QApplication::processEvents();
-            return;
+            if( interpreter->process(item1->node()) != -1)
+                return;
         }
     }
 
 
     // Recursively call the function for each child node.
-    expandChildren(child, view);
+    traverseTree(child, view);
 
     if (!view->isExpanded(index)) {
         view->expand(index);
@@ -261,7 +261,19 @@ void MainWindow::expandChildren(const QModelIndex &index, QTreeView *view)
 
 void MainWindow::next()
 {
-    expandChildren(view->currentIndex(), view);
+    if( n_cycle >= DEFAULT("repeats").toInt() )
+    {
+        pause();
+        return;
+    }
+    //if( view->currentIndex().row() == view->header()->
+    if( !view->indexBelow(view->currentIndex()).isValid() )
+    {
+        n_cycle++;
+        view->setCurrentIndex(model->index(0,0));
+    }
+
+    traverseTree(view->currentIndex(), view);
 }
 
 void MainWindow::loadSettings()

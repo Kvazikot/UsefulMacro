@@ -66,7 +66,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     void timerEvent(QTimerEvent* event);
     //Main Action of the Application UsefulClicker
-    void expandChildren(const QModelIndex &index, QTreeView *view);
+    void traverseTree(const QModelIndex &index, QTreeView *view);
     void mousePressEvent(QMouseEvent* event);
     void loadDocument(QString filename);
     void loadSettings();
@@ -94,6 +94,7 @@ private:
     QString current_filename;
     QAction* playAction;
     bool pauseFlag;
+    int n_cycle;
 
 };
 

@@ -52,7 +52,7 @@ public:
     void MainLoop();
     virtual int parse(const QDomNode& node)=0;
     virtual Delays parseDelays(const QDomNode& node)=0;
-    virtual void process(const QDomNode& domNode);
+    virtual int process(const QDomNode& domNode);
     void TraverseXmlNode(const QDomNode& node);
 signals:
     void setCurrentNode(QDomNode& currentNode);
