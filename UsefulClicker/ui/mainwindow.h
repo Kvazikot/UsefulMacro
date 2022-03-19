@@ -68,7 +68,7 @@ public:
     //Main Action of the Application UsefulClicker
     void expandChildren(const QModelIndex &index, QTreeView *view);
     void mousePressEvent(QMouseEvent* event);
-    void loadDocument();
+    void loadDocument(QString filename);
     void loadSettings();
 
 
@@ -78,6 +78,7 @@ public slots:
     void next();
     void refresh();
     void pause();
+    void openXml();
     void hideDeadRows();
     void save();
     void setNextItem(QModelIndex& index);

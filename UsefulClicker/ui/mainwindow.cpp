@@ -76,6 +76,7 @@
 #include <QSettings>
 #include <QDir>
 #include <QTimer>
+#include <QFileDialog>
 #include <QStandardItemModel>
 #include <windows.h>
 #include "model/treemodel.h"
@@ -100,9 +101,9 @@ MainWindow::MainWindow(QWidget *parent)
     const QStringList headers({tr("#"), tr("Title"), tr("Description")});
 
     startTimer(50);
-
+    current_filename = DEFAULT("last_sheme").toString();
     //----------------------------------------------------
-    loadDocument();
+    loadDocument(current_filename);
     //--------------------------------------------------------------------
     loadSettings();
     interpreter = new InterpreterWin64();
@@ -116,6 +117,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(refreshAction, &QAction::triggered, this, &MainWindow::refresh);
     //connect(playAction, &QAction::triggered, daemon, &InterpreterDaemon::terminate);
     connect(playAction, &QAction::triggered, this, &MainWindow::pause);
+    connect(actionOpen, &QAction::triggered, this, &MainWindow::openXml);
     addToolBar(toolbar);
 
     FancyDelegate* spinbox = new FancyDelegate(view);
@@ -147,6 +149,23 @@ MainWindow::MainWindow(QWidget *parent)
     updateActions();
 }
 
+void MainWindow::openXml()
+{
+    QFileDialog dialog(this);
+    dialog.setFileMode(QFileDialog::AnyFile);
+    dialog.setDirectory(QDir::currentPath() + "/xml");
+    QStringList fileNames;
+    if (dialog.exec())
+    {
+        fileNames = dialog.selectedFiles();
+        if( fileNames.size()>0 )
+          loadDocument(fileNames[0]);
+    }
+
+
+}
+
+
 void MainWindow::pause()
 {
     pauseFlag = ! pauseFlag;
@@ -162,14 +181,14 @@ void MainWindow::pause()
 void MainWindow::refresh()
 {
     loadSettings();
-    loadDocument();
+    loadDocument(current_filename);
 }
 
-void MainWindow::loadDocument()
+void MainWindow::loadDocument(QString filename)
 {
-
-    current_filename = QDir::currentPath() + "/xml/sheme2.xml";
-    ClickerDocument* doc = new ClickerDocument( QDir::currentPath() + "/xml/sheme2.xml");
+    current_filename = filename;
+    SAVE_DEFAULT("last_sheme", filename);
+    ClickerDocument* doc = new ClickerDocument(filename);
     model = new ClickerModel(*doc);
     view->setModel(model);
     view->expandAll();

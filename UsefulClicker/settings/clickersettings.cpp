@@ -32,4 +32,9 @@ QVariant ClickerSettings::readDefault(QString name)
     return settings->value( "defaults/" + name, "r");
 }
 
+void ClickerSettings::writeDefault(QString key, QVariant value)
+{
+    settings->setValue("defaults/" + key, value.toString());
+}
+
 
