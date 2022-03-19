@@ -1,0 +1,25 @@
+<xml>
+<func>
+<click x="10" y="20"  button="right"/>
+<hotkey hotkey="ctrl + a" />
+<hotkey hotkey="ctrl + a" />
+<hotkey hotkey="ctrl + a" />
+<click area="Rect(0,1,200,200)" button="left"/>
+<click area="Rect(0,1,200,200)" button="left"/>
+<click area="Rect(0,1,200,200)" button="left"/>
+<click area="Rect(0,1,200,200)" button="left"/>
+<click area="Rect(0,1,200,200)" button="left"/>
+<click area="Rect(0,1,200,200)" button="left"/>
+</func>
+<!--
+<main>
+<code name="init" >
+mouseX = Wave(t_cycle)
+</code>
+
+<func_call name="SetUrl" />
+<func_call name="Wave" arg0="t_cycle * $(dt)" />
+</main>
+-->
+<img src="myimage.png"/>
+</xml>
