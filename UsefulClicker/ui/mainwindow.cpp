@@ -75,6 +75,7 @@
 #include <QFile>
 #include <QSettings>
 #include <QDir>
+#include <QTimer>
 #include <QStandardItemModel>
 #include <windows.h>
 #include "model/treemodel.h"
@@ -88,7 +89,7 @@
 #include "interpreter/interpreter.h"
 #include "interpreter/interpreterwin64.h"
 
-InterpreterDaemon* daemon;
+static InterpreterWin64* interpreter = 0;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -104,23 +105,17 @@ MainWindow::MainWindow(QWidget *parent)
     loadDocument();
     //--------------------------------------------------------------------
     loadSettings();
-    InterpreterWin64* interpreter = new InterpreterWin64(&interpreterData);
-
-    qDebug() << "MainWindow::guiTHread id = " << QThread::currentThreadId();
-    AbstractInterpreter* abstract_interpreter = (AbstractInterpreter*)(interpreter);
-    //qDebug() << interpreter.getData()->domDocument.documentElement().nodeName();
-    InterpreterDaemon* daemon = new InterpreterDaemon(abstract_interpreter);
-    connect(daemon, &QThread::finished, daemon, &QObject::deleteLater);
-    daemon->start();
+    interpreter = new InterpreterWin64();
 
     //--------------------------------------------------------------------
 
     QToolBar* toolbar = new QToolBar(this);
-    QAction* playAction =  toolbar->addAction(QIcon(":/images/stop.png"), "Stop");
+    playAction =  toolbar->addAction(QIcon(":/images/play.jpg"), "Play");
+    pauseFlag = true;
     QAction* refreshAction =  toolbar->addAction(QIcon(":/images/refresh-icon.png"), "Refresh");
     connect(refreshAction, &QAction::triggered, this, &MainWindow::refresh);
     //connect(playAction, &QAction::triggered, daemon, &InterpreterDaemon::terminate);
-    connect(playAction, &QAction::triggered, daemon, &InterpreterDaemon::stop);
+    connect(playAction, &QAction::triggered, this, &MainWindow::pause);
     addToolBar(toolbar);
 
     FancyDelegate* spinbox = new FancyDelegate(view);
@@ -152,6 +147,18 @@ MainWindow::MainWindow(QWidget *parent)
     updateActions();
 }
 
+void MainWindow::pause()
+{
+    pauseFlag = ! pauseFlag;
+    if( pauseFlag )
+       playAction->setIcon(QIcon(":/images/play.jpg"));
+    else
+    {
+       playAction->setIcon(QIcon(":/images/pause.jpg"));
+       next();
+    }
+}
+
 void MainWindow::refresh()
 {
     loadSettings();
@@ -166,13 +173,6 @@ void MainWindow::loadDocument()
     model = new ClickerModel(*doc);
     view->setModel(model);
     view->expandAll();
-
-    //init interpreter data
-    interpreterData.rootNode = doc->firstChild().parentNode();
-    interpreterData.currentNode = doc->firstChild().parentNode();
-    interpreterData.defaultDocument = *doc;
-    interpreterData.domDocument = *doc;
-
 }
 
 void MainWindow::setNextItem(QModelIndex& index)
@@ -211,7 +211,7 @@ void MainWindow::hideDeadRows()
 }
 
 
-void MainWindow::expandChildren(QDomNode& node, const QModelIndex &index, QTreeView *view)
+void MainWindow::expandChildren(const QModelIndex &index, QTreeView *view)
 {
     if (!index.isValid()) {
         return;
@@ -222,27 +222,27 @@ void MainWindow::expandChildren(QDomNode& node, const QModelIndex &index, QTreeV
 
     if(item1)
     {
-        if( item1->node() == node )
+        if (index.isValid())
         {
-            if (index.isValid())
-            {
-                view->setCurrentIndex(view->indexBelow(index));
-                return;
-            }
+            view->setCurrentIndex(view->indexBelow(index));
+            //interpreter->process(node);
+            //QApplication::processEvents();
+            return;
         }
     }
+
+
     // Recursively call the function for each child node.
-    expandChildren(node, child, view);
+    expandChildren(child, view);
 
     if (!view->isExpanded(index)) {
         view->expand(index);
     }
 }
 
-
 void MainWindow::next()
 {
-    expandChildren(interpreterData.currentNode, view->currentIndex(), view);
+    expandChildren(view->currentIndex(), view);
 }
 
 void MainWindow::loadSettings()
@@ -254,7 +254,7 @@ void MainWindow::loadSettings()
 
 void MainWindow::timerEvent(QTimerEvent* event)
 {
-    next();
+    if(!pauseFlag) next();
     event->accept();
 }
 

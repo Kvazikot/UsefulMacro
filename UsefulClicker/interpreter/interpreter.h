@@ -34,29 +34,6 @@
 // Позднее я сделаю абстрактный платформонезависимый интерфейс
 // И вынесу платформозависимую часть в отдельный файл
 //-----------------------------------------------------
-struct InterpreterData // убрать в отдельный h-файл
-{
-    QDomDocument defaultDocument;
-    QDomDocument& domDocument = defaultDocument;
-    QDomNode currentNode;
-    QDomNode rootNode;
-    InterpreterData(){}
-    InterpreterData(QDomDocument& d, QDomNode& n)
-        :domDocument(d), currentNode(n)
-    {}
-    InterpreterData(InterpreterData& initData)
-    {
-        defaultDocument = initData.defaultDocument;
-        domDocument = initData.domDocument;
-        currentNode = initData.currentNode;
-    }
-    void operator=(InterpreterData& initData)
-    {
-        defaultDocument = initData.defaultDocument;
-        domDocument = initData.domDocument;
-        currentNode = initData.currentNode;
-    }
-};
 
 struct Delays
 {
@@ -75,8 +52,8 @@ public:
     void MainLoop();
     virtual int parse(const QDomNode& node)=0;
     virtual Delays parseDelays(const QDomNode& node)=0;
-    virtual InterpreterData* getData()=0;
-
+    virtual void process(const QDomNode& domNode);
+    void TraverseXmlNode(const QDomNode& node);
 signals:
     void setCurrentNode(QDomNode& currentNode);
 
@@ -92,37 +69,6 @@ public slots:
 };
 
 
-
-
-// Worker - это рабочий поток кликера
-class InterpreterDaemon : public QThread
-{
-    Q_OBJECT
-public:
-    AbstractInterpreter* interpreter;
-    QDeadlineTimer timer;
-    bool stopFlag;
-
-    InterpreterDaemon(){}
-    InterpreterDaemon(AbstractInterpreter* interpreter);
-    void TraverseXmlNode(const QDomNode& node);
-    void run() override;
-
-public slots:
-    void setInterpreter(AbstractInterpreter* i)
-    {
-        interpreter = i;
-        stopFlag = false;
-    }
-    void stop()
-    {
-        stopFlag = true;
-    }
-signals:
-    //void resultReady(const QString &result);
-    void resultReady(QModelIndex &result);
-
-};
 
 
 

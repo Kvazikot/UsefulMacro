@@ -66,7 +66,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     void timerEvent(QTimerEvent* event);
     //Main Action of the Application UsefulClicker
-    void expandChildren(QDomNode& node, const QModelIndex &index, QTreeView *view);
+    void expandChildren(const QModelIndex &index, QTreeView *view);
     void mousePressEvent(QMouseEvent* event);
     void loadDocument();
     void loadSettings();
@@ -77,6 +77,7 @@ public slots:
     void about();
     void next();
     void refresh();
+    void pause();
     void hideDeadRows();
     void save();
     void setNextItem(QModelIndex& index);
@@ -88,9 +89,10 @@ private slots:
     bool removeColumn();
     void removeRow();
 private:
-    InterpreterData interpreterData;
     ClickerModel* model;
     QString current_filename;
+    QAction* playAction;
+    bool pauseFlag;
 
 };
 

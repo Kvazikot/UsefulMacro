@@ -25,67 +25,14 @@
 #include <windows.h>
 #include "interpreter/interpreterpy.h"
 
-//-------------------------------------------------------------------------------
-InterpreterDaemon::InterpreterDaemon(AbstractInterpreter* interpreter)
-    : QThread(), interpreter(interpreter), stopFlag(false)
+
+void AbstractInterpreter::process(const QDomNode& domNode)
 {
-    //InterpreterPy* python = new InterpreterPy();
-}
-
-void InterpreterDaemon::TraverseXmlNode(const QDomNode& node)
-{
-  QDomNode domNode = node.firstChild();
-  QDomElement domElement;
-  QDomText domText;
-
-  static int level = 0;
-
-  level++;
-
-  while(!(domNode.isNull()))
-  {
-    if(domNode.isElement())
-    {
-      domElement = domNode.toElement();
-      if(!(domElement.isNull()))
-      {
-      }
-    }
-
-
-    if(0)
-    for(auto i =0; i < domNode.childNodes().count(); i++)
-    {
-        auto child = domNode.childNodes().at(i);
-        TraverseXmlNode(child);
-    }
-
-    TraverseXmlNode(domNode);
-    domNode = domNode.nextSibling();
-
     //qDebug() << __FUNCTION__ << "isElement" << level << QString(level, ' ').toLocal8Bit().constData() << domElement.tagName().toLocal8Bit().constData();
     // я знаю что тут нужно измерять время таймером...
     // не надо меня учить
-    Delays delays = interpreter->parseDelays(domNode);
-    if( interpreter->parse(domNode) == -1)
+    Delays delays = parseDelays(domNode);
+    if( parse(domNode) == -1)
         delays.delay_fixed = 0;
-    //QThread::msleep(qRound(delays.delay_fixed));
-    if ( stopFlag ) return;
 
-    QThread::msleep(delays.delay_fixed);
-
-
-    InterpreterData* data1 = interpreter->getData();
-    data1->currentNode = domNode;
-
-  }
-
-  level--;
 }
-
-void InterpreterDaemon::run()
-{
-    InterpreterData* data1 = interpreter->getData();
-    TraverseXmlNode(data1->rootNode);
-}
-

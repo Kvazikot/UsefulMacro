@@ -8,8 +8,6 @@
 #include <QRect>
 #include <QRegularExpression>
 
-static InterpreterData* data = 0;
-
 void send_key2(QVector<WORD>& vkeys, bool keyUp)
 {
     INPUT inputs[2];
@@ -78,10 +76,9 @@ void hotKey(char* hot_key)
 
 }
 
-InterpreterWin64::InterpreterWin64(InterpreterData* initData)
+InterpreterWin64::InterpreterWin64()
     : AbstractInterpreter()
 {
-    data = initData;
 }
 
 Delays InterpreterWin64::parseDelays(const QDomNode& node)
@@ -118,11 +115,6 @@ QRect InterpreterWin64::parseRect(const QDomNode& node)
     if( args.size() == 4)
         return QRect(args[0],args[1],args[2],args[3]);
     return  QRect();
-}
-
-InterpreterData* InterpreterWin64::getData()
-{
-    return data;
 }
 
 void MouseClick(QPoint coordinates, Qt::MouseButton button)

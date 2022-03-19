@@ -16,13 +16,12 @@ public:
                                "keydown","keyup","scrollup","scrolldown",
                                "func"};
 
-    InterpreterWin64(InterpreterData* initData);
+    InterpreterWin64();
     Delays parseDelays(const QDomNode& node)  override;
     QRect parseRect(const QDomNode& node);
 
     void MainLoop();
     int parse(const QDomNode& node) override;
-    InterpreterData* getData() override;
 
 signals:
     void setCurrentNode(QDomNode& currentNode);
