@@ -31,6 +31,7 @@ void SimpleDelegate::slotSetAttrs(QMap<QString, QString> _attrs)
     for(auto k : _attrs.keys())
         attrs[k] = _attrs[k];
 
+    //edit->setText(getAttrsString());
     emit commitData(edit);
 
     QTimer::singleShot(100, this, SLOT(restoreDelegate()));
@@ -53,7 +54,7 @@ QWidget*  SimpleDelegate::createEditor(QWidget *parent,
 {
 
     QStringList values;    
-    values << "Enabled" << "Disabled" << QString::number(index.column()) << QString(option.text);
+    //values << "Enabled" << "Disabled" << QString::number(index.column()) << QString(option.text);
     QLineEdit* w = new QLineEdit(parent);
     edit = w;
     return w;
@@ -66,9 +67,27 @@ void  SimpleDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
     if(index.column()==1)
     {
         QString value = getAttrsString();
-        editor->geometry();
         model->setData(index, value, Qt::EditRole);
         qDebug() << "SimpleDelegate::setModelData " << value;
     }
 }
 
+void  SimpleDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
+{
+    if(index.column()==1)
+    {
+        QString value = index.model()->data(index, Qt::EditRole).toString();
+        value+=getAttrsString();
+        //QLineEdit* editor2 = qobject_cast<QLineEdit*>(editor);
+        //editor2->setText(value);
+    }
+}
+
+void SimpleDelegate::updateEditorGeometry(QWidget *editor,
+                                           const QStyleOptionViewItem &option,
+                                           const QModelIndex& index/* index */) const
+{
+    //editor->setGeometry(QRect(0,0,1,1));
+    edit = (QLineEdit*)editor;
+    qDebug() << "updateEditorGeometry " << editor->rect();
+}

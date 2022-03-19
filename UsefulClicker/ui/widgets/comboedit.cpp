@@ -37,7 +37,7 @@ ComboEdit::ComboEdit(QWidget *parent) :
     area_but = new AreaButton(this);
     area_but->state = true;
     area_but->setIcon(":/images/area_icon.png", true, true);
-    connect(area_but, SIGNAL(accept()),this, SLOT(updateSequence()));
+    connect(area_but, SIGNAL(accept()),this, SLOT(slotAccepted()));
     connect(QCoreApplication::instance(), SIGNAL(focusChanged(QWidget*, QWidget*)), this, SLOT(slotFocusChanged(QWidget*, QWidget*)));
 
     hbox = new QHBoxLayout((QWidget*)this->parent());

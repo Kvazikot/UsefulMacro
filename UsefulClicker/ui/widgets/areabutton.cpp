@@ -23,7 +23,8 @@ void AreaButton::areaSelected(QRect rect, QImage& rect_image)
                                              .arg(rect.width())
                                              .arg(rect.height());
     attrs["areaRect"] = v;
-    emit sendAttrs(attrs);
+    emit click(v);
+    //emit sendAttrs(attrs);
 
 
 }

@@ -74,9 +74,6 @@
 #include "settings/clickersettings.h"
 #include <QtXml>
 
-//QDir::currentPath() + "/xml/sheme2.xml";
-
-//! [0]
 ClickerModel::ClickerModel(const QDomDocument &document, QObject *parent)
     : QAbstractItemModel(parent),
       domDocument(document),
@@ -84,24 +81,18 @@ ClickerModel::ClickerModel(const QDomDocument &document, QObject *parent)
 {
     qDebug() << "hideCodeTags = " << _("hideCodeTags");
 }
-//! [0]
 
-//! [1]
 ClickerModel::~ClickerModel()
 {
     delete rootItem;
 }
-//! [1]
 
-//! [2]
 int ClickerModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return 3;
 }
-//! [2]
 
-//! [3]
 QVariant ClickerModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
@@ -116,7 +107,6 @@ QVariant ClickerModel::data(const QModelIndex &index, int role) const
     item1->parse();
 
     const QDomNode node = item->node();
-//! [3] //! [4]
 
     switch (index.column()) {
         case 0:
@@ -150,8 +140,35 @@ bool ClickerModel::setData(const QModelIndex &index, const QVariant &value, int 
 
     qDebug() << "ClickerModel::setData ";
     DomItem *item1 = (DomItem*)(index.internalPointer());
-    bool result = item1->setData(index.column(), value.toString(), role);
+    bool result=false;
+    QString v =  value.toString() ;
+    if(index.column() == 1)
+    {
+        if( v.contains("ctrl") || v.contains("shift") || v.contains("win"))
+        {
+            auto el = item1->node().toElement();
+            el.setTagName("hotkey");
+            el.setAttribute("hotkey", value.toString());
+        }
+        if( v.contains("button") )
+        {
+              auto el = item1->node().toElement();
+              el.setTagName("click");
+              if(v.contains("Left"))
+                 el.setAttribute("button", "left");
+              else
+                  el.setAttribute("button", "right");
+              result = item1->setData(1, "click", role);
+        }
+        if( v.contains("area") )
+        {
+            //auto el = item1->node().toElement();
+            //el.setAttribute("area", "asasas");
+            result = item1->setData(2, value, role);
+        }
 
+    }
+    qDebug() << __FUNCTION__ << " " << value;
 
     if (result)
         emit dataChanged(index, index, {Qt::DisplayRole, Qt::EditRole});
