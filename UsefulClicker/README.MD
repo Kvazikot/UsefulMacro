@@ -1,7 +1,7 @@
 This project is licensed under the terms of the GNU General Public License v3.0
 
 Проект начался из-за того что у меня перестал работать Auto Mouse Clicker
-изза того что один енот устроил абсолютно бессмысленную войну на Украине.
+изза того что один диктаторишка устроил абсолютно бессмысленную войну на Украине.
 
 ## Недостатки Auto Mouse Clicker by MurGee 
 
