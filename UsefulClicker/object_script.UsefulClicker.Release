@@ -3,6 +3,7 @@ release/interpreter.o
 release/interpreterpy.o
 release/interpreterwin64.o
 release/dspmodule.o
+release/coordselector.o
 release/screenbuttonsdetector.o
 release/aboutbox.o
 release/areaselectordialog.o
@@ -21,10 +22,9 @@ release/domitem.o
 release/fancydelegate.o
 release/clickersettings.o
 release/simpledelegate.o
-release/treeitem.o
-release/treemodel.o
 release/qrc_res.o
 release/moc_dspmodule.o
+release/moc_coordselector.o
 release/moc_screenbuttonsdetector.o
 release/moc_aboutbox.o
 release/moc_areaselectordialog.o
@@ -41,4 +41,3 @@ release/moc_interpreterwin64.o
 release/moc_clickermodel.o
 release/moc_fancydelegate.o
 release/moc_simpledelegate.o
-release/moc_treemodel.o

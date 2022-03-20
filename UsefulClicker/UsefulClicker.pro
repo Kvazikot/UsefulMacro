@@ -71,6 +71,7 @@ SOURCES += main.cpp \
     interpreter/interpreterpy.cpp \
     interpreter/interpreterwin64.cpp \
     cv/dspmodule.cpp \
+    ui/coordselector.cpp \
     ui/screenbuttonsdetector.cpp \
     ui/aboutbox.cpp \
     ui/areaselectordialog.cpp \
@@ -89,12 +90,14 @@ SOURCES += main.cpp \
     model/domitem.cpp \
     model/fancydelegate.cpp \
     settings/clickersettings.cpp \
-    model/simpledelegate.cpp \
-    model/treeitem.cpp \
-    model/treemodel.cpp
+    model/simpledelegate.cpp
+    #model/treeitem.cpp \
+    #model/treemodel.cpp
 
 HEADERS += \
     cv/dspmodule.h \
+    ui/coordselector.h \
+    ui/dialogtype.h \
     ui/screenbuttonsdetector.h \
     ui/aboutbox.h \
     ui/areaselectordialog.h \
@@ -116,8 +119,8 @@ HEADERS += \
     model/domitem.h \
     model/fancydelegate.h \
     model/simpledelegate.h \
-    model/treeitem.h \
-    model/treemodel.h \
+    #model/treeitem.h \
+    #model/treemodel.h \
     settings/clickersettings.h
 
 # install
@@ -126,6 +129,7 @@ FORMS += \
     ui/aboutbox.ui \
     ui/areaselectordialog.ui \
     ui/autocompleteeditor.ui \
+    ui/coordselector.ui \
     ui/imagesearchdialog.ui \
     ui/mainwindow.ui \
     ui/screenbuttonsdetector.ui

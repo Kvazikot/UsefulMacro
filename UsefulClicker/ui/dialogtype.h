@@ -1,0 +1,9 @@
+#ifndef DIALOGTYPE_H
+#define DIALOGTYPE_H
+enum DialogType
+{
+    AREA_SELECTOR=0,
+    SCREEN_BUTTONS_DETECTOR=1,
+    COORDINATES_SELECTOR=2
+};
+#endif // DIALOGTYPE_H

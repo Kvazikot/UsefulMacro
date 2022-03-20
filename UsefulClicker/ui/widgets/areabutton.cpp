@@ -31,12 +31,21 @@ void AreaButton::areaSelected(QRect rect, QImage& rect_image)
 
 void AreaButton::mousePressEvent(QMouseEvent *ev)
 {
-    if ( ev->button() == Qt::MouseButton::LeftButton )
+    if ( ev->button() == Qt::MouseButton::RightButton )
     {
         QTreeView*  view = (QTreeView*)this->parent()->parent()->parent();
         SimpleDelegate* delegate = new SimpleDelegate(view, view->itemDelegate());
         view->setItemDelegate(delegate);
         connect(delegate, SIGNAL(activated(const QModelIndex&)), view, SLOT(update(const QModelIndex&)) );
     }
+
+    if ( ev->button() == Qt::MouseButton::LeftButton )
+    {
+        QTreeView*  view = (QTreeView*)this->parent()->parent()->parent();
+        SimpleDelegate* delegate = new SimpleDelegate(view, view->itemDelegate(), DialogType::SCREEN_BUTTONS_DETECTOR);
+        view->setItemDelegate(delegate);
+        connect(delegate, SIGNAL(activated(const QModelIndex&)), view, SLOT(update(const QModelIndex&)) );
+    }
+
 
 }

@@ -166,6 +166,7 @@ bool ClickerModel::setData(const QModelIndex &index, const QVariant &value, int 
             //el.setAttribute("area", "asasas");
             result = item1->setData(2, value, role);
         }
+        result = item1->setData(2, value, role);
 
     }
     qDebug() << __FUNCTION__ << " " << value;

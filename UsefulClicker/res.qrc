@@ -16,5 +16,9 @@
         <file>images/refresh-icon.png</file>
         <file>images/stop.png</file>
         <file>images/play.png</file>
+        <file>images/hitler_face.png</file>
+        <file>images/stalin.jpg</file>
+        <file>images/putler.jpg</file>
+        <file>images/templ_cross_org.png</file>
     </qresource>
 </RCC>

@@ -5,19 +5,39 @@
 #include <QCoreApplication>
 #include "model/simpledelegate.h"
 #include "ui/areaselectordialog.h"
+#include "ui/screenbuttonsdetector.h"
+#include "ui/coordselector.h"
 
 QModelIndex  new_index;
 
 static QLineEdit* edit;
 static QAbstractItemDelegate* old_delegate;
 
-SimpleDelegate::SimpleDelegate(QObject* pobj, QAbstractItemDelegate* _old_delegate) :
+SimpleDelegate::SimpleDelegate(QObject* pobj, QAbstractItemDelegate* _old_delegate, DialogType dialog) :
     QStyledItemDelegate(pobj)
 {
    old_delegate = _old_delegate;
-   AreaSelectorDialog* dlg = new AreaSelectorDialog((QWidget*)pobj);
-   connect(dlg, SIGNAL(sigSetAreaRect(QMap<QString,QString>)), this, SLOT(slotSetAttrs(QMap<QString,QString>)));
-   dlg->show();
+   switch( dialog )
+   {
+        case AREA_SELECTOR:
+        {
+            AreaSelectorDialog* dlg = new AreaSelectorDialog((QWidget*)pobj);
+            connect(dlg, SIGNAL(sigSetAreaRect(QMap<QString,QString>)), this, SLOT(slotSetAttrs(QMap<QString,QString>)));
+            dlg->show();
+        } break;
+        case SCREEN_BUTTONS_DETECTOR:
+        {
+           ScreenButtonsDetector* dlg2 = new ScreenButtonsDetector((QWidget*)pobj);
+           connect(dlg2, SIGNAL(sigSetAttrs(QMap<QString,QString>)), this, SLOT(slotSetAttrs(QMap<QString,QString>)));
+           dlg2->show();
+        } break;
+        case COORDINATES_SELECTOR:
+        {
+            CoordSelector* dlg2 = new CoordSelector((QWidget*)pobj);
+            connect(dlg2, SIGNAL(sigSetAttrs(QMap<QString,QString>)), this, SLOT(slotSetAttrs(QMap<QString,QString>)));
+            dlg2->show();
+        } break;
+   }
 }
 
 void SimpleDelegate::restoreDelegate()

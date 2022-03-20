@@ -8,6 +8,7 @@
 #include <QMouseEvent>
 #include <QPaintEvent>
 #include <QWheelEvent>
+#include "ui/dialogtype.h"
 
 namespace Ui {
 class ScreenButtonsDetector;
@@ -35,6 +36,8 @@ public:
 public slots:
     void on_doneButton_clicked();
     void setImage();
+signals:
+    void sigSetAttrs(QMap<QString, QString> attrs);
 
 private:
     Ui::ScreenButtonsDetector *ui;

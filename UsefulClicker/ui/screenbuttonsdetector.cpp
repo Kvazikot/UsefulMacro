@@ -11,7 +11,7 @@
 using namespace cv;
 static DspModule* dsp;
 
-ScreenButtonsDetector::ScreenButtonsDetector(QWidget *parent) :
+ScreenButtonsDetector::ScreenButtonsDetector(QWidget *parent):
     QDialog(parent),
     ui(new Ui::ScreenButtonsDetector)
 {
@@ -43,6 +43,14 @@ void ScreenButtonsDetector::mousePressEvent(QMouseEvent* event)
     event->accept();
 
     //process selected rectangle
+    QMap<QString, QString> attrs;
+    QString v = QString("QRect(%1,%2,%3,%4)").arg(selected_rect.left())
+            .arg(selected_rect.top())
+            .arg(selected_rect.width())
+            .arg(selected_rect.height());
+    attrs["area"] = v;
+    emit sigSetAttrs(attrs);
+
 
     close();
 

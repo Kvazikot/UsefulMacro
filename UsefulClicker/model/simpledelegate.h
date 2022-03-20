@@ -5,15 +5,18 @@
 #include <QStyledItemDelegate>
 #include <QComboBox>
 #include <QObject>
+#include <QDomNode>
 #include <QAbstractItemDelegate>
 #include "ui/areaselectordialog.h"
+#include "ui/dialogtype.h"
 
 class SimpleDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 public:
+
     QMap<QString, QString> attrs;
-    SimpleDelegate(QObject* pobj = 0, QAbstractItemDelegate* _old_delegate = 0);
+    SimpleDelegate(QObject* pobj = 0, QAbstractItemDelegate* _old_delegate = 0, DialogType dialog=DialogType::AREA_SELECTOR);
     QString getAttrsString() const;
     QWidget* createEditor(QWidget *parent,
                                 const QStyleOptionViewItem &option,
@@ -32,4 +35,5 @@ public slots:
 signals:
     void activated(const QModelIndex &index);
 };
+
 #endif // SIMPLEDELEGATE

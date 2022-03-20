@@ -29,8 +29,6 @@ ComboEdit::ComboEdit(QWidget *parent) :
     connect(mouse_but, SIGNAL(accept()),this, SLOT(slotAccepted()));
 
     cross_but = new CrossButton(0);
-    cross_but->state = true;
-    cross_but->setIcon(":/images/knights-templar-cross.png", true, true);
     connect(cross_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
     connect(cross_but, SIGNAL(accept()),this, SLOT(updateSequence()));
 
@@ -46,6 +44,7 @@ ComboEdit::ComboEdit(QWidget *parent) :
     hbox->addWidget(cross_but);
     hbox->addWidget(keyboard_but);
     hbox->addWidget(mouse_but);
+
     hbox->setStretch(0, 100);
 
     QWidget* w = (QWidget*)this->parent();

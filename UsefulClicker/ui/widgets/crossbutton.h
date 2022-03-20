@@ -3,9 +3,10 @@
 
 #include <QWidget>
 #include <QMouseEvent>
+#include <QMouseEvent>
 #include "ui/widgets/keyboardbutton.h"
 
-class CrossButton : public KeyboardButton
+class CrossButton : public QLabel
 {
     Q_OBJECT
 public:
