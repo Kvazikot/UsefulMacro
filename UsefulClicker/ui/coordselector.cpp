@@ -1,3 +1,4 @@
+#include <QTimer>
 #include <QImage>
 #include <QPainter>
 #include <QMouseEvent>
@@ -7,7 +8,8 @@
 static std::vector<QRectF> rects;
 static std::vector<QVector2D> velocitys;
 static std::vector<int> sprite_indexes;
-static QImage sprite[3];
+static QImage sprite[10];
+static QMap<QString, QString> attrs;
 
 CoordSelector::CoordSelector(QWidget *parent) :
     QDialog(0),
@@ -74,12 +76,22 @@ void CoordSelector::mousePressEvent(QMouseEvent* event)
 {
 
     //process selected rectangle
-    QMap<QString, QString> attrs;
     attrs["x"] = QString::number(mpos.x());
     attrs["y"] = QString::number(mpos.y());
-    emit sigSetAttrs(attrs);
 
-    close();
+    for(int i=0; i < n_rects; i++)
+    {
+        QRectF r = rects[i];
+        if( r.contains(mpos) )
+        {
+            velocitys[i] = QVector2D(rnd*10, rnd*10);
+            velocitys[i].setX(velocitys[i].x()*100);
+            velocitys[i].setY(velocitys[i].y()*100);
+        }
+    }
+
+
+    QTimer::singleShot(2000, this, SLOT(closeDelaySlot()));
 
     event->accept();
 }
@@ -126,7 +138,7 @@ void CoordSelector::paintEvent( QPaintEvent* event)
         painter.drawImage(rects[i], sprite[j]);
     }
 
-    painter.fillRect(r4, Qt::red);
+    //painter.fillRect(r4, QColor());
 
     QFont f;
     f.setBold(true);
@@ -149,7 +161,7 @@ void CoordSelector::timerEvent(QTimerEvent* event)
 
 void CoordSelector::on_doneButton_clicked()
 {
-    close();
+
 }
 
 void CoordSelector::showEvent(QShowEvent* event)
@@ -158,3 +170,8 @@ void CoordSelector::showEvent(QShowEvent* event)
     event->accept();
 }
 
+void CoordSelector::closeDelaySlot()
+{
+    emit sigSetAttrs(attrs);
+    close();
+}

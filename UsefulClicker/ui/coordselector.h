@@ -33,6 +33,7 @@ public:
     void wheelEvent(QWheelEvent* event) override;
 public slots:
     void on_doneButton_clicked();
+    void closeDelaySlot();
 signals:
     void sigSetAttrs(QMap<QString, QString> attrs);
 
