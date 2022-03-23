@@ -91,6 +91,7 @@
 #include "interpreter/interpreterwin64.h"
 
 static InterpreterWin64* interpreter = 0;
+QString MainWindow::current_filename;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -115,7 +116,7 @@ MainWindow::MainWindow(QWidget *parent)
     playAction =  toolbar->addAction(QIcon(":/images/play.png"), "Play");
     pauseFlag = true;
     QAction* refreshAction =  toolbar->addAction(QIcon(":/images/refresh-icon.png"), "Refresh");
-    connect(refreshAction, &QAction::triggered, this, &MainWindow::refresh);
+    connect(refreshAction, &QAction::triggered, this, &MainWindow::reload);
     //connect(playAction, &QAction::triggered, daemon, &InterpreterDaemon::terminate);
     connect(playAction, &QAction::triggered, this, &MainWindow::pause);
     connect(actionOpen, &QAction::triggered, this, &MainWindow::openXml);
@@ -177,9 +178,25 @@ void MainWindow::pause()
     }
 }
 
-void MainWindow::refresh()
+// reload from memory (original document)
+void MainWindow::reloadFromMemory()
 {
     loadSettings();
+    //loadDocument(current_filename);
+    model->getDoc()->reload();
+    ClickerDocument doc = *model->getDoc();
+    delete model;
+    model = new ClickerModel(doc);
+    view->setModel(model);
+    view->expandAll();
+
+}
+
+// reload from file
+void MainWindow::reloadFromFile(QString& filename)
+{
+    loadSettings();
+    current_filename = filename;
     loadDocument(current_filename);
 }
 
@@ -187,6 +204,7 @@ void MainWindow::loadDocument(QString filename)
 {
     current_filename = filename;
     SAVE_DEFAULT("last_sheme", filename);
+    delete model;
     ClickerDocument* doc = new ClickerDocument(filename);
     model = new ClickerModel(*doc);
     view->setModel(model);
@@ -197,35 +215,6 @@ void MainWindow::setNextItem(QModelIndex& index)
 {
     auto index2 = view->indexBelow(index);
     view->setCurrentIndex(index2);
-}
-
-void MainWindow::hideDeadRows()
-{
-    QStringList validNodes = {"hotkey","click","dblclick","type",
-                               "keydown","keyup","scrollup","scrolldown",
-                               "func"};
-    view->setCurrentIndex(model->index(0,0));
-    QModelIndex index = view->currentIndex();
-    QModelIndex index2;
-    view->expandRecursively(index);
-    int cnt = 1999;
-    while(cnt > 0)
-    {
-        cnt--;
-        index2 = view->indexBelow(view->currentIndex());
-        view->setCurrentIndex(index2);
-        if (index2.isValid())
-        {
-            const DomItem* item = static_cast<DomItem*>(index2.internalPointer());
-            QDomElement  el = item->node().toElement();
-
-            if( !validNodes.contains(el.nodeName()) &&
-                    (item->node().childNodes().count() == 0) )
-                view->setRowHidden(index2.row(), index2.parent(), true);
-            else
-                view->setRowHidden(index2.row(), index2.parent(), false);
-        }
-    }
 }
 
 
@@ -290,11 +279,11 @@ void MainWindow::timerEvent(QTimerEvent* event)
 
 
 
-void MainWindow::save()
+void MainWindow::saveToFile(QString& filename)
 {
     QString textData;
     ClickerModel *model =  (ClickerModel*)view->model();
-    model->save(current_filename);
+    model->save(filename);
 
 }
 
@@ -347,8 +336,9 @@ void MainWindow::insertRow()
     auto parentItem = static_cast<DomItem*>(index.internalPointer());
     QDomNode newNode = parentItem->node().cloneNode(false);
     parentItem->node().parentNode().toElement().insertAfter(newNode, parentItem->node());
+    //model->domDocument.
     save();
-    refresh();
+    reloadFromFile(current_filename);
     MouseClick(center, Qt::MouseButton::LeftButton);
 }
 void MainWindow::mouseMoveEvent(QMouseEvent* event)

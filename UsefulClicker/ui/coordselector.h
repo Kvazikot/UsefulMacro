@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QMap>
+#include <QElapsedTimer>
+//#include <QSound>
 
 namespace Ui {
 class CoordSelector;
@@ -16,12 +18,17 @@ public:
     explicit CoordSelector(QWidget *parent = nullptr);
     ~CoordSelector();
     QPoint mpos;
-    QRect selected_rect;
+    QRectF hit_rect;
     QCursor cursor;
-
+    //QSound bullet_sound;
     QPixmap cursor_pixmap;
+    QElapsedTimer timeSinceHit;
+    QPoint hitPoint;
     int n_rects = 10;
+    int score = 10;
     int frame;
+    int n_hited;
+    bool hit;
 
     void animate();
     void generate_rects();
@@ -34,6 +41,7 @@ public:
 public slots:
     void on_doneButton_clicked();
     void closeDelaySlot();
+    void clickDelay();
 signals:
     void sigSetAttrs(QMap<QString, QString> attrs);
 

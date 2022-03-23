@@ -2,14 +2,19 @@
 #include <QImage>
 #include <QPainter>
 #include <QMouseEvent>
+//#include <QSound>
 #include "coordselector.h"
 #include "ui_coordselector.h"
 
 static std::vector<QRectF> rects;
 static std::vector<QVector2D> velocitys;
+static std::vector<QPoint> offsets;
 static std::vector<int> sprite_indexes;
 static QImage sprite[10];
+static QImage bullet_sprite;
 static QMap<QString, QString> attrs;
+
+#define rnd ((float)rand()/RAND_MAX)
 
 CoordSelector::CoordSelector(QWidget *parent) :
     QDialog(0),
@@ -25,10 +30,11 @@ CoordSelector::CoordSelector(QWidget *parent) :
 
     QImage bg_image(300,300,QImage::Format_ARGB32);
     bg_image.fill(QColor(100,100,100,0));
-
-    sprite[0] = QImage(":/images/hitler_face.png");
-    sprite[1] = QImage(":/images/putler.jpg");
+    hit = false;
+    sprite[0] = QImage(":/images/putler.jpg");
+    sprite[1] = QImage(":/images/hitler_face.png");
     sprite[2] = QImage(":/images/stalin.jpg");
+    bullet_sprite =QImage(":/images/bullet.png");
     //sprite[0] = QImage();
     //sprite[1] = QImage();
     //sprite[2] = QImage();
@@ -37,6 +43,7 @@ CoordSelector::CoordSelector(QWidget *parent) :
     {
         rects.push_back(QRect(1,1,100,100));
         velocitys.push_back(QVector2D(1,1));
+        offsets.push_back(QPoint(rnd*30,rnd*30));
         sprite_indexes.push_back(0);
     }
     generate_rects();
@@ -46,7 +53,6 @@ CoordSelector::CoordSelector(QWidget *parent) :
 
 }
 
-#define rnd ((float)rand()/RAND_MAX)
 
 void CoordSelector::generate_rects()
 {
@@ -55,7 +61,7 @@ void CoordSelector::generate_rects()
         float x,y,w,h;
         x =  rnd * (float)rect().width();
         y =  rnd * (float)rect().height();
-        w = 200. * rnd;
+        w = 10 + 200. * rnd;
         h = w;
         QRectF r(x,y,w,h);
         rects[i] = r;
@@ -79,6 +85,38 @@ void CoordSelector::mousePressEvent(QMouseEvent* event)
     attrs["x"] = QString::number(mpos.x());
     attrs["y"] = QString::number(mpos.y());
 
+    hit = false;
+    for(int i=0; i < n_rects; i++)
+    {
+        QRectF r = rects[i];
+        if( r.contains(mpos) )
+        {
+            hit_rect = r;
+            n_hited = i;
+            hitPoint = mpos;
+            hit = true;
+            QTimer::singleShot(70, this, SLOT(clickDelay()));
+
+            qDebug() << " n_hited " << n_hited;
+            //velocitys[i] = QVector2D(rnd*10, rnd*10);
+            //velocitys[i].setX(velocitys[i].x()*100);
+            //velocitys[i].setY(velocitys[i].y()*100);
+            int j = sprite_indexes[i];
+            if( j==0 )
+                score+=100;
+            else
+                score+=10000;
+        }
+    }
+
+
+
+    event->accept();
+}
+
+void CoordSelector::clickDelay()
+{
+    hit = false;
     for(int i=0; i < n_rects; i++)
     {
         QRectF r = rects[i];
@@ -89,17 +127,24 @@ void CoordSelector::mousePressEvent(QMouseEvent* event)
             velocitys[i].setY(velocitys[i].y()*100);
         }
     }
-
-
     QTimer::singleShot(2000, this, SLOT(closeDelaySlot()));
 
-    event->accept();
+
 }
 
 void CoordSelector::mouseMoveEvent(QMouseEvent* event)
 {
     mpos = event->globalPosition().toPoint();
-    qDebug() << mpos;
+    for(int i=0; i < n_rects; i++)
+    {
+        QRectF r = rects[i];
+        if( r.contains(mpos) )
+        {
+            hit_rect = r;
+            n_hited = i;
+        }
+    }
+
     repaint();
     event->accept();
 }
@@ -125,30 +170,49 @@ void CoordSelector::paintEvent( QPaintEvent* event)
     if( frame > n_rects )
         frame = 0;
 
+    QFont f;
+    f.setBold(true);
+    f.setPixelSize(36);
+    painter.setFont(f);
+    painter.setPen(Qt::red);
+
     // draw rects
     //int i = frame;
     for(int i=0; i < n_rects; i++)
     {
         QRectF r = rects[i];
         float x = r.left() + velocitys[i].x() ;
-        float y = r.top() + velocitys[i].y() ;
+        float y = r.top() + velocitys[i].y();
+
+
         rects[i] = QRectF(x,y,r.width(),r.height());
         painter.fillRect(rects[i], Qt::red);
         int j = sprite_indexes[i];
         painter.drawImage(rects[i], sprite[j]);
+        if( j==0 )
+            painter.drawText(rects[i].topLeft(),"pathetic looser");
+        else
+            painter.drawText(rects[i].topLeft(),"looser");
+        if(i == n_hited && hit)
+        {
+           painter.drawImage(hitPoint, bullet_sprite);
+        }
+
     }
 
     //painter.fillRect(r4, QColor());
 
-    QFont f;
     f.setBold(true);
     f.setPixelSize(24);
     painter.setFont(f);
     painter.setPen(Qt::red);
 
 
-    QString s = QString("Left click to select coordinates.");
+    //QString s = QString("Left click to select coordinates. Score").arg(score);
+    //painter.drawText(0,1000, s);
+    QString s = QString("Score = %1").arg(score);
     painter.drawText(0,1000, s);
+
     event->accept();
     frame++;
 }
@@ -174,4 +238,5 @@ void CoordSelector::closeDelaySlot()
 {
     emit sigSetAttrs(attrs);
     close();
+
 }

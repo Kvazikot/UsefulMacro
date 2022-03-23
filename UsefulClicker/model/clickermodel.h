@@ -75,7 +75,7 @@
 #include <QAbstractItemModel>
 #include <QDomDocument>
 #include <QModelIndex>
-
+#include "xml/clickerdocument.h"
 class DomItem;
 
 
@@ -86,7 +86,7 @@ class ClickerModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit ClickerModel(const QDomDocument &document, QObject *parent = nullptr);
+    explicit ClickerModel(const ClickerDocument &document, QObject *parent = nullptr);
     ~ClickerModel();  
 
     QVariant data(const QModelIndex &index, int role) const override;
@@ -103,9 +103,10 @@ public:
     bool insertColumns(int position, int columns, const QModelIndex &parent) override;
     bool insertRows(int position, int rows, const QModelIndex &parent) override;
     void save(QString filename);
+    ClickerDocument* getDoc() { return &document; }
     //bool removeColumns(int position, int columns, const QModelIndex &parent) override;
 private:
-    QDomDocument domDocument;
+    ClickerDocument document;
     DomItem *rootItem;
 };
 //! [0]

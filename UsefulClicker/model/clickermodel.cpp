@@ -74,10 +74,10 @@
 #include "settings/clickersettings.h"
 #include <QtXml>
 
-ClickerModel::ClickerModel(const QDomDocument &document, QObject *parent)
+ClickerModel::ClickerModel(const ClickerDocument &document, QObject *parent)
     : QAbstractItemModel(parent),
-      domDocument(document),
-      rootItem(new DomItem(domDocument, 0))
+      document(document),
+      rootItem(new DomItem(document, 0))
 {
     qDebug() << "hideCodeTags = " << _("hideCodeTags");
 }
@@ -325,7 +325,7 @@ void  ClickerModel::save(QString filename)
     if( f.open(QIODevice::WriteOnly | QIODevice::Truncate))
     {
         QTextStream ts(&f);
-        domDocument.save(ts, 0);
+        document.Save(ts);
         f.close();
     }
 

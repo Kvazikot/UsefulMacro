@@ -76,20 +76,21 @@ public slots:
     void updateActions();
     void about();
     void next();
-    void refresh();
     void pause();
     void openXml();
-    void hideDeadRows();
-    void save();
+    void save(){saveToFile(current_filename);}
+    void saveToFile(QString& filename=current_filename);
     void setNextItem(QModelIndex& index);
-
+    void reloadFromFile(QString& filename);
+    void reloadFromMemory();
+    void reload(){ reloadFromMemory(); }
 private slots:
     void insertChild();
     void insertRow();
     void removeRow();
 private:
-    ClickerModel* model;
-    QString current_filename;
+    ClickerModel* model=0;
+    static QString current_filename;
     QAction* playAction;
     bool pauseFlag;
     int n_cycle;
