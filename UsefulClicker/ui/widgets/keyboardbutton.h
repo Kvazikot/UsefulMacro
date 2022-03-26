@@ -20,7 +20,7 @@ public:
     virtual void paintEvent(QPaintEvent *) override;
 signals:
     void clicked();
-    void sendAttrs(QMap<QString,QString> attrs);
+    //void sendAttrs(QMap<QString,QString> attrs);
     void accept();
     void updateSequence();
 

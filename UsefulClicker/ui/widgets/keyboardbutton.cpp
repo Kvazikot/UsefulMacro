@@ -1,5 +1,6 @@
 #include <QKeyEvent>
 #include <QCoreApplication>
+#include <QTimer>
 #include "keyboardbutton.h"
 
 //---------------------------------------------------------------------------------

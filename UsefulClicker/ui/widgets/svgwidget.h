@@ -26,7 +26,7 @@ public:
     explicit SvgWidget(QWidget *parent = 0);
 
 //----методы работающие с SVG как с текстом
-    void SvgLoad(QString svgPath);
+    bool SvgLoad(QString svgPath);
     void SvgSave(QString svgFileM);
     void LoadOriginal();
     void doReplace();

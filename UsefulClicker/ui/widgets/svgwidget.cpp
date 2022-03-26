@@ -410,7 +410,7 @@ void SvgWidget::rotateNode(QString id, float degree)
 
 
 // загрузка SVG
-void SvgWidget::SvgLoad(QString svgPath)
+bool SvgWidget::SvgLoad(QString svgPath)
 {
     id_list.clear();
     svg = "";
@@ -420,7 +420,7 @@ void SvgWidget::SvgLoad(QString svgPath)
     QFile f(svgPath);
     if (!f.open(QFile::ReadOnly | QFile::Text)) {
         qDebug() << "cannot open file " << svgPath;
-        return;
+        return false;
     }
     QTextStream ts(&f);
     //ts.setCodec("UTF-8");
@@ -438,6 +438,7 @@ void SvgWidget::SvgLoad(QString svgPath)
 
     }
     svg_original = svg;
+    return true;
 }
 
 // загрузить оригинальный SVG (не измененный)
