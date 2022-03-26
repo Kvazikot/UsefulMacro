@@ -28,11 +28,9 @@
 
 int AbstractInterpreter::process(const QDomNode& domNode)
 {
-    Delays delays = parseDelays(domNode);
     // -1 if node is rejected
-    if( parse(domNode) == -1)
+    if( execute(domNode) == -1)
     {
-        delays.delay_fixed = 0;
         return -1;
     }
     return 0;

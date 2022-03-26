@@ -50,7 +50,7 @@ public:
     AbstractInterpreter()
     {}
     void MainLoop();
-    virtual int parse(const QDomNode& node)=0;
+    virtual int execute(const QDomNode& node)=0;
     virtual Delays parseDelays(const QDomNode& node)=0;
     virtual int process(const QDomNode& domNode);
     void TraverseXmlNode(const QDomNode& node);

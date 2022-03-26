@@ -19,9 +19,10 @@ public:
     InterpreterWin64();
     Delays parseDelays(const QDomNode& node)  override;
     QRect parseRect(const QDomNode& node);
+    void MySleep(QDateTime endTime);
 
     void MainLoop();
-    int parse(const QDomNode& node) override;
+    int execute(const QDomNode& node) override;
 
 signals:
     void setCurrentNode(QDomNode& currentNode);

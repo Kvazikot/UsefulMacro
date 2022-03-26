@@ -1,5 +1,8 @@
 #include <QDebug>
 #include <QPoint>
+#include <QTime>
+#include <QDateTime>
+#include <QApplication>
 #include <windef.h>
 #include "interpreter/interpreterwin64.h"
 #include "model/clickermodel.h"
@@ -51,7 +54,7 @@ void hotKey(char* hot_key)
     char c = hot_key[strlen(hot_key)-1];
     SHORT code = c-32;
     code = VkKeyScanA(c);
-    qDebug() << __FUNCTION__ << QString(hot_key) << " VkKeyScanA code =" << code << " c=" << c;
+    qDebug() << __FUNCTION__ << QString(hot_key) << " VkKeyScanA code =" << code << " c=" << c ;
 
     if( strstr(hot_key, "shift") !=NULL )
         vkeys.push_back(VK_SHIFT);
@@ -157,44 +160,73 @@ void MouseClick(QRect rect, Qt::MouseButton button)
     MouseClick(QPoint(x,y), button);
 }
 
-int InterpreterWin64::parse(const QDomNode& node)
+void InterpreterWin64::MySleep(QDateTime endTime)
+{
+    const auto MAX_DELAY_SEC = 20;
+    QDateTime startTime = QDateTime::currentDateTime();
+    while(1)
+    {
+        QCoreApplication::processEvents(QEventLoop::AllEvents, MAX_DELAY_SEC);
+        QDateTime currentTime = QDateTime::currentDateTime();
+        if( currentTime.msecsTo(endTime) < 0)
+            break;
+        if( startTime.secsTo(currentTime) >  MAX_DELAY_SEC)
+            break;
+        Sleep(10);
+    }
+
+}
+
+int InterpreterWin64::execute(const QDomNode& node)
 {
     QString name = node.toElement().tagName().toLocal8Bit();
     if( !validNodes.contains( name  ) ) return -1;
 
     qDebug() << name;
 
-    if( name == "hotkey" )
+    //
+    int repeats = ATTR("repeats").toInt();
+    int n = 0;
+
+    while(n++ < repeats)
     {
-        QString str = node.toElement().attribute("hotkey");
-        str = str.replace(" ","");
-        hotKey((char*)str.toLocal8Bit().toStdString().c_str());
-        return 1;
-    }
-    //<click area="Rect(0,1,200,200)" button="left"/>
-    //<click x="10" y="20"  button="right"/>
-    if( name == "click" )
-    {
-        QString atr = node.toElement().attribute("button");
-        Qt::MouseButton b;
-        if (atr == "left")
-            b = Qt::MouseButton::LeftButton;
-        else
-            b = Qt::MouseButton::RightButton;
-        bool ok1,ok2;
-        auto x = node.toElement().attribute("x").toInt(&ok1);
-        auto y = node.toElement().attribute("y").toInt(&ok2);
-        if(ok1 && ok2)
-            MouseClick(QPoint(x,y), b);
-        if( node.toElement().hasAttribute("area"))
+
+        if( name == "hotkey" )
         {
-            QRect rect = parseRect(node);
-            MouseClick(rect, b);
+            QString str = node.toElement().attribute("hotkey");
+            str = str.replace(" ","");
+            hotKey((char*)str.toLocal8Bit().toStdString().c_str());
         }
 
+        if( name == "click" )
+        {
+            QString atr = node.toElement().attribute("button");
+            Qt::MouseButton b;
+            if (atr == "left")
+                b = Qt::MouseButton::LeftButton;
+            else
+                b = Qt::MouseButton::RightButton;
+            bool ok1,ok2;
+            auto x = node.toElement().attribute("x").toInt(&ok1);
+            auto y = node.toElement().attribute("y").toInt(&ok2);
+            if(ok1 && ok2)
+                MouseClick(QPoint(x,y), b);
+            if( node.toElement().hasAttribute("area"))
+            {
+                QRect rect = parseRect(node);
+                MouseClick(rect, b);
+            }
 
-        return 1;
+        }
+
+        // make a delay
+        Delays delays = parseDelays(node);
+        int delay = delays.delay_fixed + (delays.delay_random * (float)rand()/RAND_MAX);
+        QDateTime t = QDateTime::currentDateTime().addMSecs(delay);
+        MySleep(t);
+        qDebug() << __FUNCTION__ << " delay=" << delay;
     }
+
 
     return 0;
 }
