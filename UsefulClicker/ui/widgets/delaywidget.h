@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QPaintEvent>
 #include <QShowEvent>
+#include <QKeyEvent>
 #include <QWheelEvent>
 
 
@@ -21,6 +22,7 @@ public:
     explicit DelayWidget(QWidget *parent = nullptr);
     void showEvent(QShowEvent* event);
     void timerEvent(QTimerEvent* event);
+    void keyPressEvent(QKeyEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event);
     void mousePressEvent(QMouseEvent* event);
     void paintEvent(QPaintEvent* event) override;

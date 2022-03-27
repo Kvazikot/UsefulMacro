@@ -147,9 +147,10 @@ void DelayWidget::paintEvent( QPaintEvent* event)
     pen.setWidth(20);
     pen.setColor(Qt::white);
     painter.setPen(pen);
+    painter.drawLine(mlocalPos, c);
     painter.fillPath(path, Qt::green);
     painter.drawText(mlocalPos.toPoint(), QString::number(22));
-    painter.drawLine(mlocalPos, c);
+    //painter.drawLine(mlocalPos, c);
 
     /*
     QPainter painter;
@@ -161,6 +162,14 @@ void DelayWidget::paintEvent( QPaintEvent* event)
     */
 
 }
+
+void DelayWidget::keyPressEvent(QKeyEvent* event)
+{
+    event->accept();
+    if( event->key() == Qt::Key_Return )
+        close();
+}
+
 void DelayWidget::wheelEvent(QWheelEvent* event)
 {
     if( event->angleDelta().y() > 0 )
