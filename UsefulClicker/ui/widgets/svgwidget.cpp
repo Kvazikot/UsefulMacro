@@ -251,20 +251,21 @@ void SvgWidget::setText(QString group_id, QString text)
     if( it!=elementByID.end() )
     {
        group_node = it.value();
-       QDomNode e = group_node.firstChild();
-       fprintf(stderr,"%s", e.nodeName().toStdString().c_str());
-       if(e.nodeName()=="rect")
-           e = e.nextSibling();
-       if(e.nodeName() == "text")
-       {
-           QDomNode parent = e;
-           e = e.firstChild();
-           fprintf(stderr,"%s", e.nodeName().toStdString().c_str());
-           e.setNodeValue(text);
-           QDomText newNode = domDocument.createTextNode(text);
-           parent.replaceChild(newNode,e);
 
-       }
+       auto span = group_node.toElement().firstChild();
+
+       QString str;
+       QTextStream stream(&str);
+       span.save(stream, 4 /*indent*/);
+       //str.replace();
+       // </tspan>
+       static QRegularExpression re("[>]([\\S]+)</tspan>");
+       str.replace(re, ">" + text + "</tspan>");
+
+       auto doc = span.toDocument();
+       doc.setContent(str);
+       group_node.replaceChild(doc, span);
+
 
     }
 }
@@ -333,8 +334,8 @@ void SvgWidget::setRadialGradient(QString id, QRadialGradient g)
        node.setAttribute("fx", g.focalPoint().rx());
        node.setAttribute("fy", g.focalPoint().ry());
        node.setAttribute("r", QString::number(g.radius()));
-       qDebug() << __FUNCTION__ << "r " << g.radius();       
-       qDebug() << __FUNCTION__ << "r " << node.attribute("r").toDouble();
+       //qDebug() << __FUNCTION__ << "r " << g.radius();
+       //qDebug() << __FUNCTION__ << "r " << node.attribute("r").toDouble();
 
     }
 
@@ -356,7 +357,7 @@ QRadialGradient SvgWidget::getRadialGradient(QString id)
        double fx = node.attribute("fx").toDouble();
        double fy = node.attribute("fy").toDouble();
        double r = node.attribute("r").toDouble();
-       qDebug() << __FUNCTION__ << "r " << r;
+       //qDebug() << __FUNCTION__ << "r " << r;
        g.setCenter(cx,cy);
        g.setFocalPoint(fx,fy);
        g.setRadius(r);

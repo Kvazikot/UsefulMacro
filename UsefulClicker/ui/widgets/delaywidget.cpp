@@ -1,6 +1,8 @@
 #include <QPainter>
 #include <QGridLayout>
 #include <QDir>
+#include <QPainterPath>
+#include <QPen>
 #include <QGuiApplication>
 #include <QLabel>
 #include "delaywidget.h"
@@ -20,6 +22,8 @@ DelayWidget::DelayWidget(QWidget *parent)
     setAttribute(Qt::WA_PaintOnScreen);
     setCursor(Qt::CrossCursor);
     frame = 0;
+    repeats = 0;
+    setMouseTracking(true);
     //setWindowOpacity(0.3);
 //    setTra
 
@@ -54,37 +58,73 @@ void DelayWidget::timerEvent(QTimerEvent* event)
 {
     QRectF elipse = widget->getEllipse("path1042-1-5");
     //qDebug() << "read elipse " << elipse;
-    double r = rnd(10,100);
-    QPointF c = elipse.center();
+
+    c = elipse.center();
+    double dist = QVector2D(mlocalPos).distanceToPoint(QVector2D(c));
+    double r = dist/2 + rnd(10,10);
+
     elipse.setCoords(c.x()-r,c.y()-r,c.x()+r,c.y()+r);
     widget->setEllipse("path1042-1-5", elipse);
 
 
     QRectF elipse2 = widget->getEllipse("path1042");
     //qDebug() << "read elipse " << elipse;
-    r = rnd(100,200);
+
     c = elipse2.center();
+    r = dist + rnd(10,10);
     elipse2.setCoords(c.x()-r,c.y()-r,c.x()+r,c.y()+r);
     widget->setEllipse("path1042", elipse2);
 
     QRadialGradient g = widget->getRadialGradient("radialGradient1451");
-    double r1 = rnd(300,500);
+    double r1 = dist;
     g.setRadius(r1);
     //g.setFocalRadius(r1);
     widget->setRadialGradient("radialGradient1451", g);
 
+    //qDebug() << "dist " << dist;
+
+    // set fixed delay text
+    QPointF d = c - mlocalPos;
+    float angle;
+    if(d.y() > 0)
+    {
+        if(d.x() > 0)
+            angle = 270 + qRadiansToDegrees(atan2(d.y(),d.x()));
+        else
+            angle = qRadiansToDegrees(atan2(d.y(),d.x())-M_PI_2);
+    }
+    else
+        angle = qRadiansToDegrees(M_PI_2 + M_PI - atan2(-d.y(),d.x()));
+
+    static char num[100];
+    sprintf(num,"%3.1f",angle);
+    widget->setText("text12424-4", QString(num));
+
+    // set random delay text
+    sprintf(num,"%3.1f",dist/10);
+    widget->setText("text12424", QString(num));
+
+    // set repeats
+    sprintf(num,"%03d",repeats);
+    widget->setText("text12424-7", QString(num));
 
     widget->LoadRenderDOM();
 
-    qDebug() << "frame " << frame;
-    qDebug() << "r " << r;
-    qDebug() << "r1 " << r1;
+    //qDebug() << "frame " << frame;
+    //qDebug() << "r " << r;
+    //qDebug() << "r1 " << r1;
+
     //qDebug() << "write elipse " << elipse;
     repaint();
+
+
     frame++;
 }
 void DelayWidget::mouseMoveEvent(QMouseEvent* event)
-{
+{    
+    mpos = QPointF(event->globalPos());
+    mlocalPos = event->localPos();
+    //qDebug() << __FUNCTION__ << mlocalPos;
 }
 void DelayWidget::mousePressEvent(QMouseEvent* event)
 {
@@ -100,6 +140,16 @@ void DelayWidget::paintEvent( QPaintEvent* event)
     painter.drawPixmap(rect(), screenshot, r);
     event->accept();
 
+    //draw mouse point
+    QPainterPath path;
+    path.addEllipse(mlocalPos, 10, 10);
+    QPen pen;
+    pen.setWidth(20);
+    pen.setColor(Qt::white);
+    painter.setPen(pen);
+    painter.fillPath(path, Qt::green);
+    painter.drawText(mlocalPos.toPoint(), QString::number(22));
+    painter.drawLine(mlocalPos, c);
 
     /*
     QPainter painter;
@@ -113,5 +163,11 @@ void DelayWidget::paintEvent( QPaintEvent* event)
 }
 void DelayWidget::wheelEvent(QWheelEvent* event)
 {
+    if( event->angleDelta().y() > 0 )
+        repeats++;
+    else
+        repeats--;
+
+    qDebug() << repeats;
 }
 
