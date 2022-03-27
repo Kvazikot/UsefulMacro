@@ -44,7 +44,7 @@ void SvgWidget::doReplace()
 }
 
 //загружает DOM документ из SVG файла
-bool SvgWidget::LoadDom(QString fn)
+bool SvgWidget::LoadDocument(QString fn)
 {
     QString errorStr;
     int errorLine;
@@ -205,6 +205,23 @@ void SvgWidget::setStroke(QString id, QColor stroke_color)
     }
 }
 
+void SvgWidget::setEllipse(QString id, QRectF elipse)
+{
+    QDomElement path_node;
+    QMap<QString, QDomElement>::iterator it;
+    QRectF rect;
+    it = elementByID.find(id);
+    if( it!=elementByID.end() )
+    {
+        path_node = it.value();
+        path_node.setAttribute("cx", elipse.center().x());
+        path_node.setAttribute("cy", elipse.center().y());
+        path_node.setAttribute("rx", elipse.width());//QString::number(elipse.width()));
+        path_node.setAttribute("ry", elipse.height());//QString::number(elipse.height()));
+    }
+
+}
+
 QRectF SvgWidget::getEllipse(QString id)
 {
     QDomElement path_node;
@@ -214,14 +231,13 @@ QRectF SvgWidget::getEllipse(QString id)
     if( it!=elementByID.end() )
     {
        path_node = it.value();
+       //qDebug() << __FUNCTION__ << "cx " << path_node.attribute("cx");
        double cx = path_node.attribute("cx").toDouble();
        double cy = path_node.attribute("cy").toDouble();
-       double rx = path_node.attribute("rx").toDouble();
-       double ry = path_node.attribute("ry").toDouble();
-       rect.setTop(cy-ry/2);
-       rect.setLeft(cx-rx/2);
-       rect.setRight(cx+rx/2);
-       rect.setBottom(cy+ry/2);
+       double rx = path_node.attribute("rx").toDouble()/2;
+       double ry = path_node.attribute("ry").toDouble()/2;
+       QPointF c = QPointF(cx,cy);
+       rect.setCoords(c.x()-rx,c.y()-ry,c.x()+rx,c.y()+ry);
     }
     return rect;
 }
@@ -300,6 +316,55 @@ QRectF SvgWidget::getRect(QString id)
        rect.setRect(x,y,w,h);
     }
     return rect;
+}
+
+
+void SvgWidget::setRadialGradient(QString id, QRadialGradient g)
+{
+    QDomElement node;
+    QPainterPath path;
+    QMap<QString, QDomElement>::iterator it;
+    it = elementByID.find(id);
+    if( it!=elementByID.end() )
+    {
+       node = it.value();
+       node.setAttribute("cx", g.center().x());
+       node.setAttribute("cy", g.center().y());
+       node.setAttribute("fx", g.focalPoint().rx());
+       node.setAttribute("fy", g.focalPoint().ry());
+       node.setAttribute("r", QString::number(g.radius()));
+       qDebug() << __FUNCTION__ << "r " << g.radius();       
+       qDebug() << __FUNCTION__ << "r " << node.attribute("r").toDouble();
+
+    }
+
+}
+
+
+QRadialGradient SvgWidget::getRadialGradient(QString id)
+{
+    QRadialGradient g;
+    QDomElement node;
+    QPainterPath path;
+    QMap<QString, QDomElement>::iterator it;
+    it = elementByID.find(id);
+    if( it!=elementByID.end() )
+    {
+       node = it.value();
+       double cx = node.attribute("cx").toDouble();
+       double cy = node.attribute("cy").toDouble();
+       double fx = node.attribute("fx").toDouble();
+       double fy = node.attribute("fy").toDouble();
+       double r = node.attribute("r").toDouble();
+       qDebug() << __FUNCTION__ << "r " << r;
+       g.setCenter(cx,cy);
+       g.setFocalPoint(fx,fy);
+       g.setRadius(r);
+       // TODO: gradientTransform="matrix(1,0,0,1.0800218,0,-15.218899)"
+       //rect.setRect(x,y,w,h);
+    }
+    return g;
+
 }
 
 QPointF  SvgWidget::mapToViewbox(QPoint p, QRectF viewbox)

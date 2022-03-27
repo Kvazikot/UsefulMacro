@@ -12,6 +12,7 @@
    shape-rendering="crispEdges"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
@@ -25,8 +26,8 @@
      inkscape:document-units="mm"
      showgrid="true"
      inkscape:zoom="1.0469406"
-     inkscape:cx="99.814638"
-     inkscape:cy="305.65248"
+     inkscape:cx="99.814641"
+     inkscape:cy="305.65249"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
      inkscape:window-x="-8"
@@ -42,6 +43,30 @@
   </sodipodi:namedview>
   <defs
      id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient874-7">
+      <stop
+         style="stop-color:#008080;stop-opacity:1;"
+         offset="0"
+         id="stop1453" />
+      <stop
+         style="stop-color:#008080;stop-opacity:0;"
+         offset="1"
+         id="stop1455" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient874-7-2">
+      <stop
+         style="stop-color:#008080;stop-opacity:1;"
+         offset="0"
+         id="stop870" />
+      <stop
+         style="stop-color:#008080;stop-opacity:0;"
+         offset="1"
+         id="stop872" />
+    </linearGradient>
     <linearGradient
        id="linearGradient111400"
        inkscape:swatch="solid">
@@ -126,35 +151,6 @@
        width="126.97575"
        height="49.979816"
        id="rect37844-3" />
-    <meshgradient
-       inkscape:collect="always"
-       id="meshgradient93199"
-       gradientUnits="userSpaceOnUse"
-       x="-22.049129"
-       y="57.342045">
-      <meshrow
-         id="meshrow93201">
-        <meshpatch
-           id="meshpatch93203">
-          <stop
-             path="c 23.7888,-23.5794  62.3581,-23.5794  86.1469,0"
-             style="stop-color:#ffffff;stop-opacity:1"
-             id="stop93205" />
-          <stop
-             path="c 23.7888,23.5794  23.7888,61.8093  0,85.3887"
-             style="stop-color:#33188d;stop-opacity:1"
-             id="stop93207" />
-          <stop
-             path="c -23.7888,23.5794  -62.3581,23.5794  -86.1469,2.84217e-14"
-             style="stop-color:#ffffff;stop-opacity:1"
-             id="stop93209" />
-          <stop
-             path="c -23.7888,-23.5794  -23.7888,-61.8093  -1.42109e-14,-85.3887"
-             style="stop-color:#33188d;stop-opacity:1"
-             id="stop93211" />
-        </meshpatch>
-      </meshrow>
-    </meshgradient>
     <font
        horiz-adv-x="1024"
        id="font105605"
@@ -167,6 +163,28 @@
          d="M0,0h1000v1024h-1000z"
          id="missing-glyph105609" />
     </font>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient874-7-2"
+       id="radialGradient1043"
+       cx="159.65105"
+       cy="190.18445"
+       fx="159.65105"
+       fy="190.18445"
+       r="91.007818"
+       gradientTransform="matrix(1,0,0,1.0800218,0,-15.218899)"
+       gradientUnits="userSpaceOnUse" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient874-7"
+       id="radialGradient1451"
+       cx="160.90034"
+       cy="190.69041"
+       fx="160.90034"
+       fy="190.69041"
+       r="76.702133"
+       gradientTransform="matrix(1,0,0,1.0441764,0,-8.4240249)"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <g
      inkscape:label="Layer 1"
@@ -197,9 +215,9 @@
        cy="190.18445"
        rx="88.173668"
        ry="95.456276"
-       style="fill:url(#meshgradient93199);fill-opacity:1;stroke:#33188d;stroke-width:5.6683;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+       style="fill:url(#radialGradient1043);fill-opacity:1;stroke:#33188d;stroke-width:5.6683;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     <ellipse
-       style="fill:#2a8318;fill-opacity:0.658635;stroke:#87cfe3;stroke-width:0.243945;stroke-opacity:1"
+       style="fill:url(#radialGradient1451);fill-opacity:1.0;stroke:#87cfe3;stroke-width:0.243945;stroke-opacity:1"
        id="path1042"
        cx="160.90034"
        cy="190.69041"

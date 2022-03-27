@@ -36,6 +36,9 @@ public:
     QPainterPath getPath(QString id);
     QRectF getRect(QString id);
     QRectF getEllipse(QString id);
+    QRadialGradient getRadialGradient(QString id);
+    void setRadialGradient(QString id, QRadialGradient g);
+    void setEllipse(QString id, QRectF elipse);
     void rotateNode(QString id, float degree);
     void rotateNode(QString id, QPointF center, float degree);
     void setText(QString group_id, QString text);
@@ -44,7 +47,7 @@ public:
     QTransform getViewBoxTransform();
 
 //----методы работающие с SVG как с DOM документом(медленнее)
-    bool LoadDom(QString fn);
+    bool LoadDocument(QString fn);
     bool SaveDom(QString fn);
     bool LoadRenderDOM();
     void setViewBox(const QDomNode& root);

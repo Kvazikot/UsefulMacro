@@ -14,6 +14,7 @@ class DelayWidget : public QWidget
 public:
     QPixmap screenshot;
     int bigTimerRadius = 150;
+    int frame=0;
     explicit DelayWidget(QWidget *parent = nullptr);
     void showEvent(QShowEvent* event);
     void timerEvent(QTimerEvent* event);
