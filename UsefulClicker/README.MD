@@ -28,6 +28,19 @@ This project is licensed under the terms of the GNU General Public License v3.0
 В этом смысле она работает похоже на то как работает сетчатка глаза животного.
 Кнопки подсвечиваются зеленым в стиле augmented reality.
 
+![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/screenshots/buttons_detector_screenshot.png)
+
+рис.1 Детектор кнопок
+
+![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/screenshots/delay_widget.png)
+
+рис.2 Виджет установки задержек
+
+![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/screenshots/xml_editor_screenshot.png)
+
+рис.3 Редактор программы кликера в виде xml дерева.
+
+
 ## Новая концепция для Useful Clicker (3/28/2022)
 Программа должна распознавать контекст. Т.е. какое окно сейчас на экране, какие кнопки на экране.
 Все кнопки она обводит зеленым цветом, а кнопку которую нужно кликнуть в красное.
