@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QMap>
 #include <QElapsedTimer>
-//#include <QSound>
+#include <QSoundEffect>
 
 namespace Ui {
 class CoordSelector;
@@ -20,7 +20,8 @@ public:
     QPoint mpos;
     QRectF hit_rect;
     QCursor cursor;
-    //QSound bullet_sound;
+    QSoundEffect bullet_sound;
+
     QPixmap cursor_pixmap;
     QElapsedTimer timeSinceHit;
     QPoint hitPoint;

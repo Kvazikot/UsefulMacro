@@ -93,6 +93,7 @@
 static InterpreterWin64* interpreter = 0;
 QString MainWindow::current_filename;
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -115,8 +116,14 @@ MainWindow::MainWindow(QWidget *parent)
     QToolBar* toolbar = new QToolBar(this);
     playAction =  toolbar->addAction(QIcon(":/images/play.png"), "Play");
     pauseFlag = true;
+
     QAction* refreshAction =  toolbar->addAction(QIcon(":/images/refresh-icon.png"), "Refresh");
     connect(refreshAction, &QAction::triggered, this, &MainWindow::reload);
+
+    QAction* shellAction =  toolbar->addAction(QIcon(":/images/Terminal-icon.png"), "Shell");
+    connect(shellAction, &QAction::triggered, this, &MainWindow::shell);
+
+
     //connect(playAction, &QAction::triggered, daemon, &InterpreterDaemon::terminate);
     connect(playAction, &QAction::triggered, this, &MainWindow::pause);
     connect(actionOpen, &QAction::triggered, this, &MainWindow::openXml);
@@ -147,6 +154,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(actionSave, &QAction::triggered, this, &MainWindow::save);
 
     updateActions();
+}
+
+void MainWindow::shell()
+{
+
 }
 
 void MainWindow::openXml()

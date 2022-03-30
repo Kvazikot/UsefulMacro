@@ -1,4 +1,4 @@
-QT += core gui widgets  xml
+QT += core gui widgets xml multimedia svg
 QMAKE_CXXFLAGS += -std=c++17
 TARGET = UsefulClicker
 UI_DIR = "./ui"
@@ -78,11 +78,16 @@ SOURCES += main.cpp \
     ui/autocompleteeditor.cpp \
     ui/imagesearchdialog.cpp \
     ui/mainwindow.cpp \
+    ui/shelldialog.cpp \
     ui/widgets/areabutton.cpp \
     ui/widgets/comboedit.cpp \
     ui/widgets/crossbutton.cpp \
+    ui/widgets/delaywidget.cpp \
     ui/widgets/keyboardbutton.cpp \
     ui/widgets/mousebutton.cpp \
+    ui/widgets/svg_path_parser.cpp \
+    ui/widgets/svgwidget.cpp \
+    ui/widgets/qconsole.cpp \
     xml/clickerdocument.cpp \
     xml/xmlstreamer.cpp \
     #xml/serialisationtest.cpp
@@ -96,15 +101,18 @@ SOURCES += main.cpp \
 
 HEADERS += \
     cv/dspmodule.h \
+    ui/widgets/qconsole.h \
     ui/coordselector.h \
     ui/dialogtype.h \
     ui/screenbuttonsdetector.h \
     ui/aboutbox.h \
     ui/areaselectordialog.h \
     ui/autocompleteeditor.h \
+    ui/shelldialog.h \
     ui/widgets/areabutton.h \
     ui/widgets/comboedit.h \
     ui/widgets/crossbutton.h \
+    ui/widgets/delaywidget.h \
     ui/widgets/keyboardbutton.h \
     ui/widgets/mousebutton.h \
     ui/mainwindow.h \
@@ -112,6 +120,7 @@ HEADERS += \
     interpreter/interpreter.h \
     interpreter/interpreterpy.h \
     interpreter/interpreterwin64.h \
+    ui/widgets/svgwidget.h \
     xml/clickerdocument.h \
     xml/xmlstreamer.h \
     #xml/serialisationtest.h
@@ -132,7 +141,8 @@ FORMS += \
     ui/coordselector.ui \
     ui/imagesearchdialog.ui \
     ui/mainwindow.ui \
-    ui/screenbuttonsdetector.ui
+    ui/screenbuttonsdetector.ui \
+    ui/shelldialog.ui
 
 RESOURCES += \
     res.qrc

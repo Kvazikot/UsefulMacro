@@ -76,6 +76,7 @@ public slots:
     void updateActions();
     void about();
     void next();
+    void shell();
     void pause();
     void openXml();
     void save(){saveToFile(current_filename);}
