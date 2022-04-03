@@ -59,6 +59,7 @@
 #include "ui/autocompleteeditor.h"
 #include "model/clickermodel.h"
 #include <QTextEdit>
+#include <QLineEdit>
 #include <QAbstractItemModel>
 //! [0]
 FancyDelegate::FancyDelegate(QObject *parent)
@@ -140,9 +141,14 @@ void FancyDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
     }
     else
     {
-        QTextEdit* edit = static_cast<QTextEdit*>(editor);
-        QString value = index.model()->data(index, Qt::EditRole).toString();
-        model->setData(index, edit->toPlainText(), Qt::EditRole);
+        if( QString(editor->metaObject()->className()).contains("QLineEdit"))
+        {
+            qDebug() << editor->metaObject()->className();
+            QLineEdit* edit = static_cast<QLineEdit*>(editor);
+            QString value = index.model()->data(index, Qt::EditRole).toString();
+            qDebug() << __FUNCTION__ << edit->text();
+            model->setData(index, edit->text(), Qt::EditRole);
+        }
     }
 }
 //! [3]

@@ -87,11 +87,13 @@
 #include "aboutbox.h"
 #include "settings/clickersettings.h"
 #include "xml/clickerdocument.h"
+#include "ui/shelldialog.h"
 #include "interpreter/interpreter.h"
 #include "interpreter/interpreterwin64.h"
 
 static InterpreterWin64* interpreter = 0;
 QString MainWindow::current_filename;
+extern void MouseClick(QPoint coordinates, Qt::MouseButton button);
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -158,6 +160,22 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::shell()
 {
+    view->setSelectionBehavior(QAbstractItemView::SelectItems);
+    const QModelIndex index = view->currentIndex();
+    const QModelIndex index2 = model->index(index.row(), 3);
+    QRect rect = view->visualRect(index2);
+    QPoint center = view->mapToGlobal(rect.center());
+    MouseClick(center, Qt::MouseButton::LeftButton);
+    MouseClick(center, Qt::MouseButton::LeftButton);
+    QTimer::singleShot(400, this, SLOT(shell2()));
+}
+
+void MainWindow::shell2()
+{
+    //view->setSelection(rect);
+    SimpleDelegate* delegate = new SimpleDelegate(view, view->itemDelegate(), DialogType::SHELL_COMMAND_DIALOG);
+    view->setItemDelegate(delegate);
+    connect(delegate, SIGNAL(activated(const QModelIndex&)), view, SLOT(update(const QModelIndex&)) );
 
 }
 
@@ -337,7 +355,6 @@ void MainWindow::insertChild()
     updateActions();
 }
 
-extern void MouseClick(QPoint coordinates, Qt::MouseButton button);
 
 void MainWindow::insertRow()
 {

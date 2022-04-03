@@ -140,7 +140,7 @@ bool DomItem::setData(int column, const QVariant &value, int role)
     if(column == 2 || column == 1)
     {
         //QStringList attrlist = value.toString().split("=");
-         QRegularExpression re("([\\S]+)[=]([\\S]+)");
+         QRegularExpression re("([\\S]+)[=]([\\S ]+)");
 
          int pos = 0;
          bool hasMatch = true;

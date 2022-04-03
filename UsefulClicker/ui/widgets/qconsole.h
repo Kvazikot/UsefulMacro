@@ -122,7 +122,7 @@ public:
 		//clear & reset the console (useful sometimes)
 		void clear();
 		void reset(const QString &welcomeText = "");
-
+        void closeThread();
 		//cosmetic methods !
 
 		// @{
@@ -235,6 +235,7 @@ private:
 class PipeReaderThread : public QThread
 {
 public:
+    bool flagClose;
     PipeReaderThread(QConsole* parent);
     void run();
 };

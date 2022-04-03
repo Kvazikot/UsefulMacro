@@ -142,6 +142,41 @@ bool ClickerModel::setData(const QModelIndex &index, const QVariant &value, int 
     DomItem *item1 = (DomItem*)(index.internalPointer());
     bool result=false;
     QString v =  value.toString() ;
+    if(index.column() == 2)
+    {
+
+        if( v.contains("cmd") )
+        {
+            auto el = item1->node().toElement();
+            el.setTagName("shell");
+            el.setAttribute("bg", "1");
+            el.setAttribute("showConsole", "1");
+            //QStringList key_value = v.split("=");
+            int pos = v.indexOf("=");
+            QString value = v.mid(pos+2, v.size() - pos - 2);
+            el.setAttribute("cmd", value);
+
+            /* to set text body of <shell> tag
+            * i.e. text between <shell> </shell>
+            * use this pieace of code
+            auto span = el;
+                    QString str;
+                    QTextStream stream(&str);
+                    span.save(stream, 4);
+                    //str.replace();
+                    // </tspan>
+                    static QRegularExpression re("[>]([\\S]+)</>");
+                    str.replace(re, ">" + v + "</shell>");
+
+                    auto doc = span.toDocument();
+                    doc.setContent(str);
+                    item1->node().parentNode().replaceChild(doc, span);
+            */
+
+
+        }
+    }
+
     if(index.column() == 1)
     {
         if( v.contains("ctrl") || v.contains("shift") || v.contains("win"))
@@ -160,6 +195,7 @@ bool ClickerModel::setData(const QModelIndex &index, const QVariant &value, int 
                   el.setAttribute("button", "right");
               result = item1->setData(1, "click", role);
         }
+
         if( v.contains("area") )
         {
             //auto el = item1->node().toElement();

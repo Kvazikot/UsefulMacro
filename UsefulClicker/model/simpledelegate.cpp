@@ -7,6 +7,7 @@
 #include "ui/areaselectordialog.h"
 #include "ui/screenbuttonsdetector.h"
 #include "ui/coordselector.h"
+#include "ui/shelldialog.h"
 
 QModelIndex  new_index;
 
@@ -37,7 +38,28 @@ SimpleDelegate::SimpleDelegate(QObject* pobj, QAbstractItemDelegate* _old_delega
             connect(dlg2, SIGNAL(sigSetAttrs(QMap<QString,QString>)), this, SLOT(slotSetAttrs(QMap<QString,QString>)));
             dlg2->show();
         } break;
+        case SHELL_COMMAND_DIALOG:
+        {
+            ShellDialog* dlg3 = new ShellDialog((QWidget*)pobj);
+            connect(dlg3, SIGNAL(sigSetAttrs(QMap<QString,QString>)), this, SLOT(editCurrentItem(QMap<QString,QString>)));
+            dlg3->show();
+
+        } break;
    }
+}
+
+void SimpleDelegate::editCurrentItem(QMap<QString,QString> _attrs)
+{
+    QTreeView* view = (QTreeView*)old_delegate->parent();
+    QModelIndex index = view->currentIndex();
+    view->edit(index);
+    for(auto k : _attrs.keys())
+        attrs[k] = _attrs[k];
+    edit->setText(getAttrsString());
+    emit commitData(edit);
+
+    QTimer::singleShot(500, this, SLOT(restoreDelegate()));
+
 }
 
 void SimpleDelegate::restoreDelegate()

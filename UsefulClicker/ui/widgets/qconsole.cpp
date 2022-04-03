@@ -23,6 +23,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QDir>
+#include <QThread>
 #include <QVBoxLayout>
 #include <QApplication>
 #include <QScrollBar>
@@ -31,7 +32,7 @@
 
 //TODO null onclose
 static QConsole* current_console = 0;
-
+static PipeReaderThread* pipeThread = 0;
 //#define USE_POPUP_COMPLETER
 #define WRITE_ONLY QIODevice::WriteOnly
 
@@ -241,7 +242,7 @@ QConsole::QConsole(QWidget *parent, const QString &welcomeText)
 	//Disable undo/redo
 	setUndoRedoEnabled(false);
 
-    PipeReaderThread* pipeThread = new PipeReaderThread(this);
+    pipeThread = new PipeReaderThread(this);
     pipeThread->start();
 	//Disable context menu
 	//This menu is useful for undo/redo, cut/copy/paste, del, select all,
@@ -253,6 +254,18 @@ QConsole::QConsole(QWidget *parent, const QString &welcomeText)
 	reset(welcomeText);
     const int tabwidth = QFontMetrics(currentFont()).maxWidth() * 4;
     //setTabStopWidth(tabwidth);
+}
+
+
+void QConsole::closeThread()
+{
+    if(pipeThread)
+    {
+        pipeThread->flagClose = true;
+        //QThread::currentThread()->sleep(1000);
+        pipeThread = 0;
+    }
+   // pipeThread->terminate();
 }
 
 //Sets the prompt and cache the prompt length to optimize the processing speed
@@ -634,6 +647,7 @@ void QConsole::read_stdout()
 PipeReaderThread::PipeReaderThread(QConsole* parent)
     : QThread(parent)
 {
+    flagClose = false;
 
 }
 
@@ -641,8 +655,14 @@ void PipeReaderThread::run()
 {
     //QFile pipe(" >\\\\.\\pipe\\StdOutPipe");
     QFile pipe(log_filename);
+    if( pipe.open( QFile::Truncate | QFile::WriteOnly) )
+    {
+        pipe.write("");
+        pipe.close();
+    }
     while(1)
     {
+        if(flagClose) return;
         if( !pipe.isOpen() )
         if( !pipe.open( QFile::ReadOnly) )
             qDebug() << "cannod open " + log_filename;

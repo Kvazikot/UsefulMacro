@@ -31,6 +31,7 @@ public:
 
 public slots:
     void slotSetAttrs(QMap<QString,QString> attrs);
+    void editCurrentItem(QMap<QString,QString> attrs);
     void restoreDelegate();
 signals:
     void activated(const QModelIndex &index);
