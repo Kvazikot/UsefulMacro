@@ -36,6 +36,7 @@ void MouseButton::mousePressEvent(QMouseEvent *ev)
     icon_enabled = icon_enabled.scaled(50,height());
     setPixmap(QPixmap::fromImage(icon_enabled));
     emit click(sequence);
+    emit clicked();
 
 }
 

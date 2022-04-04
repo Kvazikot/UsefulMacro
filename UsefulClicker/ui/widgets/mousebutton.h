@@ -15,6 +15,7 @@ public:
     void mousePressEvent(QMouseEvent *ev) override;
 signals:
     void click(QString button);
+    void clicked();
 };
 
 

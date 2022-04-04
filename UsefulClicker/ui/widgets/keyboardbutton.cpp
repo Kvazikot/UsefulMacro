@@ -41,6 +41,7 @@ void KeyboardButton::mousePressEvent(QMouseEvent *ev)
         QCoreApplication::sendEvent(this, &keyEvent);
 
     }
+    emit clicked();
     ev->accept();
 }
 

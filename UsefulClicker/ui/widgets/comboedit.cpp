@@ -5,11 +5,26 @@
 #include "ui/widgets/keyboardbutton.h"
 #include "ui/widgets/mousebutton.h"
 #include "ui/widgets/comboedit.h"
+#include "ui/widgets/shellbutton.h"
 
 static KeyboardButton* keyboard_but;
 static CrossButton* cross_but;
 static MouseButton* mouse_but;
 static AreaButton* area_but;
+static ShellButton* shell_but;
+static QVector<QImage> icons_cache;
+
+
+void cache_icons(QLayout* layout)
+{
+    icons_cache.append(QImage(50,50,QImage::Format_ARGB32));
+    for( int n = 0; n < layout->count(); n++)
+        if( QString(layout->itemAt(n)->widget()->metaObject()->className()) != "ComboEdit")
+        {
+            auto label = (QLabel*)layout->itemAt(n)->widget();
+            icons_cache.append((label->pixmap().toImage()));
+        }
+}
 
 //---------------------------------------------------------------------------------------------------------
 
@@ -21,29 +36,35 @@ ComboEdit::ComboEdit(QWidget *parent) :
     keyboard_but->setIcon(":/images/keyboard_icon.png", true, false);
     setContextMenuPolicy(Qt::PreventContextMenu);
     connect(keyboard_but, SIGNAL(clicked()),this, SLOT(slotKeyboardClick()));
-    connect(keyboard_but, SIGNAL(accept()),this, SLOT(slotAccepted()));
+    connect(keyboard_but, SIGNAL(clicked()),this, SLOT(slotButtonClicked()));
 
     mouse_but = new MouseButton(0);
     mouse_but->setIcon(":/images/mouse_default.png", true, true);
     connect(mouse_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
-    connect(mouse_but, SIGNAL(accept()),this, SLOT(slotAccepted()));
+    connect(mouse_but, SIGNAL(clicked()),this, SLOT(slotButtonClicked()));
 
     cross_but = new CrossButton(0);
     connect(cross_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
-    connect(cross_but, SIGNAL(accept()),this, SLOT(updateSequence()));
+    connect(cross_but, SIGNAL(clicked()),this, SLOT(updateSequence()));
 
     area_but = new AreaButton(this);
     area_but->state = true;
     area_but->setIcon(":/images/area_icon.png", true, true);
-    connect(area_but, SIGNAL(accept()),this, SLOT(slotAccepted()));
+    connect(area_but, SIGNAL(clicked()),this, SLOT(slotButtonClicked()));
     connect(QCoreApplication::instance(), SIGNAL(focusChanged(QWidget*, QWidget*)), this, SLOT(slotFocusChanged(QWidget*, QWidget*)));
+
+    shell_but = new ShellButton(0);
+    connect(shell_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
+    connect(shell_but, SIGNAL(clicked()),this, SLOT(slotButtonClicked()));
 
     hbox = new QHBoxLayout((QWidget*)this->parent());
     hbox->addWidget(this);
+    hbox->addWidget(shell_but);
     hbox->addWidget(area_but);
     hbox->addWidget(cross_but);
     hbox->addWidget(keyboard_but);
     hbox->addWidget(mouse_but);
+    cache_icons(hbox);
 
     hbox->setStretch(0, 100);
 
@@ -52,6 +73,24 @@ ComboEdit::ComboEdit(QWidget *parent) :
 
 }
 
+ComboEdit::~ComboEdit()
+{
+
+}
+
+void ComboEdit::showEvent(QShowEvent* ev)
+{
+    ev->accept();
+    qDebug() << __FUNCTION__ << text();
+    if( text() == "shell" )
+        dimIcons(shell_but);
+    if( text() == "click" )
+        dimIcons(mouse_but);
+    if( text().contains("Scroll") )
+        dimIcons(mouse_but);
+    if( text().contains("hotkey") )
+        dimIcons(keyboard_but);
+}
 
 void ComboEdit::slotCrossClick()
 {
@@ -61,11 +100,56 @@ void ComboEdit::slotCrossClick()
     //cross_but->setDisabled(cross_but->state);
 }
 
-void ComboEdit::slotAccepted()
+void ComboEdit::dimIcons(QWidget* except_label)
 {
+    //return;
 
-    QKeyEvent keyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
-    QCoreApplication::sendEvent(this, &keyEvent);
+    ((QLabel*)except_label)->setFrameShape(QLabel::Shape::Box);
+    ((QLabel*)except_label)->setLineWidth(4);
+    ((QLabel*)except_label)->setStyleSheet("color: rgb(255, 0, 0);");
+
+    QHBoxLayout* layout = (QHBoxLayout*)((QWidget*)this->parent())->layout();
+    float factor = 0.6f;
+    for( int n = 0; n < layout->count(); n++)
+    {
+        if( QString(layout->itemAt(n)->widget()->metaObject()->className()) != "ComboEdit")
+        {
+            auto label = (QLabel*)layout->itemAt(n)->widget();
+            if(label!=except_label)
+                label->setFrameShape(QLabel::Shape::NoFrame);
+            else
+                continue;
+            QImage icon = icons_cache[n];
+            if( (QWidget*)label != except_label)
+            {
+                //icon.invertPixels();
+                for (int l = 0; l < icon.height(); ++l) {
+                for (int k = 0; k < icon.width(); ++k) {
+                    QColor c = icon.pixelColor(k,l);
+                    int r = (int)(c.red()*(1.-factor));
+                    int g = (int)(c.green()*(1.-factor));
+                    int b = (int)(c.blue()*(1.-factor));
+                    //c = QColor(r,g,b,100);
+                    //if(!firstRun)
+                    //    c.setAlpha(c.alpha()*7);
+                    c.setAlpha(c.alpha()/7);
+                    icon.setPixelColor(k,l,c);
+                }
+                }
+                label->setPixmap(QPixmap::fromImage(icon));
+            }
+        }
+    }
+}
+
+void ComboEdit::slotButtonClicked()
+{
+    QLabel* label = static_cast<QLabel*>(QWidget::sender());
+    //perform invert image test on every icon
+    dimIcons(label);
+    //frameShape
+    //QKeyEvent keyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+    //QCoreApplication::sendEvent(this, &keyEvent);
 }
 
 void ComboEdit::wheelEvent(QWheelEvent *event)

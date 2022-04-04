@@ -16,6 +16,7 @@ public slots:
 
 signals:
     void click(QString button);
+    void clicked();
 };
 
 

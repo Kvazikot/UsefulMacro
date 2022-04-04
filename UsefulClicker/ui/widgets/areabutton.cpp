@@ -47,5 +47,5 @@ void AreaButton::mousePressEvent(QMouseEvent *ev)
         connect(delegate, SIGNAL(activated(const QModelIndex&)), view, SLOT(update(const QModelIndex&)) );
     }
 
-
+    emit clicked();
 }
