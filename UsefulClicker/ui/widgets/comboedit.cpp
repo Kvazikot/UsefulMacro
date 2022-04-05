@@ -14,7 +14,6 @@ static AreaButton* area_but;
 static ShellButton* shell_but;
 static QVector<QImage> icons_cache;
 
-
 void cache_icons(QLayout* layout)
 {
     icons_cache.append(QImage(50,50,QImage::Format_ARGB32));
@@ -102,42 +101,36 @@ void ComboEdit::slotCrossClick()
 
 void ComboEdit::dimIcons(QWidget* except_label)
 {
-    //return;
-
     ((QLabel*)except_label)->setFrameShape(QLabel::Shape::Box);
-    ((QLabel*)except_label)->setLineWidth(4);
+    ((QLabel*)except_label)->setLineWidth(2);
     ((QLabel*)except_label)->setStyleSheet("color: rgb(255, 0, 0);");
 
     QHBoxLayout* layout = (QHBoxLayout*)((QWidget*)this->parent())->layout();
-    float factor = 0.6f;
     for( int n = 0; n < layout->count(); n++)
     {
         if( QString(layout->itemAt(n)->widget()->metaObject()->className()) != "ComboEdit")
         {
             auto label = (QLabel*)layout->itemAt(n)->widget();
-            if(label!=except_label)
-                label->setFrameShape(QLabel::Shape::NoFrame);
-            else
-                continue;
             QImage icon = icons_cache[n];
-            if( (QWidget*)label != except_label)
+            if(label!=except_label)
             {
-                //icon.invertPixels();
+                label->setFrameShape(QLabel::Shape::NoFrame);
                 for (int l = 0; l < icon.height(); ++l) {
                 for (int k = 0; k < icon.width(); ++k) {
                     QColor c = icon.pixelColor(k,l);
-                    int r = (int)(c.red()*(1.-factor));
-                    int g = (int)(c.green()*(1.-factor));
-                    int b = (int)(c.blue()*(1.-factor));
-                    //c = QColor(r,g,b,100);
-                    //if(!firstRun)
-                    //    c.setAlpha(c.alpha()*7);
-                    c.setAlpha(c.alpha()/7);
+                    c.setAlpha(c.alpha()/3);
                     icon.setPixelColor(k,l,c);
                 }
                 }
                 label->setPixmap(QPixmap::fromImage(icon));
             }
+            else
+            {
+                QImage icon = icons_cache[n];
+                label->setPixmap(QPixmap::fromImage(icon));
+                continue;
+            }
+
         }
     }
 }
@@ -146,10 +139,7 @@ void ComboEdit::slotButtonClicked()
 {
     QLabel* label = static_cast<QLabel*>(QWidget::sender());
     //perform invert image test on every icon
-    dimIcons(label);
-    //frameShape
-    //QKeyEvent keyEvent(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
-    //QCoreApplication::sendEvent(this, &keyEvent);
+    //dimIcons(label);
 }
 
 void ComboEdit::wheelEvent(QWheelEvent *event)

@@ -73,6 +73,11 @@
 #include "model/domitem.h"
 #include "settings/clickersettings.h"
 #include <QtXml>
+#include <QPixmap>
+#include <QImage>
+#include <QIcon>
+
+#define im(res_name) QIcon(QPixmap::fromImage(QImage(res_name).scaled(250,250)));
 
 ClickerModel::ClickerModel(const ClickerDocument &document, QObject *parent)
     : QAbstractItemModel(parent),
@@ -80,6 +85,10 @@ ClickerModel::ClickerModel(const ClickerDocument &document, QObject *parent)
       rootItem(new DomItem(document, 0))
 {
     qDebug() << "hideCodeTags = " << _("hideCodeTags");
+    iconMap["hotkey"] = im(":/images/keyboard_icon.png");
+    iconMap["click"] = im(":/images/mouse_default.png");
+    iconMap["Scroll"] = im(":/images/mouse_default.png");
+    iconMap["shell"] = im(":/images/Terminal-icon.png");
 }
 
 ClickerModel::~ClickerModel()
@@ -98,7 +107,7 @@ QVariant ClickerModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
 
-    if (role != Qt::DisplayRole && role != Qt::EditRole)
+    if (role != Qt::DisplayRole && role != Qt::EditRole && role != Qt::DecorationRole)
         return QVariant();
 
 
@@ -110,7 +119,13 @@ QVariant ClickerModel::data(const QModelIndex &index, int role) const
 
     switch (index.column()) {
         case 0:
-            return  QString::number(index.row()); //+ " " + QString::number(rand());//
+        {
+            //if (role == Qt::DisplayRole) {
+                //qDebug() << "role " << role;
+                return  iconMap[node.nodeName()];
+        }
+            //}
+            //return  QString::number(index.row()); //+ " " + QString::number(rand());//
         case 1:
             return node.nodeName();
         case 2:
@@ -142,9 +157,38 @@ bool ClickerModel::setData(const QModelIndex &index, const QVariant &value, int 
     DomItem *item1 = (DomItem*)(index.internalPointer());
     bool result=false;
     QString v =  value.toString() ;
-    if(index.column() == 2)
-    {
 
+    if(index.column() == 0)
+    {
+        QImage mEditImage = QImage(":/images/refresh-icon.png");
+        auto icon = QVariant(QIcon(QPixmap::fromImage(mEditImage.scaled(100,100))));
+        item1->setData(0, icon, Qt::DecorationRole);
+    }
+    if(index.column() == 1)
+    {
+        if( v.contains("ctrl") || v.contains("shift") || v.contains("win"))
+        {
+            auto el = item1->node().toElement();
+            el.setTagName("hotkey");
+            el.setAttribute("hotkey", value.toString());
+        }
+        if( v.contains("button") )
+        {
+              auto el = item1->node().toElement();
+              el.setTagName("click");
+              if(v.contains("Left"))
+                 el.setAttribute("button", "left");
+              else
+                  el.setAttribute("button", "right");
+              result = item1->setData(1, "click", role);
+        }
+
+        if( v.contains("area") )
+        {
+            //auto el = item1->node().toElement();
+            //el.setAttribute("area", "asasas");
+            result = item1->setData(2, value, role);
+        }
         if( v.contains("cmd") )
         {
             auto el = item1->node().toElement();
@@ -174,33 +218,6 @@ bool ClickerModel::setData(const QModelIndex &index, const QVariant &value, int 
             */
 
 
-        }
-    }
-
-    if(index.column() == 1)
-    {
-        if( v.contains("ctrl") || v.contains("shift") || v.contains("win"))
-        {
-            auto el = item1->node().toElement();
-            el.setTagName("hotkey");
-            el.setAttribute("hotkey", value.toString());
-        }
-        if( v.contains("button") )
-        {
-              auto el = item1->node().toElement();
-              el.setTagName("click");
-              if(v.contains("Left"))
-                 el.setAttribute("button", "left");
-              else
-                  el.setAttribute("button", "right");
-              result = item1->setData(1, "click", role);
-        }
-
-        if( v.contains("area") )
-        {
-            //auto el = item1->node().toElement();
-            //el.setAttribute("area", "asasas");
-            result = item1->setData(2, value, role);
         }
         result = item1->setData(2, value, role);
 

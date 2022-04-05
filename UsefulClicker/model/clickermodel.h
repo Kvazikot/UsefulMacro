@@ -106,6 +106,7 @@ public:
     ClickerDocument* getDoc() { return &document; }
     //bool removeColumns(int position, int columns, const QModelIndex &parent) override;
 private:
+    QMap<QString, QIcon> iconMap;
     ClickerDocument document;
     DomItem *rootItem;
 };

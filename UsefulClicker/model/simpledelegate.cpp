@@ -55,7 +55,7 @@ void SimpleDelegate::editCurrentItem(QMap<QString,QString> _attrs)
     view->edit(index);
     for(auto k : _attrs.keys())
         attrs[k] = _attrs[k];
-    edit->setText(getAttrsString());
+    //edit->setText(getAttrsString());
     emit commitData(edit);
 
     QTimer::singleShot(500, this, SLOT(restoreDelegate()));

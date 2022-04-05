@@ -135,13 +135,27 @@ MainWindow::MainWindow(QWidget *parent)
     view->setItemDelegate(spinbox);
     view->header()->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
+    QImage image(":/images/vector-star-icon.png");
+    QStandardItem *item = new QStandardItem();
+    //item->setData(QVariant(QPixmap::fromImage(image)), Qt::DecorationRole);
+    model->itemData(model->index(0,0))[Qt::DecorationRole].setValue(QPixmap::fromImage(image));
+
+    for (int row = 0; row < model->rowCount(); ++row)
+    {
+        QMap<int,QVariant> roles;
+        roles[Qt::DecorationRole] = QVariant(QPixmap::fromImage(image));
+        model->setItemData(model->index(row,0),roles);
+        model->setHeaderData(0,Qt::Orientation::Horizontal,roles[Qt::DecorationRole],Qt::DecorationRole);
+    }
+
+
     connect(view, SIGNAL(activated()), this, SLOT(itemActivated()));
     view->parentWidget()->setStyleSheet("QTreeView::item { padding: 10px }; white-space:pre-wrap; word-wrap:break-word" );
 
     for (int column = 1; column < model->columnCount(); ++column)
         view->setColumnWidth(column, 500);
 
-    view->setColumnWidth(0, 50);
+    view->setColumnWidth(0, 130);
 
     connect(exitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
 
