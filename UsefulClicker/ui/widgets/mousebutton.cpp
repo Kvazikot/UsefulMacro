@@ -43,6 +43,15 @@ void MouseButton::mousePressEvent(QMouseEvent *ev)
 void MouseButton::wheelEvent(QWheelEvent *event)
 {
     event->accept();
+    QString sequence;
     icon_enabled = QImage(":/images/mouse_scroll.png");
+    icon_enabled = icon_enabled.scaled(50,height());
+    if(event->angleDelta().y() > 0)
+        sequence = "scrollup";
+    else
+        sequence = "scrolldown";
     setPixmap(QPixmap::fromImage(icon_enabled));
+    emit click(sequence);
+    emit clicked();
+
 }

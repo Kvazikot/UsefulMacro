@@ -77,7 +77,7 @@
 #include <QImage>
 #include <QIcon>
 
-#define im(res_name) QIcon(QPixmap::fromImage(QImage(res_name).scaled(250,250)));
+#define im(res_name) QIcon(QPixmap::fromImage(QImage(res_name).scaled(500,500)));
 
 ClickerModel::ClickerModel(const ClickerDocument &document, QObject *parent)
     : QAbstractItemModel(parent),
@@ -87,8 +87,12 @@ ClickerModel::ClickerModel(const ClickerDocument &document, QObject *parent)
     qDebug() << "hideCodeTags = " << _("hideCodeTags");
     iconMap["hotkey"] = im(":/images/keyboard_icon.png");
     iconMap["click"] = im(":/images/mouse_default.png");
-    iconMap["Scroll"] = im(":/images/mouse_default.png");
+    iconMap["leftclick"] = im(":/images/mouse_left_click.png");
+    iconMap["rightclick"] = im(":/images/mouse_right_click.png");
+    iconMap["scrollup"] = im(":/images/mouse_scroll.png");
+    iconMap["scrolldown"] = im(":/images/mouse_scroll.png");
     iconMap["shell"] = im(":/images/Terminal-icon.png");
+    iconMap["img"] = im(":/images/area_icon.png");
 }
 
 ClickerModel::~ClickerModel()
@@ -122,6 +126,13 @@ QVariant ClickerModel::data(const QModelIndex &index, int role) const
         {
             //if (role == Qt::DisplayRole) {
                 //qDebug() << "role " << role;
+                if(node.nodeName() == "click")
+                {
+                    if( node.toElement().attribute("button") == "left")
+                        return iconMap["leftclick"];
+                    if( node.toElement().attribute("button") == "right")
+                        return iconMap["rightclick"];
+                }
                 return  iconMap[node.nodeName()];
         }
             //}
@@ -166,15 +177,16 @@ bool ClickerModel::setData(const QModelIndex &index, const QVariant &value, int 
     }
     if(index.column() == 1)
     {
+        auto el = item1->node().toElement();
         if( v.contains("ctrl") || v.contains("shift") || v.contains("win"))
         {
-            auto el = item1->node().toElement();
             el.setTagName("hotkey");
             el.setAttribute("hotkey", value.toString());
         }
+        if( v.contains("scroll") )
+            el.setTagName(v);
         if( v.contains("button") )
         {
-              auto el = item1->node().toElement();
               el.setTagName("click");
               if(v.contains("Left"))
                  el.setAttribute("button", "left");
@@ -191,7 +203,6 @@ bool ClickerModel::setData(const QModelIndex &index, const QVariant &value, int 
         }
         if( v.contains("cmd") )
         {
-            auto el = item1->node().toElement();
             el.setTagName("shell");
             el.setAttribute("bg", "1");
             el.setAttribute("showConsole", "1");
