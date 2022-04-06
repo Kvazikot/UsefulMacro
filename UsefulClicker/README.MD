@@ -40,6 +40,14 @@ This project is licensed under the terms of the GNU General Public License v3.0
 
 рис.3 Редактор программы кликера в виде xml дерева.
 
+![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/screenshots/xml_editor_screenshot2.png)
+
+рис.4 Редактор программы кликера в виде xml дерева с картинками справа. 
+
+![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/screenshots/Cool_tests_form.png)
+
+рис.5 Крутая тестовая программа 
+
 
 ## Новая концепция для Useful Clicker (3/28/2022)
 Программа должна распознавать контекст. Т.е. какое окно сейчас на экране, какие кнопки на экране.
