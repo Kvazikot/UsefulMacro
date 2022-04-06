@@ -67,6 +67,7 @@ LIBS+=-L$$OPENCV_451_PATH\\build_mingw\\lib\\ -lopencv_shape453.dll
 
 
 SOURCES += main.cpp \
+    tests/cool_tests_form.cpp \
     interpreter/interpreter.cpp \
     interpreter/interpreterpy.cpp \
     interpreter/interpreterwin64.cpp \
@@ -85,6 +86,7 @@ SOURCES += main.cpp \
     ui/widgets/delaywidget.cpp \
     ui/widgets/keyboardbutton.cpp \
     ui/widgets/mousebutton.cpp \
+    ui/widgets/shellbutton.cpp \
     ui/widgets/svg_path_parser.cpp \
     ui/widgets/svgwidget.cpp \
     ui/widgets/qconsole.cpp \
@@ -100,6 +102,7 @@ SOURCES += main.cpp \
     #model/treemodel.cpp
 
 HEADERS += \
+    tests/cool_tests_form.h \
     cv/dspmodule.h \
     ui/widgets/qconsole.h \
     ui/coordselector.h \
@@ -120,6 +123,7 @@ HEADERS += \
     interpreter/interpreter.h \
     interpreter/interpreterpy.h \
     interpreter/interpreterwin64.h \
+    ui/widgets/shellbutton.h \
     ui/widgets/svgwidget.h \
     xml/clickerdocument.h \
     xml/xmlstreamer.h \
@@ -135,6 +139,7 @@ HEADERS += \
 # install
 
 FORMS += \
+    tests/cool_tests_form.ui \
     ui/aboutbox.ui \
     ui/areaselectordialog.ui \
     ui/autocompleteeditor.ui \
