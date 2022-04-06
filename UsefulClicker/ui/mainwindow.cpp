@@ -91,6 +91,7 @@
 #include "interpreter/interpreter.h"
 #include "interpreter/interpreterwin64.h"
 
+MainWindow* MainWindow::instance;
 static InterpreterWin64* interpreter = 0;
 QString MainWindow::current_filename;
 extern void MouseClick(QPoint coordinates, Qt::MouseButton button);
@@ -101,6 +102,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     setupUi(this);
     setWindowTitle("UsefulClicker");
+    instance = this;
 
     const QStringList headers({tr("#"), tr("Title"), tr("Description")});
 
@@ -182,6 +184,11 @@ void MainWindow::shell()
     MouseClick(center, Qt::MouseButton::LeftButton);
     MouseClick(center, Qt::MouseButton::LeftButton);
     QTimer::singleShot(400, this, SLOT(shell2()));
+}
+
+MainWindow* MainWindow::getInstance()
+{
+    return instance;
 }
 
 void MainWindow::shell2()

@@ -39,6 +39,7 @@ class AreaSelectorDialog : public QDialog
 
 public:
     QVector<QRectF> rectangles;
+    QString filename;
     QImage rect_image;
     QPoint startWndCoords;
     QPoint prevMouseCoords;

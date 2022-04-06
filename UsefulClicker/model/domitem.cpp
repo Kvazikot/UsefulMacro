@@ -159,7 +159,10 @@ bool DomItem::setData(int column, const QVariant &value, int role)
                      key = key.mid(1, value1.size()-2);
 
                  qDebug() << "readed " << key << " " << node().toElement().attribute(key);
-                 node().toElement().setAttribute(key, value1);
+                 if( key=="nodename" )
+                     node().toElement().setTagName(value1);
+                 else
+                   node().toElement().setAttribute(key, value1);
                  qDebug() << key << " " <<  value1 << ",";
              }
              else

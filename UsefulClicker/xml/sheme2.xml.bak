@@ -1,4 +1,4 @@
-<xml>
+<>
  <func>
   <click x="10" button="right" y="20"/>
   <hotkey hotkey="ctrl + a"/>
@@ -18,4 +18,4 @@ mouseX = Wave(t_cycle)
 </main>
 -->
  <img src="myimage.png" area="QRect(24,351,23,23) "/>
-</xml>
+</>

@@ -1,0 +1,38 @@
+<xml>
+
+ <func name="Type test">
+  <shell bg="1" showConsole="1" hotkey="ctrl + a" cmd="start /B notepad " comment="run notepad"/>
+  <type mode="copy_paste">   Это пример текста который был сгенерирован программой UsefulClicker сегодня. </type>
+ </func>
+ 
+ <func name="Change font">
+  <hotkey hotkey="alt"/>
+  <hotkey keysequence="left+left+enter+down+enter" delay_ms="10"/>
+  <type>Arial</type>
+  <hotkey hotkey="enter"/>
+  <hotkey hotkey="ctrl+tab" repeat=2/>
+  <type>32</type>
+  <hotkey hotkey="enter"/>  
+ </func>
+ 
+ <func name="Post Twit">
+  <click button="left" x="1000" y="500" comment="click in chrome window" >
+  <hotkey hotkey="F6"/>  
+  <type>https://twitter.com/Kvazikot</type>
+  <hotkey hotkey="Enter"/>  
+  <clickimg button="left" src="./images/3_6_2022_9_25_01.png"> </img>
+  <type mode="copy_paste">   Это пример текста который был сгенерирован программой UsefulClicker сегодня. </type>
+  <clickimg button="left" src="./images/3_6_2022_9_26_01.png"> </img>
+ </func>
+ <!--
+<main>
+<code name="init" >
+mouseX = Wave(t_cycle)
+</code>
+
+<func_call name="SetUrl" />
+<func_call name="Wave" arg0="t_cycle * $(dt)" />
+</main>
+-->
+ <img src="myimage.png"/>
+</xml>

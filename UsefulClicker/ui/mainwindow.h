@@ -71,6 +71,8 @@ public:
     void mouseMoveEvent(QMouseEvent* event);
     void loadDocument(QString filename);
     void loadSettings();
+    static MainWindow* getInstance();
+    static MainWindow* instance;
 
 public slots:
     void updateActions();

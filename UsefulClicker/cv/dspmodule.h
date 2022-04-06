@@ -37,6 +37,7 @@ public:
     DspModule();
     void computeHaudorf();
     void detectButtons(int screen_num, int kernel_size, std::vector<QRect>& rects);
+    QImage saveImage(QRect roi, QString& filename);
     void findTextAreas();
     int X, Y;
 

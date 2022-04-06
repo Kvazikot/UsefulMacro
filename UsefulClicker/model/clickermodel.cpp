@@ -178,6 +178,8 @@ bool ClickerModel::setData(const QModelIndex &index, const QVariant &value, int 
     if(index.column() == 1)
     {
         auto el = item1->node().toElement();
+
+
         if( v.contains("ctrl") || v.contains("shift") || v.contains("win"))
         {
             el.setTagName("hotkey");

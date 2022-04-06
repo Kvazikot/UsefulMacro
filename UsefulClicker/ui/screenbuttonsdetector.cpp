@@ -2,6 +2,8 @@
 #include <QPushButton>
 #include <QPainter>
 #include <QTimer>
+#include <QDateTime>
+#include <QDir>
 #include <algorithm>
 #include <opencv2/imgproc.hpp>
 #include "cv/dspmodule.h"
@@ -26,7 +28,6 @@ ScreenButtonsDetector::ScreenButtonsDetector(QWidget *parent):
     QImage bg_image(300,300,QImage::Format_ARGB32);
     bg_image.fill(QColor(100,100,100,0));
     //ui->label->setPixmap(QPixmap::fromImage(bg_image));
-
     //ui->label->setScaledContents(false);
     //screenNum = 0;
     //fullscreenMode = false;
@@ -49,6 +50,14 @@ void ScreenButtonsDetector::mousePressEvent(QMouseEvent* event)
             .arg(selected_rect.width())
             .arg(selected_rect.height());
     attrs["area"] = v;
+    QString filename;
+    dsp->saveImage(selected_rect, filename);
+    attrs["filename"] = filename;
+    attrs["nodename"] = "clickimg";
+    //rect_image.save(str);
+
+
+
     emit sigSetAttrs(attrs);
 
 

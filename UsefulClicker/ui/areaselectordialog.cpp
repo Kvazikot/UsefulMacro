@@ -23,7 +23,9 @@
 #include <QPushButton>
 #include <QScreen>
 #include <QTimer>
+#include <QDateTime>
 #include <QPainterPath>
+#include <QDir>
 #include "windows.h"
 #include "areaselectordialog.h"
 #include "ui_areaselectordialog.h"
@@ -305,6 +307,7 @@ void AreaSelectorDialog::on_doneButton_clicked()
                                             .arg(selectedRect.width())
                                             .arg(selectedRect.height());
    attrs["area"] = v;
+   attrs["filename"] = filename;
    emit sigSetAreaRect(attrs);
    close();
 

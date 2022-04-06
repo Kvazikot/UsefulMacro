@@ -3,7 +3,7 @@ QMAKE_CXXFLAGS += -std=c++17
 TARGET = UsefulClicker
 UI_DIR = "./ui"
 TEMPLATE = app
-QMAKE_FLAGS_RELEASE += -O3 -msse4.1 -mssse3 -msse3 -msse2 -msse
+QMAKE_FLAGS_RELEASE += -O3 -msse4.1 -mssse3 -msse3 -msse2 -msse -Wno-unused-variable
 QMAKE_CXXFLAGS_RELEASE += -O3 -msse4.1 -mssse3 -msse3 -msse2 -msse
 OPENCV_451_PATH = "e:\\opencv"
 #PYTHON_PATH = "C:\\Program Files\\Python37"

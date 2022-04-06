@@ -131,5 +131,5 @@ void SimpleDelegate::updateEditorGeometry(QWidget *editor,
 {
     //editor->setGeometry(QRect(0,0,1,1));
     edit = (QLineEdit*)editor;
-    qDebug() << "updateEditorGeometry " << editor->rect();
+    //qDebug() << "updateEditorGeometry " << editor->rect();
 }

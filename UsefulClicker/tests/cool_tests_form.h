@@ -15,6 +15,10 @@ public:
     explicit CoolTestsForm(QWidget *parent = nullptr);
     ~CoolTestsForm();
 
+private slots:
+    void on_buttonsDetector1_clicked();
+    void on_runNotepadFullscreen_clicked();
+
 private:
     Ui::CoolTestsForm *ui;
 };
