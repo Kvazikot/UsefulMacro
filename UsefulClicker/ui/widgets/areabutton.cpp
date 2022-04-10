@@ -31,20 +31,31 @@ void AreaButton::areaSelected(QRect rect, QImage& rect_image)
 
 void AreaButton::mousePressEvent(QMouseEvent *ev)
 {
+    auto classname = QString(this->parent()->parent()->metaObject()->className());
     if ( ev->button() == Qt::MouseButton::RightButton )
     {
-        QTreeView*  view = (QTreeView*)this->parent()->parent()->parent();
-        SimpleDelegate* delegate = new SimpleDelegate(view, view->itemDelegate());
-        view->setItemDelegate(delegate);
-        connect(delegate, SIGNAL(activated(const QModelIndex&)), view, SLOT(update(const QModelIndex&)) );
+        if( classname == "CoolTestsForm")
+            createDialog(this->parent(), DialogType::AREA_SELECTOR);
+        else
+        {
+            QTreeView*  view = (QTreeView*)this->parent()->parent()->parent();
+            SimpleDelegate* delegate = new SimpleDelegate(view, view->itemDelegate(), DialogType::AREA_SELECTOR);
+            view->setItemDelegate(delegate);
+            connect(delegate, SIGNAL(activated(const QModelIndex&)), view, SLOT(update(const QModelIndex&)) );
+        }
     }
 
     if ( ev->button() == Qt::MouseButton::LeftButton )
     {
-        QTreeView*  view = (QTreeView*)this->parent()->parent()->parent();
-        SimpleDelegate* delegate = new SimpleDelegate(view, view->itemDelegate(), DialogType::SCREEN_BUTTONS_DETECTOR);
-        view->setItemDelegate(delegate);
-        connect(delegate, SIGNAL(activated(const QModelIndex&)), view, SLOT(update(const QModelIndex&)) );
+        if( classname == "CoolTestsForm")
+            createDialog(this->parent(), DialogType::SCREEN_BUTTONS_DETECTOR);
+        else
+        {
+            QTreeView*  view = (QTreeView*)this->parent()->parent()->parent();
+            SimpleDelegate* delegate = new SimpleDelegate(view, view->itemDelegate(), DialogType::SCREEN_BUTTONS_DETECTOR);
+            view->setItemDelegate(delegate);
+            connect(delegate, SIGNAL(activated(const QModelIndex&)), view, SLOT(update(const QModelIndex&)) );
+        }
     }
 
     emit clicked();

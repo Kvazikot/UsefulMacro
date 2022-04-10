@@ -10,7 +10,7 @@ class AreaButton : public KeyboardButton
     Q_OBJECT
 public:
     explicit AreaButton(QWidget *parent = nullptr);
-    void mousePressEvent(QMouseEvent *ev) override;
+    virtual void mousePressEvent(QMouseEvent *ev) override;
 public slots:
     void areaSelected(QRect rect, QImage& rect_image);
 

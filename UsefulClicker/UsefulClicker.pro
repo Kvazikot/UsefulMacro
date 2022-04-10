@@ -72,7 +72,9 @@ SOURCES += main.cpp \
     interpreter/interpreterpy.cpp \
     interpreter/interpreterwin64.cpp \
     cv/dspmodule.cpp \
+    tests/highlighter.cpp \
     ui/coordselector.cpp \
+    ui/createdialog.cpp \
     ui/screenbuttonsdetector.cpp \
     ui/aboutbox.cpp \
     ui/areaselectordialog.cpp \
@@ -104,6 +106,7 @@ SOURCES += main.cpp \
 HEADERS += \
     tests/cool_tests_form.h \
     cv/dspmodule.h \
+    tests/highlighter.h \
     ui/widgets/qconsole.h \
     ui/coordselector.h \
     ui/dialogtype.h \

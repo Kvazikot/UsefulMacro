@@ -11,7 +11,7 @@ class KeyboardButton : public QLabel
 public:
     QImage icon_enabled, icon_disabled;
     explicit KeyboardButton(QWidget *parent = nullptr);
-    void mousePressEvent(QMouseEvent *ev) override;
+    virtual void mousePressEvent(QMouseEvent *ev) override;
     void timerEvent(QTimerEvent* event) override;
     void setDisable();
     bool mouseOverFlag;

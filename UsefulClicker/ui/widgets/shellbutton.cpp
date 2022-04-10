@@ -27,9 +27,17 @@ void ShellButton::mousePressEvent(QMouseEvent *ev)
 
     if ( ev->button() == Qt::MouseButton::LeftButton )
     {
-        QTreeView*  view = (QTreeView*)this->parent()->parent()->parent();
-        SimpleDelegate* delegate = new SimpleDelegate(view, view->itemDelegate(), DialogType::SHELL_COMMAND_DIALOG);
-        view->setItemDelegate(delegate);
+        auto classname = QString(this->parent()->parent()->metaObject()->className());
+        //if(this->parent()->parent() != 0)
+
+        if( classname == "CoolTestsForm")
+            createDialog(this->parent(), DialogType::SHELL_COMMAND_DIALOG);
+        else
+        {
+            QTreeView*  view = (QTreeView*)this->parent()->parent()->parent();
+            SimpleDelegate* delegate = new SimpleDelegate(view, view->itemDelegate(), DialogType::SHELL_COMMAND_DIALOG);
+            view->setItemDelegate(delegate);
+        }
         //connect(delegate, SIGNAL(activated(const QModelIndex&)), view, SLOT(update(const QModelIndex&)) );
     }
     emit clicked();

@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>818</width>
-    <height>359</height>
+    <width>1037</width>
+    <height>748</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -104,8 +104,8 @@ color: rgb(255, 255, 255);</string>
   <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
     <rect>
-     <x>490</x>
-     <y>190</y>
+     <x>640</x>
+     <y>170</y>
      <width>160</width>
      <height>97</height>
     </rect>
@@ -255,7 +255,7 @@ color: rgb(255, 255, 255);</string>
      <x>30</x>
      <y>290</y>
      <width>1021</width>
-     <height>343</height>
+     <height>471</height>
     </rect>
    </property>
    <property name="title">
@@ -267,6 +267,12 @@ color: rgb(255, 255, 255);</string>
     </item>
     <item row="0" column="0">
      <widget class="QPlainTextEdit" name="plainTextEdit_3">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>70</height>
+       </size>
+      </property>
       <property name="plainText">
        <string>x=&quot;&quot; y=&quot;&quot;</string>
       </property>
@@ -325,6 +331,19 @@ color: rgb(255, 255, 255);</string>
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QGroupBox" name="buttonsGroup">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>230</y>
+     <width>321</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>GroupBox</string>
+   </property>
   </widget>
  </widget>
  <resources/>

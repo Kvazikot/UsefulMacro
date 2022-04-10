@@ -70,13 +70,14 @@ public:
     QRadioButton *screen1;
     QRadioButton *screen0;
     QPushButton *areaButton;
+    QGroupBox *buttonsGroup;
 
     void setupUi(QDialog *CoolTestsForm)
     {
         if (CoolTestsForm->objectName().isEmpty())
             CoolTestsForm->setObjectName(QString::fromUtf8("CoolTestsForm"));
         CoolTestsForm->setWindowModality(Qt::NonModal);
-        CoolTestsForm->resize(818, 359);
+        CoolTestsForm->resize(1037, 748);
         buttonBox = new QDialogButtonBox(CoolTestsForm);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setGeometry(QRect(1330, 30, 81, 61));
@@ -123,7 +124,7 @@ public:
 
         groupBox_2 = new QGroupBox(CoolTestsForm);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        groupBox_2->setGeometry(QRect(490, 190, 160, 97));
+        groupBox_2->setGeometry(QRect(640, 170, 160, 97));
         gridLayout_2 = new QGridLayout(groupBox_2);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         typeTest = new QPushButton(groupBox_2);
@@ -204,7 +205,7 @@ public:
 
         groupBox_5 = new QGroupBox(CoolTestsForm);
         groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
-        groupBox_5->setGeometry(QRect(30, 290, 1021, 343));
+        groupBox_5->setGeometry(QRect(30, 290, 1021, 471));
         gridLayout_5 = new QGridLayout(groupBox_5);
         gridLayout_5->setObjectName(QString::fromUtf8("gridLayout_5"));
         xmlEditor = new QPlainTextEdit(groupBox_5);
@@ -214,6 +215,7 @@ public:
 
         plainTextEdit_3 = new QPlainTextEdit(groupBox_5);
         plainTextEdit_3->setObjectName(QString::fromUtf8("plainTextEdit_3"));
+        plainTextEdit_3->setMaximumSize(QSize(16777215, 70));
 
         gridLayout_5->addWidget(plainTextEdit_3, 0, 0, 1, 1);
 
@@ -245,6 +247,9 @@ public:
 
         gridLayout_6->addWidget(areaButton, 2, 0, 1, 1);
 
+        buttonsGroup = new QGroupBox(CoolTestsForm);
+        buttonsGroup->setObjectName(QString::fromUtf8("buttonsGroup"));
+        buttonsGroup->setGeometry(QRect(310, 230, 321, 71));
 
         retranslateUi(CoolTestsForm);
         QObject::connect(buttonBox, &QDialogButtonBox::accepted, CoolTestsForm, qOverload<>(&QDialog::accept));
@@ -283,6 +288,7 @@ public:
         screen1->setText(QCoreApplication::translate("CoolTestsForm", "Screen 1", nullptr));
         screen0->setText(QCoreApplication::translate("CoolTestsForm", "Screen 0", nullptr));
         areaButton->setText(QCoreApplication::translate("CoolTestsForm", "Area selector", nullptr));
+        buttonsGroup->setTitle(QCoreApplication::translate("CoolTestsForm", "GroupBox", nullptr));
     } // retranslateUi
 
 };

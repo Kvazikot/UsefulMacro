@@ -11,8 +11,8 @@ class MouseButton : public KeyboardButton
 public:
     Qt::MouseButton button;
     explicit MouseButton(QWidget *parent = nullptr);
-    void wheelEvent(QWheelEvent *event) override;
-    void mousePressEvent(QMouseEvent *ev) override;
+    virtual void wheelEvent(QWheelEvent *event) override;
+    virtual void mousePressEvent(QMouseEvent *ev) override;
 signals:
     void click(QString button);
     void clicked();

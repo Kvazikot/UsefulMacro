@@ -30,6 +30,7 @@
 #include <vector>
 #include <xmmintrin.h>
 #include "cv/dspmodule.h"
+#include "settings/clickersettings.h"
 #include <malloc.h>
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgcodecs.hpp>
@@ -134,8 +135,9 @@ void DspModule::detectButtons(int screen_num, int kernel_size, vector<QRect>& re
     //imwrite("out.png", im_gray);
 
     blur( im_gray, im_gray, Size(3,3) );
-    int thresh = 100;
+    int thresh = DEFAULT("canny_threshold").toInt();
     Canny( im_gray, canny_output, thresh, thresh*2 );
+    //imwrite("canny.png", im_gray);
     Mat rect_kernel = getStructuringElement(MORPH_RECT, Size(kernel_size, kernel_size));
     dilate(canny_output, canny_output, rect_kernel, Point(-1, -1), 1);
     vector<vector<Point> > contours;

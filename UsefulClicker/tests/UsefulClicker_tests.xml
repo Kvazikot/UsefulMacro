@@ -27,9 +27,9 @@
   <hotkey hotkey="F6"/>
   <type> https://twitter.com/ </type>
   <hotkey hotkey="Enter"/>  
-  <clickimg button="left" src="./images/3_6_2022_9_25_01.png"> </clickimg>
+  <clickimg area="Rect(330,645,229,56)" filename="$(UsefulClicker)/images/21.03.12.119.png" button="left"> </clickimg>
   <type mode="copy_paste">Это пример текста который был сгенерирован программой UsefulClicker сегодня. </type>
-  <clickimg button="left" src="./images/3_6_2022_9_26_01.png"> </clickimg>
+  <hotkey hotkey="Enter"/>
  </func>
 
 <!-- 

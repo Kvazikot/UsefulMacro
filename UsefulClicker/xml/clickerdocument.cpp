@@ -49,6 +49,45 @@ bool ClickerDocument::load(QString fn)
     return true;
 }
 
+QString ClickerDocument::getFunction(QString funcname)
+{
+    QDomNode domNode = findNodeByName(this->documentElement(), funcname);
+    QString str;
+    QTextStream stream(&str);
+    domNode.save(stream, 4);
+    return str;
+}
+
+void ClickerDocument::setFunction(QString funcname, QString text)
+{
+
+    ///auto doc = span.toDocument();
+    //doc.setContent(str);
+
+}
+
+QDomNode ClickerDocument::findNodeByName(const QDomNode& rootNode, QString name)
+{
+    QDomNode domNode = rootNode.firstChild();
+    QDomElement domElement;
+    while(!(domNode.isNull()))
+    {
+        if(domNode.isElement())
+        {
+            domElement = domNode.toElement();
+            if(!(domElement.isNull()))
+            {
+                if( name == domElement.attribute("name"))
+                    return domNode;
+            }
+
+        }
+        findNodeByName(domNode, name);
+        domNode = domNode.nextSibling();
+    }
+    return domNode;
+}
+
 void ClickerDocument::getFunctionsList(const QDomNode& rootNode, QStringList& outList)
 {
     QDomNode domNode = rootNode.firstChild();

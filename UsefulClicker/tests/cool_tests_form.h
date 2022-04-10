@@ -16,6 +16,7 @@ public:
     explicit CoolTestsForm(QWidget *parent = nullptr);
     void runFunction(QString func_name);
     void fullScreen();
+    void createButtons();
     ~CoolTestsForm();
 
 private slots:
@@ -32,6 +33,8 @@ private slots:
     void on_pickPoint_clicked();
 
     void on_areaButton_clicked();
+
+    void on_functionsList_currentIndexChanged(int index);
 
 public slots:
     void slotSetAttrs(QMap<QString,QString> attrs);
