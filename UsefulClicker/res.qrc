@@ -16,9 +16,13 @@
         <file>images/refresh-icon.png</file>
         <file>images/stop.png</file>
         <file>images/play.png</file>
+        <file>images/templ_cross_org.png</file>
+        <file>images/bullet.png</file>
+        <file>images/putler.jpg</file>
         <file>images/hitler_face.png</file>
         <file>images/stalin.jpg</file>
-        <file>images/putler.jpg</file>
-        <file>images/templ_cross_org.png</file>
+        <file>images/Terminal-icon.png</file>
+        <file>images/vector-star-icon.png</file>
+        <file>tests/UsefulClicker_tests.xml</file>
     </qresource>
 </RCC>

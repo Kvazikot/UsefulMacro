@@ -2,6 +2,7 @@
 #define INTERPRETERWIN64_H
 
 #include <QObject>
+#include <QDomNode>
 
 #include "interpreter/interpreter.h"
 void hotKey(char* hot_key);
@@ -12,9 +13,10 @@ class InterpreterWin64 : public AbstractInterpreter
 {
     Q_OBJECT    
 public:
-    QStringList validNodes = {"hotkey","click","dblclick","type",
+    QStringList validNodes = {"hotkey","click","shell","dblclick","type",
                                "keydown","keyup","scrollup","scrolldown",
                                "func"};
+
 
     InterpreterWin64();
     Delays parseDelays(const QDomNode& node)  override;
@@ -23,7 +25,11 @@ public:
 
     void MainLoop();
     int execute(const QDomNode& node) override;
-
+    int executeHotkey(const QDomNode& node);
+    int executeClick(const QDomNode& node);
+    int executeType(const QDomNode& node);
+    int executeShellCommand(const QDomNode& node);
+    void executeFunction(const QDomNode& rootNode, QDomNode funcNode, QString function_name);
 signals:
     void setCurrentNode(QDomNode& currentNode);
 

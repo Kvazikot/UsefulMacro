@@ -110,6 +110,13 @@ MainWindow::MainWindow(QWidget *parent)
     n_cycle = 0;
     current_filename = DEFAULT("last_sheme").toString();
     //----------------------------------------------------
+    //QString xml = "<xml> <error message=\"You have xml error. This is a default xml. Check xml document\"> </xml>";
+    QString xml = "<?xml version='1.0'?> <xml error=\"This is default document. Make sure you load right xml.\">  </xml>";
+    bool ok  = (*(QDomDocument*)&defaultDoc).setContent(xml);
+    qDebug() << "defaultDoc.setContent " << ok;
+    setDoc(&defaultDoc);
+
+
     loadDocument(current_filename);
     //--------------------------------------------------------------------
     loadSettings();
@@ -174,6 +181,11 @@ MainWindow::MainWindow(QWidget *parent)
     updateActions();
 }
 
+AbstractInterpreter* MainWindow::getInterpreter()
+{
+    return interpreter;
+}
+
 void MainWindow::shell()
 {
     view->setSelectionBehavior(QAbstractItemView::SelectItems);
@@ -229,6 +241,11 @@ void MainWindow::pause()
     }
 }
 
+void MainWindow::reload()
+{
+    reloadFromFile(current_filename);
+}
+
 // reload from memory (original document)
 void MainWindow::reloadFromMemory()
 {
@@ -251,15 +268,37 @@ void MainWindow::reloadFromFile(QString& filename)
     loadDocument(current_filename);
 }
 
+ClickerDocument* MainWindow::getDoc()
+{
+    return doc;
+}
+
+void MainWindow::setDoc(ClickerDocument* _doc)
+{
+    doc = _doc;
+}
+
+
 void MainWindow::loadDocument(QString filename)
 {
     current_filename = filename;
     SAVE_DEFAULT("last_sheme", filename);
     delete model;
     ClickerDocument* doc = new ClickerDocument(filename);
-    model = new ClickerModel(*doc);
-    view->setModel(model);
-    view->expandAll();
+    if( doc->isLoaded )
+    {
+        setDoc(doc);
+        model = new ClickerModel(*doc);
+        view->setModel(model);
+        view->expandAll();
+    }
+    else
+    {
+        setDoc(&defaultDoc);
+        model = new ClickerModel(defaultDoc);
+        view->setModel(model);
+        view->expandAll();
+    }
 }
 
 void MainWindow::setNextItem(QModelIndex& index)

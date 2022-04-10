@@ -154,5 +154,6 @@ RESOURCES += \
 
 DISTFILES += \
     settings/UsefulClicker.ini \
+    tests/UsefulClicker_tests.xml \
     xml/sheme1.xml \
     xml/sheme2.xml

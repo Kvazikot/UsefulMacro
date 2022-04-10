@@ -2,10 +2,12 @@
 #include <QPoint>
 #include <QTime>
 #include <QDateTime>
+#include <QClipboard>
 #include <QApplication>
 #include <windef.h>
 #include "interpreter/interpreterwin64.h"
 #include "model/clickermodel.h"
+#include "windows.h"
 #include "settings/clickersettings.h"
 #include <windows.h>
 #include <QRect>
@@ -46,15 +48,16 @@ void send_key3(QVector<WORD>& vkeys, bool keyUp)
 }
 
 
-void hotKey(char* hot_key)
+void Key(char* hot_key)
 {
     //SendCtrlA();
     //return;
+    if( strlen(hot_key) > 200 ) return;
     QVector<WORD> vkeys;
     char c = hot_key[strlen(hot_key)-1];
     SHORT code = c-32;
     code = VkKeyScanA(c);
-    qDebug() << __FUNCTION__ << QString(hot_key) << " VkKeyScanA code =" << code << " c=" << c ;
+    //qDebug() << __FUNCTION__ << QString(hot_key) << " VkKeyScanA code =" << code << " c=" << c ;
 
     if( strstr(hot_key, "shift") !=NULL )
         vkeys.push_back(VK_SHIFT);
@@ -76,7 +79,6 @@ void hotKey(char* hot_key)
         send_key3(vkeys, false);
         send_key3(vkeys, true);
     }
-
 }
 
 InterpreterWin64::InterpreterWin64()
@@ -177,6 +179,90 @@ void InterpreterWin64::MySleep(QDateTime endTime)
 
 }
 
+int InterpreterWin64::executeHotkey(const QDomNode& node)
+{
+    QString str = node.toElement().attribute("hotkey");
+    str = str.replace(" ","");
+    Key((char*)str.toLocal8Bit().toStdString().c_str());
+    return 1;
+}
+
+int InterpreterWin64::executeClick(const QDomNode& node)
+{
+    QString atr = node.toElement().attribute("button");
+    Qt::MouseButton b;
+    if (atr == "left")
+        b = Qt::MouseButton::LeftButton;
+    else
+        b = Qt::MouseButton::RightButton;
+    bool ok1,ok2;
+    auto x = node.toElement().attribute("x").toInt(&ok1);
+    auto y = node.toElement().attribute("y").toInt(&ok2);
+    if(ok1 && ok2)
+        MouseClick(QPoint(x,y), b);
+    if( node.toElement().hasAttribute("area"))
+    {
+        QRect rect = parseRect(node);
+        MouseClick(rect, b);
+    }
+    return 1;
+}
+
+int InterpreterWin64::executeType(const QDomNode& node)
+{
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    //QString originalText = clipboard->text();
+    QString text;
+    if( node.toElement().hasAttribute("text") )
+        text = node.toElement().attribute("text");
+    else
+        text = node.toElement().nodeValue();
+    clipboard->setText(text);
+    Key("ctrl+v");
+}
+
+
+void InterpreterWin64::executeFunction(const QDomNode& rootNode, QDomNode funcNode, QString function_name)
+{
+
+    QDomNode domNode = rootNode.firstChild();
+    QDomElement domElement;
+    while(!(domNode.isNull()))
+    {
+        if(domNode.isElement())
+        {
+            domElement = domNode.toElement();
+            if(!(domElement.isNull()))
+            {
+                QString name = domNode.nodeName();
+                if(name == "func" && domElement.attribute("name") == function_name)
+                   funcNode = domNode;
+            }
+
+        }
+        //getFunctionsList(domNode, outList);
+        if( domNode.parentNode() == funcNode)
+        {
+            qDebug() << "node name " << domNode.nodeName() << "is in function" << funcNode.toElement().attribute("name");
+            execute(domNode);
+        }
+        //qDebug() << "node name is " << domNode.nodeName() << "is in function" << funcNode.toElement().attribute("name");
+        executeFunction(domNode, funcNode, function_name);
+        domNode = domNode.nextSibling();
+    }
+}
+
+int InterpreterWin64::executeShellCommand(const QDomNode& node)
+{
+    QString cmd;
+    if( node.toElement().hasAttribute("cmd") )
+    {
+        cmd = node.toElement().attribute("cmd");
+        ShellExecuteA(0, 0, (char*)cmd.toStdString().c_str(), 0, 0, SW_NORMAL);
+    }
+    return 0;
+}
+
 int InterpreterWin64::execute(const QDomNode& node)
 {
     QString name = node.toElement().tagName().toLocal8Bit();
@@ -192,32 +278,16 @@ int InterpreterWin64::execute(const QDomNode& node)
     {
 
         if( name == "hotkey" )
-        {
-            QString str = node.toElement().attribute("hotkey");
-            str = str.replace(" ","");
-            hotKey((char*)str.toLocal8Bit().toStdString().c_str());
-        }
+            executeHotkey(node);
 
         if( name == "click" )
-        {
-            QString atr = node.toElement().attribute("button");
-            Qt::MouseButton b;
-            if (atr == "left")
-                b = Qt::MouseButton::LeftButton;
-            else
-                b = Qt::MouseButton::RightButton;
-            bool ok1,ok2;
-            auto x = node.toElement().attribute("x").toInt(&ok1);
-            auto y = node.toElement().attribute("y").toInt(&ok2);
-            if(ok1 && ok2)
-                MouseClick(QPoint(x,y), b);
-            if( node.toElement().hasAttribute("area"))
-            {
-                QRect rect = parseRect(node);
-                MouseClick(rect, b);
-            }
+            executeClick(node);
 
-        }
+        if( name == "type" )
+            executeType(node);
+
+        if( name == "shell" )
+            executeShellCommand(node);
 
         // make a delay
         Delays delays = parseDelays(node);

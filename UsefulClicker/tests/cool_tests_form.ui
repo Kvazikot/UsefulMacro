@@ -36,7 +36,7 @@
    <property name="geometry">
     <rect>
      <x>160</x>
-     <y>210</y>
+     <y>50</y>
      <width>121</width>
      <height>228</height>
     </rect>
@@ -76,7 +76,7 @@ color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>320</x>
-     <y>280</y>
+     <y>120</y>
      <width>161</width>
      <height>101</height>
     </rect>
@@ -105,7 +105,7 @@ color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>320</x>
-     <y>170</y>
+     <y>10</y>
      <width>160</width>
      <height>97</height>
     </rect>
@@ -115,7 +115,7 @@ color: rgb(255, 255, 255);</string>
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="typeTest">
       <property name="text">
        <string> Type test</string>
       </property>
@@ -134,7 +134,7 @@ color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>500</x>
-     <y>170</y>
+     <y>10</y>
      <width>161</width>
      <height>91</height>
     </rect>
@@ -156,7 +156,7 @@ color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>210</y>
+     <y>50</y>
      <width>121</width>
      <height>228</height>
     </rect>
@@ -189,21 +189,21 @@ color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>170</y>
+     <y>10</y>
      <width>261</width>
      <height>26</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QPushButton" name="pushButton_5">
+     <widget class="QPushButton" name="runFunction">
       <property name="text">
        <string>Run Function</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QComboBox" name="comboBox">
+     <widget class="QComboBox" name="functionsList">
       <item>
        <property name="text">
         <string>func1</string>
@@ -217,22 +217,15 @@ color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>690</x>
-     <y>170</y>
+     <y>10</y>
      <width>160</width>
-     <height>97</height>
+     <height>131</height>
     </rect>
    </property>
    <property name="title">
     <string>4 Group. CV tests</string>
    </property>
    <layout class="QGridLayout" name="gridLayout_4">
-    <item row="0" column="0">
-     <widget class="QPushButton" name="buttonsDetector1">
-      <property name="text">
-       <string>Buttons Detector 1</string>
-      </property>
-     </widget>
-    </item>
     <item row="1" column="0">
      <widget class="QPushButton" name="pushButton_9">
       <property name="text">
@@ -240,7 +233,35 @@ color: rgb(255, 255, 255);</string>
       </property>
      </widget>
     </item>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="buttonsDetector1">
+      <property name="text">
+       <string>Buttons Detector 1</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QPushButton" name="imageSearch">
+      <property name="text">
+       <string>Image Search</string>
+      </property>
+     </widget>
+    </item>
    </layout>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_5">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>290</y>
+     <width>1021</width>
+     <height>343</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Console</string>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_5"/>
   </widget>
  </widget>
  <resources/>

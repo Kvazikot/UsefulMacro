@@ -21,6 +21,8 @@
 
 #include <QObject>
 #include <QScreen>
+#include <QDir>
+#include <QDateTime>
 #include <cmath>
 #include <QGuiApplication>
 #include <QDebug>
@@ -93,6 +95,22 @@ void drawCounters(Size image_size, vector<vector<Point> >& contours, Mat backgro
     }
 }
 
+QImage DspModule::saveImage(QRect roi, QString& filename)
+{
+    QDateTime dt;
+    dt = dt.currentDateTime();
+    //QString clickerPath = qEnvironmentVariable("UsefulClicker");
+    //if(clickerPath.size() == 0)
+    //    clickerPath = QDir::currentPath();
+    QString clickerPath = "$(UsefulClicker)";
+    filename = "\"" + clickerPath + "/images/" + dt.toString("hh.mm.ss.zzz.png") + "\"";
+    //last_screenshot
+    QImage outputImage(roi.width(),roi.height(), last_screenshot.format());
+    outputImage = last_screenshot.copy(roi);
+    clickerPath = QDir::currentPath();
+    outputImage.save(clickerPath + "/images/" + dt.toString("hh.mm.ss.zzz.png"));
+    return outputImage;
+}
 
 void DspModule::detectButtons(int screen_num, int kernel_size, vector<QRect>& rects)
 {

@@ -53,6 +53,7 @@
 
 #include "ui/ui_mainwindow.h"
 #include "model/clickermodel.h"
+#include "xml/clickerdocument.h"
 #include "interpreter/interpreter.h"
 #include <QMouseEvent>
 #include <QTimerEvent>
@@ -87,13 +88,18 @@ public slots:
     void setNextItem(QModelIndex& index);
     void reloadFromFile(QString& filename);
     void reloadFromMemory();
-    void reload(){ reloadFromMemory(); }
+    void reload();
+    ClickerDocument* getDoc();
+    void setDoc(ClickerDocument* doc);
+    AbstractInterpreter* getInterpreter();
 private slots:
     void insertChild();
     void insertRow();
     void removeRow();
 private:
     ClickerModel* model=0;
+    ClickerDocument* doc;
+    ClickerDocument  defaultDoc;
     static QString current_filename;
     QAction* playAction;
     bool pauseFlag;

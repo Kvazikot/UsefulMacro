@@ -1,38 +1,74 @@
 #include <QFile>
 #include <QDebug>
+#include <QMessageBox>
 #include <QRegularExpression>
 #include "settings/clickersettings.h"
 #include "clickerdocument.h"
 
+ClickerDocument::ClickerDocument()
+{
+
+}
+
 ClickerDocument::ClickerDocument(QString fullpath)
     : QDomDocument()
 {
-    QString filename = fullpath;
+    load(fullpath);
+}
+
+bool ClickerDocument::load(QString fn)
+{
+    QString filename = fn;
 
     QDomDocument doc(filename);
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly))
     {
         qDebug() << "cannot open " << filename;
-        return;
+        isLoaded = false;
+        return false;
     }
     if (!doc.setContent(&file)) {
         file.close();
         qDebug() << "xml error";
-        return;
+        isLoaded = false;
+        return false;
     }
     file.close();
 
     QDomDocument& this_reference = *this;
     this_reference = doc;
     original_document = doc;
+    isLoaded = true;
 
 
     if( _F("hideAllNonClickerTags") )
     {
         filters = {"shell", "code", "include"};
     }
+    return true;
+}
 
+void ClickerDocument::getFunctionsList(const QDomNode& rootNode, QStringList& outList)
+{
+    QDomNode domNode = rootNode.firstChild();
+    QDomElement domElement;
+    while(!(domNode.isNull()))
+    {
+        if(domNode.isElement())
+        {
+            domElement = domNode.toElement();
+            if(!(domElement.isNull()))
+            {
+                QString name = domNode.nodeName();
+                if(name == "func")
+                    outList.push_back(domElement.attribute("name"));
+            }
+
+        }
+        getFunctionsList(domNode, outList);
+        domNode = domNode.nextSibling();
+    }
 }
 
 QString ClickerDocument::getContent(QDomDocument& document)
@@ -40,10 +76,10 @@ QString ClickerDocument::getContent(QDomDocument& document)
     return document.toString();
 }
 
-void ClickerDocument::setContent(QDomDocument& document, QString& text)
+bool ClickerDocument::setContent(QDomDocument& document, QString& text)
 {
     format_document(text);
-    document.setContent(text);
+    return document.setContent(text);
 }
 
 void ClickerDocument::Save(QTextStream& ts)

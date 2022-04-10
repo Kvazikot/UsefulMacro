@@ -357,7 +357,7 @@ void QConsole::handleReturnKeyPress()
 	QString command = getCurrentCommand();
 	//execute the command and get back its text result and its return value
 	if (isCommandComplete(command))
-		execCommand(command, false);
+        execCommand(command, true);
 	else
 	{
 		append("");
