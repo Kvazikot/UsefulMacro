@@ -12,8 +12,10 @@ class CoolTestsForm : public QDialog
     Q_OBJECT
 
 public:
+    int screenNum=0;
     explicit CoolTestsForm(QWidget *parent = nullptr);
     void runFunction(QString func_name);
+    void fullScreen();
     ~CoolTestsForm();
 
 private slots:
@@ -27,6 +29,13 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    void on_pickPoint_clicked();
+
+    void on_areaButton_clicked();
+
+public slots:
+    void slotSetAttrs(QMap<QString,QString> attrs);
+    void slotFullScreen();
 private:
     Ui::CoolTestsForm *ui;
 };

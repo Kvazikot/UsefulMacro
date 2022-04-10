@@ -15,13 +15,13 @@ class CoordSelector : public QDialog
     Q_OBJECT
 
 public:
+    int screenNum=0;
     explicit CoordSelector(QWidget *parent = nullptr);
     ~CoordSelector();
     QPoint mpos;
     QRectF hit_rect;
     QCursor cursor;
     QSoundEffect bullet_sound;
-
     QPixmap cursor_pixmap;
     QElapsedTimer timeSinceHit;
     QPoint hitPoint;
@@ -30,7 +30,8 @@ public:
     int frame;
     int n_hited;
     bool hit;
-
+    bool showEasterEgg;
+    void fullScreen();
     void animate();
     void generate_rects();
     void showEvent(QShowEvent* event) override;
@@ -41,6 +42,7 @@ public:
     void wheelEvent(QWheelEvent* event) override;
 public slots:
     void on_doneButton_clicked();
+    void slotFullScreen();
     void closeDelaySlot();
     void clickDelay();
 signals:

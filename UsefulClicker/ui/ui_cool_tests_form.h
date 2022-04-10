@@ -21,6 +21,7 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -61,13 +62,21 @@ public:
     QPushButton *imageSearch;
     QGroupBox *groupBox_5;
     QGridLayout *gridLayout_5;
+    QPlainTextEdit *xmlEditor;
+    QPlainTextEdit *plainTextEdit_3;
+    QGroupBox *groupBox_6;
+    QGridLayout *gridLayout_6;
+    QPushButton *pickPoint;
+    QRadioButton *screen1;
+    QRadioButton *screen0;
+    QPushButton *areaButton;
 
     void setupUi(QDialog *CoolTestsForm)
     {
         if (CoolTestsForm->objectName().isEmpty())
             CoolTestsForm->setObjectName(QString::fromUtf8("CoolTestsForm"));
         CoolTestsForm->setWindowModality(Qt::NonModal);
-        CoolTestsForm->resize(1451, 912);
+        CoolTestsForm->resize(818, 359);
         buttonBox = new QDialogButtonBox(CoolTestsForm);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setGeometry(QRect(1330, 30, 81, 61));
@@ -99,7 +108,7 @@ public:
 
         groupBox = new QGroupBox(CoolTestsForm);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        groupBox->setGeometry(QRect(320, 120, 161, 101));
+        groupBox->setGeometry(QRect(310, 30, 161, 101));
         gridLayout = new QGridLayout(groupBox);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         pushButton_7 = new QPushButton(groupBox);
@@ -114,7 +123,7 @@ public:
 
         groupBox_2 = new QGroupBox(CoolTestsForm);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        groupBox_2->setGeometry(QRect(320, 10, 160, 97));
+        groupBox_2->setGeometry(QRect(490, 190, 160, 97));
         gridLayout_2 = new QGridLayout(groupBox_2);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         typeTest = new QPushButton(groupBox_2);
@@ -129,7 +138,7 @@ public:
 
         groupBox_3 = new QGroupBox(CoolTestsForm);
         groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
-        groupBox_3->setGeometry(QRect(500, 10, 161, 91));
+        groupBox_3->setGeometry(QRect(310, 140, 161, 91));
         gridLayout_3 = new QGridLayout(groupBox_3);
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
         pushButton_4 = new QPushButton(groupBox_3);
@@ -175,7 +184,7 @@ public:
 
         groupBox_4 = new QGroupBox(CoolTestsForm);
         groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
-        groupBox_4->setGeometry(QRect(690, 10, 160, 131));
+        groupBox_4->setGeometry(QRect(660, 30, 160, 131));
         gridLayout_4 = new QGridLayout(groupBox_4);
         gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
         pushButton_9 = new QPushButton(groupBox_4);
@@ -198,6 +207,44 @@ public:
         groupBox_5->setGeometry(QRect(30, 290, 1021, 343));
         gridLayout_5 = new QGridLayout(groupBox_5);
         gridLayout_5->setObjectName(QString::fromUtf8("gridLayout_5"));
+        xmlEditor = new QPlainTextEdit(groupBox_5);
+        xmlEditor->setObjectName(QString::fromUtf8("xmlEditor"));
+
+        gridLayout_5->addWidget(xmlEditor, 1, 0, 1, 1);
+
+        plainTextEdit_3 = new QPlainTextEdit(groupBox_5);
+        plainTextEdit_3->setObjectName(QString::fromUtf8("plainTextEdit_3"));
+
+        gridLayout_5->addWidget(plainTextEdit_3, 0, 0, 1, 1);
+
+        groupBox_6 = new QGroupBox(CoolTestsForm);
+        groupBox_6->setObjectName(QString::fromUtf8("groupBox_6"));
+        groupBox_6->setGeometry(QRect(500, 30, 131, 141));
+        gridLayout_6 = new QGridLayout(groupBox_6);
+        gridLayout_6->setObjectName(QString::fromUtf8("gridLayout_6"));
+        pickPoint = new QPushButton(groupBox_6);
+        pickPoint->setObjectName(QString::fromUtf8("pickPoint"));
+
+        gridLayout_6->addWidget(pickPoint, 3, 0, 1, 1);
+
+        screen1 = new QRadioButton(groupBox_6);
+        screen1->setObjectName(QString::fromUtf8("screen1"));
+        screen1->setAutoRepeat(true);
+
+        gridLayout_6->addWidget(screen1, 1, 0, 1, 1);
+
+        screen0 = new QRadioButton(groupBox_6);
+        screen0->setObjectName(QString::fromUtf8("screen0"));
+        screen0->setChecked(true);
+        screen0->setAutoRepeat(true);
+
+        gridLayout_6->addWidget(screen0, 0, 0, 1, 1);
+
+        areaButton = new QPushButton(groupBox_6);
+        areaButton->setObjectName(QString::fromUtf8("areaButton"));
+
+        gridLayout_6->addWidget(areaButton, 2, 0, 1, 1);
+
 
         retranslateUi(CoolTestsForm);
         QObject::connect(buttonBox, &QDialogButtonBox::accepted, CoolTestsForm, qOverload<>(&QDialog::accept));
@@ -229,7 +276,13 @@ public:
         pushButton_9->setText(QCoreApplication::translate("CoolTestsForm", "Change font ", nullptr));
         buttonsDetector1->setText(QCoreApplication::translate("CoolTestsForm", "Buttons Detector 1", nullptr));
         imageSearch->setText(QCoreApplication::translate("CoolTestsForm", "Image Search", nullptr));
-        groupBox_5->setTitle(QCoreApplication::translate("CoolTestsForm", "Console", nullptr));
+        groupBox_5->setTitle(QCoreApplication::translate("CoolTestsForm", "Xml editor", nullptr));
+        plainTextEdit_3->setPlainText(QCoreApplication::translate("CoolTestsForm", "x=\"\" y=\"\"", nullptr));
+        groupBox_6->setTitle(QCoreApplication::translate("CoolTestsForm", "Pick point from screen", nullptr));
+        pickPoint->setText(QCoreApplication::translate("CoolTestsForm", "Coord selector", nullptr));
+        screen1->setText(QCoreApplication::translate("CoolTestsForm", "Screen 1", nullptr));
+        screen0->setText(QCoreApplication::translate("CoolTestsForm", "Screen 0", nullptr));
+        areaButton->setText(QCoreApplication::translate("CoolTestsForm", "Area selector", nullptr));
     } // retranslateUi
 
 };

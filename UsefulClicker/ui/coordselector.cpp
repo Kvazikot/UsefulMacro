@@ -1,4 +1,6 @@
 #include <QTimer>
+#include <QScreen>
+#include <QGuiApplication>
 #include <QImage>
 #include <QPainter>
 #include <QMouseEvent>
@@ -27,6 +29,7 @@ CoordSelector::CoordSelector(QWidget *parent) :
     setAttribute(Qt::WA_WState_WindowOpacitySet);
     setAttribute(Qt::WA_PaintOnScreen); // not needed in Qt 5.2 and up
     setCursor(Qt::CrossCursor);
+    showEasterEgg = false;
     ui->setupUi(this);
 
     QImage bg_image(300,300,QImage::Format_ARGB32);
@@ -84,9 +87,16 @@ void CoordSelector::mousePressEvent(QMouseEvent* event)
 {
 
     //process selected rectangle
+
     attrs["x"] = QString::number(mpos.x());
     attrs["y"] = QString::number(mpos.y());
 
+    if(!showEasterEgg)
+    {
+        emit sigSetAttrs(attrs);
+        done(1);
+        return;
+    }
     hit = false;
     for(int i=0; i < n_rects; i++)
     {
@@ -135,6 +145,21 @@ void CoordSelector::clickDelay()
 
 }
 
+void CoordSelector::slotFullScreen()
+{
+    if( screenNum > QGuiApplication::screens().size() ) return;
+    QScreen* screen = QGuiApplication::screens()[screenNum];
+    setGeometry(screen->geometry());
+    show();
+    setCursor(Qt::CrossCursor);
+}
+
+void CoordSelector::fullScreen()
+{
+
+    QTimer::singleShot(500, this, SLOT(slotFullScreen()));
+}
+
 void CoordSelector::mouseMoveEvent(QMouseEvent* event)
 {
     mpos = event->globalPosition().toPoint();
@@ -160,11 +185,8 @@ void CoordSelector::wheelEvent(QWheelEvent* event)
 
 void CoordSelector::animate()
 {
+    if( !showEasterEgg) return;
 
-}
-
-void CoordSelector::paintEvent( QPaintEvent* event)
-{
     QPainter painter(this);
     QRect r4(mpos.x(), mpos.y(),100,100);
     //qDebug() << __FUNCTION__ << r;
@@ -216,6 +238,11 @@ void CoordSelector::paintEvent( QPaintEvent* event)
     QString s = QString("Score = %1").arg(score);
     painter.drawText(0,1000, s);
 
+}
+
+void CoordSelector::paintEvent( QPaintEvent* event)
+{
+    animate();
     event->accept();
     frame++;
 }

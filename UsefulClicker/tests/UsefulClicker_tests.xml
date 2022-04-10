@@ -7,13 +7,19 @@
 
  
  <func name="Change font">
-  <hotkey hotkey="alt"/>
-  <hotkey keysequence="left+left+enter+down+enter" delay_ms="10"/>
+  <click button="left" x="1531" y="661" />
+  <hotkey hotkey="alt+o"/>
+  <hotkey keysequence="f" delay_ms="100"/>
+  <hotkey hotkey="alt+s" delay_fixed="500"/>
+  <type text="48" />
+  <hotkey keysequence="enter" delay_ms="100"/>
+<!--
   <type>Arial</type>
   <hotkey hotkey="enter"/>
   <hotkey hotkey="ctrl+tab" repeat="2"/>
   <type>32</type>
   <hotkey hotkey="enter"/>  
+-->  
  </func>
 
  <func name="Post Twit">
