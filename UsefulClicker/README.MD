@@ -138,6 +138,17 @@ visual basic.
 21. Сделать обфускацию строк если это требуется разоработчику
 22. Сделать бинарный экспорт 
 23. При импорте из xml схемы все теги <script> сохраняются в отдельные .py файлы в каталог scripts
+24. OCR всех областей найлденных ButtonDetector например с помощью трансофрмера https://huggingface.co/docs/transformers/model_doc/trocr  
+
+  
+# Кодогенератор оптимального xml кода, 
+  входные данные: для которого траекторию мыши и события клавиатуры.   
+  выход: минимальный xml код, желательно с понятным человеку содержанием    
+  ```
+  <window template="notepad_template.png"/>
+  <menuclick> File -> Open </menuclick>
+  <inputline> readme.txt </inputline>
+  ````
  
 # Список виджетов UsefulClicker
 * [TimerWidget](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/widgets/README.MD#timerwidget)
