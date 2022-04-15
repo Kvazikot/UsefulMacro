@@ -21,15 +21,15 @@
   <hotkey hotkey="enter"/>  
 -->  
  </func>
-
  <func name="Post Twit">
-  <click button="left" x="1000" y="500" comment="click in chrome window" />
+  <click button="left" x="1700" y="500" comment="click in chrome window" />
   <hotkey hotkey="F6"/>
-  <type> https://twitter.com/ </type>
-  <hotkey hotkey="Enter"/>  
-  <clickimg area="Rect(330,645,229,56)" filename="$(UsefulClicker)/images/21.03.12.119.png" button="left"> </clickimg>
-  <type mode="copy_paste">Это пример текста который был сгенерирован программой UsefulClicker сегодня. </type>
-  <hotkey hotkey="Enter"/>
+  <type text="https://twitter.com/" />
+  <hotkey keysequence="enter" delay_ms="1000"/>
+  <clickimg targetImg="$(UsefulClicker)/images/14.24.37.537.png" button="left"> </clickimg>
+  <type text="Это пример текста который был сгенерирован программой UsefulClicker сегодня."/>
+  <clickimg targetImg="$(UsefulClicker)/images/15.51.21.025.png" button="left"> </clickimg>
+
  </func>
 
 <!-- 

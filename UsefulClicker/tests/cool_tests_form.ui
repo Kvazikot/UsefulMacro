@@ -283,50 +283,61 @@ color: rgb(255, 255, 255);</string>
   <widget class="QGroupBox" name="groupBox_6">
    <property name="geometry">
     <rect>
-     <x>500</x>
+     <x>510</x>
      <y>30</y>
-     <width>131</width>
-     <height>141</height>
+     <width>109</width>
+     <height>157</height>
     </rect>
    </property>
    <property name="title">
     <string>Pick point from screen</string>
    </property>
    <layout class="QGridLayout" name="gridLayout_6">
-    <item row="3" column="0">
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QRadioButton" name="screen0">
+        <property name="text">
+         <string> 0</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <property name="autoRepeat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="screen1">
+        <property name="text">
+         <string>1</string>
+        </property>
+        <property name="autoRepeat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="areaButton">
+      <property name="text">
+       <string>Area selector</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
      <widget class="QPushButton" name="pickPoint">
       <property name="text">
        <string>Coord selector</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QRadioButton" name="screen1">
+    <item row="3" column="0">
+     <widget class="QPushButton" name="shellDialog">
       <property name="text">
-       <string>Screen 1</string>
-      </property>
-      <property name="autoRepeat">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QRadioButton" name="screen0">
-      <property name="text">
-       <string>Screen 0</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
-      <property name="autoRepeat">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="areaButton">
-      <property name="text">
-       <string>Area selector</string>
+       <string>Shell Dialog</string>
       </property>
      </widget>
     </item>

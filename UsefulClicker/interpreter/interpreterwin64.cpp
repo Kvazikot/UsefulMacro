@@ -3,15 +3,29 @@
 #include <QTime>
 #include <QDateTime>
 #include <QClipboard>
+#include <QDir>
+#include <QGuiApplication>
+#include <QScreen>
+#include <QtGlobal>
 #include <QApplication>
 #include <windef.h>
 #include "interpreter/interpreterwin64.h"
 #include "model/clickermodel.h"
+#include "cv/dspmodule.h"
 #include "windows.h"
 #include "settings/clickersettings.h"
 #include <windows.h>
 #include <QRect>
 #include <QRegularExpression>
+
+static DspModule* dsp;
+using namespace cv;
+
+InterpreterWin64::InterpreterWin64()
+    : AbstractInterpreter()
+{
+    dsp = new DspModule();
+}
 
 void send_key2(QVector<WORD>& vkeys, bool keyUp)
 {
@@ -47,11 +61,72 @@ void send_key3(QVector<WORD>& vkeys, bool keyUp)
     Sleep(DEFAULT("input_delay_msec").toInt());
 }
 
+void KeySequence(char* hot_key, int delay_ms)
+{
+    qDebug() << __FUNCTION__ << QString(hot_key);
+    QVector<WORD> vkeys;
+    QStringList keys = QString(hot_key).split('+');
+    qDebug() << keys;
+    int k = 0;
+    // keyup events
+    for(QString tok : keys)
+    {
+        tok = tok.toLower();
+        SHORT c = (int)tok[0].toLower().toLatin1()-32;
+        k = VkKeyScanA(c);
+        if(tok == "left")
+           k = VK_LEFT;
+        if(tok == "right")
+           k = VK_RIGHT;
+        if(tok == "down")
+           k  = VK_DOWN;
+        if(tok == "up")
+            k = VK_UP;
+        if(tok == "enter")
+         k = VK_RETURN;
+        INPUT inputs[2];
+        ZeroMemory(inputs, sizeof(inputs));
+        inputs[0].type = INPUT_KEYBOARD;
+        inputs[0].ki.wVk = k;
+        SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
+        Sleep(DEFAULT("input_delay_msec").toInt());
+    }
+
+
+
+    // keydown events
+    for(QString tok : keys)
+    {
+        tok = tok.toLower();
+        SHORT c = (int)tok[0].toLower().toLatin1()-32;
+        k = VkKeyScanA(c);
+        if(tok == "left")
+           k = VK_LEFT;
+        if(tok == "right")
+           k = VK_RIGHT;
+        if(tok == "down")
+           k  = VK_DOWN;
+        if(tok == "up")
+            k = VK_UP;
+        if(tok == "enter")
+         k = VK_RETURN;
+        INPUT inputs[2];
+        ZeroMemory(inputs, sizeof(inputs));
+        inputs[0].type = INPUT_KEYBOARD;
+        inputs[0].ki.wVk = k;
+        inputs[0].ki.dwFlags = KEYEVENTF_KEYUP;
+        SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
+        Sleep(DEFAULT("input_delay_msec").toInt());
+    }
+    Sleep(delay_ms);
+
+}
 
 void Key(char* hot_key)
 {
     //SendCtrlA();
     //return;
+    qDebug() << __FUNCTION__ << QString(hot_key);
     if( strlen(hot_key) > 200 ) return;
     QVector<WORD> vkeys;
     char c = hot_key[strlen(hot_key)-1];
@@ -59,6 +134,30 @@ void Key(char* hot_key)
     code = VkKeyScanA(c);
     //qDebug() << __FUNCTION__ << QString(hot_key) << " VkKeyScanA code =" << code << " c=" << c ;
 
+    if( strstr(hot_key, "F1") !=NULL )
+        vkeys.push_back(VK_F1);
+    if( strstr(hot_key, "F2") !=NULL )
+        vkeys.push_back(VK_F2);
+    if( strstr(hot_key, "F3") !=NULL )
+        vkeys.push_back(VK_F3);
+    if( strstr(hot_key, "F4") !=NULL )
+        vkeys.push_back(VK_F4);
+    if( strstr(hot_key, "F5") !=NULL )
+        vkeys.push_back(VK_F5);
+    if( strstr(hot_key, "F6") !=NULL )
+        vkeys.push_back(VK_F6);
+    if( strstr(hot_key, "F7") !=NULL )
+        vkeys.push_back(VK_F7);
+    if( strstr(hot_key, "F8") !=NULL )
+        vkeys.push_back(VK_F8);
+    if( strstr(hot_key, "F9") !=NULL )
+        vkeys.push_back(VK_F9);
+    if( strstr(hot_key, "F10") !=NULL )
+        vkeys.push_back(VK_F10);
+    if( strstr(hot_key, "F11") !=NULL )
+        vkeys.push_back(VK_F11);
+    if( strstr(hot_key, "F12") !=NULL )
+        vkeys.push_back(VK_F12);
     if( strstr(hot_key, "shift") !=NULL )
         vkeys.push_back(VK_SHIFT);
     if( strstr(hot_key, "ctrl") !=NULL )
@@ -67,6 +166,10 @@ void Key(char* hot_key)
         vkeys.push_back(VK_MENU);
     if( strstr(hot_key, "win") !=NULL )
         vkeys.push_back(VK_LWIN);
+    if( strstr(hot_key, "enter") !=NULL )
+        vkeys.push_back(VK_RETURN);
+    if( strstr(hot_key, "return") !=NULL )
+        vkeys.push_back(VK_RETURN);
     vkeys.push_back(code);
 
     if(vkeys.size() == 2)
@@ -81,10 +184,6 @@ void Key(char* hot_key)
     }
 }
 
-InterpreterWin64::InterpreterWin64()
-    : AbstractInterpreter()
-{
-}
 
 Delays InterpreterWin64::parseDelays(const QDomNode& node)
 {
@@ -134,7 +233,6 @@ void MouseClick(QPoint coordinates, Qt::MouseButton button)
     mouse_pos.y =  coordinates.y();
     SetCursorPos(mouse_pos.x, mouse_pos.y);
 
-    return;
     if( button == Qt::MouseButton::LeftButton )
     {
         mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_LEFTDOWN, mouse_pos.x, mouse_pos.y, 0, 0);
@@ -181,9 +279,22 @@ void InterpreterWin64::MySleep(QDateTime endTime)
 
 int InterpreterWin64::executeHotkey(const QDomNode& node)
 {
-    QString str = node.toElement().attribute("hotkey");
-    str = str.replace(" ","");
-    Key((char*)str.toLocal8Bit().toStdString().c_str());
+    QString str;
+    if( node.toElement().hasAttribute("hotkey") )
+    {
+        str = node.toElement().attribute("hotkey");
+        str = str.replace(" ","");
+        Key((char*)str.toLocal8Bit().toStdString().c_str());
+    }
+    if( node.toElement().hasAttribute("keysequence") )
+    {
+        str = node.toElement().attribute("keysequence");
+        str = str.replace(" ","");
+        auto delay_ms = node.toElement().attribute("delay_ms").toInt();
+        KeySequence((char*)str.toLocal8Bit().toStdString().c_str(), delay_ms);
+    }
+
+
     return 1;
 }
 
@@ -246,8 +357,10 @@ void InterpreterWin64::executeFunction(const QDomNode& rootNode, QDomNode funcNo
             qDebug() << "node name " << domNode.nodeName() << "is in function" << funcNode.toElement().attribute("name");
             execute(domNode);
         }
+        else
+            executeFunction(domNode, funcNode, function_name);
         //qDebug() << "node name is " << domNode.nodeName() << "is in function" << funcNode.toElement().attribute("name");
-        executeFunction(domNode, funcNode, function_name);
+
         domNode = domNode.nextSibling();
     }
 }
@@ -263,6 +376,46 @@ int InterpreterWin64::executeShellCommand(const QDomNode& node)
     return 0;
 }
 
+QString decodePath(QString filename)
+{
+    //$(UsefulClicker)/images/21.03.12.119.png
+    QRegularExpression reEnv("[$(]{2}([\\w_]+)[)]{1}");
+    auto match = reEnv.match(filename);
+    QString clickerPath = QDir::currentPath();
+    if( match.hasMatch() )
+    {
+        auto varname = match.capturedTexts()[1];
+        filename = filename.replace("$(UsefulClicker)","");
+        //qDebug() << __FUNCTION__ << varname;
+        clickerPath = qEnvironmentVariable(varname.toStdString().c_str(), QDir::currentPath());
+    }
+    return clickerPath + filename;
+}
+//<clickimg area="Rect(330,645,229,56)" screenNum="0" targetImg="$(UsefulClicker)/images/21.03.12.119.png" button="left"> </clickimg>
+int InterpreterWin64::executeClickImg(const QDomNode& node)
+{
+    QString targetImg_fn = decodePath(node.toElement().attribute("targetImg"));
+    QString areaImg_path = QDir::currentPath() + "/images/";//decodePath(node.toElement().attribute("areaImg"));
+    int screenNum = node.toElement().attribute("screenNum").toInt();
+    QString button = node.toElement().attribute("button");
+    QRect area = parseRect(node);
+    QScreen* screen = QGuiApplication::screens()[screenNum];
+    QImage screenshot = screen->grabWindow(0,0,0,screen->geometry().width(), screen->geometry().height()).toImage();
+    cv::Mat areaImg(screenshot.height(), screenshot.width(),CV_8UC4, screenshot.bits());
+    cvtColor( areaImg, areaImg, cv::COLOR_BGRA2BGR  );
+    QString areImg_fn = areaImg_path + "areaImg.bmp";
+    cv::imwrite(areImg_fn.toStdString(), areaImg);
+
+    dsp->searchImage(targetImg_fn.toStdString(), areImg_fn.toStdString());
+
+    if( button == "left")
+        MouseClick(dsp->matchedRectangle, Qt::MouseButton::LeftButton);
+    if( button == "right")
+        MouseClick(dsp->matchedRectangle, Qt::MouseButton::RightButton);
+
+
+}
+
 int InterpreterWin64::execute(const QDomNode& node)
 {
     QString name = node.toElement().tagName().toLocal8Bit();
@@ -272,6 +425,7 @@ int InterpreterWin64::execute(const QDomNode& node)
 
     //
     int repeats = ATTR("repeats").toInt();
+    qDebug() << __FUNCTION__ << " repeats=" << repeats;
     int n = 0;
 
     while(n++ < repeats)
@@ -288,6 +442,9 @@ int InterpreterWin64::execute(const QDomNode& node)
 
         if( name == "shell" )
             executeShellCommand(node);
+
+        if( name == "clickimg" )
+            executeClickImg(node);
 
         // make a delay
         Delays delays = parseDelays(node);

@@ -14,8 +14,8 @@ class InterpreterWin64 : public AbstractInterpreter
     Q_OBJECT    
 public:
     QStringList validNodes = {"hotkey","click","shell","dblclick","type",
-                               "keydown","keyup","scrollup","scrolldown",
-                               "func"};
+                              "keydown","keyup","scrollup","scrolldown","clickimg",
+                              "func"};
 
 
     InterpreterWin64();
@@ -29,6 +29,7 @@ public:
     int executeClick(const QDomNode& node);
     int executeType(const QDomNode& node);
     int executeShellCommand(const QDomNode& node);
+    int executeClickImg(const QDomNode& node);
     void executeFunction(const QDomNode& rootNode, QDomNode funcNode, QString function_name);
 signals:
     void setCurrentNode(QDomNode& currentNode);

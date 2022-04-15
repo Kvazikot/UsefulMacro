@@ -12,6 +12,7 @@
 #include "ui/screenbuttonsdetector.h"
 #include "ui/coordselector.h"
 #include "ui/imagesearchdialog.h"
+#include "ui/shelldialog.h"
 #include "tests/highlighter.h"
 
 #include "ui/widgets/areabutton.h"
@@ -28,8 +29,24 @@ static MouseButton* mouse_but;
 static AreaButton* area_but;
 static ShellButton* shell_but;
 static QTextEdit* editor = 0;
+static Highlighter* highlighter = 0;
 //static QVector<QImage> icons_cache;
 
+QString decodePath1(QString filename)
+{
+    //$(UsefulClicker)/images/21.03.12.119.png
+    QRegularExpression reEnv("[$(]{2}([\\w_]+)[)]{1}");
+    auto match = reEnv.match(filename);
+    QString clickerPath = QDir::currentPath();
+    if( match.hasMatch() )
+    {
+        auto varname = match.capturedTexts()[1];
+        filename = filename.replace("$(UsefulClicker)","");
+        qDebug() << __FUNCTION__ << varname;
+        clickerPath = qEnvironmentVariable(varname.toStdString().c_str(), QDir::currentPath());
+    }
+    return clickerPath + filename;
+}
 
 //---------------------------------------------------------------------------------------------------------
 void CoolTestsForm::createButtons()
@@ -102,14 +119,64 @@ CoolTestsForm::CoolTestsForm(QWidget *parent) :
     font.setFixedPitch(true);
     font.setPointSize(10);
     editor = new QTextEdit();
+    //
+    connect(editor, SIGNAL(textChanged()), this, SLOT(textChanged()));
     editor->setFont(font);
-    Highlighter* highlighter = new Highlighter(editor->document());
+    highlighter = new Highlighter(editor->document());
     ui->groupBox_5->layout()->replaceWidget(ui->xmlEditor, editor);
 
     auto func_body_text = window->getDoc()->getFunction(ui->functionsList->currentText());
+    editor->clear();
     editor->setText(func_body_text);
 
+    QList<QTextEdit::ExtraSelection> extraSelections;
+    QTextCursor cursor = editor->textCursor();
+    QTextFrameFormat frameFormat;
+    frameFormat.setHeight(10);
+    frameFormat.setWidth(2350);
+    frameFormat.setBackground(Qt::yellow);
+    cursor.insertFrame(frameFormat);
+    editor->setTextCursor(cursor);
+    connect(editor, SIGNAL(cursorPositionChanged()), this, SLOT(cursorPositionChanged()));
+
+    // individfual functions tests
+    decodePath1("$(UsefulClicker)/images/21.03.12.119.png");
+
+//    QTextEdit::ExtraSelection selection;
+//    selection.format.setBackground(Qt::yellow);
+//    selection.format.setProperty(QTextFormat::FullWidthSelection, true);
+//    selection.cursor = cursor;
+//    selection.cursor.clearSelection();
+//    extraSelections.append(selection);
+//    editor->setExtraSelections(extraSelections);
+
+
+    startTimer(1000);
     //runFunction("Change font");
+}
+
+void CoolTestsForm::cursorPositionChanged()
+{
+}
+
+void CoolTestsForm::timerEvent(QTimerEvent* event)
+{
+    if( lastEditTimer.elapsed() > 2000 && saved == false)
+    {
+        if(editor)
+        {
+            MainWindow* window = MainWindow::getInstance();
+            window->getDoc()->setFunction(ui->functionsList->currentText(), editor->toPlainText().toLocal8Bit());
+            saved = true;
+        }
+
+    }
+}
+
+void CoolTestsForm::textChanged()
+{
+    lastEditTimer.restart();
+    saved = false;
 }
 
 CoolTestsForm::~CoolTestsForm()
@@ -140,6 +207,7 @@ void CoolTestsForm::runFunction(QString func_name)
 {
     MainWindow* window = MainWindow::getInstance();
     QDomDocument* doc = static_cast<QDomDocument*>(window->getDoc());
+    qDebug() << window->getDoc()->getFunction(func_name);
     InterpreterWin64*  interpreter = static_cast<InterpreterWin64*>(window->getInterpreter());
     interpreter->executeFunction(doc->documentElement(), doc->documentElement(), func_name);
 }
@@ -209,6 +277,15 @@ void CoolTestsForm::on_functionsList_currentIndexChanged(int index)
         MainWindow* window = MainWindow::getInstance();
         auto func_body_text = window->getDoc()->getFunction(ui->functionsList->currentText());
         editor->setText(func_body_text);
+        QStringList lines = func_body_text.split("\n");
+        //highlighter->highlightBlock(lines[lines.size()/2]);
     }
+}
+
+
+void CoolTestsForm::on_shellDialog_clicked()
+{
+    ShellDialog* dlg = new ShellDialog(this);
+    dlg->show();
 }
 

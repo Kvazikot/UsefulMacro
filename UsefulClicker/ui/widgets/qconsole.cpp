@@ -91,6 +91,7 @@ PopupCompleter::PopupCompleter(const QStringList& sl, QWidget *parent)
 {
 		setModal(true);
 
+
 		listWidget_ = new PopupListWidget();
 		listWidget_->setMaximumHeight(200);
 		qDebug() << "sizeHint(): " << listWidget_->sizeHint();
@@ -227,7 +228,8 @@ void QConsole::reset(const QString &welcomeText)
 		//init attributes
 		historyIndex = 0;
 		history.clear();
-		recordedScript.clear();}
+        recordedScript.clear();
+}
 
 //QConsole constructor (init the QTextEdit & the attributes)
 QConsole::QConsole(QWidget *parent, const QString &welcomeText)
@@ -241,6 +243,7 @@ QConsole::QConsole(QWidget *parent, const QString &welcomeText)
 
 	//Disable undo/redo
 	setUndoRedoEnabled(false);
+    setPrompt(">>");
 
     pipeThread = new PipeReaderThread(this);
     pipeThread->start();
@@ -305,6 +308,7 @@ void QConsole::setFont(const QFont& f) {
 		textCursor().setBlockCharFormat(format);
 		setCurrentFont(f);
 		setTextCursor(oldCursor);
+
 }
 
 
@@ -357,7 +361,7 @@ void QConsole::handleReturnKeyPress()
 	QString command = getCurrentCommand();
 	//execute the command and get back its text result and its return value
 	if (isCommandComplete(command))
-        execCommand(command, true);
+        execCommand(command, true, true);
 	else
 	{
 		append("");
@@ -662,7 +666,11 @@ void PipeReaderThread::run()
     }
     while(1)
     {
-        if(flagClose) return;
+        if( flagClose )
+        {
+            pipe.close();
+            return;
+        }
         if( !pipe.isOpen() )
         if( !pipe.open( QFile::ReadOnly) )
             qDebug() << "cannod open " + log_filename;
@@ -762,7 +770,7 @@ bool QConsole::execCommand(const QString &command, bool writeCommand,
 		append(strRes);
 		moveCursor(QTextCursor::End);
 		//Display the prompt again
-		if (showPrompt)
+        if (showPrompt)
 			displayPrompt();
 		return !res;
 }
@@ -794,7 +802,7 @@ int QConsole::loadScript(const QString &fileName)
 			if (command.isNull())
 				break;
 			//done
-			execCommand(command, true, false);
+            execCommand(command, true, true);
 		}
 		f.close();
 		return 0;
