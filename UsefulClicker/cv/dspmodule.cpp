@@ -139,7 +139,10 @@ void DspModule::detectButtons(int screen_num, int kernel_size, vector<QRect>& re
     int thresh = DEFAULT("canny_threshold").toInt();
     Canny( im_gray, canny_output, thresh, thresh*2 );
     //imwrite("canny.png", im_gray);
-    kernel_size = DEFAULT("kernel_size").toInt();
+
+    //kernel_size = DEFAULT("kernel_size").toInt();
+    //if(kernel_size < 4) kernel_size = 4;
+
     Mat rect_kernel = getStructuringElement(MORPH_RECT, Size(kernel_size, kernel_size));
     dilate(canny_output, canny_output, rect_kernel, Point(-1, -1), 1);
     vector<vector<Point> > contours;
@@ -165,23 +168,17 @@ void DspModule::detectButtons(int screen_num, int kernel_size, vector<QRect>& re
 
 }
 
-QRect DspModule::searchImage(std::string TargetIn_path, std::string SearchIn_path, int screenNum)
+QRect DspModule::searchImage(std::string TargetIn_path, int screenNum)
 {
 
-    Mat3b SearchIn = Mat3b::zeros(80,80);
     Mat3b TargetIn = Mat3b::zeros(80,80);
     QFileInfo fi;
     QString f1 = TargetIn_path.c_str();
-    if(!fi.exists(f1)) return QRect();
-    f1 = SearchIn_path.c_str();
-    if(!fi.exists(f1)) return QRect();
-    //if(fi.exists(TargetIn_path)) return QRect();
-    //if(fi.exists(SearchIn_path)) return QRect();
 
-    SearchIn = imread(SearchIn_path);
+    if(!fi.exists(f1)) return QRect();
+
     TargetIn = imread(TargetIn_path);
 
-    //makeScreenshot();
     QScreen* screen = QGuiApplication::screens()[screenNum];
     QImage screenshot = last_screenshot;
     if( last_screenshot.width() != screen->geometry().width() )
@@ -214,6 +211,23 @@ QRect DspModule::searchImage(std::string TargetIn_path, std::string SearchIn_pat
     //for(uint i=0; i < contours.size(); i++)
      //   areas.push_back( contourArea(contours[i]) );
     cvtColor(im_gray, im_gray, COLOR_GRAY2RGB);
+
+    int h_bins = 50, s_bins = 60;
+    int histSize[] = { h_bins, s_bins };
+    // hue varies from 0 to 179, saturation from 0 to 255
+    float h_ranges[] = { 0, 180 };
+    float s_ranges[] = { 0, 256 };
+    const float* ranges[] = { h_ranges, s_ranges };
+
+    // Use the 0-th and 1-st channels
+    int channels[] = { 0, 1 };
+    Mat hsv_base1, hsv_base2;
+    Mat hist_base1, hist_base2;
+
+    cvtColor( TargetIn, hsv_base2, COLOR_BGR2HSV );
+    calcHist( &hsv_base2, 2, channels, Mat(), hist_base2, 2, histSize, ranges, true, false );
+    normalize( hist_base2, hist_base2, 0, 1, NORM_MINMAX, -1, Mat() );
+
     RNG rng(12345);
     for( size_t i = 0; i< contours.size(); i++ )
     {
@@ -222,24 +236,12 @@ QRect DspModule::searchImage(std::string TargetIn_path, std::string SearchIn_pat
         cv::Rect r = minAreaRect(contours[i]).boundingRect();
         if(r.width < 20 ) continue;
         if(r.height < 20 ) continue;
-        Mat cutfromSearch = Mat(SearchIn, r);
+        Mat cutfromSearch = Mat(areaImg, r);
 
-        Mat hsv_base1, hsv_base2;
         cvtColor( cutfromSearch, hsv_base1, COLOR_BGR2HSV );
-        cvtColor( TargetIn, hsv_base2, COLOR_BGR2HSV );
-        int h_bins = 50, s_bins = 60;
-        int histSize[] = { h_bins, s_bins };
-        // hue varies from 0 to 179, saturation from 0 to 255
-        float h_ranges[] = { 0, 180 };
-        float s_ranges[] = { 0, 256 };
-        const float* ranges[] = { h_ranges, s_ranges };
-        // Use the 0-th and 1-st channels
-        int channels[] = { 0, 1 };
-        Mat hist_base1, hist_base2;
+
         calcHist( &hsv_base1, 1, channels, Mat(), hist_base1, 2, histSize, ranges, true, false );
         normalize( hist_base1, hist_base1, 0, 1, NORM_MINMAX, -1, Mat() );
-        calcHist( &hsv_base2, 2, channels, Mat(), hist_base2, 2, histSize, ranges, true, false );
-        normalize( hist_base2, hist_base2, 0, 1, NORM_MINMAX, -1, Mat() );
         double base_base = compareHist( hist_base1, hist_base2, 2 );
         //qDebug("%s  hist_compare %f ", __FUNCTION__, base_base);
         if(base_base > 1 )

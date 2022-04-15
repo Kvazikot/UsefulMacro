@@ -404,14 +404,17 @@ int InterpreterWin64::executeClickImg(const QDomNode& node)
     QString areaImg_path = QDir::currentPath() + "/images/";//decodePath(node.toElement().attribute("areaImg"));
     int screenNum = node.toElement().attribute("screenNum").toInt();
     QString button = node.toElement().attribute("button");
+    QString areImg_fn = areaImg_path + "areaImg.bmp";
+
+    /*
     QScreen* screen = QGuiApplication::screens()[screenNum];
     QImage screenshot = screen->grabWindow(0,0,0,screen->geometry().width(), screen->geometry().height()).toImage();
     cv::Mat areaImg(screenshot.height(), screenshot.width(),CV_8UC4, screenshot.bits());
     cvtColor( areaImg, areaImg, cv::COLOR_BGRA2BGR  );
-    QString areImg_fn = areaImg_path + "areaImg.bmp";
     cv::imwrite(areImg_fn.toStdString(), areaImg);
+    */
 
-    dsp->searchImage(targetImg_fn.toStdString(), areImg_fn.toStdString());
+    dsp->searchImage(targetImg_fn.toStdString());
     if ( dsp->matchedRectangle.height() < 10 ) return 0;
     if ( dsp->matchedRectangle.width() < 10 ) return 0;
 

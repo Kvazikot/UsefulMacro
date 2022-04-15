@@ -23,7 +23,6 @@ public:
     std::vector<QRect> rects;
     QPoint mpos;
     QRect selected_rect;
-    int kernel_size;
 
     void showEvent(QShowEvent* event);
     void timerEvent(QTimerEvent* event);

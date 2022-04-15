@@ -33,7 +33,6 @@ ScreenButtonsDetector::ScreenButtonsDetector(QWidget *parent):
     //fullscreenMode = false;
     //DspModule
     dsp = new DspModule();
-    dsp->kernel_size = 4;
 
     startTimer(10);
 
@@ -75,15 +74,15 @@ void ScreenButtonsDetector::mouseMoveEvent(QMouseEvent* event)
 
 void ScreenButtonsDetector::wheelEvent(QWheelEvent* event)
 {
-    int p = kernel_size;
+    int p = dsp->kernel_size;
     if( event->angleDelta().y() > 0)
        p-=1;
     else
         p+=1;
 
-    kernel_size = std::clamp(p, 2, 40);
+    dsp->kernel_size = std::clamp(p, 2, 40);
     rects.clear();
-    dsp->detectButtons(0, kernel_size, rects);
+    dsp->detectButtons(0, dsp->kernel_size, rects);
 
 }
 
@@ -109,7 +108,7 @@ void ScreenButtonsDetector::paintEvent( QPaintEvent* event)
     event->accept();
 
 
-    QString s = QString("x = %1 Select image to search. Use mouse wheel for fine tuning. ").arg(kernel_size);
+    QString s = QString("kernel_size = %1 Select image to search. Use mouse wheel for fine tuning. ").arg(dsp->kernel_size);
     painter.drawText(0,1000, s);
 }
 
@@ -132,7 +131,7 @@ void ScreenButtonsDetector::setImage()
 
 void ScreenButtonsDetector::showEvent(QShowEvent* event)
 {
-    dsp->detectButtons(0, kernel_size, rects);
+    dsp->detectButtons(0, dsp->kernel_size, rects);
     showFullScreen();
     event->accept();
     //QTimer::singleShot(3000, this,  SLOT(setImage()));
