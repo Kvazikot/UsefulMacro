@@ -33,10 +33,11 @@ class DspModule : public QObject
 public:
     std::vector<cv::Rect> text_areas;
     QImage last_screenshot;
+    int kernel_size;
 
     DspModule();
     void computeHaudorf();
-    QRect searchImage(std::string TargetIn_path, std::string SearchIn_path);
+    QRect searchImage(std::string TargetIn_path, std::string SearchIn_path, int screenNum=0);
     void detectButtons(int screen_num, int kernel_size, std::vector<QRect>& rects);
     QImage saveImage(QRect roi, QString& filename);
     void findTextAreas();
