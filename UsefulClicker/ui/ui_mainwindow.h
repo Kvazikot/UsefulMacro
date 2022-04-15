@@ -12,13 +12,17 @@
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QGroupBox>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QTreeView>
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -39,8 +43,18 @@ public:
     QAction *actionhideCodeTags;
     QAction *actionhideAllNonClickerTags;
     QWidget *centralwidget;
-    QVBoxLayout *vboxLayout;
+    QGridLayout *gridLayout_3;
+    QGroupBox *groupBox;
+    QGridLayout *gridLayout;
     QTreeView *view;
+    QGroupBox *groupBox_2;
+    QHBoxLayout *horizontalLayout;
+    QGroupBox *groupBox_3;
+    QGridLayout *gridLayout_2;
+    QTextEdit *textEdit;
+    QGroupBox *groupBox_4;
+    QGridLayout *gridLayout_4;
+    QPlainTextEdit *xmlEditor;
     QMenuBar *menubar;
     QMenu *fileMenu;
     QMenu *actionsMenu;
@@ -82,11 +96,13 @@ public:
         actionhideAllNonClickerTags->setChecked(true);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        vboxLayout = new QVBoxLayout(centralwidget);
-        vboxLayout->setSpacing(0);
-        vboxLayout->setContentsMargins(0, 0, 0, 0);
-        vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
-        view = new QTreeView(centralwidget);
+        gridLayout_3 = new QGridLayout(centralwidget);
+        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
+        groupBox = new QGroupBox(centralwidget);
+        groupBox->setObjectName(QString::fromUtf8("groupBox"));
+        gridLayout = new QGridLayout(groupBox);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        view = new QTreeView(groupBox);
         view->setObjectName(QString::fromUtf8("view"));
         view->setMouseTracking(true);
         view->setEditTriggers(QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked);
@@ -105,7 +121,41 @@ public:
         view->header()->setHighlightSections(true);
         view->header()->setProperty("showSortIndicator", QVariant(false));
 
-        vboxLayout->addWidget(view);
+        gridLayout->addWidget(view, 0, 0, 1, 1);
+
+        groupBox_2 = new QGroupBox(groupBox);
+        groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
+        horizontalLayout = new QHBoxLayout(groupBox_2);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        groupBox_3 = new QGroupBox(groupBox_2);
+        groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
+        gridLayout_2 = new QGridLayout(groupBox_3);
+        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        textEdit = new QTextEdit(groupBox_3);
+        textEdit->setObjectName(QString::fromUtf8("textEdit"));
+
+        gridLayout_2->addWidget(textEdit, 0, 0, 1, 1);
+
+
+        horizontalLayout->addWidget(groupBox_3);
+
+        groupBox_4 = new QGroupBox(groupBox_2);
+        groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
+        gridLayout_4 = new QGridLayout(groupBox_4);
+        gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
+        xmlEditor = new QPlainTextEdit(groupBox_4);
+        xmlEditor->setObjectName(QString::fromUtf8("xmlEditor"));
+
+        gridLayout_4->addWidget(xmlEditor, 0, 0, 1, 1);
+
+
+        horizontalLayout->addWidget(groupBox_4);
+
+
+        gridLayout->addWidget(groupBox_2, 1, 0, 1, 1);
+
+
+        gridLayout_3->addWidget(groupBox, 1, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -177,6 +227,15 @@ public:
         actionOpen->setText(QCoreApplication::translate("MainWindow", "Open", nullptr));
         actionhideCodeTags->setText(QCoreApplication::translate("MainWindow", "hideCodeTags", nullptr));
         actionhideAllNonClickerTags->setText(QCoreApplication::translate("MainWindow", "hideAllNonClickerTags", nullptr));
+        groupBox->setTitle(QCoreApplication::translate("MainWindow", "Xml tree view", nullptr));
+        groupBox_2->setTitle(QCoreApplication::translate("MainWindow", "Xml editor", nullptr));
+        groupBox_3->setTitle(QCoreApplication::translate("MainWindow", "Function description", nullptr));
+        textEdit->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:700;\">This function is cooking eggs and mix them with wiskey</span></p></body></html>", nullptr));
+        groupBox_4->setTitle(QCoreApplication::translate("MainWindow", "Xml editor", nullptr));
         fileMenu->setTitle(QCoreApplication::translate("MainWindow", "&File", nullptr));
         actionsMenu->setTitle(QCoreApplication::translate("MainWindow", "&Actions", nullptr));
         menuAbout->setTitle(QCoreApplication::translate("MainWindow", "About", nullptr));
