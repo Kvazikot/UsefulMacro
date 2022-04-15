@@ -13,34 +13,18 @@
   <hotkey hotkey="alt+s" delay_fixed="500"/>
   <type text="48" />
   <hotkey keysequence="enter" delay_ms="100"/>
-<!--
-  <type>Arial</type>
-  <hotkey hotkey="enter"/>
-  <hotkey hotkey="ctrl+tab" repeat="2"/>
-  <type>32</type>
-  <hotkey hotkey="enter"/>  
--->  
- </func>
- <func name="Post Twit">
-  <click button="left" x="1700" y="500" comment="click in chrome window" />
-  <hotkey hotkey="F6"/>
-  <type text="https://twitter.com/" />
-  <hotkey keysequence="enter" delay_ms="1000"/>
-  <clickimg targetImg="$(UsefulClicker)/images/14.24.37.537.png" button="left"> </clickimg>
-  <type text="Это пример текста который был сгенерирован программой UsefulClicker сегодня."/>
-  <clickimg targetImg="$(UsefulClicker)/images/15.51.21.025.png" button="left"> </clickimg>
+  </func>
 
- </func>
+<func name="Post Twit">
+ <click button="left" x="1700" y="416" comment="click in chrome window" />
+ <hotkey hotkey="F6"/>
+ <type text="https://twitter.com/" />
+ <hotkey keysequence="enter" delay_ms="1000"/>
+ <clickimg targetImg="$(UsefulClicker)/images/18.10.45.400.png" button="left" delay_fixed="1000"> </clickimg>
+ <type text="Это пример текста который был сгенерирован программой UsefulClicker сегодня." delay_fixed="1000"/>
+ <clickimg targetImg="$(UsefulClicker)/images/18.01.05.902.png" button="left"> </clickimg>
+ <hotkey keysequence="enter" delay_ms="1000"/>
+</func>
 
-<!-- 
-<main>
-<code name="init" >
-mouseX = Wave(t_cycle)
-</code>
-
-<func_call name="SetUrl" />
-<func_call name="Wave" arg0="t_cycle * $(dt)" />
-</main>
--->
- <img src="myimage.png"/>
 </xml>
+

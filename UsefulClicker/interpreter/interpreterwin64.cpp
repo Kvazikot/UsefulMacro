@@ -328,8 +328,12 @@ int InterpreterWin64::executeType(const QDomNode& node)
         text = node.toElement().attribute("text");
     else
         text = node.toElement().nodeValue();
+
     clipboard->setText(text);
+    Sleep(100);
+    //clipboard->c
     Key("ctrl+v");
+    return 0;
 }
 
 
@@ -363,6 +367,7 @@ void InterpreterWin64::executeFunction(const QDomNode& rootNode, QDomNode funcNo
 
         domNode = domNode.nextSibling();
     }
+
 }
 
 int InterpreterWin64::executeShellCommand(const QDomNode& node)
@@ -407,6 +412,8 @@ int InterpreterWin64::executeClickImg(const QDomNode& node)
     cv::imwrite(areImg_fn.toStdString(), areaImg);
 
     dsp->searchImage(targetImg_fn.toStdString(), areImg_fn.toStdString());
+    if ( dsp->matchedRectangle.height() < 10 ) return 0;
+    if ( dsp->matchedRectangle.width() < 10 ) return 0;
 
     if( button == "left")
         MouseClick(dsp->matchedRectangle, Qt::MouseButton::LeftButton);
@@ -453,7 +460,6 @@ int InterpreterWin64::execute(const QDomNode& node)
         MySleep(t);
         qDebug() << __FUNCTION__ << " delay=" << delay;
     }
-
 
     return 0;
 }

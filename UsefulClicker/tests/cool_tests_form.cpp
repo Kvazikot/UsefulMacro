@@ -210,6 +210,8 @@ void CoolTestsForm::runFunction(QString func_name)
     qDebug() << window->getDoc()->getFunction(func_name);
     InterpreterWin64*  interpreter = static_cast<InterpreterWin64*>(window->getInterpreter());
     interpreter->executeFunction(doc->documentElement(), doc->documentElement(), func_name);
+    qDebug() << __FUNCTION__ << " ~~~~~ EXECUTION DONE ~~~~~!";
+
 }
 
 void CoolTestsForm::on_typeTest_clicked()
@@ -287,5 +289,11 @@ void CoolTestsForm::on_shellDialog_clicked()
 {
     ShellDialog* dlg = new ShellDialog(this);
     dlg->show();
+}
+
+
+void CoolTestsForm::on_pushButton_4_clicked()
+{
+    runFunction("Post Twit");
 }
 

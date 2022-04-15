@@ -33,7 +33,8 @@ ScreenButtonsDetector::ScreenButtonsDetector(QWidget *parent):
     //fullscreenMode = false;
     //DspModule
     dsp = new DspModule();
-    kernel_size = 4;
+    dsp->kernel_size = 4;
+
     startTimer(10);
 
 

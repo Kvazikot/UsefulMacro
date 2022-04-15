@@ -43,6 +43,8 @@ private slots:
 
     void on_shellDialog_clicked();
 
+    void on_pushButton_4_clicked();
+
 public slots:
     void slotSetAttrs(QMap<QString,QString> attrs);
     void slotFullScreen();
