@@ -23,6 +23,8 @@
 #include "imagesearchdialog.h"
 #include "cv/dspmodule.h"
 #include <windows.h>
+#include <QDateTime>
+#include <QDir>
 #include "ui/ui_imagesearchdialog.h"
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgcodecs.hpp>
@@ -145,7 +147,14 @@ void ImageSearchDialog::slotTargetSelected(QRect rect, QPointF window_offset)
     QImage imgIn= QImage((uchar*) targetImg.data, targetImg.cols, targetImg.rows, targetImg.step, QImage::Format_ARGB32);
     ui->label_2->setPixmap(QPixmap::fromImage(imgIn));
     cvtColor( targetImg, targetImg, cv::COLOR_BGRA2BGR  );
-    cv::imwrite("targetImg.bmp", targetImg);
+    //QDateTime currentTime = QDateTime::currentDateTime();
+    QDateTime dt;
+    dt = dt.currentDateTime();
+    QString clickerPath = qEnvironmentVariable("UsefulClicker");
+    if(clickerPath.size() == 0)
+        clickerPath = QDir::currentPath();
+    QString filename = clickerPath + "/images/" + dt.toString("hh.mm.ss.zzz.png");
+    cv::imwrite(filename.toStdString(), targetImg);
 }
 
 
