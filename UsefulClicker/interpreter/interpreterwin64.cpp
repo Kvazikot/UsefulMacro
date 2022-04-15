@@ -321,6 +321,7 @@ int InterpreterWin64::executeClick(const QDomNode& node)
 
 int InterpreterWin64::executeType(const QDomNode& node)
 {
+
     QClipboard *clipboard = QGuiApplication::clipboard();
     //QString originalText = clipboard->text();
     QString text;
@@ -403,7 +404,6 @@ int InterpreterWin64::executeClickImg(const QDomNode& node)
     QString areaImg_path = QDir::currentPath() + "/images/";//decodePath(node.toElement().attribute("areaImg"));
     int screenNum = node.toElement().attribute("screenNum").toInt();
     QString button = node.toElement().attribute("button");
-    QRect area = parseRect(node);
     QScreen* screen = QGuiApplication::screens()[screenNum];
     QImage screenshot = screen->grabWindow(0,0,0,screen->geometry().width(), screen->geometry().height()).toImage();
     cv::Mat areaImg(screenshot.height(), screenshot.width(),CV_8UC4, screenshot.bits());
@@ -420,7 +420,7 @@ int InterpreterWin64::executeClickImg(const QDomNode& node)
     if( button == "right")
         MouseClick(dsp->matchedRectangle, Qt::MouseButton::RightButton);
 
-
+    return 0;
 }
 
 int InterpreterWin64::execute(const QDomNode& node)
