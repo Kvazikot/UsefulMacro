@@ -40,11 +40,11 @@ This project is licensed under the terms of the GNU General Public License v3.0
 
 рис.3 Редактор программы кликера в виде xml дерева.
 
-![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/screenshots/xml_editor_screenshot2.png)
+![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/screenshots/mainwindow_0.92.png)
 
 рис.4 Редактор программы кликера в виде xml дерева с картинками справа. 
 
-![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/screenshots/Cool_tests_form.png)
+![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/screenshots/testform_0.92.png)
 
 рис.5 Крутая тестовая программа 
 
