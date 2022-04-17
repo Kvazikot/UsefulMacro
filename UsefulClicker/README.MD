@@ -81,6 +81,35 @@ https://youtu.be/BYM5G5CIgS8
   <menuclick> File -> Open </menuclick>
   <inputline>readme.txt</inputline>
   
+  
+<!-- 
+when launching UsefulClicker the following environment variables are set
+UsefulClicker_xml = "(CWD)\xml" - directory where it looks for include
+UsefulClicker_scripts = "(CWD)\scripts" - directory where it saves scripts from this scheme
+UsefulClicker_settings = "%APPDATA%\Roaming\UsefulClicker"
+-->
+
+<include> sheme1.xml </include>
+<include> sheme2.xml </include>
+
+<code source_name="block.py" lang="python" >
+  import random
+  print( random.randint(0, 13) )
+</code> 
+ 
+<shell name="cmd" bg="1" showConsole="1">
+start / B date
+</shell>
+ 
+ <!--         RUN PYTHON FUNCTION          -->
+ <py_call name="pyFunctionName($(arg1))"/>  
+ 
+ <!--         FUNCTION CALL           -->
+ <func_call name="SetUrl" arg0="https://www.hh.ru" comment="set hh url" />
+ 
+ <!--         FUNCTION DEFINITION           >
+ <!-- every function is inialised global python variables arg0, arg1 etc  --> 
+  
   <func name="Post Twit">
     <click button="left" x="1700" y="416" comment="click in chrome window" />
     <hotkey hotkey="F6"/>
