@@ -81,7 +81,7 @@ https://youtu.be/BYM5G5CIgS8
   <inputline>readme.txt</inputline>
   ```
   
-# XML document sheme for Useful Clicker 0.91
+# XML document sheme for Useful Clicker 0.91. Sort of meta language (Language of languages)
   
 ```  
 <!-- 
