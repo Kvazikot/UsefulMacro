@@ -75,13 +75,15 @@ https://youtu.be/BYM5G5CIgS8
 # Macro recording with code generation of optimal xml code,
   * input: for which mouse trajectory and keyboard events.  
   * output: minimal xml code, preferably with human-readable content
-  
   ```
   <window template="notepad_template.png"/>
   <menuclick> File -> Open </menuclick>
   <inputline>readme.txt</inputline>
+  ```
   
+# XML document sheme for Useful Clicker 0.91
   
+```  
 <!-- 
 when launching UsefulClicker the following environment variables are set
 UsefulClicker_xml = "(CWD)\xml" - directory where it looks for include
@@ -89,17 +91,18 @@ UsefulClicker_scripts = "(CWD)\scripts" - directory where it saves scripts from 
 UsefulClicker_settings = "%APPDATA%\Roaming\UsefulClicker"
 -->
 
+<!--         INCLUDE DERECTIVE          -->
 <include> sheme1.xml </include>
 <include> sheme2.xml </include>
 
+<!--         CODE BLOCK(PYTHON, C++, etc)          -->
 <code source_name="block.py" lang="python" >
   import random
   print( random.randint(0, 13) )
 </code> 
- 
-<shell name="cmd" bg="1" showConsole="1">
-start / B date
-</shell>
+
+<!--         SHELL CODE BLOCK(bash, cmd etc)          -->
+<shell name="cmd" bg="1" showConsole="1"> start / B date </shell>
  
  <!--         RUN PYTHON FUNCTION          -->
  <py_call name="pyFunctionName($(arg1))"/>  
@@ -135,6 +138,8 @@ start / B date
     <hotkey keysequence="enter" delay_ms="1000"/>
   </func>
   ````
+  
+  
   
 
 
