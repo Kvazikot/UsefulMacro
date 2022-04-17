@@ -1,25 +1,23 @@
 This project is licensed under the terms of the GNU General Public License v3.0
 
-/*
-+ - - - + - + - -
-+ - + - + copyright by Vladimir Baranov (Kvazikot) <br>
-+ - + - + email: vsbaranov83@gmail.com <br>
-+ - + - + github: https://github.com/Kvazikot/UsefulMacro/UsefulClicker <br>
+  + - - - + - + - -
+  + - + - + copyright by Vladimir Baranov (Kvazikot)  <br>
+  + - + - + email: vsbaranov83@gmail.com  <br>
+  + - + - + github: http://github.com/Kvazikot/BallPark  <br>
 ```
-                          ) (
-                         /( (\___/) )\
-                        (#) \ ('')| (#
-                         ||___c\ > '__||
-                         ||**** ),_/ **'|
-                   .__ |'* ___| |___*'|
-                    \_\ |' ( ~ ,)'|
-                     (( |' /(. ' .)\ |
-                      \\_|_/ <_ _____> \______________
-                       / '-, \ / ,-' ______ \
-              b'ger/(//\\)__//\
-                                          './_____/
-```
-*/
+                            )            (
+                           /(   (\___/)  )\
+                          ( #)  \ ('')| ( #
+                           ||___c\  > '__||
+                           ||**** ),_/ **'|
+                     .__   |'* ___| |___*'|
+                      \_\  |' (    ~   ,)'|
+                       ((  |' /(.  '  .)\ |
+                        \\_|_/ <_ _____> \______________
+                         /   '-, \   / ,-'      ______  \
+                b'ger   /      (//   \\)     __/     /   \
+                                            './_____/
+```             
 ## About Useful Clicker
 The UC program is intended for programming user actions.
 For example, to automatically search for materials in youtube and download certain videos.
