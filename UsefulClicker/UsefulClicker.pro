@@ -3,8 +3,8 @@ QMAKE_CXXFLAGS += -std=c++17
 TARGET = UsefulClicker
 UI_DIR = "./ui"
 TEMPLATE = app
-QMAKE_FLAGS_RELEASE += -O3 -msse4.1 -mssse3 -msse3 -msse2 -msse -Wno-unused-variable
-QMAKE_CXXFLAGS_RELEASE += -O3 -msse4.1 -mssse3 -msse3 -msse2 -msse
+#QMAKE_FLAGS_RELEASE += -O3 -msse4.1 -mssse3 -msse3 -msse2 -msse -Wno-unused-variable
+#QMAKE_CXXFLAGS_RELEASE += -O3 -msse4.1 -mssse3 -msse3 -msse2 -msse
 OPENCV_451_PATH = "e:\\opencv"
 #PYTHON_PATH = "C:\\Program Files\\Python37"
 #INCLUDEPATH += "C:\\Program Files\\Python37\\include"
@@ -93,6 +93,7 @@ SOURCES += main.cpp \
     ui/widgets/svgwidget.cpp \
     ui/widgets/qconsole.cpp \
     xml/clickerdocument.cpp \
+    xml/xmleditor.cpp \
     xml/xmlstreamer.cpp \
     #xml/serialisationtest.cpp
     model/clickermodel.cpp \
@@ -129,6 +130,7 @@ HEADERS += \
     ui/widgets/shellbutton.h \
     ui/widgets/svgwidget.h \
     xml/clickerdocument.h \
+    xml/xmleditor.h \
     xml/xmlstreamer.h \
     #xml/serialisationtest.h
     model/clickermodel.h \

@@ -19,11 +19,11 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QTreeView>
 #include <QtWidgets/QWidget>
+#include "xml/xmleditor.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -54,7 +54,7 @@ public:
     QTextEdit *textEdit;
     QGroupBox *groupBox_4;
     QGridLayout *gridLayout_4;
-    QPlainTextEdit *xmlEditor;
+    XmlEditor *xmlEditor;
     QMenuBar *menubar;
     QMenu *fileMenu;
     QMenu *actionsMenu;
@@ -129,6 +129,7 @@ public:
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         groupBox_3 = new QGroupBox(groupBox_2);
         groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
+        groupBox_3->setMaximumSize(QSize(300, 16777215));
         gridLayout_2 = new QGridLayout(groupBox_3);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         textEdit = new QTextEdit(groupBox_3);
@@ -141,9 +142,15 @@ public:
 
         groupBox_4 = new QGroupBox(groupBox_2);
         groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(groupBox_4->sizePolicy().hasHeightForWidth());
+        groupBox_4->setSizePolicy(sizePolicy);
+        groupBox_4->setMinimumSize(QSize(300, 0));
         gridLayout_4 = new QGridLayout(groupBox_4);
         gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
-        xmlEditor = new QPlainTextEdit(groupBox_4);
+        xmlEditor = new XmlEditor(groupBox_4);
         xmlEditor->setObjectName(QString::fromUtf8("xmlEditor"));
 
         gridLayout_4->addWidget(xmlEditor, 0, 0, 1, 1);

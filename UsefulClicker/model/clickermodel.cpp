@@ -106,6 +106,14 @@ int ClickerModel::columnCount(const QModelIndex &parent) const
     return 3;
 }
 
+QDomNode ClickerModel::getNodeByIndex(const QModelIndex &index)
+{
+    const DomItem *item = static_cast<DomItem*>(index.internalPointer());
+    DomItem *item1 = (DomItem*)(index.internalPointer());
+    const QDomNode node = item->node();
+    return node;
+}
+
 QVariant ClickerModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())

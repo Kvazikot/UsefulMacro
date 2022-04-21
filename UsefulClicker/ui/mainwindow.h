@@ -87,15 +87,20 @@ public slots:
     void saveToFile(QString& filename=current_filename);
     void setNextItem(QModelIndex& index);
     void reloadFromFile(QString& filename);
+    void functionSelected(const QString&);
     void reloadFromMemory();
     void reload();
     ClickerDocument* getDoc();
     void setDoc(ClickerDocument* doc);
     AbstractInterpreter* getInterpreter();
+    void itemActivated(const QModelIndex &);
+
 private slots:
     void insertChild();
     void insertRow();
     void removeRow();
+    void on_xmlEditor_textChanged();
+
 private:
     ClickerModel* model=0;
     ClickerDocument* doc;

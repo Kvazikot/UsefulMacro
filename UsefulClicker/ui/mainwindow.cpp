@@ -74,6 +74,7 @@
 #include <QToolBar>
 #include <QFile>
 #include <QSettings>
+#include <QLabel>
 #include <QDir>
 #include <QTimer>
 #include <QFileDialog>
@@ -93,6 +94,7 @@
 
 MainWindow* MainWindow::instance;
 static InterpreterWin64* interpreter = 0;
+static QComboBox* functionSelector;
 QString MainWindow::current_filename;
 extern void MouseClick(QPoint coordinates, Qt::MouseButton button);
 
@@ -134,6 +136,18 @@ MainWindow::MainWindow(QWidget *parent)
     QAction* shellAction =  toolbar->addAction(QIcon(":/images/Terminal-icon.png"), "Shell");
     connect(shellAction, &QAction::triggered, this, &MainWindow::shell);
 
+    QLabel* label = new QLabel(this);
+    label->setText("<b>Fucntion List</b>-->");
+
+    functionSelector = new QComboBox(this);
+    QStringList list;
+    getDoc()->getFunctionsList(doc->documentElement(),list);
+    functionSelector->addItems(list);
+    functionSelector->setMinimumWidth(200);
+    toolbar->addWidget(label);
+    toolbar->addWidget(functionSelector);
+    connect(functionSelector, SIGNAL(currentTextChanged(const QString&)), this, SLOT(functionSelected(const QString&)));
+
 
     //connect(playAction, &QAction::triggered, daemon, &InterpreterDaemon::terminate);
     connect(playAction, &QAction::triggered, this, &MainWindow::pause);
@@ -143,6 +157,7 @@ MainWindow::MainWindow(QWidget *parent)
     FancyDelegate* spinbox = new FancyDelegate(view);
     view->setItemDelegate(spinbox);
     view->header()->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
 
     QImage image(":/images/vector-star-icon.png");
     QStandardItem *item = new QStandardItem();
@@ -156,8 +171,8 @@ MainWindow::MainWindow(QWidget *parent)
         model->setItemData(model->index(row,0),roles);
         model->setHeaderData(0,Qt::Orientation::Horizontal,roles[Qt::DecorationRole],Qt::DecorationRole);
     }
-
-
+ //
+    connect(view, SIGNAL(clicked(const QModelIndex &)), this, SLOT(itemActivated(const QModelIndex &)));
     connect(view, SIGNAL(activated()), this, SLOT(itemActivated()));
     view->parentWidget()->setStyleSheet("QTreeView::item { padding: 10px }; white-space:pre-wrap; word-wrap:break-word" );
 
@@ -177,8 +192,39 @@ MainWindow::MainWindow(QWidget *parent)
     connect(insertChildAction, &QAction::triggered, this, &MainWindow::insertChild);
     connect(actionAbout, &QAction::triggered, this, &MainWindow::about);
     connect(actionSave, &QAction::triggered, this, &MainWindow::save);
+    connect(view,SIGNAL(currentChanged(const QModelIndex &current, const QModelIndex &previous)),
+            this,SLOT(elementClicked(const QModelIndex& current, const QModelIndex& previous)));
 
     updateActions();
+}
+
+void MainWindow::itemActivated(const QModelIndex &)
+{
+    auto current = view->currentIndex();
+    const int row =  current.row();
+    const int column = current.column();
+    qDebug() << "Clicked at " << row << column;
+    QDomNode node = model->getNodeByIndex(current);
+    if( node.nodeName() == "func" )
+    {
+        auto fun_name = node.toElement().attribute("name");
+        auto func_body_text = getDoc()->getFunction(fun_name);
+        xmlEditor->clear();
+        xmlEditor->setText(func_body_text);
+    }
+    if( node.parentNode().nodeName() == "func" )
+    {
+        node = node.parentNode();
+        auto fun_name = node.toElement().attribute("name");
+        auto func_body_text = getDoc()->getFunction(fun_name);
+        xmlEditor->clear();
+        xmlEditor->setText(func_body_text);
+    }
+
+
+
+
+    //xmlEditor->setText();
 }
 
 AbstractInterpreter* MainWindow::getInterpreter()
@@ -196,6 +242,14 @@ void MainWindow::shell()
     MouseClick(center, Qt::MouseButton::LeftButton);
     MouseClick(center, Qt::MouseButton::LeftButton);
     QTimer::singleShot(400, this, SLOT(shell2()));
+}
+
+void MainWindow::functionSelected(const QString&)
+{
+    auto func_body_text = getDoc()->getFunction(functionSelector->currentText());
+    xmlEditor->clear();
+    xmlEditor->setText(func_body_text);
+
 }
 
 MainWindow* MainWindow::getInstance()
@@ -256,7 +310,7 @@ void MainWindow::reloadFromMemory()
     delete model;
     model = new ClickerModel(doc);
     view->setModel(model);
-    view->expandAll();
+
 
 }
 
@@ -290,7 +344,9 @@ void MainWindow::loadDocument(QString filename)
         setDoc(doc);
         model = new ClickerModel(*doc);
         view->setModel(model);
-        view->expandAll();
+        view->collapseAll();
+        view->expand(view->currentIndex());
+        //view->expandAll();
     }
     else
     {
@@ -444,5 +500,14 @@ void MainWindow::removeRow()
 
 void MainWindow::updateActions()
 {
+    const QModelIndex current = view->selectionModel()->currentIndex();
+    const int row =  current.row();
+    const int column = current.column();
+    qDebug() << "Clicked at " << row << column;
+}
+
+void MainWindow::on_xmlEditor_textChanged()
+{
 
 }
+

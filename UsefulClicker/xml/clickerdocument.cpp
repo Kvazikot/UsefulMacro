@@ -54,16 +54,25 @@ QString ClickerDocument::getFunction(QString funcname)
     QDomNode domNode = findNodeByName(this->documentElement(), funcname);
     QString str;
     QTextStream stream(&str);
-    domNode.save(stream, 4);
+    domNode.save(stream, 0);
     return str;
 }
 
 void ClickerDocument::setFunction(QString funcname, QString text)
 {
-
-    ///auto doc = span.toDocument();
-    //doc.setContent(str);
-
+    QDomNode domNode = findNodeByName(this->documentElement(), funcname);
+    QDomNode domNode2 = domNode.cloneNode(true);
+    auto doc = domNode2.toDocument();
+    auto res = doc.setContent(text);
+    //domNode.parentNode().replaceChild(domNode2, domNode);
+    QString str;
+    QTextStream stream(&str);
+    domNode2.save(stream, 4);
+    qDebug() << "setContent result is " << res;
+    qDebug() <<  "-------------";
+    qDebug() <<  text;
+    qDebug() <<  "-------------";
+    qDebug() <<  str;
 }
 
 QDomNode ClickerDocument::findNodeByName(const QDomNode& rootNode, QString name)
