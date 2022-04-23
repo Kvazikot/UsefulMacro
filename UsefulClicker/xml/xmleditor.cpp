@@ -19,29 +19,60 @@ XmlEditor::XmlEditor(QWidget *parent)
 
 }
 
-void XmlEditor::onTextChange(){
+void XmlEditor::setFuncNode(const QDomNode& node)
+{
+    currentNode = node;
+}
 
-    QRegularExpression re("$<func name=([\\w]+)");
+void XmlEditor::applyChanges()
+{
+
+}
+
+void XmlEditor::onTextChange()
+{
+    bool applyChangesFlag=true;
+    QString str;
+
+    QTextStream ts(&str);
+    currentNode.save(ts, 0);
+    if (str != toPlainText())
+        applyChangesFlag = true;
+
+    QRegularExpression re("<func name=([\"\\w _\\d]+)");
     QRegularExpressionMatch match = re.match(toPlainText());
     if( match.hasMatch() )
     {
-        QString funcname = match.capturedTexts()[2];
+        QString funcname = match.capturedTexts()[1];
+        funcname = funcname.replace("\"","");
         if( !doc->setFunction(funcname, toPlainText()) )
-            emit updateStatusBar("Xml error!");
+            emit updateStatusBar("Xml error!", applyChangesFlag);
         else
-            emit updateStatusBar("Xml OK!");
+            emit updateStatusBar("Xml OK!", applyChangesFlag);
     }
-    QRegularExpression re2("$<func[ ]+>");
+    QRegularExpression re2("<func[ ]+>");
     match = re2.match(toPlainText());
     if( match.hasMatch() )
     {
         // generate function name
-        QString randFunctionName = QString("func%1").arg(rand()%10000);
+        QString randFunctionName = genFunName();
         if( !doc->setFunction(randFunctionName, toPlainText()))
-            emit updateStatusBar("Xml error!");
+            emit updateStatusBar("Xml error!", applyChangesFlag);
         else
-            emit updateStatusBar("Xml OK!");
+            emit updateStatusBar("Xml OK!", applyChangesFlag);
     }
+}
+
+void XmlEditor::newFun(QString name)
+{
+    QString initialXml = QString("<func name=\"%1\">\n</func>").arg(name);
+    setText(initialXml);
+}
+
+QString XmlEditor::genFunName()
+{
+    QString randFunctionName = QString("func%1").arg(rand()%10000);
+    return randFunctionName;
 }
 
 void XmlEditor::setDoc(ClickerDocument* doc)

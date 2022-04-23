@@ -74,6 +74,7 @@
 #include "dialogtype.h"
 #include <QToolBar>
 #include <QFile>
+#include <QPushButton>
 #include <QSettings>
 #include <QLabel>
 #include <QDir>
@@ -152,9 +153,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(newFunAction, &QAction::triggered, this, &MainWindow::new_fun);
 
     QLabel* xmlEditorStatus = new QLabel(this);
-    connect(xmlEditor, SIGNAL(updateStatusBar(const QString&)), xmlEditorStatus, SLOT(setText(const QString&)));
+    connect(xmlEditor, SIGNAL(updateStatusBar(const QString&, bool)), this, SLOT(updateStatus(const QString&, bool)));
     //updateStatusBar
     statusBar()->addWidget(xmlEditorStatus);
+
+    connect(xmlEditor, SIGNAL(textChanged()), this, SLOT(xmlChanged()));
 
 
     //connect(playAction, &QAction::triggered, daemon, &InterpreterDaemon::terminate);
@@ -204,6 +207,13 @@ MainWindow::MainWindow(QWidget *parent)
             this,SLOT(elementClicked(const QModelIndex& current, const QModelIndex& previous)));
 
     updateActions();
+}
+
+
+
+void MainWindow::xmlChanged()
+{
+
 }
 
 void drawPlus(QImage& act_image, QPixmap& plus)
@@ -259,6 +269,7 @@ void MainWindow::contextMenuEvent(QContextMenuEvent *event)
     menu.addAction(createAction(":/images/keyboard_icon.png", "Add keydown action"));
     menu.addAction(createAction(":/images/type.png", "Add type"));
     menu.addAction(createAction(":/images/Terminal-icon.png", "Add Shell"));
+    menu.addAction(createAction(":/images/area_icon.png", "Add image click"));
     menu.addSeparator();
     menu.addAction(createAction(":/images/clock-icon.png", "Set delay for this"));
     menu.exec(event->globalPos());
@@ -276,6 +287,82 @@ void MainWindow::new_fun()
 
 }
 
+static QVector<QPushButton*> applyButtons;
+static QLabel* errorLabel=0;
+
+void MainWindow::updateStatus(const QString& text, bool applyChangesFlag)
+{
+    if( text.contains("error"))
+    {
+        if(errorLabel!=0)
+        {
+            statusBar()->removeWidget(errorLabel);
+            delete errorLabel;
+            errorLabel = 0;
+        }
+        errorLabel = new QLabel(this);
+        errorLabel->setText(text);
+        errorLabel->setStyleSheet("background-color: rgb(255, 0, 0); color: rgb(255, 255, 255);");
+        statusBar()->addWidget(errorLabel, width()-errorLabel->width());
+    }
+    else
+    {
+        if(errorLabel!=0)
+        {
+            statusBar()->removeWidget(errorLabel);
+            delete errorLabel;
+            errorLabel = 0;
+        }
+        if( applyChangesFlag && applyButtons.size() == 0)
+        {
+            QPushButton* apply_button = new QPushButton(this);
+            apply_button->setText("Apply changes");
+            connect(apply_button, SIGNAL(clicked()), this, SLOT(applyChangesXml()));
+            statusBar()->addWidget(apply_button, width()-apply_button->width());
+            applyButtons.push_back(apply_button);
+        }
+    }
+
+
+}
+
+void MainWindow::applyChangesXml()
+{
+    xmlEditor->applyChanges();
+    statusBar()->removeWidget(applyButtons.back());
+    applyButtons.pop_back();
+}
+
+void MainWindow::applyChanges()
+{
+    auto current = view->currentIndex();
+    QDomNode node = model->getNodeByIndex(current);
+    node.toElement().setAttribute("comment", commentEditor->toPlainText());
+    if( commentEditor->toPlainText().size() == 0 )
+        node.toElement().removeAttribute("comment");
+    statusBar()->removeWidget(applyButtons.back());
+    applyButtons.pop_back();
+}
+
+void MainWindow::commentChanged()
+{
+    auto current = view->currentIndex();
+    QDomNode node = model->getNodeByIndex(current);
+    QString old_comment;
+    if( node.toElement().hasAttribute("comment") )
+        old_comment = node.toElement().attribute("comment");
+    if( old_comment!=commentEditor->toPlainText() && applyButtons.size() == 0)
+    {
+      //node.toElement().setAttribute("comment", commentEditor->toPlainText());
+        //statusBar()->widge
+        QPushButton* apply_button = new QPushButton(this);
+        apply_button->setText("Apply changes");
+        connect(apply_button, SIGNAL(clicked()), this, SLOT(applyChanges()));
+        statusBar()->addWidget(apply_button);
+        applyButtons.push_back(apply_button);
+    }
+}
+
 void MainWindow::itemActivated(const QModelIndex &)
 {
     auto current = view->currentIndex();
@@ -283,11 +370,19 @@ void MainWindow::itemActivated(const QModelIndex &)
     const int column = current.column();
     qDebug() << "Clicked at " << row << column;
     QDomNode node = model->getNodeByIndex(current);
+    if( node.toElement().hasAttribute("comment") )
+        commentEditor->setText(node.toElement().attribute("comment"));
+    else
+        commentEditor->setText(node.toElement().attribute(""));
+
+    connect(commentEditor, SIGNAL(textChanged()), this, SLOT(commentChanged()) );
+
     if( node.nodeName() == "func" )
     {
         auto fun_name = node.toElement().attribute("name");
         auto func_body_text = getDoc()->getFunction(fun_name);
-        xmlEditor->clear();
+        xmlEditor->setFuncNode(node);
+        xmlEditor->clear();        
         xmlEditor->setText(func_body_text);
     }
     if( node.parentNode().nodeName() == "func" )
@@ -295,6 +390,7 @@ void MainWindow::itemActivated(const QModelIndex &)
         node = node.parentNode();
         auto fun_name = node.toElement().attribute("name");
         auto func_body_text = getDoc()->getFunction(fun_name);
+        xmlEditor->setFuncNode(node);
         xmlEditor->clear();
         xmlEditor->setText(func_body_text);
     }
@@ -308,7 +404,10 @@ AbstractInterpreter* MainWindow::getInterpreter()
 
 void MainWindow::functionSelected(const QString&)
 {
+    auto current = view->currentIndex();
+    QDomNode node = model->getNodeByIndex(current);
     auto func_body_text = getDoc()->getFunction(functionSelector->currentText());
+    xmlEditor->setFuncNode(node);
     xmlEditor->clear();
     xmlEditor->setText(func_body_text);
 
@@ -540,4 +639,6 @@ void MainWindow::updateActions()
     const int column = current.column();
     qDebug() << "Clicked at " << row << column;
 }
+
+
 

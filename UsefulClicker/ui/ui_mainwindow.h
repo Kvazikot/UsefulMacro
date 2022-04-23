@@ -51,7 +51,7 @@ public:
     QHBoxLayout *horizontalLayout;
     QGroupBox *groupBox_3;
     QGridLayout *gridLayout_2;
-    QTextEdit *textEdit;
+    QTextEdit *commentEditor;
     QGroupBox *groupBox_4;
     QGridLayout *gridLayout_4;
     XmlEditor *xmlEditor;
@@ -132,10 +132,10 @@ public:
         groupBox_3->setMaximumSize(QSize(300, 16777215));
         gridLayout_2 = new QGridLayout(groupBox_3);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
-        textEdit = new QTextEdit(groupBox_3);
-        textEdit->setObjectName(QString::fromUtf8("textEdit"));
+        commentEditor = new QTextEdit(groupBox_3);
+        commentEditor->setObjectName(QString::fromUtf8("commentEditor"));
 
-        gridLayout_2->addWidget(textEdit, 0, 0, 1, 1);
+        gridLayout_2->addWidget(commentEditor, 0, 0, 1, 1);
 
 
         horizontalLayout->addWidget(groupBox_3);
@@ -235,9 +235,9 @@ public:
         actionhideCodeTags->setText(QCoreApplication::translate("MainWindow", "hideCodeTags", nullptr));
         actionhideAllNonClickerTags->setText(QCoreApplication::translate("MainWindow", "hideAllNonClickerTags", nullptr));
         groupBox->setTitle(QCoreApplication::translate("MainWindow", "Xml tree view", nullptr));
-        groupBox_2->setTitle(QCoreApplication::translate("MainWindow", "Xml editor", nullptr));
-        groupBox_3->setTitle(QCoreApplication::translate("MainWindow", "Function description", nullptr));
-        textEdit->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        groupBox_2->setTitle(QCoreApplication::translate("MainWindow", "XML", nullptr));
+        groupBox_3->setTitle(QCoreApplication::translate("MainWindow", "Function description and comments", nullptr));
+        commentEditor->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"

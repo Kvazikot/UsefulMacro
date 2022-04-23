@@ -79,7 +79,8 @@ public:
 public slots:
     void updateActions();
     void contextMenuActionTriggered();
-
+    void updateStatus(const QString&, bool);
+    void applyChangesXml();
     void contextMenuEvent(QContextMenuEvent *event);
     void about();
     void pause();
@@ -96,12 +97,16 @@ public slots:
     void setDoc(ClickerDocument* doc);
     AbstractInterpreter* getInterpreter();
     void itemActivated(const QModelIndex &);
+    void xmlChanged();
 
 private slots:
     void insertChild();
+    void applyChanges();
+    void commentChanged();
     void insertRow();
     void removeRow();
     void setCurentDomNode(QDomNode& currentNode);
+
 
 private:
     ClickerModel* model=0;

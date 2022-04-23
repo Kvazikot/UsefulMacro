@@ -30,7 +30,7 @@ public:
 
 
 signals:
-
+    void sigSetAttrs(QMap<QString,QString> attrs);
 };
 
 #endif // DELAYWIDGET_H

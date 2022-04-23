@@ -76,7 +76,7 @@
        <item row="1" column="0">
         <widget class="QGroupBox" name="groupBox_2">
          <property name="title">
-          <string>Xml editor</string>
+          <string>XML</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
@@ -88,11 +88,11 @@
              </size>
             </property>
             <property name="title">
-             <string>Function description</string>
+             <string>Function description and comments</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_2">
              <item row="0" column="0">
-              <widget class="QTextEdit" name="textEdit">
+              <widget class="QTextEdit" name="commentEditor">
                <property name="html">
                 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;

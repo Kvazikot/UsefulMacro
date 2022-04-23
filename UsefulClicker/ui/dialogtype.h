@@ -14,7 +14,8 @@ enum DialogType
     DELAY_WIDGET=5
 };
 
-static QMap<QString, DialogType> action_map{{"Add left click", COORDINATES_SELECTOR},
+static QMap<QString, DialogType> action_map{{"Add image click", SCREEN_BUTTONS_DETECTOR},
+                                            {"Add left click", COORDINATES_SELECTOR},
                                      {"Add right click", COORDINATES_SELECTOR},
                                      {"Add scroll down", COORDINATES_SELECTOR},
                                      {"Add Shell", SHELL_COMMAND_DIALOG},
