@@ -18,7 +18,7 @@ public:
     void getFunctionsList(const QDomNode& rootNode, QStringList& outList);
     QDomNode findNodeByName(const QDomNode& rootNode, QString name);
     QString getFunction(QString funcname);
-    void setFunction(QString funcname, QString text);
+    bool setFunction(QString funcname, QString text);
     bool setContent(QDomDocument& document, QString& text);
     void format_document(QTextStream& ts);
     void format_document(QString& text);

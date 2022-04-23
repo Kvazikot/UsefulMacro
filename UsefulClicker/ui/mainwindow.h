@@ -67,7 +67,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     void timerEvent(QTimerEvent* event);
     //Main Action of the Application UsefulClicker
-    void traverseTree(const QModelIndex &index, QTreeView *view);
+    void traverseTree(const QModelIndex &index, const QDomNode& targetNode, QTreeView *view);
     void mousePressEvent(QMouseEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
     void loadDocument(QString filename);
@@ -78,10 +78,8 @@ public:
 public slots:
     void updateActions();
     void about();
-    void next();
-    void shell();
-    void shell2();
     void pause();
+    void new_fun();
     void openXml();
     void save(){saveToFile(current_filename);}
     void saveToFile(QString& filename=current_filename);
@@ -99,7 +97,7 @@ private slots:
     void insertChild();
     void insertRow();
     void removeRow();
-    void on_xmlEditor_textChanged();
+    void setCurentDomNode(QDomNode& currentNode);
 
 private:
     ClickerModel* model=0;

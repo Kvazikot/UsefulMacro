@@ -360,6 +360,7 @@ void InterpreterWin64::executeFunction(const QDomNode& rootNode, QDomNode funcNo
         if( domNode.parentNode() == funcNode)
         {
             qDebug() << "node name " << domNode.nodeName() << "is in function" << funcNode.toElement().attribute("name");
+            emit setCurrentNode(domNode);
             execute(domNode);
         }
         else

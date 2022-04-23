@@ -58,7 +58,7 @@ QString ClickerDocument::getFunction(QString funcname)
     return str;
 }
 
-void ClickerDocument::setFunction(QString funcname, QString text)
+bool ClickerDocument::setFunction(QString funcname, QString text)
 {
     QDomNode domNode = findNodeByName(this->documentElement(), funcname);
     QDomNode domNode2 = domNode.cloneNode(true);
@@ -73,6 +73,7 @@ void ClickerDocument::setFunction(QString funcname, QString text)
     qDebug() <<  text;
     qDebug() <<  "-------------";
     qDebug() <<  str;
+    return res;
 }
 
 QDomNode ClickerDocument::findNodeByName(const QDomNode& rootNode, QString name)

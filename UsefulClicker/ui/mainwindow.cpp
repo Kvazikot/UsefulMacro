@@ -133,9 +133,6 @@ MainWindow::MainWindow(QWidget *parent)
     QAction* refreshAction =  toolbar->addAction(QIcon(":/images/refresh-icon.png"), "Refresh");
     connect(refreshAction, &QAction::triggered, this, &MainWindow::reload);
 
-    QAction* shellAction =  toolbar->addAction(QIcon(":/images/Terminal-icon.png"), "Shell");
-    connect(shellAction, &QAction::triggered, this, &MainWindow::shell);
-
     QLabel* label = new QLabel(this);
     label->setText("<b>Fucntion List</b>-->");
 
@@ -147,6 +144,14 @@ MainWindow::MainWindow(QWidget *parent)
     toolbar->addWidget(label);
     toolbar->addWidget(functionSelector);
     connect(functionSelector, SIGNAL(currentTextChanged(const QString&)), this, SLOT(functionSelected(const QString&)));
+
+    QAction* newFunAction =  toolbar->addAction(QIcon(":/images/new_fun.png"), "New fun");
+    connect(newFunAction, &QAction::triggered, this, &MainWindow::new_fun);
+
+    QLabel* xmlEditorStatus = new QLabel(this);
+    connect(xmlEditor, SIGNAL(updateStatusBar(const QString&)), xmlEditorStatus, SLOT(setText(const QString&)));
+    //updateStatusBar
+    statusBar()->addWidget(xmlEditorStatus);
 
 
     //connect(playAction, &QAction::triggered, daemon, &InterpreterDaemon::terminate);
@@ -198,6 +203,11 @@ MainWindow::MainWindow(QWidget *parent)
     updateActions();
 }
 
+void MainWindow::new_fun()
+{
+    qDebug() << __FUNCTION__;
+}
+
 void MainWindow::itemActivated(const QModelIndex &)
 {
     auto current = view->currentIndex();
@@ -220,28 +230,12 @@ void MainWindow::itemActivated(const QModelIndex &)
         xmlEditor->clear();
         xmlEditor->setText(func_body_text);
     }
-
-
-
-
     //xmlEditor->setText();
 }
 
 AbstractInterpreter* MainWindow::getInterpreter()
 {
     return interpreter;
-}
-
-void MainWindow::shell()
-{
-    view->setSelectionBehavior(QAbstractItemView::SelectItems);
-    const QModelIndex index = view->currentIndex();
-    const QModelIndex index2 = model->index(index.row(), 3);
-    QRect rect = view->visualRect(index2);
-    QPoint center = view->mapToGlobal(rect.center());
-    MouseClick(center, Qt::MouseButton::LeftButton);
-    MouseClick(center, Qt::MouseButton::LeftButton);
-    QTimer::singleShot(400, this, SLOT(shell2()));
 }
 
 void MainWindow::functionSelected(const QString&)
@@ -257,14 +251,6 @@ MainWindow* MainWindow::getInstance()
     return instance;
 }
 
-void MainWindow::shell2()
-{
-    //view->setSelection(rect);
-    SimpleDelegate* delegate = new SimpleDelegate(view, view->itemDelegate(), DialogType::SHELL_COMMAND_DIALOG);
-    view->setItemDelegate(delegate);
-    connect(delegate, SIGNAL(activated(const QModelIndex&)), view, SLOT(update(const QModelIndex&)) );
-
-}
 
 void MainWindow::openXml()
 {
@@ -282,7 +268,6 @@ void MainWindow::openXml()
 
 }
 
-
 void MainWindow::pause()
 {
     pauseFlag = ! pauseFlag;
@@ -291,7 +276,6 @@ void MainWindow::pause()
     else
     {
        playAction->setIcon(QIcon(":/images/pause.jpg"));
-       next();
     }
 }
 
@@ -330,6 +314,7 @@ ClickerDocument* MainWindow::getDoc()
 void MainWindow::setDoc(ClickerDocument* _doc)
 {
     doc = _doc;
+    xmlEditor->setDoc(doc);
 }
 
 
@@ -363,8 +348,12 @@ void MainWindow::setNextItem(QModelIndex& index)
     view->setCurrentIndex(index2);
 }
 
+void MainWindow::setCurentDomNode(QDomNode& currentNode)
+{
+    traverseTree(model->index(0,0), currentNode, view );
+}
 
-void MainWindow::traverseTree(const QModelIndex &index, QTreeView *view)
+void MainWindow::traverseTree(const QModelIndex &index, const QDomNode& targetNode, QTreeView *view)
 {
     if (!index.isValid()) {
         return;
@@ -378,35 +367,17 @@ void MainWindow::traverseTree(const QModelIndex &index, QTreeView *view)
         if (index.isValid())
         {
             view->setCurrentIndex(view->indexBelow(index));
-            if( interpreter->process(item1->node()) != -1)
+            if( item1->node() == targetNode)
                 return;
         }
     }
 
-
     // Recursively call the function for each child node.
-    traverseTree(child, view);
+    traverseTree(child, targetNode, view);
 
     if (!view->isExpanded(index)) {
         view->expand(index);
     }
-}
-
-void MainWindow::next()
-{
-    if( n_cycle >= DEFAULT("repeats").toInt() )
-    {
-        pause();
-        return;
-    }
-    //if( view->currentIndex().row() == view->header()->
-    if( !view->indexBelow(view->currentIndex()).isValid() )
-    {
-        n_cycle++;
-        view->setCurrentIndex(model->index(0,0));
-    }
-
-    traverseTree(view->currentIndex(), view);
 }
 
 void MainWindow::loadSettings()
@@ -418,12 +389,8 @@ void MainWindow::loadSettings()
 
 void MainWindow::timerEvent(QTimerEvent* event)
 {
-    if(!pauseFlag) next();
     event->accept();
 }
-
-
-
 
 void MainWindow::saveToFile(QString& filename)
 {
@@ -504,10 +471,5 @@ void MainWindow::updateActions()
     const int row =  current.row();
     const int column = current.column();
     qDebug() << "Clicked at " << row << column;
-}
-
-void MainWindow::on_xmlEditor_textChanged()
-{
-
 }
 
