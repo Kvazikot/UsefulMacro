@@ -24,5 +24,6 @@
         <file>images/Terminal-icon.png</file>
         <file>images/vector-star-icon.png</file>
         <file>tests/UsefulClicker_tests.xml</file>
+        <file>images/new_fun.png</file>
     </qresource>
 </RCC>
