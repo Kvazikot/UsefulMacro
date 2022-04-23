@@ -25,5 +25,10 @@
         <file>images/vector-star-icon.png</file>
         <file>tests/UsefulClicker_tests.xml</file>
         <file>images/new_fun.png</file>
+        <file>images/plus.png</file>
+        <file>images/type.png</file>
+        <file>images/paste-icon.png</file>
+        <file>images/copy-icon.png</file>
+        <file>images/clock-icon.png</file>
     </qresource>
 </RCC>

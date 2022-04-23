@@ -105,6 +105,7 @@ SOURCES += main.cpp \
     #model/treemodel.cpp
 
 HEADERS += \
+    myproxystyle.h \
     tests/cool_tests_form.h \
     cv/dspmodule.h \
     tests/highlighter.h \
