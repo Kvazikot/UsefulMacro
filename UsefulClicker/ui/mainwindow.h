@@ -72,11 +72,15 @@ public:
     void mouseMoveEvent(QMouseEvent* event);
     void loadDocument(QString filename);
     void loadSettings();
+    QAction* createAction(QString icon, QString text, bool addPlusFlag=true);
     static MainWindow* getInstance();
     static MainWindow* instance;
 
 public slots:
     void updateActions();
+    void contextMenuActionTriggered();
+
+    void contextMenuEvent(QContextMenuEvent *event);
     void about();
     void pause();
     void new_fun();

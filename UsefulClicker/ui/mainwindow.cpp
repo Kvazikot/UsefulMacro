@@ -71,14 +71,17 @@
 ****************************************************************************/
 
 #include "ui/mainwindow.h"
+#include "dialogtype.h"
 #include <QToolBar>
 #include <QFile>
 #include <QSettings>
 #include <QLabel>
 #include <QDir>
+#include <QInputDialog>
 #include <QTimer>
 #include <QFileDialog>
 #include <QStandardItemModel>
+#include <QPainter>
 #include <windows.h>
 #include "model/treemodel.h"
 #include "model/simpledelegate.h"
@@ -203,9 +206,74 @@ MainWindow::MainWindow(QWidget *parent)
     updateActions();
 }
 
+void drawPlus(QImage& act_image, QPixmap& plus)
+{
+    QPainter painter(&act_image);
+    QRect rect1 = act_image.rect();
+    QRect rect2 = rect1;
+    rect2.setWidth(300);
+    rect2.setHeight(300);
+    rect2.setTop(rect1.height()-rect2.height());
+    rect2.setBottom(rect1.bottom());
+    rect2.moveLeft(300);
+    //painter.fillRect(rect2,Qt::red);
+    painter.drawPixmap(rect2, plus);
+}
+
+
+
+void MainWindow::contextMenuActionTriggered()
+{
+    QAction* act = static_cast<QAction*>(sender());
+    qDebug() << __FUNCTION__ << act->text();
+    if( action_map.contains(act->text()) )
+    {
+        DialogType dialog_type = action_map[act->text()];
+        createDialog(this, dialog_type);
+    }
+}
+
+QAction* MainWindow::createAction(QString icon, QString text, bool addPlusFlag)
+{
+    static QPixmap plus_image(":/images/plus.png");
+    QImage act_image = QImage(icon);
+    act_image = act_image.scaled(600,600);
+    if( addPlusFlag )
+        drawPlus(act_image, plus_image);
+    QAction* act =  new QAction(QIcon(QPixmap::fromImage(act_image)),text);
+    connect(act, SIGNAL(triggered()), this, SLOT(contextMenuActionTriggered()));
+    return act;
+}
+
+void MainWindow::contextMenuEvent(QContextMenuEvent *event)
+{
+    QMenu menu(this);
+    menu.addAction(createAction(":/images/copy-icon.png", "Copy this ", false));
+    menu.addAction(createAction(":/images/paste-icon.png", "Paste after this", false));
+    menu.addSeparator();
+    menu.addAction(createAction(":/images/mouse_left_click.png", "Add left click"));
+    menu.addAction(createAction(":/images/mouse_right_click.png", "Add right click"));
+    menu.addAction(createAction(":/images/mouse_scroll.png", "Add scroll down"));
+    menu.addAction(createAction(":/images/mouse_scroll.png", "Add scroll up"));
+    menu.addSeparator();
+    menu.addAction(createAction(":/images/keyboard_icon.png", "Add keydown action"));
+    menu.addAction(createAction(":/images/type.png", "Add type"));
+    menu.addAction(createAction(":/images/Terminal-icon.png", "Add Shell"));
+    menu.addSeparator();
+    menu.addAction(createAction(":/images/clock-icon.png", "Set delay for this"));
+    menu.exec(event->globalPos());
+}
+
 void MainWindow::new_fun()
 {
     qDebug() << __FUNCTION__;
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("QInputDialog::getText()"),
+                                         tr("Function name:"), QLineEdit::Normal,
+                                         xmlEditor->genFunName(), &ok);
+    if (ok && !text.isEmpty())
+        xmlEditor->newFun(text);
+
 }
 
 void MainWindow::itemActivated(const QModelIndex &)
