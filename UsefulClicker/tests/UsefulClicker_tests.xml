@@ -4,8 +4,9 @@
   <shell bg="1" showConsole="1" hotkey="ctrl + a" cmd="notepad.exe" comment="run notepad"/>
   <type mode="copy_paste" text="Это пример текста который был сгенерирован программой UsefulClicker сегодня. " >Это пример текста который был сгенерирован программой UsefulClicker сегодня. </type>
  </func>
-
- 
+ <func name="Open test_doc.xml">
+  <shell bg="1" showConsole="1" hotkey="ctrl + a" cmd="notepad.exe test_doc.xml" comment="run notepad"/>
+ </func>
  <func name="Change font">
   <click button="left" x="1531" y="661" />
   <hotkey hotkey="alt+o"/>

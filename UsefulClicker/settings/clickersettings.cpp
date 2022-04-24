@@ -3,6 +3,7 @@
 
 ClickerSettings ClickerSettings::instance;
 
+
 ClickerSettings::ClickerSettings()
 {
     // load settings

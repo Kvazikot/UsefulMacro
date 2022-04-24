@@ -25,6 +25,7 @@ public:
     void Save(QTextStream& ts);
     void reload();
     bool load(QString fn);
+    bool save(QString fn);
     ~ClickerDocument();
 
 };

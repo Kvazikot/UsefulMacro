@@ -58,21 +58,44 @@ QString ClickerDocument::getFunction(QString funcname)
     return str;
 }
 
-bool ClickerDocument::setFunction(QString funcname, QString text)
+bool ClickerDocument::setFunction(QString funcname, QString new_function_body)
 {
     QDomNode domNode = findNodeByName(this->documentElement(), funcname);
-    QDomNode domNode2 = domNode.cloneNode(true);
-    auto doc = domNode2.toDocument();
-    auto res = doc.setContent(text);
-    //domNode.parentNode().replaceChild(domNode2, domNode);
+    //show_message(domNode.toElement().tagName());
     QString str;
-    QTextStream stream(&str);
-    domNode2.save(stream, 4);
-    qDebug() << "setContent result is " << res;
-    qDebug() <<  "-------------";
-    qDebug() <<  text;
-    qDebug() <<  "-------------";
-    qDebug() <<  str;
+    QTextStream ts(&str);
+    domNode.save(ts, 4);
+    QString old_function_body = str;
+
+    QString content_of_all_document = this->toString(4);
+
+    //1. replace function body from content_of_all_document on new_function_body
+    //2. create dom document from that string
+    QString substring = "name=\"" + funcname + "\"";
+    int pos = content_of_all_document.indexOf(substring);
+    if( pos!=-1 )
+    {
+        // !!! this solution do not work with matryoshka functions
+        auto content_before = content_of_all_document.mid(0, pos);
+        auto tagBegin = content_before.lastIndexOf("<func");
+        auto tagEnd = content_of_all_document.indexOf("</func>", pos);
+        return true;
+    }
+    auto re_template = QString("<func[a-zA-Z0-9 =\"_]+name=([a-zA-Z0-9 =\"_])+").arg(funcname);
+    //new_function_body = QString("<func name=\"%1\">").arg(funcname) + new_function_body + "</func>";
+    QRegularExpression re(re_template);
+    auto match = re.match(content_of_all_document);
+    show_message("re_template",re_template);
+    show_message("content_of_all_document",content_of_all_document);
+    if( match.hasMatch() )
+    {
+        show_message("Matched function",match.capturedTexts()[1]);
+    }
+
+
+    //QDomDocument dom_doc = domNode.toDocument();
+    //auto res = dom_doc.setContent(function_body);
+    auto res = 0;
     return res;
 }
 
@@ -136,6 +159,20 @@ void ClickerDocument::Save(QTextStream& ts)
     format_document(ts);
     ts <<  getContent(original_document);
 }
+
+bool ClickerDocument::save(QString fn)
+{
+    QDomDocument* dom_doc = static_cast<QDomDocument*>(this);
+    QFile file(fn);
+    if( file.open(QFile::WriteOnly) )
+    {
+        QTextStream ts(&file);
+        dom_doc->save(ts, 4);
+        return true;
+    }
+    return false;
+}
+
 
 void Fix_line(QString& line)
 {

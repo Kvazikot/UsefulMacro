@@ -73,6 +73,10 @@ public:
     QPushButton *pickPoint;
     QPushButton *shellDialog;
     QGroupBox *buttonsGroup;
+    QGroupBox *groupBox_7;
+    QGridLayout *gridLayout_7;
+    QPushButton *createTestXml;
+    QPushButton *setFunctionTest;
 
     void setupUi(QDialog *CoolTestsForm)
     {
@@ -126,7 +130,7 @@ public:
 
         groupBox_2 = new QGroupBox(CoolTestsForm);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        groupBox_2->setGeometry(QRect(640, 170, 160, 97));
+        groupBox_2->setGeometry(QRect(830, 30, 160, 97));
         gridLayout_2 = new QGridLayout(groupBox_2);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         typeTest = new QPushButton(groupBox_2);
@@ -141,7 +145,7 @@ public:
 
         groupBox_3 = new QGroupBox(CoolTestsForm);
         groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
-        groupBox_3->setGeometry(QRect(310, 140, 161, 91));
+        groupBox_3->setGeometry(QRect(310, 140, 161, 61));
         gridLayout_3 = new QGridLayout(groupBox_3);
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
         pushButton_4 = new QPushButton(groupBox_3);
@@ -261,7 +265,22 @@ public:
 
         buttonsGroup = new QGroupBox(CoolTestsForm);
         buttonsGroup->setObjectName(QString::fromUtf8("buttonsGroup"));
-        buttonsGroup->setGeometry(QRect(310, 230, 321, 71));
+        buttonsGroup->setGeometry(QRect(310, 200, 491, 101));
+        groupBox_7 = new QGroupBox(CoolTestsForm);
+        groupBox_7->setObjectName(QString::fromUtf8("groupBox_7"));
+        groupBox_7->setGeometry(QRect(840, 130, 151, 101));
+        gridLayout_7 = new QGridLayout(groupBox_7);
+        gridLayout_7->setObjectName(QString::fromUtf8("gridLayout_7"));
+        createTestXml = new QPushButton(groupBox_7);
+        createTestXml->setObjectName(QString::fromUtf8("createTestXml"));
+
+        gridLayout_7->addWidget(createTestXml, 0, 0, 1, 1);
+
+        setFunctionTest = new QPushButton(groupBox_7);
+        setFunctionTest->setObjectName(QString::fromUtf8("setFunctionTest"));
+
+        gridLayout_7->addWidget(setFunctionTest, 1, 0, 1, 1);
+
 
         retranslateUi(CoolTestsForm);
         QObject::connect(buttonBox, &QDialogButtonBox::accepted, CoolTestsForm, qOverload<>(&QDialog::accept));
@@ -301,7 +320,10 @@ public:
         areaButton->setText(QCoreApplication::translate("CoolTestsForm", "Area selector", nullptr));
         pickPoint->setText(QCoreApplication::translate("CoolTestsForm", "Coord selector", nullptr));
         shellDialog->setText(QCoreApplication::translate("CoolTestsForm", "Shell Dialog", nullptr));
-        buttonsGroup->setTitle(QCoreApplication::translate("CoolTestsForm", "GroupBox", nullptr));
+        buttonsGroup->setTitle(QCoreApplication::translate("CoolTestsForm", "5. Xml tests", nullptr));
+        groupBox_7->setTitle(QCoreApplication::translate("CoolTestsForm", "5 Group. Xml Tests", nullptr));
+        createTestXml->setText(QCoreApplication::translate("CoolTestsForm", "Create Test Document", nullptr));
+        setFunctionTest->setText(QCoreApplication::translate("CoolTestsForm", "SetFunction Test", nullptr));
     } // retranslateUi
 
 };

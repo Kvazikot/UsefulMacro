@@ -26,6 +26,7 @@ signals:
 
 private:
    ClickerDocument* doc;
+   QString funcname;
    QDomNode currentNode;
 
 };

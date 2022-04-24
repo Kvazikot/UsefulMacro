@@ -45,6 +45,10 @@ private slots:
 
     void on_pushButton_4_clicked();
 
+    void on_createTestXml_clicked();
+
+    void on_setFunctionTest_clicked();
+
 public slots:
     void slotSetAttrs(QMap<QString,QString> attrs);
     void slotFullScreen();

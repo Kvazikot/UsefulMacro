@@ -2,7 +2,9 @@
 #define CLICKERSETTINGS_H
 
 #include <QSettings>
+#include <QMessageBox>
 
+#define show_message(title,msg) { QMessageBox msgBox; msgBox.setWindowTitle(title); msgBox.setText(msg); msgBox.exec(); }
 // -------------------------------------------------------------------------------
 
 #define _F(f) ClickerSettings::getInstance()->readFlag(f)

@@ -26,7 +26,9 @@ void XmlEditor::setFuncNode(const QDomNode& node)
 
 void XmlEditor::applyChanges()
 {
-
+    auto doc = currentNode.toDocument();
+    ClickerDocument* doc2 = static_cast<ClickerDocument*>(&doc);
+    doc2->setFunction(funcname,toPlainText());
 }
 
 void XmlEditor::onTextChange()
@@ -43,7 +45,7 @@ void XmlEditor::onTextChange()
     QRegularExpressionMatch match = re.match(toPlainText());
     if( match.hasMatch() )
     {
-        QString funcname = match.capturedTexts()[1];
+        funcname = match.capturedTexts()[1];
         funcname = funcname.replace("\"","");
         if( !doc->setFunction(funcname, toPlainText()) )
             emit updateStatusBar("Xml error!", applyChangesFlag);

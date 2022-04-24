@@ -331,6 +331,11 @@ void MainWindow::applyChangesXml()
     xmlEditor->applyChanges();
     statusBar()->removeWidget(applyButtons.back());
     applyButtons.pop_back();
+
+    ClickerDocument doc = *model->getDoc();
+    delete model;
+    model = new ClickerModel(doc);
+    view->setModel(model);
 }
 
 void MainWindow::applyChanges()

@@ -161,6 +161,7 @@ void CoolTestsForm::cursorPositionChanged()
 
 void CoolTestsForm::timerEvent(QTimerEvent* event)
 {
+    /*
     if( lastEditTimer.elapsed() > 2000 && saved == false)
     {
         if(editor)
@@ -171,6 +172,7 @@ void CoolTestsForm::timerEvent(QTimerEvent* event)
         }
 
     }
+    */
 }
 
 void CoolTestsForm::textChanged()
@@ -216,7 +218,7 @@ void CoolTestsForm::runFunction(QString func_name)
 
 void CoolTestsForm::on_typeTest_clicked()
 {
-    runFunction("Type test 2");
+    runFunction("Type test 2");    
 }
 
 void CoolTestsForm::on_runFunction_clicked()
@@ -295,5 +297,34 @@ void CoolTestsForm::on_shellDialog_clicked()
 void CoolTestsForm::on_pushButton_4_clicked()
 {
     runFunction("Post Twit");
+}
+
+
+
+void CoolTestsForm::on_createTestXml_clicked()
+{
+    static ClickerDocument* testdoc;
+    QString xml = "<?xml version='1.0'?> <xml error=\"This is default document. Make sure you load right xml.\"> <func name=\"test_f\" > <type text=\"text\"/>  </func>  </xml>";
+    testdoc = new ClickerDocument();
+    QDomDocument* dom_doc = static_cast<QDomDocument*>(testdoc);
+    dom_doc->setContent(xml);
+    testdoc->save("test_doc.xml");
+    runFunction("Open test_doc.xml");
+    delete testdoc;
+}
+
+
+void CoolTestsForm::on_setFunctionTest_clicked()
+{
+    static ClickerDocument* testdoc;
+    QString xml = "<?xml version='1.0'?> <xml error=\"This is default document. Make sure you load right xml.\"> <func name=\"test_f\" > <type text=\"text\"/>  </func>  </xml>";
+    testdoc = new ClickerDocument();
+    QDomDocument* dom_doc = static_cast<QDomDocument*>(testdoc);
+    dom_doc->setContent(xml);
+    QString function_body = QString("<hotkey hotkey=\"win+R\" />");
+    testdoc->setFunction("test_f", function_body);
+    testdoc->save("test_doc.xml");
+    runFunction("Open test_doc.xml");
+    delete testdoc;
 }
 
