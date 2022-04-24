@@ -317,11 +317,13 @@ void CoolTestsForm::on_createTestXml_clicked()
 void CoolTestsForm::on_setFunctionTest_clicked()
 {
     static ClickerDocument* testdoc;
-    QString xml = "<?xml version='1.0'?> <xml error=\"This is default document. Make sure you load right xml.\"> <func name=\"test_f\" > <type text=\"text\"/>  </func>  </xml>";
+    QString xml = "<?xml version='1.0'?> " \
+                  "<xml error=\"This is default document. Make sure you load right xml.\"> "
+                  "<func name=\"test_f\" > <type text=\"text\"/>  </func>  </xml>";
     testdoc = new ClickerDocument();
     QDomDocument* dom_doc = static_cast<QDomDocument*>(testdoc);
     dom_doc->setContent(xml);
-    QString function_body = QString("<hotkey hotkey=\"win+R\" />");
+    QString function_body = QString("<func name=\"test_f\" ><hotkey hotkey=\"win+R\" /></func>");
     testdoc->setFunction("test_f", function_body);
     testdoc->save("test_doc.xml");
     runFunction("Open test_doc.xml");
