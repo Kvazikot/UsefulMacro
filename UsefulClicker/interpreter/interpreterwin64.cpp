@@ -375,10 +375,14 @@ void InterpreterWin64::executeFunction(const QDomNode& rootNode, QDomNode funcNo
 int InterpreterWin64::executeShellCommand(const QDomNode& node)
 {
     QString cmd;
+    QStringList args;
     if( node.toElement().hasAttribute("cmd") )
     {
         cmd = node.toElement().attribute("cmd");
-        ShellExecuteA(0, 0, (char*)cmd.toStdString().c_str(), 0, 0, SW_NORMAL);
+        args = cmd.split(" ");
+        cmd = args[0];
+        args.pop_front();
+        ShellExecuteA(0, 0, (char*)cmd.toStdString().c_str(), (char*)args.join(" ").toStdString().c_str(), 0, SW_NORMAL);
     }
     return 0;
 }
