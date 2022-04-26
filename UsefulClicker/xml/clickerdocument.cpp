@@ -58,9 +58,10 @@ QString ClickerDocument::getFunction(QString funcname)
     return str;
 }
 
-bool checkXmlSyntax(QString& xml )
+bool ClickerDocument::checkXmlSyntax(QString xml )
 {
-    return true;
+    QDomNode node;
+    return node.toDocument().setContent(xml);
 }
 
 bool ClickerDocument::setFunction(QString funcname, QString new_function_body)

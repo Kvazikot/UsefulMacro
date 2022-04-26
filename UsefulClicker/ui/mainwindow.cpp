@@ -287,8 +287,9 @@ void MainWindow::new_fun()
 
 }
 
-static QVector<QPushButton*> applyButtons;
-static QLabel* errorLabel=0;
+static QPushButton* applyButton = 0;
+static QPushButton* apply_button2 = 0;
+static QLabel* errorLabel = 0;
 
 void MainWindow::updateStatus(const QString& text, bool applyChangesFlag)
 {
@@ -304,6 +305,7 @@ void MainWindow::updateStatus(const QString& text, bool applyChangesFlag)
         errorLabel->setText(text);
         errorLabel->setStyleSheet("background-color: rgb(255, 0, 0); color: rgb(255, 255, 255);");
         statusBar()->addWidget(errorLabel, width()-errorLabel->width());
+
     }
     else
     {
@@ -313,13 +315,13 @@ void MainWindow::updateStatus(const QString& text, bool applyChangesFlag)
             delete errorLabel;
             errorLabel = 0;
         }
-        if( applyChangesFlag && applyButtons.size() == 0)
+        if( applyChangesFlag && applyButton == 0 )
         {
-            QPushButton* apply_button = new QPushButton(this);
-            apply_button->setText("Apply changes");
-            connect(apply_button, SIGNAL(clicked()), this, SLOT(applyChangesXml()));
-            statusBar()->addWidget(apply_button, width()-apply_button->width());
-            applyButtons.push_back(apply_button);
+            applyButton = new QPushButton(this);
+            applyButton->setText("Apply changes");
+            connect(applyButton, SIGNAL(clicked()), this, SLOT(applyChangesXml()));
+            statusBar()->addWidget(applyButton, width()-applyButton->width());
+
         }
     }
 
@@ -329,10 +331,10 @@ void MainWindow::updateStatus(const QString& text, bool applyChangesFlag)
 void MainWindow::applyChangesXml()
 {
     xmlEditor->applyChanges();
-    statusBar()->removeWidget(applyButtons.back());
-    applyButtons.pop_back();
+    statusBar()->removeWidget(applyButton);
+    applyButton = 0;
 
-    ClickerDocument doc = *model->getDoc();
+    auto doc = *model->getDoc();
     delete model;
     model = new ClickerModel(doc);
     view->setModel(model);
@@ -345,8 +347,8 @@ void MainWindow::applyChanges()
     node.toElement().setAttribute("comment", commentEditor->toPlainText());
     if( commentEditor->toPlainText().size() == 0 )
         node.toElement().removeAttribute("comment");
-    statusBar()->removeWidget(applyButtons.back());
-    applyButtons.pop_back();
+    statusBar()->removeWidget(apply_button2);
+    apply_button2 = 0;
 }
 
 void MainWindow::commentChanged()
@@ -356,15 +358,17 @@ void MainWindow::commentChanged()
     QString old_comment;
     if( node.toElement().hasAttribute("comment") )
         old_comment = node.toElement().attribute("comment");
-    if( old_comment!=commentEditor->toPlainText() && applyButtons.size() == 0)
+    if( old_comment!=commentEditor->toPlainText() )
     {
       //node.toElement().setAttribute("comment", commentEditor->toPlainText());
         //statusBar()->widge
-        QPushButton* apply_button = new QPushButton(this);
-        apply_button->setText("Apply changes");
-        connect(apply_button, SIGNAL(clicked()), this, SLOT(applyChanges()));
-        statusBar()->addWidget(apply_button);
-        applyButtons.push_back(apply_button);
+        if( apply_button2 == 0 )
+        {
+            apply_button2 = new QPushButton(this);
+            apply_button2->setText("Apply changes");
+            connect(apply_button2, SIGNAL(clicked()), this, SLOT(applyChanges()));
+            statusBar()->addWidget(apply_button2);
+        }
     }
 }
 
@@ -374,6 +378,10 @@ void MainWindow::itemActivated(const QModelIndex &)
     const int row =  current.row();
     const int column = current.column();
     qDebug() << "Clicked at " << row << column;
+
+
+    statusBar()->removeWidget(errorLabel);
+
     QDomNode node = model->getNodeByIndex(current);
     if( node.toElement().hasAttribute("comment") )
         commentEditor->setText(node.toElement().attribute("comment"));
@@ -387,8 +395,10 @@ void MainWindow::itemActivated(const QModelIndex &)
         auto fun_name = node.toElement().attribute("name");
         auto func_body_text = getDoc()->getFunction(fun_name);
         xmlEditor->setFuncNode(node);
-        xmlEditor->clear();        
+        xmlEditor->enableChangeEvent(false);
+        xmlEditor->clear();
         xmlEditor->setText(func_body_text);
+        xmlEditor->enableChangeEvent(true);
     }
     if( node.parentNode().nodeName() == "func" )
     {
@@ -396,8 +406,10 @@ void MainWindow::itemActivated(const QModelIndex &)
         auto fun_name = node.toElement().attribute("name");
         auto func_body_text = getDoc()->getFunction(fun_name);
         xmlEditor->setFuncNode(node);
+        xmlEditor->enableChangeEvent(false);
         xmlEditor->clear();
         xmlEditor->setText(func_body_text);
+        xmlEditor->enableChangeEvent(true);
     }
     //xmlEditor->setText();
 }

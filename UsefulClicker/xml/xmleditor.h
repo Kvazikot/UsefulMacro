@@ -16,8 +16,8 @@ public:
     QString genFunName();
     void newFun(QString name);
     void applyChanges();
-
-
+    void enableChangeEvent(bool enableFlag);
+    QString cutFunctionName(QString& xml);
 public slots:
     void onTextChange();
 
@@ -25,9 +25,11 @@ signals:
     void updateStatusBar(const QString& xmlErrorMessage, bool applyChangesFlag);
 
 private:
-   ClickerDocument* doc;
+   ClickerDocument* doc;   
    QString funcname;
    QDomNode currentNode;
+   bool enableChangeFlag;
+   QString original_xml;
 
 };
 

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 6.3.0
+** Created by: Qt User Interface Compiler version 6.2.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -66,7 +66,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(1276, 858);
+        MainWindow->resize(1273, 752);
         exitAction = new QAction(MainWindow);
         exitAction->setObjectName(QString::fromUtf8("exitAction"));
         insertRowAction = new QAction(MainWindow);
@@ -167,7 +167,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 1276, 21));
+        menubar->setGeometry(QRect(0, 0, 1273, 25));
         fileMenu = new QMenu(menubar);
         fileMenu->setObjectName(QString::fromUtf8("fileMenu"));
         actionsMenu = new QMenu(menubar);

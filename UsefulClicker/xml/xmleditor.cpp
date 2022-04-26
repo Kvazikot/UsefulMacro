@@ -1,5 +1,6 @@
 #include <QRegularExpression>
 #include "xmleditor.h"
+#include "settings/clickersettings.h"
 #include "tests/highlighter.h"
 
 static Highlighter* highlighter;
@@ -19,6 +20,11 @@ XmlEditor::XmlEditor(QWidget *parent)
 
 }
 
+void XmlEditor::enableChangeEvent(bool enableFlag)
+{
+   enableChangeFlag = enableFlag;
+}
+
 void XmlEditor::setFuncNode(const QDomNode& node)
 {
     currentNode = node;
@@ -26,43 +32,51 @@ void XmlEditor::setFuncNode(const QDomNode& node)
 
 void XmlEditor::applyChanges()
 {
-    auto doc = currentNode.toDocument();
-    ClickerDocument* doc2 = static_cast<ClickerDocument*>(&doc);
-    doc2->setFunction(funcname,toPlainText());
+    doc->setFunction(funcname,toPlainText());
 }
+
+QString XmlEditor::cutFunctionName(QString& xml)
+{
+    QRegularExpression re("<func name=\"([\\w _\\d]+)\"");
+    QRegularExpressionMatch match = re.match(xml);
+    if( match.hasMatch() )
+    {
+        QString name = match.capturedTexts()[1];
+        name = name.replace("\"","");
+        return name;
+    }
+    //else
+    //    emit updateStatusBar("Function name error!", false);
+    return genFunName();
+}
+
 
 void XmlEditor::onTextChange()
 {
     bool applyChangesFlag=true;
     QString str;
 
+    if( !enableChangeFlag )
+    {
+        original_xml = toPlainText();
+        show_message("original_xml", original_xml);
+        funcname = cutFunctionName(original_xml);
+        return;
+    }
+
     QTextStream ts(&str);
     currentNode.save(ts, 0);
     if (str != toPlainText())
         applyChangesFlag = true;
 
-    QRegularExpression re("<func name=([\"\\w _\\d]+)");
-    QRegularExpressionMatch match = re.match(toPlainText());
-    if( match.hasMatch() )
-    {
-        funcname = match.capturedTexts()[1];
-        funcname = funcname.replace("\"","");
-        if( !doc->setFunction(funcname, toPlainText()) )
-            emit updateStatusBar("Xml error!", applyChangesFlag);
-        else
-            emit updateStatusBar("Xml OK!", applyChangesFlag);
-    }
-    QRegularExpression re2("<func[ ]+>");
-    match = re2.match(toPlainText());
-    if( match.hasMatch() )
-    {
-        // generate function name
-        QString randFunctionName = genFunName();
-        if( !doc->setFunction(randFunctionName, toPlainText()))
-            emit updateStatusBar("Xml error!", applyChangesFlag);
-        else
-            emit updateStatusBar("Xml OK!", applyChangesFlag);
-    }
+    QString xml = toPlainText();
+
+    if( !doc->checkXmlSyntax(xml) )
+        emit updateStatusBar("Xml error!", applyChangesFlag);
+    else
+        emit updateStatusBar("Xml OK!", applyChangesFlag);
+
+
 }
 
 void XmlEditor::newFun(QString name)

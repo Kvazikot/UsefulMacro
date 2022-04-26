@@ -5,7 +5,7 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QDir>
-#include <QSoundEffect>
+//#include <QSoundEffect>
 #include "coordselector.h"
 #include "ui_coordselector.h"
 
@@ -39,7 +39,7 @@ CoordSelector::CoordSelector(QWidget *parent) :
     sprite[1] = QImage(":/images/hitler_face.png");
     sprite[2] = QImage(":/images/stalin.jpg");
     bullet_sprite =QImage(":/images/bullet.png");
-    bullet_sound.setSource(QUrl::fromLocalFile(QDir::currentPath() + "images/shot.wav"));
+    //bullet_sound.setbullet_soundSource(QUrl::fromLocalFile(QDir::currentPath() + "images/shot.wav"));
     //sprite[0] = QImage();
     //sprite[1] = QImage();
     //sprite[2] = QImage();
@@ -107,7 +107,7 @@ void CoordSelector::mousePressEvent(QMouseEvent* event)
             n_hited = i;
             hitPoint = mpos;
             hit = true;
-            bullet_sound.play();
+            //bullet_sound.play();
             QTimer::singleShot(70, this, SLOT(clickDelay()));
 
             qDebug() << " n_hited " << n_hited;

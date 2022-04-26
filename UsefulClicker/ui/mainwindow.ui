@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1276</width>
-    <height>858</height>
+    <width>1273</width>
+    <height>752</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -142,8 +142,8 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1276</width>
-     <height>21</height>
+     <width>1273</width>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
