@@ -65,7 +65,7 @@ Highlighter::Highlighter(QTextDocument *parent)
         QStringLiteral("\\bhotkey\\b"), QStringLiteral("\\bnamespace\\b"), QStringLiteral("\\boperator\\b"),
         QStringLiteral("\\btype\\b"), QStringLiteral("\\bprotected\\b"), QStringLiteral("\\bpublic\\b"),
         QStringLiteral("\\bclickimg\\b"), QStringLiteral("\\bsignals\\b"), QStringLiteral("\\bsigned\\b"),
-        QStringLiteral("\\bslots\\b"), QStringLiteral("\\bstatic\\b"), QStringLiteral("\\bstruct\\b"),
+        QStringLiteral("\\bshell\\b"), QStringLiteral("\\bstatic\\b"), QStringLiteral("\\bstruct\\b"),
         QStringLiteral("\\btemplate\\b"), QStringLiteral("\\btypedef\\b"), QStringLiteral("\\btypename\\b"),
         QStringLiteral("\\bunion\\b"), QStringLiteral("\\bunsigned\\b"), QStringLiteral("\\bvirtual\\b"),
         QStringLiteral("\\bvoid\\b"), QStringLiteral("\\bvolatile\\b"), QStringLiteral("\\bbool\\b")

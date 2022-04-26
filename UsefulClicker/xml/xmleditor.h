@@ -13,6 +13,7 @@ public:
     explicit XmlEditor(QWidget *parent = nullptr);
     void setDoc(ClickerDocument* doc);
     void setFuncNode(const QDomNode& node);
+    void setXml(QString xml);
     QString genFunName();
     void newFun(QString name);
     void applyChanges();

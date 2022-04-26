@@ -52,6 +52,7 @@ bool ClickerDocument::load(QString fn)
 QString ClickerDocument::getFunction(QString funcname)
 {
     QDomNode domNode = findNodeByName(this->documentElement(), funcname);
+    if(domNode.isNull()) return "";
     QString str;
     QTextStream stream(&str);
     domNode.save(stream, 0);

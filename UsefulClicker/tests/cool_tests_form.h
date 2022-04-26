@@ -2,6 +2,7 @@
 #define COOL_TESTS_FORM_H
 
 #include <QDialog>
+#include <QMap>
 #include <QElapsedTimer>
 #include <QTimerEvent>
 

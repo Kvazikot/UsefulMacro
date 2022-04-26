@@ -28,16 +28,21 @@ void XmlEditor::enableChangeEvent(bool enableFlag)
 void XmlEditor::setFuncNode(const QDomNode& node)
 {
     currentNode = node;
+    original_xml = "";
+    QTextStream ts(&original_xml);
+    node.save(ts, 0);
+    funcname = cutFunctionName(original_xml);
 }
 
 void XmlEditor::applyChanges()
 {
+    funcname = cutFunctionName(original_xml);
     doc->setFunction(funcname,toPlainText());
 }
 
 QString XmlEditor::cutFunctionName(QString& xml)
 {
-    QRegularExpression re("<func name=\"([\\w _\\d]+)\"");
+    QRegularExpression re("[<]{0,1}func.*name=(.*)[>]{1}");
     QRegularExpressionMatch match = re.match(xml);
     if( match.hasMatch() )
     {
@@ -45,11 +50,22 @@ QString XmlEditor::cutFunctionName(QString& xml)
         name = name.replace("\"","");
         return name;
     }
-    //else
-    //    emit updateStatusBar("Function name error!", false);
+    else
+        emit updateStatusBar("Function name error!", false);
     return genFunName();
 }
 
+
+void XmlEditor::setXml(QString xml)
+{
+    if( xml.size() > 0 )
+    {
+        setText(xml);
+        //show_message("original_xml", original_xml);
+        //show_message("xml", xml);
+    }
+
+}
 
 void XmlEditor::onTextChange()
 {
@@ -57,12 +73,7 @@ void XmlEditor::onTextChange()
     QString str;
 
     if( !enableChangeFlag )
-    {
-        original_xml = toPlainText();
-        show_message("original_xml", original_xml);
-        funcname = cutFunctionName(original_xml);
         return;
-    }
 
     QTextStream ts(&str);
     currentNode.save(ts, 0);

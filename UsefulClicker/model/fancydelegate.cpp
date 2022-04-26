@@ -61,6 +61,9 @@
 #include <QTextEdit>
 #include <QLineEdit>
 #include <QAbstractItemModel>
+
+bool isFiltered(QString text);
+
 //! [0]
 FancyDelegate::FancyDelegate(QObject *parent)
     : QStyledItemDelegate(parent)
@@ -74,10 +77,14 @@ QWidget *FancyDelegate::createEditor(QWidget *parent,
                                        const QModelIndex &index/* index */) const
 {
     QWidget* widget = 0;
-    if( index.column() == 1 )
+    QString value = index.model()->data(index, Qt::EditRole).toString();
+    if( index.column() == 1  )
     {
-        AutocompleteEditor* comboBox = new AutocompleteEditor(parent);
-        widget = comboBox;
+        if( !isFiltered(value) )
+        {
+            AutocompleteEditor* comboBox = new AutocompleteEditor(parent);
+            widget = comboBox;
+        }
     }
     else
     {
@@ -95,9 +102,12 @@ void FancyDelegate::setEditorData(QWidget *editor,
 {
     if( index.column() == 1 )
     {
-        AutocompleteEditor* edit = static_cast<AutocompleteEditor*>(editor);
         QString value = index.model()->data(index, Qt::EditRole).toString();
-        edit->setValue(value);
+        if( !isFiltered(value) )
+        {
+            AutocompleteEditor* edit = static_cast<AutocompleteEditor*>(editor);
+            edit->setValue(value);
+        }
     }
     else
     {
@@ -111,7 +121,7 @@ void FancyDelegate::setEditorData(QWidget *editor,
 
 bool isFiltered(QString text)
 {
-    QStringList filters = {"hot key sequence" };
+    QStringList filters = {"hot key sequence", "func" };
 
     for(auto f : filters )
     {

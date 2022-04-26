@@ -271,7 +271,7 @@ QVariant ClickerModel::headerData(int section, Qt::Orientation orientation,
             case 0:
                 return tr("#");
             case 1:
-                return tr("Name");
+                return tr("Tag name");
             case 2:
                 return tr("Attributes");
             case 3:

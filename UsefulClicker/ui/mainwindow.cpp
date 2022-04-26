@@ -409,22 +409,28 @@ void MainWindow::itemActivated(const QModelIndex &)
     {
         auto fun_name = node.toElement().attribute("name");
         auto func_body_text = getDoc()->getFunction(fun_name);
-        xmlEditor->setFuncNode(node);
-        xmlEditor->enableChangeEvent(false);
-        xmlEditor->clear();
-        xmlEditor->setText(func_body_text);
-        xmlEditor->enableChangeEvent(true);
+        if(!func_body_text.isNull())
+        {
+            xmlEditor->setFuncNode(node);
+            xmlEditor->enableChangeEvent(false);
+            xmlEditor->clear();
+            xmlEditor->setXml(func_body_text);
+            xmlEditor->enableChangeEvent(true);
+        }
     }
     if( node.parentNode().nodeName() == "func" )
     {
         node = node.parentNode();
         auto fun_name = node.toElement().attribute("name");
         auto func_body_text = getDoc()->getFunction(fun_name);
-        xmlEditor->setFuncNode(node);
-        xmlEditor->enableChangeEvent(false);
-        xmlEditor->clear();
-        xmlEditor->setText(func_body_text);
-        xmlEditor->enableChangeEvent(true);
+        if(!func_body_text.isNull())
+        {
+            xmlEditor->setFuncNode(node);
+            xmlEditor->enableChangeEvent(false);
+            xmlEditor->clear();
+            xmlEditor->setXml(func_body_text);
+            xmlEditor->enableChangeEvent(true);
+        }
     }
     //xmlEditor->setText();
 }
