@@ -328,16 +328,31 @@ void MainWindow::updateStatus(const QString& text, bool applyChangesFlag)
 
 }
 
+QPoint GetMousePos();
+
 void MainWindow::applyChangesXml()
 {
     xmlEditor->applyChanges();
     statusBar()->removeWidget(applyButton);
     applyButton = 0;
-
+    auto row = view->currentIndex().row();
     auto doc = *model->getDoc();
     delete model;
     model = new ClickerModel(doc);
     view->setModel(model);
+    //expand xml node
+    view->expand(model->index(0,0));
+    view->expand(model->index(1,0));
+    /* next code is return previous selection
+    view->setCurrentIndex(model->index(row,0));
+    const QModelIndex index = view->currentIndex();
+    QRect rect = view->visualRect(index);
+    QPoint center = QPoint(300,300);//view->mapToGlobal(rect.center());
+    QPoint ret_pos = GetMousePos();
+    MouseClick(center, Qt::MouseButton::LeftButton);
+    MouseClick(ret_pos, Qt::MouseButton::LeftButton);
+    */
+    //view->
 }
 
 void MainWindow::applyChanges()

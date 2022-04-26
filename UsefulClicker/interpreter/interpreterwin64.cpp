@@ -221,6 +221,13 @@ QRect InterpreterWin64::parseRect(const QDomNode& node)
     return  QRect();
 }
 
+QPoint GetMousePos()
+{
+    POINT mouse_pos;
+    GetCursorPos(&mouse_pos);
+    return QPoint(mouse_pos.x, mouse_pos.y);
+}
+
 void MouseClick(QPoint coordinates, Qt::MouseButton button)
 {
     POINT mouse_pos;
