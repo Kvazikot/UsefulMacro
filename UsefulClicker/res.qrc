@@ -30,5 +30,6 @@
         <file>images/paste-icon.png</file>
         <file>images/copy-icon.png</file>
         <file>images/clock-icon.png</file>
+        <file>sounds/shot.wav</file>
     </qresource>
 </RCC>

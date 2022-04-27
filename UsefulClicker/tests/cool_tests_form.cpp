@@ -194,7 +194,11 @@ void CoolTestsForm::on_runNotepadFullscreen_clicked()
 
 void CoolTestsForm::on_buttonsDetector1_clicked()
 {
-    ScreenButtonsDetector* dlg = new ScreenButtonsDetector(this);
+    int screenNum = 0;
+    if( ui->screen1->isChecked() )
+        screenNum = 1;
+    ScreenButtonsDetector* dlg = new ScreenButtonsDetector(this, screenNum);
+    dlg->setScreenNumber(screenNum);
     dlg->showFullScreen();
 }
 
@@ -261,9 +265,9 @@ void CoolTestsForm::on_pickPoint_clicked()
     int screenNum = 0;
     if( ui->screen1->isChecked() )
         screenNum = 1;
-    dlg->screenNum = screenNum;
+    dlg->setScreenNumber(screenNum);
     connect(dlg, SIGNAL(sigSetAttrs(QMap<QString,QString>)), this, SLOT(slotSetAttrs(QMap<QString,QString>)));
-    dlg->fullScreen();
+    dlg->showFullScreen();
 }
 
 

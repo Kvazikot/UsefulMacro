@@ -21,9 +21,9 @@
  <hotkey hotkey="F6"/>
  <type text="https://twitter.com/" />
  <hotkey keysequence="enter" delay_ms="1000"/>
- <clickimg targetImg="$(UsefulClicker)/images/18.10.45.400.png" button="left" delay_fixed="1000"> </clickimg>
+ <clickimg targetImg="$(UsefulClicker)/images/19.12.11.321.png" button="left" delay_fixed="1000"> </clickimg>
  <type text="Это пример текста который был сгенерирован программой UsefulClicker сегодня." delay_fixed="1000"/>
- <clickimg targetImg="$(UsefulClicker)/images/18.01.05.902.png" button="left"> </clickimg>
+ <clickimg targetImg="$(UsefulClicker)/images/19.12.11.321.png" button="left"> </clickimg>
  <hotkey keysequence="enter" delay_ms="1000"/>
 </func>
 

@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1037</width>
-    <height>748</height>
+    <width>964</width>
+    <height>516</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,7 +37,7 @@
     <rect>
      <x>160</x>
      <y>50</y>
-     <width>121</width>
+     <width>128</width>
      <height>228</height>
     </rect>
    </property>
@@ -104,7 +104,7 @@ color: rgb(255, 255, 255);</string>
   <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
     <rect>
-     <x>830</x>
+     <x>670</x>
      <y>30</y>
      <width>160</width>
      <height>97</height>
@@ -157,7 +157,7 @@ color: rgb(255, 255, 255);</string>
     <rect>
      <x>20</x>
      <y>50</y>
-     <width>121</width>
+     <width>125</width>
      <height>228</height>
     </rect>
    </property>
@@ -191,7 +191,7 @@ color: rgb(255, 255, 255);</string>
      <x>20</x>
      <y>10</y>
      <width>261</width>
-     <height>26</height>
+     <height>31</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -216,20 +216,20 @@ color: rgb(255, 255, 255);</string>
   <widget class="QGroupBox" name="groupBox_4">
    <property name="geometry">
     <rect>
-     <x>660</x>
-     <y>30</y>
-     <width>160</width>
-     <height>131</height>
+     <x>680</x>
+     <y>140</y>
+     <width>261</width>
+     <height>171</height>
     </rect>
    </property>
    <property name="title">
     <string>4 Group. CV tests</string>
    </property>
    <layout class="QGridLayout" name="gridLayout_4">
-    <item row="1" column="0">
-     <widget class="QPushButton" name="pushButton_9">
+    <item row="2" column="0">
+     <widget class="QPushButton" name="imageSearch">
       <property name="text">
-       <string>Change font </string>
+       <string>Image Search</string>
       </property>
      </widget>
     </item>
@@ -240,10 +240,23 @@ color: rgb(255, 255, 255);</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="imageSearch">
+    <item row="1" column="0">
+     <widget class="QPushButton" name="pushButton_9">
       <property name="text">
-       <string>Image Search</string>
+       <string>Change font </string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QSpinBox" name="spinBox">
+      <property name="prefix">
+       <string>cannyThreshold = </string>
+      </property>
+      <property name="maximum">
+       <number>1000</number>
+      </property>
+      <property name="value">
+       <number>100</number>
       </property>
      </widget>
     </item>
@@ -252,9 +265,9 @@ color: rgb(255, 255, 255);</string>
   <widget class="QGroupBox" name="groupBox_5">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>290</y>
-     <width>1021</width>
+     <x>20</x>
+     <y>280</y>
+     <width>931</width>
      <height>471</height>
     </rect>
    </property>
@@ -348,7 +361,7 @@ color: rgb(255, 255, 255);</string>
     <rect>
      <x>310</x>
      <y>200</y>
-     <width>491</width>
+     <width>181</width>
      <height>101</height>
     </rect>
    </property>
@@ -359,8 +372,8 @@ color: rgb(255, 255, 255);</string>
   <widget class="QGroupBox" name="groupBox_7">
    <property name="geometry">
     <rect>
-     <x>840</x>
-     <y>130</y>
+     <x>510</x>
+     <y>200</y>
      <width>151</width>
      <height>101</height>
     </rect>

@@ -42,7 +42,8 @@ void XmlEditor::applyChanges()
 
 QString XmlEditor::cutFunctionName(QString& xml)
 {
-    QRegularExpression re("[<]{0,1}func.*name=(.*)[>]{1}");
+   // QRegularExpression re("[<]{0,1}func.*name=(.*)[>]{1}");
+    QRegularExpression re("<func name=\"([\\w _\\d]+)\"");
     QRegularExpressionMatch match = re.match(xml);
     if( match.hasMatch() )
     {
