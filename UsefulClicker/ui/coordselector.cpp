@@ -5,7 +5,7 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QDir>
-//#include <QSoundEffect>
+#include <QSoundEffect>
 #include "coordselector.h"
 #include "ui_coordselector.h"
 
@@ -14,12 +14,12 @@ static std::vector<QVector2D> velocitys;
 static std::vector<QPoint> offsets;
 static std::vector<int> sprite_indexes;
 static QImage sprite[10];
-static QImage bullet_sprite;
+static QImage bullet_sprite ;
 static QMap<QString, QString> attrs;
 
 #define rnd ((float)rand()/RAND_MAX)
 
-CoordSelector::CoordSelector(QWidget *parent) :
+CoordSelector::CoordSelector(QWidget *parent, bool withEasterEgg) :
     QDialog(0),
     ui(new Ui::CoordSelector)
 {
@@ -29,7 +29,7 @@ CoordSelector::CoordSelector(QWidget *parent) :
     setAttribute(Qt::WA_WState_WindowOpacitySet);
     setAttribute(Qt::WA_PaintOnScreen); // not needed in Qt 5.2 and up
     setCursor(Qt::CrossCursor);
-    showEasterEgg = false;
+    showEasterEgg = withEasterEgg;
     ui->setupUi(this);
 
     QImage bg_image(300,300,QImage::Format_ARGB32);
@@ -39,10 +39,7 @@ CoordSelector::CoordSelector(QWidget *parent) :
     sprite[1] = QImage(":/images/hitler_face.png");
     sprite[2] = QImage(":/images/stalin.jpg");
     bullet_sprite =QImage(":/images/bullet.png");
-    //bullet_sound.setbullet_soundSource(QUrl::fromLocalFile(QDir::currentPath() + "images/shot.wav"));
-    //sprite[0] = QImage();
-    //sprite[1] = QImage();
-    //sprite[2] = QImage();
+    bullet_sound.setSource(QUrl::fromLocalFile(":/sounds/shot.wav"));
 
     for(int i=0; i < n_rects+11; i++)
     {
@@ -107,7 +104,7 @@ void CoordSelector::mousePressEvent(QMouseEvent* event)
             n_hited = i;
             hitPoint = mpos;
             hit = true;
-            //bullet_sound.play();
+            bullet_sound.play();
             QTimer::singleShot(70, this, SLOT(clickDelay()));
 
             qDebug() << " n_hited " << n_hited;
@@ -143,21 +140,6 @@ void CoordSelector::clickDelay()
     QTimer::singleShot(2000, this, SLOT(closeDelaySlot()));
 
 
-}
-
-void CoordSelector::slotFullScreen()
-{
-    if( screenNum > QGuiApplication::screens().size() ) return;
-    QScreen* screen = QGuiApplication::screens()[screenNum];
-    setGeometry(screen->geometry());
-    show();
-    setCursor(Qt::CrossCursor);
-}
-
-void CoordSelector::fullScreen()
-{
-
-    QTimer::singleShot(500, this, SLOT(slotFullScreen()));
 }
 
 void CoordSelector::mouseMoveEvent(QMouseEvent* event)
@@ -240,6 +222,22 @@ void CoordSelector::animate()
 
 }
 
+
+bool CoordSelector::setScreenNumber(int n)
+{
+    if( QGuiApplication::screens().size() < n)
+    {
+        setScreen(QGuiApplication::screens()[0]);
+        return false;
+    }
+    screenNum = n;
+    auto scr = QGuiApplication::screens()[screenNum];
+    setScreen(scr);
+    setGeometry(scr->geometry());
+    qDebug() << __FUNCTION__ << scr->geometry();
+    return true;
+}
+
 void CoordSelector::paintEvent( QPaintEvent* event)
 {
     animate();
@@ -259,8 +257,13 @@ void CoordSelector::on_doneButton_clicked()
 }
 
 void CoordSelector::showEvent(QShowEvent* event)
-{
-    showFullScreen();
+{    
+    setWindowState(Qt::WindowFullScreen);
+    //QTimer::singleShot(500, this, SLOT(slotFullScreen()));
+    if( screenNum > QGuiApplication::screens().size() ) return;
+    QScreen* screen = QGuiApplication::screens()[screenNum];
+    setGeometry(screen->geometry());
+    setCursor(Qt::CrossCursor);
     event->accept();
 }
 

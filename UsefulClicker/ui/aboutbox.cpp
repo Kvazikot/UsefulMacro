@@ -20,6 +20,7 @@
 */
 
 #include "aboutbox.h"
+#include "ui/coordselector.h"
 #include "ui/ui_aboutbox.h"
 
 AboutBox::AboutBox(QWidget *parent) :
@@ -27,6 +28,8 @@ AboutBox::AboutBox(QWidget *parent) :
     ui(new Ui::AboutBox)
 {
     ui->setupUi(this);
+    CoordSelector* dlg = new CoordSelector(this, true);
+    dlg->showFullScreen();
 }
 
 AboutBox::~AboutBox()

@@ -19,11 +19,13 @@ class ScreenButtonsDetector : public QDialog
     Q_OBJECT
 
 public:
-    explicit ScreenButtonsDetector(QWidget *parent = nullptr);
+    explicit ScreenButtonsDetector(QWidget *parent = nullptr, int screenNumber=0);
     std::vector<QRect> rects;
     QPoint mpos;
     QRect selected_rect;
+    int screenNum;
 
+    bool setScreenNumber(int n);
     void showEvent(QShowEvent* event);
     void timerEvent(QTimerEvent* event);
     void mouseMoveEvent(QMouseEvent* event);

@@ -5,6 +5,7 @@
 #include <QMessageBox>
 
 #define show_message(title,msg) { QMessageBox msgBox; msgBox.setWindowTitle(title); msgBox.setText(msg); msgBox.exec(); }
+//#define show_message(title,msg)
 // -------------------------------------------------------------------------------
 
 #define _F(f) ClickerSettings::getInstance()->readFlag(f)

@@ -4,7 +4,8 @@
 #include <QDialog>
 #include <QMap>
 #include <QElapsedTimer>
-//#include <QSoundEffect>
+#include <QVector2D>
+#include <QSoundEffect>
 
 namespace Ui {
 class CoordSelector;
@@ -16,12 +17,12 @@ class CoordSelector : public QDialog
 
 public:
     int screenNum=0;
-    explicit CoordSelector(QWidget *parent = nullptr);
+    explicit CoordSelector(QWidget *parent = nullptr, bool withEasterEgg=false);
     ~CoordSelector();
     QPoint mpos;
     QRectF hit_rect;
     QCursor cursor;
-    //QSoundEffect bullet_sound;
+    QSoundEffect bullet_sound;
     QPixmap cursor_pixmap;
     QElapsedTimer timeSinceHit;
     QPoint hitPoint;
@@ -31,8 +32,8 @@ public:
     int n_hited;
     bool hit;
     bool showEasterEgg;
-    void fullScreen();
     void animate();
+    bool setScreenNumber(int n);
     void generate_rects();
     void showEvent(QShowEvent* event) override;
     void timerEvent(QTimerEvent* event) override;
@@ -42,7 +43,6 @@ public:
     void wheelEvent(QWheelEvent* event) override;
 public slots:
     void on_doneButton_clicked();
-    void slotFullScreen();
     void closeDelaySlot();
     void clickDelay();
 signals:

@@ -34,11 +34,13 @@ public:
     std::vector<cv::Rect> text_areas;
     QImage last_screenshot;
     int kernel_size=4;
+    const int maxRectWidth = 500;
+    const int maxRectHeight = 500;
 
     DspModule();
     void computeHaudorf();
     QRect searchImage(std::string TargetIn_path, int screenNum=0);
-    void detectButtons(int screen_num, int kernel_size, std::vector<QRect>& rects);
+    void detectButtons(int screen_num, int kernel_size, std::vector<QRect>& rects, bool doInvertImage=false);
     QImage saveImage(QRect roi, QString& filename);
     void findTextAreas();
     int X, Y;
