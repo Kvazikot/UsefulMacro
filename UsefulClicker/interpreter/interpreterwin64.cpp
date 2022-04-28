@@ -41,7 +41,6 @@ void send_key2(QVector<WORD>& vkeys, bool keyUp)
         i++;
     }
     SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
-    Sleep(DEFAULT("input_delay_msec").toInt());
 }
 
 void send_key3(QVector<WORD>& vkeys, bool keyUp)
@@ -58,15 +57,12 @@ void send_key3(QVector<WORD>& vkeys, bool keyUp)
         i++;
     }
     SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
-    Sleep(DEFAULT("input_delay_msec").toInt());
 }
 
 void KeySequence(char* hot_key, int delay_ms)
 {
-    qDebug() << __FUNCTION__ << QString(hot_key);
     QVector<WORD> vkeys;
     QStringList keys = QString(hot_key).split('+');
-    qDebug() << keys;
     int k = 0;
     // keyup events
     for(QString tok : keys)
@@ -89,7 +85,6 @@ void KeySequence(char* hot_key, int delay_ms)
         inputs[0].type = INPUT_KEYBOARD;
         inputs[0].ki.wVk = k;
         SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
-        Sleep(DEFAULT("input_delay_msec").toInt());
     }
 
 
@@ -116,23 +111,49 @@ void KeySequence(char* hot_key, int delay_ms)
         inputs[0].ki.wVk = k;
         inputs[0].ki.dwFlags = KEYEVENTF_KEYUP;
         SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
-        Sleep(DEFAULT("input_delay_msec").toInt());
     }
-    Sleep(delay_ms);
 
+}
+
+void ScrollDown()
+{
+    POINT mouse_pos;
+    GetCursorPos(&mouse_pos);
+    mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_WHEEL, 0, 0, DWORD(-100), 0);
+    /*
+    INPUT inputs[2];
+    ZeroMemory(inputs, sizeof(inputs));
+    inputs[0].mi.mouseData = -1040;
+    inputs[0].mi.dy = -100;
+    inputs[0].mi.dwExtraInfo = -100;
+    SendInput(ARRAYSIZE(inputs), inputs, sizeof(MOUSEINPUT));
+    */
+}
+
+void ScrollUp()
+{
+    POINT mouse_pos;
+    GetCursorPos(&mouse_pos);
+    mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_WHEEL, 0, 0, DWORD(100), 0);
+    /*
+    INPUT inputs[2];
+    ZeroMemory(inputs, sizeof(inputs));
+    inputs[0].mi.mouseData = 1040;
+    inputs[0].mi.dy = 100;
+    inputs[0].mi.dwExtraInfo = 100;
+    SendInput(ARRAYSIZE(inputs), inputs, sizeof(MOUSEINPUT));
+    */
 }
 
 void Key(char* hot_key)
 {
     //SendCtrlA();
     //return;
-    qDebug() << __FUNCTION__ << QString(hot_key);
     if( strlen(hot_key) > 200 ) return;
     QVector<WORD> vkeys;
     char c = hot_key[strlen(hot_key)-1];
     SHORT code = c-32;
     code = VkKeyScanA(c);
-    //qDebug() << __FUNCTION__ << QString(hot_key) << " VkKeyScanA code =" << code << " c=" << c ;
 
     if( strstr(hot_key, "F1") !=NULL )
         vkeys.push_back(VK_F1);
@@ -170,6 +191,13 @@ void Key(char* hot_key)
         vkeys.push_back(VK_RETURN);
     if( strstr(hot_key, "return") !=NULL )
         vkeys.push_back(VK_RETURN);
+    if( strstr(hot_key, "home") !=NULL )
+        vkeys.push_back(VK_HOME);
+    if( strstr(hot_key, "up") !=NULL )
+        vkeys.push_back(VK_UP);
+    if( strstr(hot_key, "down") !=NULL )
+        vkeys.push_back(VK_DOWN);
+
     vkeys.push_back(code);
 
     if(vkeys.size() == 2)
@@ -211,7 +239,6 @@ QRect InterpreterWin64::parseRect(const QDomNode& node)
         if (match.hasMatch()) {
             pos = match.capturedEnd(0);
             int i = match.captured(1).toInt(&ok);
-            qDebug() << i;
             if (ok) args.push_back(i);
         }
         else hasMatch = false;
@@ -234,7 +261,6 @@ void MouseClick(QPoint coordinates, Qt::MouseButton button)
     mouse_pos.x = coordinates.x();
     mouse_pos.y = coordinates.y();
 
-    qDebug() << __FUNCTION__ << " " << mouse_pos.x << " " << mouse_pos.y;
     GetCursorPos(&mouse_pos);
     mouse_pos.x =  coordinates.x();
     mouse_pos.y =  coordinates.y();
@@ -263,8 +289,29 @@ void MouseClick(QRect rect, Qt::MouseButton button)
 {
     int x = rect.left() + (float)rect.width() * ((float)rand())/RAND_MAX;
     int y = rect.top() + (float)rect.height() * ((float)rand())/RAND_MAX;
-    qDebug() << __FUNCTION__ << " rect = " << rect <<  "x=" << x << " y" << y;
     MouseClick(QPoint(x,y), button);
+}
+
+/* Windows sleep in 100ns units */
+BOOLEAN nanosleep(LONGLONG ns){
+    /* Declarations */
+    HANDLE timer;	/* Timer handle */
+    LARGE_INTEGER li;	/* Time defintion */
+    /* Create timer */
+    if(!(timer = CreateWaitableTimer(NULL, TRUE, NULL)))
+        return FALSE;
+    /* Set timer properties */
+    li.QuadPart = -ns;
+    if(!SetWaitableTimer(timer, &li, 0, NULL, NULL, FALSE)){
+        CloseHandle(timer);
+        return FALSE;
+    }
+    /* Start & wait for timer */
+    WaitForSingleObject(timer, INFINITE);
+    /* Clean resources */
+    CloseHandle(timer);
+    /* Slept without problems */
+    return TRUE;
 }
 
 void InterpreterWin64::MySleep(QDateTime endTime)
@@ -273,13 +320,13 @@ void InterpreterWin64::MySleep(QDateTime endTime)
     QDateTime startTime = QDateTime::currentDateTime();
     while(1)
     {
-        QCoreApplication::processEvents(QEventLoop::AllEvents, MAX_DELAY_SEC);
         QDateTime currentTime = QDateTime::currentDateTime();
         if( currentTime.msecsTo(endTime) < 0)
             break;
         if( startTime.secsTo(currentTime) >  MAX_DELAY_SEC)
             break;
-        Sleep(10);
+        nanosleep(1000); // sleep 1000 nanoseconds
+        QCoreApplication::processEvents(QEventLoop::AllEvents, MAX_DELAY_SEC);
     }
 
 }
@@ -338,10 +385,14 @@ int InterpreterWin64::executeType(const QDomNode& node)
         text = node.toElement().nodeValue();
 
     clipboard->setText(text);
-    Sleep(100);
     //clipboard->c
     Key("ctrl+v");
     return 0;
+}
+
+void InterpreterWin64::stop()
+{
+    stopFlag = true;
 }
 
 
@@ -350,6 +401,7 @@ void InterpreterWin64::executeFunction(const QDomNode& rootNode, QDomNode funcNo
 
     QDomNode domNode = rootNode.firstChild();
     QDomElement domElement;
+    stopFlag = false;
     while(!(domNode.isNull()))
     {
         if(domNode.isElement())
@@ -363,16 +415,14 @@ void InterpreterWin64::executeFunction(const QDomNode& rootNode, QDomNode funcNo
             }
 
         }
+        if( stopFlag ) return;
         //getFunctionsList(domNode, outList);
         if( domNode.parentNode() == funcNode)
         {
-            qDebug() << "node name " << domNode.nodeName() << "is in function" << funcNode.toElement().attribute("name");
-            emit setCurrentNode(domNode);
             execute(domNode);
         }
         else
             executeFunction(domNode, funcNode, function_name);
-        //qDebug() << "node name is " << domNode.nodeName() << "is in function" << funcNode.toElement().attribute("name");
 
         domNode = domNode.nextSibling();
     }
@@ -404,7 +454,6 @@ QString decodePath(QString filename)
     {
         auto varname = match.capturedTexts()[1];
         filename = filename.replace("$(UsefulClicker)","");
-        //qDebug() << __FUNCTION__ << varname;
         clickerPath = qEnvironmentVariable(varname.toStdString().c_str(), QDir::currentPath());
     }
     return clickerPath + filename;
@@ -438,42 +487,57 @@ int InterpreterWin64::executeClickImg(const QDomNode& node)
     return 0;
 }
 
+int InterpreterWin64::executeScrollUp(const QDomNode& node)
+{
+    ScrollUp();
+    return 1;
+}
+
+int InterpreterWin64::executeScrollDown(const QDomNode& node)
+{
+    ScrollDown();
+    return 1;
+}
+
+
+std::map<std::string, method_t> interpreter_func_map{{"click",&InterpreterWin64::executeClick},
+                                {"type",&InterpreterWin64::executeType},
+                                {"shell",&InterpreterWin64::executeShellCommand},
+                                {"clickimg",&InterpreterWin64::executeClickImg},
+                                {"scrollup",&InterpreterWin64::executeScrollUp},
+                                {"scrolldown",&InterpreterWin64::executeScrollDown},
+                                {"hotkey",&InterpreterWin64::executeHotkey}};
+
 int InterpreterWin64::execute(const QDomNode& node)
 {
     QString name = node.toElement().tagName().toLocal8Bit();
     if( !validNodes.contains( name  ) ) return -1;
 
-    qDebug() << name;
 
     //
     int repeats = ATTR("repeats").toInt();
-    qDebug() << __FUNCTION__ << " repeats=" << repeats;
     int n = 0;
 
     while(n++ < repeats)
     {
+        if( stopFlag ) return 0;
 
-        if( name == "hotkey" )
-            executeHotkey(node);
+       // find method in table by name of xml node
+       auto kv = interpreter_func_map.find(name.toStdString());
 
-        if( name == "click" )
-            executeClick(node);
-
-        if( name == "type" )
-            executeType(node);
-
-        if( name == "shell" )
-            executeShellCommand(node);
-
-        if( name == "clickimg" )
-            executeClickImg(node);
+       // call the method
+       if( kv != interpreter_func_map.end())
+         (this->*(kv->second))(node);
 
         // make a delay
-        Delays delays = parseDelays(node);
-        int delay = delays.delay_fixed + (delays.delay_random * (float)rand()/RAND_MAX);
+        currentDelays = parseDelays(node);
+        long delay = currentDelays.delay_fixed + (currentDelays.delay_random * (float)rand()/RAND_MAX);
+        qDebug() << "delay " << delay;
         QDateTime t = QDateTime::currentDateTime().addMSecs(delay);
         MySleep(t);
-        qDebug() << __FUNCTION__ << " delay=" << delay;
+        //QThread::msleep(delay);
+        //nanosleep(delay * 10e6);
+        emit setCurrentNode(node, currentDelays);
     }
 
     return 0;

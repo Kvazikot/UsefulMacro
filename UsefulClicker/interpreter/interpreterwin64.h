@@ -7,8 +7,6 @@
 #include "interpreter/interpreter.h"
 void hotKey(char* hot_key);
 
-
-
 class InterpreterWin64 : public AbstractInterpreter
 {
     Q_OBJECT    
@@ -17,7 +15,8 @@ public:
                               "keydown","keyup","scrollup","scrolldown","clickimg",
                               "func"};
 
-
+    bool stopFlag;
+    Delays currentDelays;
     InterpreterWin64();
     Delays parseDelays(const QDomNode& node)  override;
     QRect parseRect(const QDomNode& node);
@@ -30,11 +29,14 @@ public:
     int executeType(const QDomNode& node);
     int executeShellCommand(const QDomNode& node);
     int executeClickImg(const QDomNode& node);
+    int executeScrollUp(const QDomNode& node);
+    int executeScrollDown(const QDomNode& node);
     void executeFunction(const QDomNode& rootNode, QDomNode funcNode, QString function_name);
 signals:
-    void setCurrentNode(QDomNode& currentNode);
+    void setCurrentNode(const QDomNode& currentNode, Delays delays);
 
 public slots:
+    void stop();
     /*
     void Play() override;
     void StepForward() override;
@@ -45,6 +47,9 @@ public slots:
 
 
 };
+
+typedef int (InterpreterWin64::*method_t)(const QDomNode& n);
+typedef std::map<std::string, method_t> func_map_t;
 
 
 #endif // INTERPRETERWIN64_H

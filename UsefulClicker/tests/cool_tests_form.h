@@ -3,8 +3,10 @@
 
 #include <QDialog>
 #include <QMap>
+#include <QDomNode>
 #include <QElapsedTimer>
 #include <QTimerEvent>
+#include "interpreter.h"
 
 namespace Ui {
 class CoolTestsForm;
@@ -17,7 +19,10 @@ class CoolTestsForm : public QDialog
 public:
     int screenNum=0;
     bool saved;
-    QElapsedTimer lastEditTimer;
+    bool testIsRunningFlag;
+    QString currentStepText;
+    QElapsedTimer lastBlinkTimer;
+    QElapsedTimer lastNodeTimer;
     explicit CoolTestsForm(QWidget *parent = nullptr);
     void runFunction(QString func_name);
     void fullScreen();
@@ -50,7 +55,15 @@ private slots:
 
     void on_setFunctionTest_clicked();
 
+    void on_scrollTest_clicked();
+
+    void on_stopTest_clicked();
+
+signals:
+    void stopExecutionSignal();
+
 public slots:
+    void currentStep(const QDomNode& currentNode, Delays delays);
     void slotSetAttrs(QMap<QString,QString> attrs);
     void slotFullScreen();
     void textChanged();

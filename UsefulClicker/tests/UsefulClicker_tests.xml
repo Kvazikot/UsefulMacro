@@ -27,5 +27,17 @@
  <hotkey keysequence="enter" delay_ms="1000"/>
 </func>
 
+<func name="Scroll Test">
+ <shell bg="1" showConsole="1" hotkey="ctrl + a" cmd="notepad.exe" comment="run notepad"/>
+ <type mode="copy_paste" repeats="10" delay_fixed="100" delay_random="1" text="Это пример текста который был сгенерирован программой UsefulClicker сегодня. Это пример текста который был сгенерирован программой UsefulClicker сегодня." > </type>
+ <hotkey hotkey="ctrl + a" delay_fixed="250"/>
+ <hotkey hotkey="ctrl + c" delay_fixed="350"/>
+ <hotkey hotkey="ctrl + v" delay_fixed="450" repeats="6"/>
+ <hotkey hotkey="ctrl + up" delay_fixed="10" repeats="2"/>
+ <click button="left" x="1448" y="573" />
+ <scrollup repeats="5" />
+ <scrolldown repeats="5" />
+</func>
+
 </xml>
 

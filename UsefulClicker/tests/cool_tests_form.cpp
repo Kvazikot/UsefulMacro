@@ -13,6 +13,7 @@
 #include "ui/coordselector.h"
 #include "ui/imagesearchdialog.h"
 #include "ui/shelldialog.h"
+#include "settings/clickersettings.h"
 #include "tests/highlighter.h"
 
 #include "ui/widgets/areabutton.h"
@@ -113,6 +114,7 @@ CoolTestsForm::CoolTestsForm(QWidget *parent) :
     ui->functionsList->addItems(list);
     ui->functionsList->setCurrentIndex(2);
     createButtons();
+    testIsRunningFlag = false;
 
     QFont font;
     font.setFamily("Courier");
@@ -139,6 +141,7 @@ CoolTestsForm::CoolTestsForm(QWidget *parent) :
     editor->setTextCursor(cursor);
     connect(editor, SIGNAL(cursorPositionChanged()), this, SLOT(cursorPositionChanged()));
 
+
     // individfual functions tests
     decodePath1("$(UsefulClicker)/images/21.03.12.119.png");
 
@@ -161,23 +164,20 @@ void CoolTestsForm::cursorPositionChanged()
 
 void CoolTestsForm::timerEvent(QTimerEvent* event)
 {
-    /*
-    if( lastEditTimer.elapsed() > 2000 && saved == false)
-    {
-        if(editor)
-        {
-            MainWindow* window = MainWindow::getInstance();
-            window->getDoc()->setFunction(ui->functionsList->currentText(), editor->toPlainText().toLocal8Bit());
-            saved = true;
-        }
 
+    if( lastBlinkTimer.elapsed() > 1000 && testIsRunningFlag)
+    {
+        lastBlinkTimer.restart();
+        if (ui->testStatusLabel->text() == "")
+            ui->testStatusLabel->setText(currentStepText);
+        else
+            ui->testStatusLabel->setText("");
     }
-    */
+
 }
 
 void CoolTestsForm::textChanged()
 {
-    lastEditTimer.restart();
     saved = false;
 }
 
@@ -211,17 +211,42 @@ void CoolTestsForm::on_imageSearch_clicked()
 
 void CoolTestsForm::runFunction(QString func_name)
 {
+    //ui->stopTest->setText("STO! TEST IS RUNNING!");
+    testIsRunningFlag = true;
+    lastNodeTimer.restart();
+    currentStepText = "RUNNING " + func_name;
+
     MainWindow* window = MainWindow::getInstance();
     QDomDocument* doc = static_cast<QDomDocument*>(window->getDoc());
     qDebug() << window->getDoc()->getFunction(func_name);
     InterpreterWin64*  interpreter = static_cast<InterpreterWin64*>(window->getInterpreter());
+    connect(interpreter, SIGNAL(setCurrentNode(const QDomNode&,Delays)), this, SLOT(currentStep(const QDomNode&,Delays)));
+    connect(this, SIGNAL(stopExecutionSignal()), interpreter, SLOT(stop()));
     interpreter->executeFunction(doc->documentElement(), doc->documentElement(), func_name);
     qDebug() << __FUNCTION__ << " ~~~~~ EXECUTION DONE ~~~~~!";
-
+    testIsRunningFlag = false;
+    ui->testStatusLabel->setText("SELECT THE TEST");
+    show_message("","Test is done. Execution time is 25 ms!");
 }
+
+void CoolTestsForm::currentStep(const QDomNode& currentNode, Delays delays)
+{
+    auto msec = QString::number(lastNodeTimer.nsecsElapsed()/10e8);
+    currentStepText = "EXECUTING " + currentNode.toElement().tagName() + " in " + msec + " sec";
+    ui->testStatusLabel->setText(currentStepText);
+    ui->logEdit->appendPlainText(currentStepText);
+    auto s = QString("delay_fixed = %1 milliseconds delay_random = %2 milliseconds total = %3")
+            .arg(delays.delay_fixed)
+            .arg(delays.delay_random)
+            .arg(delays.delay_random + delays.delay_fixed);
+    ui->logEdit->appendPlainText(s);
+    lastNodeTimer.restart();
+}
+
 
 void CoolTestsForm::on_typeTest_clicked()
 {
+    lastBlinkTimer.restart();
     runFunction("Type test 2");    
 }
 
@@ -241,7 +266,7 @@ void CoolTestsForm::slotSetAttrs(QMap<QString,QString> attrs)
     QString text;
     for(auto key: attrs.keys())
         text+=key+"="+attrs[key]+" ";
-    ui->plainTextEdit_3->appendPlainText(text);
+    ui->logEdit->appendPlainText(text);
 }
 
 
@@ -332,5 +357,18 @@ void CoolTestsForm::on_setFunctionTest_clicked()
     testdoc->save("test_doc.xml");
     runFunction("Open test_doc.xml");
     delete testdoc;
+}
+
+
+void CoolTestsForm::on_scrollTest_clicked()
+{
+    runFunction("Scroll Test");
+}
+
+
+void CoolTestsForm::on_stopTest_clicked()
+{
+    emit stopExecutionSignal();
+    ui->testStatusLabel->setText("SELECT THE TEST");
 }
 
