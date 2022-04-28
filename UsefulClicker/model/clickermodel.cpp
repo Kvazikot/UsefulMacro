@@ -240,9 +240,11 @@ bool ClickerModel::setData(const QModelIndex &index, const QVariant &value, int 
 
 
         }
-        result = item1->setData(2, value, role);
 
     }
+    if(index.column() == 2)
+        result = item1->setData(2, value, role);
+
     qDebug() << __FUNCTION__ << " " << value;
 
     if (result)

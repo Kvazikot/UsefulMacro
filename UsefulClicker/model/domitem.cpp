@@ -140,7 +140,9 @@ bool DomItem::setData(int column, const QVariant &value, int role)
     if(column == 2 || column == 1)
     {
         //QStringList attrlist = value.toString().split("=");
-         QRegularExpression re("([\\S]+)[=]([\\S ]+)");
+         //For blacklisting a word : ^(?!.*chocolate).*
+
+         QRegularExpression re("[ ]{1}([\\w ]+)=([\"]{1}[^\"]+[\"]{1})");
 
          int pos = 0;
          bool hasMatch = true;

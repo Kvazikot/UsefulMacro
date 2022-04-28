@@ -159,6 +159,14 @@ void FancyDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
             qDebug() << __FUNCTION__ << edit->text();
             model->setData(index, edit->text(), Qt::EditRole);
         }
+        if( QString(editor->metaObject()->className()).contains("QTextEdit"))
+        {
+            QTextEdit* edit = static_cast<QTextEdit*>(editor);
+            QString value = index.model()->data(index, Qt::EditRole).toString();
+            model->setData(index, edit->toPlainText(), Qt::EditRole);
+
+        }
+
     }
 }
 //! [3]
