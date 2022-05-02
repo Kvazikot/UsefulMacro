@@ -210,6 +210,8 @@ void Key(char* hot_key)
         send_key3(vkeys, false);
         send_key3(vkeys, true);
     }
+    if(vkeys.size() == 1)
+        send_key2(vkeys, false);
 }
 
 
@@ -373,6 +375,16 @@ int InterpreterWin64::executeClick(const QDomNode& node)
     return 1;
 }
 
+QString removeTags(QString tag, QString withTags)
+{
+    QString tagEnd = "</" + tag + ">";
+    //QRegularExpression re( QString("%1[\\w\\S\"]+ >").arg(tag) );
+    int pos_end = withTags.indexOf(tagEnd);
+    QString withoutTags = withTags.left(pos_end);
+    int pos2 = withoutTags.indexOf(">") + 1;
+    return withoutTags.mid(pos2, withoutTags.size() - pos2);
+}
+
 int InterpreterWin64::executeType(const QDomNode& node)
 {
 
@@ -384,9 +396,53 @@ int InterpreterWin64::executeType(const QDomNode& node)
     else
         text = node.toElement().nodeValue();
 
-    clipboard->setText(text);
-    //clipboard->c
-    Key("ctrl+v");
+    // COPY PASTE MODE
+    if( node.toElement().hasAttribute("mode") )
+    {
+        auto mode = node.toElement().attribute("mode");
+        if( mode == "copy_paste")
+        {
+            clipboard->setText(text);
+            //clipboard->c
+            Key("ctrl+v");
+            return 0;
+        }
+    }
+
+    // NORMAL TYPE SIMULATION MODE
+
+    // get node value as text
+    QString str;
+    QTextStream ss(&str);
+    ss << node;
+    text = removeTags("type", ss.readAll());
+    //show_message("node value", );
+
+    // split multi string to list
+    QStringList lines = text.split(QRegularExpression("\b([\\]n)\b"));
+    QStringList lines2 = text.split("<br/>");
+    QStringList& l = (lines.size() > lines2.size())? lines:  lines2;
+    // emit keydown event for every sumbol of every string
+    for(int i=0; i < l.size(); i++)
+    {
+        l[i] = l[i].replace("\\n","");
+        l[i] = l[i].replace("<br/>","");
+
+        for(auto c = l[i].begin(); c!=l[i].end(); c++)
+        {
+            char str[3];
+            str[0] = (*c).toLatin1();
+            str[1] = '\0';
+            str[2] = '\0';
+
+            Key(str);
+            long delay = 1;
+            QDateTime t = QDateTime::currentDateTime().addMSecs(delay);
+            MySleep(t);
+
+        }
+    }
+
     return 0;
 }
 
@@ -500,10 +556,19 @@ int InterpreterWin64::executeScrollDown(const QDomNode& node)
 }
 
 
+int InterpreterWin64::executeDblClick(const QDomNode& node)
+{
+    executeClick(node);
+    nanosleep(1000);
+    executeClick(node);
+}
+
+
 std::map<std::string, method_t> interpreter_func_map{{"click",&InterpreterWin64::executeClick},
                                 {"type",&InterpreterWin64::executeType},
                                 {"shell",&InterpreterWin64::executeShellCommand},
                                 {"clickimg",&InterpreterWin64::executeClickImg},
+                                {"dblclick",&InterpreterWin64::executeDblClick},
                                 {"scrollup",&InterpreterWin64::executeScrollUp},
                                 {"scrolldown",&InterpreterWin64::executeScrollDown},
                                 {"hotkey",&InterpreterWin64::executeHotkey}};

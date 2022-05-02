@@ -50,53 +50,6 @@ QString decodePath1(QString filename)
 }
 
 //---------------------------------------------------------------------------------------------------------
-void CoolTestsForm::createButtons()
-{
-
-    keyboard_but = new KeyboardButton(0);
-    keyboard_but->setIcon(":/images/keyboard_icon.png", true, false);
-    setContextMenuPolicy(Qt::PreventContextMenu);
-    connect(keyboard_but, SIGNAL(clicked()),this, SLOT(slotKeyboardClick()));
-    connect(keyboard_but, SIGNAL(clicked()),this, SLOT(slotButtonClicked()));
-
-    mouse_but = new MouseButton(0);
-    mouse_but->setIcon(":/images/mouse_default.png", true, true);
-    connect(mouse_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
-    connect(mouse_but, SIGNAL(clicked()),this, SLOT(slotButtonClicked()));
-
-    cross_but = new CrossButton(0);
-    connect(cross_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
-    connect(cross_but, SIGNAL(clicked()),this, SLOT(updateSequence()));
-
-    area_but = new AreaButton(this);
-    area_but->state = true;
-    area_but->setIcon(":/images/area_icon.png", true, true);
-    connect(area_but, SIGNAL(clicked()),this, SLOT(slotButtonClicked()));
-    connect(QCoreApplication::instance(), SIGNAL(focusChanged(QWidget*, QWidget*)), this, SLOT(slotFocusChanged(QWidget*, QWidget*)));
-
-    shell_but = new ShellButton(this);
-    connect(shell_but, SIGNAL(click(QString)), this, SLOT(slotSetSequence(QString)));
-    connect(shell_but, SIGNAL(clicked()),this, SLOT(slotButtonClicked()));
-
-    QHBoxLayout* hbox = new QHBoxLayout((QWidget*)ui->buttonsGroup);
-    //hbox->addWidget(this);
-    hbox->addWidget(shell_but);
-    hbox->addWidget(area_but);
-    hbox->addWidget(cross_but);
-    hbox->addWidget(keyboard_but);
-    hbox->addWidget(mouse_but);
-    ui->buttonsGroup->setLayout(hbox);
-    //cache_icons(hbox);
-
-
-
-    //hbox->setStretch(0, 100);
-
-    //QWidget* w = (QWidget*)this->parent();
-    //w->setLayout(hbox);
-
-}
-
 
 CoolTestsForm::CoolTestsForm(QWidget *parent) :
     QDialog(parent),
@@ -106,6 +59,7 @@ CoolTestsForm::CoolTestsForm(QWidget *parent) :
     QString fn = ":/tests/UsefulClicker_tests.xml";
     window->loadDocument(fn);    
     ui->setupUi(this);
+
     QDomDocument* doc = static_cast<QDomDocument*>(window->getDoc());
     QStringList list;
     if( doc!=0 )
@@ -113,46 +67,22 @@ CoolTestsForm::CoolTestsForm(QWidget *parent) :
     ui->functionsList->clear();
     ui->functionsList->addItems(list);
     ui->functionsList->setCurrentIndex(2);
-    createButtons();
     testIsRunningFlag = false;
 
     QFont font;
     font.setFamily("Courier");
     font.setFixedPitch(true);
     font.setPointSize(10);
-    editor = new QTextEdit();
+    //editor = new QTextEdit();
     //
-    connect(editor, SIGNAL(textChanged()), this, SLOT(textChanged()));
-    editor->setFont(font);
-    highlighter = new Highlighter(editor->document());
+    //connect(editor, SIGNAL(textChanged()), this, SLOT(textChanged()));
+    //editor->setFont(font);
+    highlighter = new Highlighter(ui->xmlEditor->document());
     ui->groupBox_5->layout()->replaceWidget(ui->xmlEditor, editor);
 
     auto func_body_text = window->getDoc()->getFunction(ui->functionsList->currentText());
-    editor->clear();
-    editor->setText(func_body_text);
-
-    QList<QTextEdit::ExtraSelection> extraSelections;
-    QTextCursor cursor = editor->textCursor();
-    QTextFrameFormat frameFormat;
-    frameFormat.setHeight(10);
-    frameFormat.setWidth(2350);
-    frameFormat.setBackground(Qt::yellow);
-    cursor.insertFrame(frameFormat);
-    editor->setTextCursor(cursor);
-    connect(editor, SIGNAL(cursorPositionChanged()), this, SLOT(cursorPositionChanged()));
-
-
-    // individfual functions tests
-    decodePath1("$(UsefulClicker)/images/21.03.12.119.png");
-
-//    QTextEdit::ExtraSelection selection;
-//    selection.format.setBackground(Qt::yellow);
-//    selection.format.setProperty(QTextFormat::FullWidthSelection, true);
-//    selection.cursor = cursor;
-//    selection.cursor.clearSelection();
-//    extraSelections.append(selection);
-//    editor->setExtraSelections(extraSelections);
-
+    ui->xmlEditor->clear();
+    ui->xmlEditor->setText(func_body_text);
 
     startTimer(1000);
     //runFunction("Change font");
@@ -247,7 +177,7 @@ void CoolTestsForm::currentStep(const QDomNode& currentNode, Delays delays)
 void CoolTestsForm::on_typeTest_clicked()
 {
     lastBlinkTimer.restart();
-    runFunction("Type test 2");    
+    runFunction("Type test");
 }
 
 void CoolTestsForm::on_runFunction_clicked()
@@ -370,5 +300,11 @@ void CoolTestsForm::on_stopTest_clicked()
 {
     emit stopExecutionSignal();
     ui->testStatusLabel->setText("SELECT THE TEST");
+}
+
+
+void CoolTestsForm::on_typeTest2_clicked()
+{
+    runFunction("Type test 2");
 }
 

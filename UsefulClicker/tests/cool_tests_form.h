@@ -59,6 +59,8 @@ private slots:
 
     void on_stopTest_clicked();
 
+    void on_typeTest2_clicked();
+
 signals:
     void stopExecutionSignal();
 

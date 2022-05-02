@@ -11,7 +11,7 @@ class InterpreterWin64 : public AbstractInterpreter
 {
     Q_OBJECT    
 public:
-    QStringList validNodes = {"hotkey","click","shell","dblclick","type",
+    QStringList validNodes = {"hotkey","click","dblclick","shell","dblclick","type",
                               "keydown","keyup","scrollup","scrolldown","clickimg",
                               "func"};
 
@@ -26,6 +26,7 @@ public:
     int execute(const QDomNode& node) override;
     int executeHotkey(const QDomNode& node);
     int executeClick(const QDomNode& node);
+    int executeDblClick(const QDomNode& node);
     int executeType(const QDomNode& node);
     int executeShellCommand(const QDomNode& node);
     int executeClickImg(const QDomNode& node);
