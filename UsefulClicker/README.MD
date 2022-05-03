@@ -55,7 +55,7 @@ The "Next Frame" and "Previous Frame" buttons at the top of the screen.
 That is, the clicker also works in the clicker programming mode. To return the previous window e.g.
 
 ## Compression
-It is necessary to make such programs for the clicker so that they take up a minimum of bytes and do a maximum of useful work. It is possible to add additional information so that it can be restored in case of errors in the communication channel. Here you can connect information not only from artificial neural networks, but also the already slightly forgotten theory of Claude Shannon's information[1]. Perhaps cryptography is not dead yet.
+It is necessary to make such programs for the clicker so that they take up a minimum of bytes and do a maximum of useful work. It is possible to add additional information so that it can be restored in case of errors in the communication channel. Here you can compress the information using not only artificial neural networks, but also the slightly forgotten information theory of Claude Shannon's [1]. 
 
 ## The idea for an astronomical number of screenshots for reverse engineering human software (came from Marvell comics)
 We need to create an astronomical number of screenshots for all sorts of programs and operating systems.
