@@ -60,7 +60,7 @@ It is necessary to make such programs for the clicker so that they take up a min
 ## The idea for an astronomical number of screenshots for reverse engineering human software (came from Marvell comics)
 We need to create an astronomical number of screenshots for all sorts of programs and operating systems.
 Each dialog box is unique to the program. Therefore, the clicker will be oriented towards reverse engineering of traditional software.
-Soon, according to the idea of ​​Mask, all traditional software i.e. the expertise of some engineer will replace neural networks.
+Soon, according to the idea of ​​Elon Musk, all traditional software i.e. the expertise of some engineer will replace neural networks.
 But we need to prepare a description of the functions of every program on Earth that has ever existed.
 So that the future AGI can use these compiled programs for its calculations.
 So that he does not need to invent the wheel, roughly speaking
