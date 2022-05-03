@@ -54,6 +54,9 @@ All this can be arranged in a full-screen semi-transparent widget.
 The "Next Frame" and "Previous Frame" buttons at the top of the screen.
 That is, the clicker also works in the clicker programming mode. To return the previous window e.g.
 
+## Compression
+It is necessary to make such programs for the clicker so that they take up a minimum of bytes and do a maximum of useful work. It is possible to add additional information so that it can be restored in case of errors in the communication channel. Here you can connect information not only from artificial neural networks, but also the already slightly forgotten theory of Claude Shannon's information[1]. Perhaps cryptography is not dead yet.
+
 ## The idea for an astronomical number of screenshots for reverse engineering human software (came from Marvell comics)
 We need to create an astronomical number of screenshots for all sorts of programs and operating systems.
 Each dialog box is unique to the program. Therefore, the clicker will be oriented towards reverse engineering of traditional software.
@@ -242,3 +245,6 @@ After that, the user selects the already highlighted areas with the mouse, and d
 23. When importing from an xml schema, all <script> tags are saved in separate .py files in the scripts directory
 24. OCR of all areas found by ButtonDetector, for example, using the transformer https://huggingface.co/docs/transformers/model_doc/trocr
 
+  
+References
+THE MATHEMATICAL THEORY OF COMMUNICATION CLAUDE E. SHANNON, WARREN WEAVER
