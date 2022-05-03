@@ -12,7 +12,6 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAbstractButton>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
@@ -24,7 +23,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSpinBox>
-#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -33,28 +32,20 @@ class Ui_CoolTestsForm
 {
 public:
     QDialogButtonBox *buttonBox;
-    QWidget *layoutWidget;
-    QVBoxLayout *verticalLayout_2;
-    QCheckBox *checkBox_2;
-    QPushButton *pushButton;
-    QPlainTextEdit *plainTextEdit_2;
     QGroupBox *groupBox;
     QGridLayout *gridLayout;
     QPushButton *pushButton_7;
     QPushButton *pushButton_6;
     QGroupBox *groupBox_2;
     QGridLayout *gridLayout_2;
+    QPushButton *scrollTest;
     QPushButton *typeTest;
     QPushButton *pushButton_3;
-    QPushButton *scrollTest;
+    QPushButton *typeTest2;
     QGroupBox *groupBox_3;
     QGridLayout *gridLayout_3;
     QPushButton *pushButton_4;
-    QWidget *layoutWidget1;
-    QVBoxLayout *verticalLayout;
-    QCheckBox *checkBox;
-    QPlainTextEdit *plainTextEdit;
-    QWidget *layoutWidget2;
+    QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QPushButton *stopTest;
     QPushButton *runFunction;
@@ -66,7 +57,7 @@ public:
     QPushButton *imageSearch;
     QGroupBox *groupBox_5;
     QGridLayout *gridLayout_5;
-    QPlainTextEdit *xmlEditor;
+    QTextEdit *xmlEditor;
     QPlainTextEdit *logEdit;
     QGroupBox *groupBox_6;
     QGridLayout *gridLayout_6;
@@ -76,12 +67,20 @@ public:
     QPushButton *areaButton;
     QPushButton *pickPoint;
     QPushButton *shellDialog;
-    QGroupBox *buttonsGroup;
     QGroupBox *groupBox_7;
     QGridLayout *gridLayout_7;
     QPushButton *createTestXml;
     QPushButton *setFunctionTest;
     QLabel *testStatusLabel;
+    QGroupBox *groupBox_8;
+    QGridLayout *gridLayout_9;
+    QPushButton *pushButton_2;
+    QPushButton *pushButton_5;
+    QGroupBox *groupBox_9;
+    QGridLayout *gridLayout_8;
+    QPushButton *pushButton_9;
+    QPushButton *pushButton_8;
+    QPushButton *pushButton_10;
 
     void setupUi(QDialog *CoolTestsForm)
     {
@@ -94,33 +93,9 @@ public:
         buttonBox->setGeometry(QRect(1330, 30, 81, 61));
         buttonBox->setOrientation(Qt::Vertical);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
-        layoutWidget = new QWidget(CoolTestsForm);
-        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(160, 50, 128, 228));
-        verticalLayout_2 = new QVBoxLayout(layoutWidget);
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
-        checkBox_2 = new QCheckBox(layoutWidget);
-        checkBox_2->setObjectName(QString::fromUtf8("checkBox_2"));
-        checkBox_2->setStyleSheet(QString::fromUtf8("font: 600 12pt \"Segoe UI\";"));
-
-        verticalLayout_2->addWidget(checkBox_2);
-
-        pushButton = new QPushButton(layoutWidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-
-        verticalLayout_2->addWidget(pushButton);
-
-        plainTextEdit_2 = new QPlainTextEdit(layoutWidget);
-        plainTextEdit_2->setObjectName(QString::fromUtf8("plainTextEdit_2"));
-        plainTextEdit_2->setStyleSheet(QString::fromUtf8("background-color: rgb(10, 75, 255);\n"
-"color: rgb(255, 255, 255);"));
-
-        verticalLayout_2->addWidget(plainTextEdit_2);
-
         groupBox = new QGroupBox(CoolTestsForm);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        groupBox->setGeometry(QRect(310, 30, 161, 101));
+        groupBox->setGeometry(QRect(210, 60, 141, 101));
         gridLayout = new QGridLayout(groupBox);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         pushButton_7 = new QPushButton(groupBox);
@@ -135,9 +110,14 @@ public:
 
         groupBox_2 = new QGroupBox(CoolTestsForm);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        groupBox_2->setGeometry(QRect(660, 30, 171, 131));
+        groupBox_2->setGeometry(QRect(560, 40, 171, 131));
         gridLayout_2 = new QGridLayout(groupBox_2);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        scrollTest = new QPushButton(groupBox_2);
+        scrollTest->setObjectName(QString::fromUtf8("scrollTest"));
+
+        gridLayout_2->addWidget(scrollTest, 2, 0, 1, 1);
+
         typeTest = new QPushButton(groupBox_2);
         typeTest->setObjectName(QString::fromUtf8("typeTest"));
 
@@ -146,16 +126,16 @@ public:
         pushButton_3 = new QPushButton(groupBox_2);
         pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
 
-        gridLayout_2->addWidget(pushButton_3, 2, 0, 1, 1);
+        gridLayout_2->addWidget(pushButton_3, 3, 0, 1, 1);
 
-        scrollTest = new QPushButton(groupBox_2);
-        scrollTest->setObjectName(QString::fromUtf8("scrollTest"));
+        typeTest2 = new QPushButton(groupBox_2);
+        typeTest2->setObjectName(QString::fromUtf8("typeTest2"));
 
-        gridLayout_2->addWidget(scrollTest, 1, 0, 1, 1);
+        gridLayout_2->addWidget(typeTest2, 1, 0, 1, 1);
 
         groupBox_3 = new QGroupBox(CoolTestsForm);
         groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
-        groupBox_3->setGeometry(QRect(310, 140, 161, 61));
+        groupBox_3->setGeometry(QRect(210, 170, 141, 61));
         gridLayout_3 = new QGridLayout(groupBox_3);
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
         pushButton_4 = new QPushButton(groupBox_3);
@@ -163,42 +143,23 @@ public:
 
         gridLayout_3->addWidget(pushButton_4, 0, 0, 1, 1);
 
-        layoutWidget1 = new QWidget(CoolTestsForm);
-        layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(20, 50, 125, 228));
-        verticalLayout = new QVBoxLayout(layoutWidget1);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        checkBox = new QCheckBox(layoutWidget1);
-        checkBox->setObjectName(QString::fromUtf8("checkBox"));
-        checkBox->setStyleSheet(QString::fromUtf8("font: 600 12pt \"Segoe UI\";"));
-
-        verticalLayout->addWidget(checkBox);
-
-        plainTextEdit = new QPlainTextEdit(layoutWidget1);
-        plainTextEdit->setObjectName(QString::fromUtf8("plainTextEdit"));
-        plainTextEdit->setStyleSheet(QString::fromUtf8("background-color: rgb(10, 75, 255);\n"
-"color: rgb(255, 255, 255);"));
-
-        verticalLayout->addWidget(plainTextEdit);
-
-        layoutWidget2 = new QWidget(CoolTestsForm);
-        layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(20, 10, 261, 31));
-        horizontalLayout = new QHBoxLayout(layoutWidget2);
+        layoutWidget = new QWidget(CoolTestsForm);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(20, 10, 261, 31));
+        horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        stopTest = new QPushButton(layoutWidget2);
+        stopTest = new QPushButton(layoutWidget);
         stopTest->setObjectName(QString::fromUtf8("stopTest"));
 
         horizontalLayout->addWidget(stopTest);
 
-        runFunction = new QPushButton(layoutWidget2);
+        runFunction = new QPushButton(layoutWidget);
         runFunction->setObjectName(QString::fromUtf8("runFunction"));
 
         horizontalLayout->addWidget(runFunction);
 
-        functionsList = new QComboBox(layoutWidget2);
+        functionsList = new QComboBox(layoutWidget);
         functionsList->addItem(QString());
         functionsList->setObjectName(QString::fromUtf8("functionsList"));
 
@@ -206,7 +167,7 @@ public:
 
         groupBox_4 = new QGroupBox(CoolTestsForm);
         groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
-        groupBox_4->setGeometry(QRect(670, 170, 161, 141));
+        groupBox_4->setGeometry(QRect(560, 180, 161, 141));
         gridLayout_4 = new QGridLayout(groupBox_4);
         gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
         buttonsDetector1 = new QPushButton(groupBox_4);
@@ -231,9 +192,8 @@ public:
         groupBox_5->setGeometry(QRect(20, 300, 821, 561));
         gridLayout_5 = new QGridLayout(groupBox_5);
         gridLayout_5->setObjectName(QString::fromUtf8("gridLayout_5"));
-        xmlEditor = new QPlainTextEdit(groupBox_5);
+        xmlEditor = new QTextEdit(groupBox_5);
         xmlEditor->setObjectName(QString::fromUtf8("xmlEditor"));
-        xmlEditor->setMaximumSize(QSize(16777215, 11));
 
         gridLayout_5->addWidget(xmlEditor, 1, 0, 1, 1);
 
@@ -245,7 +205,7 @@ public:
 
         groupBox_6 = new QGroupBox(CoolTestsForm);
         groupBox_6->setObjectName(QString::fromUtf8("groupBox_6"));
-        groupBox_6->setGeometry(QRect(510, 30, 141, 157));
+        groupBox_6->setGeometry(QRect(380, 40, 141, 157));
         gridLayout_6 = new QGridLayout(groupBox_6);
         gridLayout_6->setObjectName(QString::fromUtf8("gridLayout_6"));
         horizontalLayout_2 = new QHBoxLayout();
@@ -281,12 +241,9 @@ public:
 
         gridLayout_6->addWidget(shellDialog, 3, 0, 1, 1);
 
-        buttonsGroup = new QGroupBox(CoolTestsForm);
-        buttonsGroup->setObjectName(QString::fromUtf8("buttonsGroup"));
-        buttonsGroup->setGeometry(QRect(310, 200, 181, 101));
         groupBox_7 = new QGroupBox(CoolTestsForm);
         groupBox_7->setObjectName(QString::fromUtf8("groupBox_7"));
-        groupBox_7->setGeometry(QRect(510, 200, 151, 101));
+        groupBox_7->setGeometry(QRect(380, 210, 151, 101));
         gridLayout_7 = new QGridLayout(groupBox_7);
         gridLayout_7->setObjectName(QString::fromUtf8("gridLayout_7"));
         createTestXml = new QPushButton(groupBox_7);
@@ -306,6 +263,41 @@ public:
 "font: 900 9pt \"Segoe UI\";\n"
 "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(9, 41, 4, 255), stop:0.085 rgba(2, 79, 0, 255), stop:0.19 rgba(50, 147, 22, 255), stop:0.275 rgba(236, 191, 49, 255), stop:0.39 rgba(243, 61, 34, 255), stop:0.555 rgba(135, 81, 60, 255), stop:0.667 rgba(121, 75, 255, 255), stop:0.825 rgba(164, 255, 244, 255), stop:0.885 rgba(104, 222, 71, 255), stop:1 rgba(93, 128, 0, 255));"));
         testStatusLabel->setAlignment(Qt::AlignCenter);
+        groupBox_8 = new QGroupBox(CoolTestsForm);
+        groupBox_8->setObjectName(QString::fromUtf8("groupBox_8"));
+        groupBox_8->setGeometry(QRect(20, 50, 161, 97));
+        gridLayout_9 = new QGridLayout(groupBox_8);
+        gridLayout_9->setObjectName(QString::fromUtf8("gridLayout_9"));
+        pushButton_2 = new QPushButton(groupBox_8);
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+
+        gridLayout_9->addWidget(pushButton_2, 0, 0, 1, 1);
+
+        pushButton_5 = new QPushButton(groupBox_8);
+        pushButton_5->setObjectName(QString::fromUtf8("pushButton_5"));
+
+        gridLayout_9->addWidget(pushButton_5, 1, 0, 1, 1);
+
+        groupBox_9 = new QGroupBox(CoolTestsForm);
+        groupBox_9->setObjectName(QString::fromUtf8("groupBox_9"));
+        groupBox_9->setGeometry(QRect(20, 160, 164, 131));
+        gridLayout_8 = new QGridLayout(groupBox_9);
+        gridLayout_8->setObjectName(QString::fromUtf8("gridLayout_8"));
+        pushButton_9 = new QPushButton(groupBox_9);
+        pushButton_9->setObjectName(QString::fromUtf8("pushButton_9"));
+
+        gridLayout_8->addWidget(pushButton_9, 1, 0, 1, 1);
+
+        pushButton_8 = new QPushButton(groupBox_9);
+        pushButton_8->setObjectName(QString::fromUtf8("pushButton_8"));
+
+        gridLayout_8->addWidget(pushButton_8, 0, 0, 1, 1);
+
+        pushButton_10 = new QPushButton(groupBox_9);
+        pushButton_10->setObjectName(QString::fromUtf8("pushButton_10"));
+
+        gridLayout_8->addWidget(pushButton_10, 2, 0, 1, 1);
+
 
         retranslateUi(CoolTestsForm);
         QObject::connect(buttonBox, &QDialogButtonBox::accepted, CoolTestsForm, qOverload<>(&QDialog::accept));
@@ -317,20 +309,16 @@ public:
     void retranslateUi(QDialog *CoolTestsForm)
     {
         CoolTestsForm->setWindowTitle(QCoreApplication::translate("CoolTestsForm", "UsefulClicker Tests Form", nullptr));
-        checkBox_2->setText(QCoreApplication::translate("CoolTestsForm", "Message 2", nullptr));
-        pushButton->setText(QCoreApplication::translate("CoolTestsForm", "Generate", nullptr));
-        plainTextEdit_2->setPlainText(QCoreApplication::translate("CoolTestsForm", "\320\255\321\202\320\276 \320\277\321\200\320\270\320\274\320\265\321\200 \321\202\320\265\320\272\321\201\321\202\320\260 \320\272\320\276\321\202\320\276\321\200\321\213\320\271 \320\261\321\213\320\273 \321\201\320\263\320\265\320\275\320\265\321\200\320\270\321\200\320\276\320\262\320\260\320\275 \320\277\321\200\320\276\320\263\321\200\320\260\320\274\320\274\320\276\320\271 UsefulClicker \321\201\320\265\320\263\320\276\320\264\320\275\321\217.", nullptr));
         groupBox->setTitle(QCoreApplication::translate("CoolTestsForm", "2 Group. Gmail tests", nullptr));
         pushButton_7->setText(QCoreApplication::translate("CoolTestsForm", "Compose Message ", nullptr));
         pushButton_6->setText(QCoreApplication::translate("CoolTestsForm", "Compose Message ", nullptr));
         groupBox_2->setTitle(QCoreApplication::translate("CoolTestsForm", "1 Group. Notepad tests", nullptr));
+        scrollTest->setText(QCoreApplication::translate("CoolTestsForm", "Scroll test", nullptr));
         typeTest->setText(QCoreApplication::translate("CoolTestsForm", " Type test", nullptr));
         pushButton_3->setText(QCoreApplication::translate("CoolTestsForm", "Change font ", nullptr));
-        scrollTest->setText(QCoreApplication::translate("CoolTestsForm", "Scroll test", nullptr));
+        typeTest2->setText(QCoreApplication::translate("CoolTestsForm", "Type test 2", nullptr));
         groupBox_3->setTitle(QCoreApplication::translate("CoolTestsForm", "3 Group. Twitter tests", nullptr));
         pushButton_4->setText(QCoreApplication::translate("CoolTestsForm", "Post Twit ", nullptr));
-        checkBox->setText(QCoreApplication::translate("CoolTestsForm", "Message 1", nullptr));
-        plainTextEdit->setPlainText(QCoreApplication::translate("CoolTestsForm", "\320\255\321\202\320\276 \320\277\321\200\320\270\320\274\320\265\321\200 \321\202\320\265\320\272\321\201\321\202\320\260 \320\272\320\276\321\202\320\276\321\200\321\213\320\271 \320\261\321\213\320\273 \321\201\320\263\320\265\320\275\320\265\321\200\320\270\321\200\320\276\320\262\320\260\320\275 \320\277\321\200\320\276\320\263\321\200\320\260\320\274\320\274\320\276\320\271 UsefulClicker \321\201\320\265\320\263\320\276\320\264\320\275\321\217.", nullptr));
         stopTest->setText(QCoreApplication::translate("CoolTestsForm", "STOP TEST", nullptr));
         runFunction->setText(QCoreApplication::translate("CoolTestsForm", "Run Function", nullptr));
         functionsList->setItemText(0, QCoreApplication::translate("CoolTestsForm", "func1", nullptr));
@@ -347,11 +335,17 @@ public:
         areaButton->setText(QCoreApplication::translate("CoolTestsForm", "Area selector", nullptr));
         pickPoint->setText(QCoreApplication::translate("CoolTestsForm", "Coord selector", nullptr));
         shellDialog->setText(QCoreApplication::translate("CoolTestsForm", "Shell Dialog", nullptr));
-        buttonsGroup->setTitle(QCoreApplication::translate("CoolTestsForm", "5. Xml tests", nullptr));
         groupBox_7->setTitle(QCoreApplication::translate("CoolTestsForm", "5 Group. Xml Tests", nullptr));
         createTestXml->setText(QCoreApplication::translate("CoolTestsForm", "Create Test Document", nullptr));
         setFunctionTest->setText(QCoreApplication::translate("CoolTestsForm", "SetFunction Test", nullptr));
         testStatusLabel->setText(QCoreApplication::translate("CoolTestsForm", "<html><head/><body><p>SELECT THE TEST</p></body></html>", nullptr));
+        groupBox_8->setTitle(QCoreApplication::translate("CoolTestsForm", "Painter tests", nullptr));
+        pushButton_2->setText(QCoreApplication::translate("CoolTestsForm", "Area click test", nullptr));
+        pushButton_5->setText(QCoreApplication::translate("CoolTestsForm", "Drawing Face Test", nullptr));
+        groupBox_9->setTitle(QCoreApplication::translate("CoolTestsForm", "MicroRecorder tests", nullptr));
+        pushButton_9->setText(QCoreApplication::translate("CoolTestsForm", "Record mouse trajectory ", nullptr));
+        pushButton_8->setText(QCoreApplication::translate("CoolTestsForm", "Interactive cv test", nullptr));
+        pushButton_10->setText(QCoreApplication::translate("CoolTestsForm", "Play mouse trajectory", nullptr));
     } // retranslateUi
 
 };

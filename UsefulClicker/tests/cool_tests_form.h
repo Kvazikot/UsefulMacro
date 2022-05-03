@@ -18,6 +18,7 @@ class CoolTestsForm : public QDialog
 
 public:
     int screenNum=0;
+    double totalTime=0;
     bool saved;
     bool testIsRunningFlag;
     QString currentStepText;
@@ -34,7 +35,6 @@ private slots:
     void on_buttonsDetector1_clicked();
     void on_runNotepadFullscreen_clicked();
     void on_imageSearch_clicked();
-    void on_typeTest_clicked();
 
 
     void on_runFunction_clicked();
@@ -60,6 +60,8 @@ private slots:
     void on_stopTest_clicked();
 
     void on_typeTest2_clicked();
+
+    void on_typeTest_clicked(bool checked);
 
 signals:
     void stopExecutionSignal();

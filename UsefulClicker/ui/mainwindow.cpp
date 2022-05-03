@@ -481,11 +481,22 @@ void MainWindow::pause()
     else
     {
        playAction->setIcon(QIcon(":/images/pause.jpg"));
+
+       MainWindow* window = MainWindow::getInstance();
+       QDomDocument* doc = static_cast<QDomDocument*>(window->getDoc());
+       InterpreterWin64*  interpreter = static_cast<InterpreterWin64*>(window->getInterpreter());
+       connect(interpreter, SIGNAL(setCurrentNode(const QDomNode&,Delays)), this, SLOT(currentStep(const QDomNode&,Delays)));
+       connect(this, SIGNAL(pause()), interpreter, SLOT(stop()));
+       QString func_name = functionSelector->currentText();
+       interpreter->executeFunction(doc->documentElement(), doc->documentElement(), func_name);
+       playAction->setIcon(QIcon(":/images/play.png"));
     }
+
 }
 
 void MainWindow::reload()
 {
+
     reloadFromFile(current_filename);
 }
 

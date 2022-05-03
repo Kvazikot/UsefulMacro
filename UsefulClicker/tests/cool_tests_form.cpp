@@ -141,6 +141,7 @@ void CoolTestsForm::on_imageSearch_clicked()
 
 void CoolTestsForm::runFunction(QString func_name)
 {
+    totalTime = 0;
     //ui->stopTest->setText("STO! TEST IS RUNNING!");
     testIsRunningFlag = true;
     lastNodeTimer.restart();
@@ -156,12 +157,14 @@ void CoolTestsForm::runFunction(QString func_name)
     qDebug() << __FUNCTION__ << " ~~~~~ EXECUTION DONE ~~~~~!";
     testIsRunningFlag = false;
     ui->testStatusLabel->setText("SELECT THE TEST");
-    show_message("","Test is done. Execution time is 25 ms!");
+    QString msg = QString("Test is done. Execution time is %1 ms!").arg(QString::number(totalTime));
+    show_message("",msg);
 }
 
 void CoolTestsForm::currentStep(const QDomNode& currentNode, Delays delays)
 {
     auto msec = QString::number(lastNodeTimer.nsecsElapsed()/10e8);
+    totalTime+=lastNodeTimer.nsecsElapsed()/10e8;
     currentStepText = "EXECUTING " + currentNode.toElement().tagName() + " in " + msec + " sec";
     ui->testStatusLabel->setText(currentStepText);
     ui->logEdit->appendPlainText(currentStepText);
@@ -173,12 +176,6 @@ void CoolTestsForm::currentStep(const QDomNode& currentNode, Delays delays)
     lastNodeTimer.restart();
 }
 
-
-void CoolTestsForm::on_typeTest_clicked()
-{
-    lastBlinkTimer.restart();
-    runFunction("Type test");
-}
 
 void CoolTestsForm::on_runFunction_clicked()
 {
@@ -306,5 +303,11 @@ void CoolTestsForm::on_stopTest_clicked()
 void CoolTestsForm::on_typeTest2_clicked()
 {
     runFunction("Type test 2");
+}
+
+
+void CoolTestsForm::on_typeTest_clicked(bool checked)
+{
+     runFunction("Type test");
 }
 
