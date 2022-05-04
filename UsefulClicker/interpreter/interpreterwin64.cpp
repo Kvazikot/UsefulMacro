@@ -22,7 +22,7 @@ static DspModule* dsp;
 using namespace cv;
 
 InterpreterWin64::InterpreterWin64()
-    : AbstractInterpreter()
+    : AbstractInterpreter(), stopFlag(false)
 {
     dsp = new DspModule();
 }
@@ -211,7 +211,9 @@ void Key(char* hot_key)
         send_key3(vkeys, true);
     }
     if(vkeys.size() == 1)
+    {
         send_key2(vkeys, false);
+    }
 }
 
 
@@ -408,7 +410,6 @@ int InterpreterWin64::executeType(const QDomNode& node)
             return 0;
         }
     }
-
     // NORMAL TYPE SIMULATION MODE
 
     // get node value as text
@@ -418,32 +419,22 @@ int InterpreterWin64::executeType(const QDomNode& node)
     text = removeTags("type", ss.readAll());
     //show_message("node value", );
 
-    // split multi string to list
-    QStringList lines = text.split(QRegularExpression("\b([\\]n)\b"));
-    QStringList lines2 = text.split("<br/>");
-    QStringList& l = (lines.size() > lines2.size())? lines:  lines2;
-    // emit keydown event for every sumbol of every string
-    for(int i=0; i < l.size(); i++)
+    for(auto c = text.begin(); c!=text.end(); c++)
     {
-        l[i] = l[i].replace("\\n","");
-        l[i] = l[i].replace("<br/>","");
+        char str[3];
+        str[0] = (*c).toLatin1();
+        str[1] = '\0';
+        str[2] = '\0';
 
-        for(auto c = l[i].begin(); c!=l[i].end(); c++)
-        {
-            char str[3];
-            str[0] = (*c).toLatin1();
-            str[1] = '\0';
-            str[2] = '\0';
+        Key(str);
+        long delay = 1;
+        QDateTime t = QDateTime::currentDateTime().addMSecs(delay);
+        MySleep(t);
 
-            Key(str);
-            long delay = 1;
-            QDateTime t = QDateTime::currentDateTime().addMSecs(delay);
-            MySleep(t);
-
-        }
     }
 
     return 0;
+
 }
 
 void InterpreterWin64::stop()
@@ -519,9 +510,18 @@ int InterpreterWin64::executeClickImg(const QDomNode& node)
 {
     QString targetImg_fn = decodePath(node.toElement().attribute("targetImg"));
     QString areaImg_path = QDir::currentPath() + "/images/";//decodePath(node.toElement().attribute("areaImg"));
-    int screenNum = node.toElement().attribute("screenNum").toInt();
+    int screenNum = -1;
+    if( node.toElement().hasAttribute("screenNum"))
+        screenNum = node.toElement().attribute("screenNum").toInt();
+    if( node.toElement().hasAttribute("kernel_size"))
+       dsp->kernel_size = node.toElement().attribute("kernel_size").toInt();
     QString button = node.toElement().attribute("button");
     QString areImg_fn = areaImg_path + "areaImg.bmp";
+
+    QFileInfo fi;
+    if( !fi.exists(targetImg_fn) )
+        return 0;
+
 
     /*
     QScreen* screen = QGuiApplication::screens()[screenNum];
@@ -531,11 +531,14 @@ int InterpreterWin64::executeClickImg(const QDomNode& node)
     cv::imwrite(areImg_fn.toStdString(), areaImg);
     */
 
-    dsp->searchImage(targetImg_fn.toStdString());
+    //delete dsp;
+    //dsp = new DspModule();
+
+    dsp->searchImage(targetImg_fn.toStdString(), screenNum);
     if ( dsp->matchedRectangle.height() < 10 ) return 0;
     if ( dsp->matchedRectangle.width() < 10 ) return 0;
 
-    if( button == "left")
+    if( button == "left" ||  button == "")
         MouseClick(dsp->matchedRectangle, Qt::MouseButton::LeftButton);
     if( button == "right")
         MouseClick(dsp->matchedRectangle, Qt::MouseButton::RightButton);
@@ -592,17 +595,18 @@ int InterpreterWin64::execute(const QDomNode& node)
 
        // call the method
        if( kv != interpreter_func_map.end())
-         (this->*(kv->second))(node);
-
-        // make a delay
-        currentDelays = parseDelays(node);
-        long delay = currentDelays.delay_fixed + (currentDelays.delay_random * (float)rand()/RAND_MAX);
-        qDebug() << "delay " << delay;
-        QDateTime t = QDateTime::currentDateTime().addMSecs(delay);
-        MySleep(t);
-        //QThread::msleep(delay);
-        //nanosleep(delay * 10e6);
-        emit setCurrentNode(node, currentDelays);
+       {
+             (this->*(kv->second))(node);
+             // make a delay
+             currentDelays = parseDelays(node);
+             long delay = currentDelays.delay_fixed + (currentDelays.delay_random * (float)rand()/RAND_MAX);
+             qDebug() << "delay " << delay;
+             QDateTime t = QDateTime::currentDateTime().addMSecs(delay);
+             MySleep(t);
+             //QThread::msleep(delay);
+             //nanosleep(delay * 10e6);
+             emit setCurrentNode(node, currentDelays);
+       }
     }
 
     return 0;

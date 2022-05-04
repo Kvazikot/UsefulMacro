@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>856</width>
-    <height>877</height>
+    <width>884</width>
+    <height>1020</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,100 +31,6 @@
    <property name="standardButtons">
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
-  </widget>
-  <widget class="QGroupBox" name="groupBox">
-   <property name="geometry">
-    <rect>
-     <x>210</x>
-     <y>60</y>
-     <width>141</width>
-     <height>101</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>2 Group. Gmail tests</string>
-   </property>
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QPushButton" name="pushButton_7">
-      <property name="text">
-       <string>Compose Message </string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QPushButton" name="pushButton_6">
-      <property name="text">
-       <string>Compose Message </string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_2">
-   <property name="geometry">
-    <rect>
-     <x>560</x>
-     <y>40</y>
-     <width>171</width>
-     <height>131</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>1 Group. Notepad tests</string>
-   </property>
-   <layout class="QGridLayout" name="gridLayout_2">
-    <item row="2" column="0">
-     <widget class="QPushButton" name="scrollTest">
-      <property name="text">
-       <string>Scroll test</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QPushButton" name="typeTest">
-      <property name="text">
-       <string> Type test</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QPushButton" name="pushButton_3">
-      <property name="text">
-       <string>Change font </string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QPushButton" name="typeTest2">
-      <property name="text">
-       <string>Type test 2</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_3">
-   <property name="geometry">
-    <rect>
-     <x>210</x>
-     <y>170</y>
-     <width>141</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>3 Group. Twitter tests</string>
-   </property>
-   <layout class="QGridLayout" name="gridLayout_3">
-    <item row="0" column="0">
-     <widget class="QPushButton" name="pushButton_4">
-      <property name="text">
-       <string>Post Twit </string>
-      </property>
-     </widget>
-    </item>
-   </layout>
   </widget>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
@@ -161,59 +67,17 @@
     </item>
    </layout>
   </widget>
-  <widget class="QGroupBox" name="groupBox_4">
-   <property name="geometry">
-    <rect>
-     <x>560</x>
-     <y>180</y>
-     <width>161</width>
-     <height>141</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>4 Group. CV tests</string>
-   </property>
-   <layout class="QGridLayout" name="gridLayout_4">
-    <item row="0" column="0">
-     <widget class="QPushButton" name="buttonsDetector1">
-      <property name="text">
-       <string>Buttons Detector 1</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QSpinBox" name="spinBox">
-      <property name="prefix">
-       <string>cannyThreshold = </string>
-      </property>
-      <property name="maximum">
-       <number>1000</number>
-      </property>
-      <property name="value">
-       <number>100</number>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QPushButton" name="imageSearch">
-      <property name="text">
-       <string>Image Search</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
   <widget class="QGroupBox" name="groupBox_5">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>300</y>
+     <y>408</y>
      <width>821</width>
-     <height>561</height>
+     <height>501</height>
     </rect>
    </property>
    <property name="title">
-    <string>Xml editor</string>
+    <string>TEST LOG</string>
    </property>
    <layout class="QGridLayout" name="gridLayout_5">
     <item row="1" column="0">
@@ -234,28 +98,281 @@
     </item>
    </layout>
   </widget>
-  <widget class="QGroupBox" name="groupBox_6">
+  <widget class="QLabel" name="testStatusLabel">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>40</y>
-     <width>141</width>
-     <height>157</height>
+     <x>360</x>
+     <y>16</y>
+     <width>291</width>
+     <height>16</height>
     </rect>
    </property>
-   <property name="title">
-    <string>Pick point from screen</string>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(0, 0, 0);
+font: 900 9pt &quot;Segoe UI&quot;;
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(9, 41, 4, 255), stop:0.085 rgba(2, 79, 0, 255), stop:0.19 rgba(50, 147, 22, 255), stop:0.275 rgba(236, 191, 49, 255), stop:0.39 rgba(243, 61, 34, 255), stop:0.555 rgba(135, 81, 60, 255), stop:0.667 rgba(121, 75, 255, 255), stop:0.825 rgba(164, 255, 244, 255), stop:0.885 rgba(104, 222, 71, 255), stop:1 rgba(93, 128, 0, 255));</string>
    </property>
-   <layout class="QGridLayout" name="gridLayout_6">
-    <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SELECT THE TEST&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>41</y>
+     <width>811</width>
+     <height>361</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Main tests (13)</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox_7">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>150</y>
+       <width>151</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>5 Group. Xml Tests</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_7">
+      <item row="0" column="0">
+       <widget class="QPushButton" name="createTestXml">
+        <property name="text">
+         <string>Create Document (#8)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="setFunctionTest">
+        <property name="text">
+         <string>SetFunction Test (#9)</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>150</y>
+       <width>171</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>1. Notepad tests</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="2" column="0">
+       <widget class="QPushButton" name="scrollTest">
+        <property name="text">
+         <string>Scroll test (#3)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="typeTest">
+        <property name="text">
+         <string> Type test (#1)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="text">
+         <string>Change font (#4)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="typeTest2">
+        <property name="text">
+         <string>Type test 2 (#2)</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_6">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>10</y>
+       <width>141</width>
+       <height>141</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Pick point from screen</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_6">
+      <item row="1" column="0">
+       <widget class="QPushButton" name="pickPoint">
+        <property name="text">
+         <string>Coord selector (#6)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="areaButton">
+        <property name="text">
+         <string>Area selector (#5)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QPushButton" name="shellDialog">
+        <property name="text">
+         <string>Shell Dialog (#7)</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>240</y>
+       <width>141</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>3. Twitter tests</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0">
+       <widget class="QPushButton" name="pushButton_4">
+        <property name="text">
+         <string>Post Twit (#10)</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_11">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>150</y>
+       <width>281</width>
+       <height>151</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Button image</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_10">
+      <item row="0" column="0">
+       <widget class="QLabel" name="buttonImage">
+        <property name="styleSheet">
+         <string notr="true">font: 700 9pt &quot;Segoe UI&quot;;
+text-decoration: underline;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Panel</enum>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>10</y>
+       <width>171</width>
+       <height>141</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>4. CV tests</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="3" column="0">
+       <widget class="QSpinBox" name="spinBox">
+        <property name="prefix">
+         <string>cannyThreshold = </string>
+        </property>
+        <property name="maximum">
+         <number>1000</number>
+        </property>
+        <property name="value">
+         <number>100</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="buttonsDetector1">
+        <property name="text">
+         <string>Buttons Detector 1 (#11)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="imageSearch">
+        <property name="text">
+         <string>Image Search (#12)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QPushButton" name="clickimgTest">
+        <property name="text">
+         <string>clickimg test (#13)</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_10">
+     <property name="geometry">
+      <rect>
+       <x>559</x>
+       <y>10</y>
+       <width>61</width>
+       <height>141</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Screen</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QRadioButton" name="allScreens">
+        <property name="text">
+         <string>All</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QRadioButton" name="screen0">
         <property name="text">
          <string> 0</string>
         </property>
         <property name="checked">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="autoRepeat">
          <bool>true</bool>
@@ -273,144 +390,107 @@
        </widget>
       </item>
      </layout>
-    </item>
-    <item row="1" column="0">
-     <widget class="QPushButton" name="areaButton">
-      <property name="text">
-       <string>Area selector</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="pickPoint">
-      <property name="text">
-       <string>Coord selector</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QPushButton" name="shellDialog">
-      <property name="text">
-       <string>Shell Dialog</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_7">
-   <property name="geometry">
-    <rect>
-     <x>380</x>
-     <y>210</y>
-     <width>151</width>
-     <height>101</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>5 Group. Xml Tests</string>
-   </property>
-   <layout class="QGridLayout" name="gridLayout_7">
-    <item row="0" column="0">
-     <widget class="QPushButton" name="createTestXml">
-      <property name="text">
-       <string>Create Test Document</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QPushButton" name="setFunctionTest">
-      <property name="text">
-       <string>SetFunction Test</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QLabel" name="testStatusLabel">
-   <property name="geometry">
-    <rect>
-     <x>360</x>
-     <y>10</y>
-     <width>291</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(0, 0, 0);
-font: 900 9pt &quot;Segoe UI&quot;;
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(9, 41, 4, 255), stop:0.085 rgba(2, 79, 0, 255), stop:0.19 rgba(50, 147, 22, 255), stop:0.275 rgba(236, 191, 49, 255), stop:0.39 rgba(243, 61, 34, 255), stop:0.555 rgba(135, 81, 60, 255), stop:0.667 rgba(121, 75, 255, 255), stop:0.825 rgba(164, 255, 244, 255), stop:0.885 rgba(104, 222, 71, 255), stop:1 rgba(93, 128, 0, 255));</string>
-   </property>
-   <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;SELECT THE TEST&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_8">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>50</y>
-     <width>161</width>
-     <height>97</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Painter tests</string>
-   </property>
-   <layout class="QGridLayout" name="gridLayout_9">
-    <item row="0" column="0">
-     <widget class="QPushButton" name="pushButton_2">
-      <property name="text">
-       <string>Area click test</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QPushButton" name="pushButton_5">
-      <property name="text">
-       <string>Drawing Face Test</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_9">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>160</y>
-     <width>164</width>
-     <height>131</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>MicroRecorder tests</string>
-   </property>
-   <layout class="QGridLayout" name="gridLayout_8">
-    <item row="1" column="0">
-     <widget class="QPushButton" name="pushButton_9">
-      <property name="text">
-       <string>Record mouse trajectory </string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QPushButton" name="pushButton_8">
-      <property name="text">
-       <string>Interactive cv test</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="pushButton_10">
-      <property name="text">
-       <string>Play mouse trajectory</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+    </widget>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>141</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>2. Gmail tests</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QPushButton" name="pushButton_7">
+        <property name="text">
+         <string>Compose Message </string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="pushButton_6">
+        <property name="text">
+         <string>Compose Message </string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>Test page 2</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox_8">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>161</width>
+       <height>97</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Painter tests</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_9">
+      <item row="0" column="0">
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="text">
+         <string>Area click test</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="pushButton_5">
+        <property name="text">
+         <string>Drawing Face Test</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_9">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>30</y>
+       <width>164</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>MicroRecorder tests</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_8">
+      <item row="1" column="0">
+       <widget class="QPushButton" name="pushButton_9">
+        <property name="text">
+         <string>Record mouse trajectory </string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="pushButton_8">
+        <property name="text">
+         <string>Interactive cv test</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QPushButton" name="pushButton_10">
+        <property name="text">
+         <string>Play mouse trajectory</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <resources/>

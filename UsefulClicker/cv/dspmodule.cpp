@@ -149,23 +149,24 @@ void DspModule::detectButtons(int screen_num, int kernel_size, vector<QRect>& re
     cv::connectedComponentsWithStats(canny_output, labels, stats, centroids);
     cvtColor(im_gray, im_gray, COLOR_GRAY2RGB);
     RNG rng(12345);
-    for(int i=0; i < labels.rows; i++)
-    {
-        auto x = stats.at<int>(i, cv::CC_STAT_LEFT);
-        auto y = stats.at<int>(i, cv::CC_STAT_TOP);
-        auto w = stats.at<int>(i, cv::CC_STAT_WIDTH);
-        auto h = stats.at<int>(i, cv::CC_STAT_HEIGHT);
-        //auto area = stats.at<int>(i, cv::CC_STAT_AREA);
-        if ( ( w < maxRectWidth) && (h < maxRectHeight ) && (w > 0) && (h >0) )
+    if( stats.cols == 5)
+        for(int i=0; i < stats.rows; i++)
         {
-            Scalar color = Scalar( rng.uniform(0, 100), rng.uniform(0,100), rng.uniform(0,100) );
-            Rect r(x,y,w,h);
-            rectangle(canny_output, r, color, 4);
-            rects.push_back(QRect(x,y,w,h));
-            //qDebug() << QRect(x,y,w,h);
-        }
+            int x = stats.at<int>(i, cv::CC_STAT_LEFT);
+            int y = stats.at<int>(i, cv::CC_STAT_TOP);
+            int w = stats.at<int>(i, cv::CC_STAT_WIDTH);
+            int h = stats.at<int>(i, cv::CC_STAT_HEIGHT);
+            //auto area = stats.at<int>(i, cv::CC_STAT_AREA);
+            if ( ( w < maxRectWidth) && (h < maxRectHeight ) && (w > 0) && (h >0) )
+            {
+                Scalar color = Scalar( rng.uniform(0, 100), rng.uniform(0,100), rng.uniform(0,100) );
+                Rect r(x,y,w,h);
+                rectangle(canny_output, r, color, 4);
+                rects.push_back(QRect(x,y,w,h));
+                //qDebug() << QRect(x,y,w,h);
+            }
 
-    }
+        }
 
     //in_out_image = QImage((uchar*) drawing->data, drawing->cols, drawing->rows, drawing->step, QImage::Format_ARGB32);
     imwrite("canny_output1234.png", canny_output);
@@ -184,88 +185,111 @@ QRect DspModule::searchImage(std::string TargetIn_path, int screenNum)
 
     TargetIn = imread(TargetIn_path);
 
-    QScreen* screen = QGuiApplication::screens()[screenNum];
-    QImage screenshot = last_screenshot;
-    if( last_screenshot.width() != screen->geometry().width() )
+    // perform search on all available screens
+    QList<QScreen*> screens;
+
+    if(screenNum == -1)
+        screens = QGuiApplication::screens();
+    else
     {
-        screenshot = screen->grabWindow(0,0,0,screen->geometry().width(), screen->geometry().height()).toImage();
-        last_screenshot = screenshot;
-    }
-    Mat areaImg;
-    areaImg.create(screenshot.height(), screenshot.width(), CV_8UC4);
-    Mat mat(screenshot.height(), screenshot.width(),CV_8UC4, screenshot.bits());
-    QRect r = screen->geometry();
-    Rect rect1(r.left(),r.top(),r.width(),r.height());
-    areaImg = Mat(mat, rect1);
-
-    Mat im_gray,canny_output;
-    cvtColor(areaImg, im_gray, COLOR_RGB2GRAY);
-    //imwrite("out.png", im_gray);
-
-    blur( im_gray, im_gray, Size(3,3) );
-    int thresh = DEFAULT("canny_threshold").toInt();
-    Canny( im_gray, canny_output, thresh, thresh*2 );
-    //imwrite("canny.png", im_gray);
-    Mat rect_kernel = getStructuringElement(MORPH_RECT, Size(kernel_size, kernel_size));
-    dilate(canny_output, canny_output, rect_kernel, Point(-1, -1), 1);
-
-    //cvtColor(im_gray, im_gray, COLOR_GRAY2RGB);
-
-    int h_bins = 50, s_bins = 60;
-    int histSize[] = { h_bins, s_bins };
-    // hue varies from 0 to 179, saturation from 0 to 255
-    float h_ranges[] = { 0, 180 };
-    float s_ranges[] = { 0, 256 };
-    const float* ranges[] = { h_ranges, s_ranges };
-
-    // Use the 0-th and 1-st channels
-    int channels[] = { 0, 1 };
-    Mat hsv_base1, hsv_base2;
-    Mat hist_base1, hist_base2;
-
-    cvtColor( TargetIn, hsv_base2, COLOR_BGR2HSV );
-    calcHist( &hsv_base2, 2, channels, Mat(), hist_base2, 2, histSize, ranges, true, false );
-    normalize( hist_base2, hist_base2, 0, 1, NORM_MINMAX, -1, Mat() );
-
-    Mat	labels, stats, centroids;
-    cv::connectedComponentsWithStats(canny_output, labels, stats, centroids);
-    cvtColor(im_gray, im_gray, COLOR_GRAY2RGB);
-    for(int i=0; i < labels.rows; i++)
-    {
-        auto x = stats.at<int>(i, cv::CC_STAT_LEFT);
-        auto y = stats.at<int>(i, cv::CC_STAT_TOP);
-        auto w = stats.at<int>(i, cv::CC_STAT_WIDTH);
-        auto h = stats.at<int>(i, cv::CC_STAT_HEIGHT);
-        //auto area = stats.at<int>(i, cv::CC_STAT_AREA);
-        if ( ( w < maxRectWidth) && (h < maxRectHeight ) && (w > 0) && (h >0) )
+        if(QGuiApplication::screens().size() > screenNum)
         {
-            Rect r(x,y,w,h);
-            Mat cutfromSearch = Mat(areaImg, r);
-            cvtColor( cutfromSearch, hsv_base1, COLOR_BGR2HSV );
+            QScreen* screen = QGuiApplication::screens()[screenNum];
+            screens.push_back(screen);
+        }
+    }
 
-            calcHist( &hsv_base1, 1, channels, Mat(), hist_base1, 2, histSize, ranges, true, false );
-            normalize( hist_base1, hist_base1, 0, 1, NORM_MINMAX, -1, Mat() );
-            double base_base = compareHist( hist_base1, hist_base2, 2 );
-            //qDebug("%s  hist_compare %f ", __FUNCTION__, base_base);
-            if(base_base > 1 )
+    double base_base;
+    double max_hist_match = std::numeric_limits<double>::min();
+
+    for(auto screen: screens)
+    {
+
+        QImage screenshot = last_screenshot;
+        if( last_screenshot.width() != screen->geometry().width() )
+        {
+            screenshot = screen->grabWindow(0,0,0,screen->geometry().width(), screen->geometry().height()).toImage();
+            last_screenshot = screenshot;
+        }
+        //Mat areaImg;
+        //areaImg.create(screenshot.height(), screenshot.width(), CV_8UC4);
+        Mat areaImg(screenshot.height(), screenshot.width(),CV_8UC4, screenshot.bits());
+        QRect r = screen->geometry();
+        Rect rect1(r.left(),r.top(),r.width(),r.height());
+        //areaImg = Mat(mat, rect1);
+
+        Mat im_gray,canny_output;
+        cvtColor(areaImg, im_gray, COLOR_RGB2GRAY);
+        //imwrite("out.png", im_gray);
+
+        blur( im_gray, im_gray, Size(3,3) );
+        int thresh = DEFAULT("canny_threshold").toInt();
+        Canny( im_gray, canny_output, thresh, thresh*2 );
+        //imwrite("canny.png", im_gray);
+        Mat rect_kernel = getStructuringElement(MORPH_RECT, Size(kernel_size, kernel_size));
+        dilate(canny_output, canny_output, rect_kernel, Point(-1, -1), 1);
+
+        //cvtColor(im_gray, im_gray, COLOR_GRAY2RGB);
+
+        int h_bins = 50, s_bins = 60;
+        int histSize[] = { h_bins, s_bins };
+        // hue varies from 0 to 179, saturation from 0 to 255
+        float h_ranges[] = { 0, 180 };
+        float s_ranges[] = { 0, 256 };
+        const float* ranges[] = { h_ranges, s_ranges };
+
+        // Use the 0-th and 1-st channels
+        int channels[] = { 0, 1 };
+        Mat hsv_base1, hsv_base2;
+        Mat hist_base1, hist_base2;
+
+        cvtColor( TargetIn, hsv_base2, COLOR_BGR2HSV );
+        calcHist( &hsv_base2, 2, channels, Mat(), hist_base2, 2, histSize, ranges, true, false );
+        normalize( hist_base2, hist_base2, 0, 1, NORM_MINMAX, -1, Mat() );
+
+        Mat	labels, stats, centroids;
+        cv::connectedComponentsWithStats(canny_output, labels, stats, centroids);
+        cvtColor(im_gray, im_gray, COLOR_GRAY2RGB);
+        for(int i=0; i < stats.rows; i++)
+        {
+            auto x = stats.at<int>(i, cv::CC_STAT_LEFT);
+            auto y = stats.at<int>(i, cv::CC_STAT_TOP);
+            auto w = stats.at<int>(i, cv::CC_STAT_WIDTH);
+            auto h = stats.at<int>(i, cv::CC_STAT_HEIGHT);
+
+            //auto area = stats.at<int>(i, cv::CC_STAT_AREA);
+
+            if ( ( w < maxRectWidth) && (h < maxRectHeight ) && (w > 0) && (h >0)  )
+                if( (x > 0) && (y > 0) && (x < areaImg.cols) && (y < areaImg.rows) )
             {
-              float area_diff = qAbs(TargetIn.rows * TargetIn.cols  - r.area());
-              //qDebug("%s area_diff %f hist_compare %f ", __FUNCTION__, area_diff, base_base);
-              if(int(area_diff) == 0)
-              {
-                X = r.x;
-                Y = r.y;
-                int w = r.width;
-                int h = r.height;
-//                qDebug() << __FUNCTION__ << "X " << X << "Y " << Y << "w " << w << "h " << h;
-                matchedRectangle = QRect(X,Y,w,h);
-                return QRect(X,Y,w,h);
-              }
+                Rect r(x,y,w,h);
+                Mat cutfromSearch = Mat(areaImg, r);
+                cvtColor( cutfromSearch, hsv_base1, COLOR_BGR2HSV );
+                calcHist( &hsv_base1, 1, channels, Mat(), hist_base1, 2, histSize, ranges, true, false );
+                normalize( hist_base1, hist_base1, 0, 1, NORM_MINMAX, -1, Mat() );
+                base_base = compareHist( hist_base1, hist_base2, 2 );
+                //qDebug("%s  hist_compare %f ", __FUNCTION__, base_base);
+                if(base_base > max_hist_match )
+                {
+                    max_hist_match = base_base;
+                    float area_diff = qAbs(TargetIn.rows * TargetIn.cols  - r.area());
+                    //qDebug("%s area_diff %f hist_compare %f ", __FUNCTION__, area_diff, base_base);
+                    //if(int(area_diff) == 0)
+                    {
+                        X = r.x;
+                        Y = r.y;
+                        int w = r.width;
+                        int h = r.height;
+                        //qDebug() << __FUNCTION__ << "X " << X << "Y " << Y << "w " << w << "h " << h;
+                        matchedRectangle = QRect(X,Y,w,h);
+                        //return matchedRectangle;
+                    }
+                }
+
             }
 
 
         }
-
     }
 
 

@@ -6,6 +6,7 @@
 
 #include "interpreter/interpreter.h"
 void hotKey(char* hot_key);
+QString decodePath(QString filename);
 
 class InterpreterWin64 : public AbstractInterpreter
 {

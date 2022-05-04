@@ -63,12 +63,15 @@ private slots:
 
     void on_typeTest_clicked(bool checked);
 
+    void on_clickimgTest_clicked();
+
 signals:
     void stopExecutionSignal();
 
 public slots:
     void currentStep(const QDomNode& currentNode, Delays delays);
     void slotSetAttrs(QMap<QString,QString> attrs);
+    void buttonDetectorOut(QMap<QString, QString> attrs);
     void slotFullScreen();
     void textChanged();
     void cursorPositionChanged();

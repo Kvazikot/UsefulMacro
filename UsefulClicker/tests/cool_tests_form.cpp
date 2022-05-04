@@ -128,9 +128,49 @@ void CoolTestsForm::on_buttonsDetector1_clicked()
     if( ui->screen1->isChecked() )
         screenNum = 1;
     ScreenButtonsDetector* dlg = new ScreenButtonsDetector(this, screenNum);
-    dlg->setScreenNumber(screenNum);
+    dlg->setScreenNumber(screenNum);    
+    connect(dlg, &ScreenButtonsDetector::sigSetAttrs, this, &CoolTestsForm::buttonDetectorOut);
+
     dlg->showFullScreen();
 }
+
+void CoolTestsForm::buttonDetectorOut(QMap<QString, QString> attrs)
+{
+    QString xmlstring = QString("<clickimg ");
+    for(auto kv=attrs.begin(); kv!=attrs.end(); kv++)
+        if( kv.key()!="nodename")
+            xmlstring+=kv.key()+"=\""+kv.value()+"\" ";
+    xmlstring+="/>";
+    //QPixmap
+    auto fn = attrs["targetImg"].replace("\"","");
+    fn = decodePath(fn);
+
+    ui->buttonImage->setPixmap(QPixmap(fn));
+    ui->logEdit->appendPlainText(xmlstring);
+}
+
+void CoolTestsForm::on_clickimgTest_clicked()
+{
+    auto lines = ui->logEdit->toPlainText().split("\n");
+    MainWindow* window = MainWindow::getInstance();
+    ui->buttonImage->setPixmap(QPixmap());
+//    ClickerDocument* doc = window->getDoc();
+    QDomDocument doc;
+    //xml = "<?xml version='1.0'?><xml>" + xml + "</xml>";
+    auto xml = lines.back();
+    if( doc.setContent( xml ) )
+    {
+        QDomElement root = doc.documentElement();
+        //QDomNode node = doc->createNodeFromString( lines.back() );
+        InterpreterWin64*  interpreter = static_cast<InterpreterWin64*>(window->getInterpreter());
+        interpreter->execute(root);
+
+    }
+
+
+}
+
+
 
 
 void CoolTestsForm::on_imageSearch_clicked()

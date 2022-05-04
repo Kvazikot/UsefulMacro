@@ -63,7 +63,9 @@ void ScreenButtonsDetector::mousePressEvent(QMouseEvent* event)
     attrs["area"] = v;
     QString filename;
     dsp->saveImage(selected_rect, filename);
-    attrs["filename"] = filename;
+    filename = filename.replace("\"","");
+    attrs["targetImg"] = filename;
+    attrs["kernel_size"] = QString::number(dsp->kernel_size);
     attrs["nodename"] = "clickimg";
     //rect_image.save(str);
 
@@ -132,7 +134,8 @@ void ScreenButtonsDetector::paintEvent( QPaintEvent* event)
     event->accept();
 
     QString message;
-    message = QString("kernel_size = %1 Select image to search. Use mouse wheel for fine tuning. logicalDotsPerInch = %2 ").arg(dsp->kernel_size).arg(screen->logicalDotsPerInch());
+    message = QString("kernel_size = %1 Select image to search. Use mouse wheel for fine tuning. ");
+    message = message.arg(QString::number(dsp->kernel_size));
     if( (screen->logicalDotsPerInch()) != 96)
         message = "Please set screen scale to 100% in Desktop settings!";
 
