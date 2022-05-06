@@ -50,6 +50,7 @@ This is related to interactive mode there clicker is mirrors user event but with
 The UsefulClicker in its development stage project right at the point of collecting vast amount of data.
 So since this is a toy project and it respects ai aligment problem. 
 I have to write some security requerments at this early stage.
+Inteligence can be a harmful weapon.
 Next stage is actualy has more teoretical than practical sense at this point.
 
 
