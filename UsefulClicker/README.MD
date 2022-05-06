@@ -25,27 +25,6 @@ The program has a built-in computer vision functionality, i.e. it can identify t
 In this sense, it works similar to how the retina of an animal's eye works.
 The buttons are highlighted in green in the style of augmented reality.
 
-![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/screenshots/buttons_detector_screenshot.png)
-
-fig.1 Button detector
-
-![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/screenshots/delay_widget.png)
-
-fig.2 Widget for setting delays
-
-![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/screenshots/xml_editor_screenshot.png)
-
-Fig.3 Clicker program editor in the form of an xml tree.
-
-![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/screenshots/mainwindow_0.92.png)
-
-fig.4 The editor of the clicker program in the form of an xml tree with pictures on the right.
-
-![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/screenshots/testform_0.92.png)
-
-fig.5 Cool test program
-
-
 ## New concept for Useful Clicker (3/28/2022)
 The program must recognize the context. Those. which window is currently on the screen, which buttons are on the screen.
 It circles all the buttons in green, and the button to be clicked in red.
@@ -53,6 +32,25 @@ He also signs the sequence number of the action next to the button.
 All this can be arranged in a full-screen semi-transparent widget.
 The "Next Frame" and "Previous Frame" buttons at the top of the screen.
 That is, the clicker also works in the clicker programming mode. To return the previous window e.g.
+
+## Reformulation of the problem (5/6/2022) . Few new thoughts. 
+Check UsefulClicker on noisy data. 
+This is related to interactive mode there clicker is mirrors user event but with a small delay.
+* 1. Try to predic there user is about to click next second or more. The possible mathematical models can be: inverse reinforcment learnong, CNN 
+* 2. MicroRecorder suppose to do several things 
+  * a) Record mouse
+  * b) Record voice and extract text from audio signal
+  * c) Record keyboard events
+  * d) Record screen with interactive button recognition
+* 3. Find youtube videos with tutorials on most popular programs for solving common problems on computer like Microsof Excel
+* 4. Try to replay tutrial based only on video data from youtube.
+* 5. Develop a plugin that invoke some video search for a particular tutorial. Maybe embed youtube search in UC interface.
+* 6. You probably need connect some decentralised blockchain based database of tutorials and make team working support (like Discord)
+
+The UsefulClicker in its development stage project right at the point of collecting vast amount of data.
+So since this is a toy project and it respects ai aligment problem. 
+Next stage is actualy has more teoretical than practical sense at this point.
+
 
 ## Compression
 It is necessary to make such programs for the clicker so that they take up a minimum of bytes and do a maximum of useful work. It is possible to add additional information so that it can be restored in case of errors in the communication channel. Here you can compress the information using not only artificial neural networks, but also the slightly forgotten information theory of Claude Shannon's [1]. 
@@ -244,6 +242,28 @@ After that, the user selects the already highlighted areas with the mouse, and d
 22. Make a binary export
 23. When importing from an xml schema, all <script> tags are saved in separate .py files in the scripts directory
 24. OCR of all areas found by ButtonDetector, for example, using the transformer https://huggingface.co/docs/transformers/model_doc/trocr
+
+## Screenshots 
+![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/screenshots/buttons_detector_screenshot.png)
+
+fig.1 Button detector
+
+![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/screenshots/delay_widget.png)
+
+fig.2 Widget for setting delays
+
+![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/screenshots/xml_editor_screenshot.png)
+
+Fig.3 Clicker program editor in the form of an xml tree.
+
+![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/screenshots/mainwindow_0.92.png)
+
+fig.4 The editor of the clicker program in the form of an xml tree with pictures on the right.
+
+![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/screenshots/testform_0.92.png)
+
+fig.5 Cool test program
+
 
   
 References
