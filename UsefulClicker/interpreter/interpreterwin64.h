@@ -13,7 +13,7 @@ class InterpreterWin64 : public AbstractInterpreter
     Q_OBJECT    
 public:
     QStringList validNodes = {"hotkey","click","dblclick","shell","dblclick","type",
-                              "keydown","keyup","scrollup","scrolldown","clickimg",
+                              "keydown","list","keyup","scrollup","scrolldown","clickimg",
                               "func"};
 
     bool stopFlag;
@@ -33,6 +33,7 @@ public:
     int executeClickImg(const QDomNode& node);
     int executeScrollUp(const QDomNode& node);
     int executeScrollDown(const QDomNode& node);
+    int executeList(const QDomNode& node);
     void executeFunction(const QDomNode& rootNode, QDomNode funcNode, QString function_name);
 signals:
     void setCurrentNode(const QDomNode& currentNode, Delays delays);

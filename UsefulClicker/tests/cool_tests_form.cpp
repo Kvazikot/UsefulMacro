@@ -208,6 +208,12 @@ void CoolTestsForm::currentStep(const QDomNode& currentNode, Delays delays)
     currentStepText = "EXECUTING " + currentNode.toElement().tagName() + " in " + msec + " sec";
     ui->testStatusLabel->setText(currentStepText);
     ui->logEdit->appendPlainText(currentStepText);
+    // get node value as text
+    QString str1;
+    QTextStream ss(&str1);
+    ss << currentNode;
+    ui->logEdit->appendPlainText(ss.readAll());
+
     auto s = QString("delay_fixed = %1 milliseconds delay_random = %2 milliseconds total = %3")
             .arg(delays.delay_fixed)
             .arg(delays.delay_random)

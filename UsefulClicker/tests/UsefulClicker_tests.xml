@@ -7,13 +7,36 @@
  <func name="Type test">
   <shell bg="1" showConsole="1" hotkey="ctrl + a" cmd="notepad.exe" comment="run notepad"/>
   <type delay_fixed="100"  >
-<!--
-string1
-string2
-string3
--->
-</type>
+    <!--
+    string1
+    string2
+    string3
+    -->
+    </type>
  </func>
+
+<!--
+example of list definition
+-->
+
+<!--
+transform tag list to shell
+<shell cmd="wscript.exe ./unknown_genius.vbs select_rand_word C:\Projects\UsefulClicker\lists\6000_inventions_confucius_20_century.txt" />
+-->
+
+<func name="List_test" no_delay="1" >
+    <list name="common_english" filename="./lists/common_english_shuffled.txt" sep="\n"/>
+    <list f="select_rand_word" name="common_english"/>
+</func>
+
+<func name="Youtube search by list" >
+    <click button="left" x="1700" y="416" comment="click in chrome window" />
+    <hotkey hotkey="F6"/>
+    <clip args="rand" list="common_english"/>
+    <type mode="copy_paste" text="https://twitter.com/" />
+    <hotkey keysequence="enter" delay_ms="1000"/>
+</func>
+
  <func name="Open test_doc.xml">
   <shell bg="1" showConsole="1" hotkey="ctrl + a" cmd="notepad.exe test_doc.xml" comment="run notepad"/>
  </func>
@@ -49,4 +72,5 @@ string3
 </func>
 
 </xml>
+
 

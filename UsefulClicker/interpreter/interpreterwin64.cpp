@@ -15,6 +15,7 @@
 #include "windows.h"
 #include "settings/clickersettings.h"
 #include <windows.h>
+#include <random>
 #include <QRect>
 #include <QRegularExpression>
 
@@ -493,10 +494,18 @@ int InterpreterWin64::executeShellCommand(const QDomNode& node)
 
 QString decodePath(QString filename)
 {
+
     //$(UsefulClicker)/images/21.03.12.119.png
     QRegularExpression reEnv("[$(]{2}([\\w_]+)[)]{1}");
     auto match = reEnv.match(filename);
     QString clickerPath = QDir::currentPath();
+    // change relative path ./ on absolute path
+    auto pos = filename.indexOf("./")+1;
+    if( pos > 0)
+    {
+        filename = clickerPath + filename.mid(pos,filename.size()-pos);
+        return filename;
+    }
     if( match.hasMatch() )
     {
         auto varname = match.capturedTexts()[1];
@@ -558,6 +567,85 @@ int InterpreterWin64::executeScrollDown(const QDomNode& node)
     return 1;
 }
 
+static QMap<QString, std::vector<QString>> global_lists;
+
+int InterpreterWin64::executeList(const QDomNode& node)
+{
+    QString filename = decodePath(node.toElement().attribute("filename"));
+    QString name = node.toElement().attribute("name");
+    QString sep = node.toElement().attribute("sep","\n");
+    std::default_random_engine generator;
+
+    QFile f(filename);
+    std::vector<QString> str;
+    str.reserve(1024*1024);
+
+    // get node value as text
+    QString str1;
+    QTextStream ss(&str1);
+    ss << node;
+    QString tag_body = removeTags("list", ss.readAll());
+
+    // load list from file
+    if (f.open(QIODevice::ReadOnly))
+    {
+        QTextStream ts(&f);
+
+        if(f.size() > 1024*1024)
+        {
+            std::uniform_int_distribution<int> distribution(0,f.size());
+            int random_offset = distribution(generator);
+            ts.seek(random_offset);
+            ts.readLine(2000);
+            str.push_back(ts.readLine(2000));
+            random_offset = distribution(generator);
+            ts.readLine(2000);
+            str.push_back(ts.readLine(2000));
+        }
+        else
+        {
+            QStringList list = ts.readAll().split("\n");
+            for( auto s: list)
+                str.push_back(s);
+            std::random_shuffle(str.begin(),str.end());
+        }
+        global_lists[name] = str;
+    }
+    else // load list from previous defined named lists (global_lists map)
+    {
+        QTextStream ts(&f);
+        QStringList list = tag_body.split("\n");
+        for( auto s: list)
+            str.push_back(s);
+        std::random_shuffle(str.begin(),str.end());
+        if( global_lists.contains(name))
+        {
+            str = global_lists[name];
+            //show_message("list found in global",name);
+        }
+        else
+            global_lists[name] = str;
+    }
+    QString outputString;
+    for( auto s: str)
+        outputString+=s+"\n";
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    QString function = node.toElement().attribute("f");
+    if( function == "select_rand_word" )
+    {
+        if( str.size() > 0 )
+        {
+            std::uniform_int_distribution<int> distribution(0,str.size());
+            int n = distribution(generator);  // generates number in the range 1..6
+            outputString = str[n];
+            show_message("selecting ",outputString);
+        }
+    }
+    clipboard->setText(outputString);
+    //show_message("", filename);
+    return 1;
+}
+
 
 int InterpreterWin64::executeDblClick(const QDomNode& node)
 {
@@ -570,6 +658,7 @@ int InterpreterWin64::executeDblClick(const QDomNode& node)
 std::map<std::string, method_t> interpreter_func_map{{"click",&InterpreterWin64::executeClick},
                                 {"type",&InterpreterWin64::executeType},
                                 {"shell",&InterpreterWin64::executeShellCommand},
+                                {"list",&InterpreterWin64::executeList},
                                 {"clickimg",&InterpreterWin64::executeClickImg},
                                 {"dblclick",&InterpreterWin64::executeDblClick},
                                 {"scrollup",&InterpreterWin64::executeScrollUp},
@@ -597,15 +686,21 @@ int InterpreterWin64::execute(const QDomNode& node)
        if( kv != interpreter_func_map.end())
        {
              (this->*(kv->second))(node);
-             // make a delay
-             currentDelays = parseDelays(node);
-             long delay = currentDelays.delay_fixed + (currentDelays.delay_random * (float)rand()/RAND_MAX);
-             qDebug() << "delay " << delay;
-             QDateTime t = QDateTime::currentDateTime().addMSecs(delay);
-             MySleep(t);
-             //QThread::msleep(delay);
-             //nanosleep(delay * 10e6);
-             emit setCurrentNode(node, currentDelays);
+
+             // check that there is no no_delay flag
+            if( !node.parentNode().toElement().hasAttribute("no_delay") )
+            {
+                 // make a delay
+                 currentDelays = parseDelays(node);
+                 long delay = currentDelays.delay_fixed + (currentDelays.delay_random * (float)rand()/RAND_MAX);
+                 qDebug() << "delay " << delay;
+                 QDateTime t = QDateTime::currentDateTime().addMSecs(delay);
+                 MySleep(t);
+            }
+            //QThread::msleep(delay);
+            //nanosleep(delay * 10e6);
+            emit setCurrentNode(node, currentDelays);
+
        }
     }
 

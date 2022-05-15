@@ -60,7 +60,7 @@ class QTextDocument;
 QT_END_NAMESPACE
 
 //! [0]
-class Highlighter : public QSyntaxHighlighter
+class   Highlighter : public QSyntaxHighlighter
 {
     Q_OBJECT
 

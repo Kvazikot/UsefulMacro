@@ -59,6 +59,7 @@ Highlighter::Highlighter(QTextDocument *parent)
     keywordFormat.setForeground(Qt::darkBlue);
     keywordFormat.setFontWeight(QFont::Bold);
     const QString keywordPatterns[] = {
+        QStringLiteral("\\blist\\b"),
         QStringLiteral("\\bfunc\\b"), QStringLiteral("\\bclass\\b"), QStringLiteral("\\bconst\\b"),
         QStringLiteral("\\bname\\b"), QStringLiteral("\\benum\\b"), QStringLiteral("\\bexplicit\\b"),
         QStringLiteral("\\bclick\\b"), QStringLiteral("\\binline\\b"), QStringLiteral("\\bint\\b"),
