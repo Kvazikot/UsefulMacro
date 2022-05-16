@@ -1,0 +1,2465 @@
+Lists parsed from imdb using Notepad++ with regular expression [\d]+[.][\w ]+ [ ][\d\w]+[ ]
+Karachi  1989 
+Je suis le seigneur du château  1989 
+Un negro con un saxo  1989 
+Covjek koji je volio sprovode  1989 
+Могучий Куинн  1989 
+Предместье  1989 
+Violación  1989 
+Do Qaidi  1989 
+Ruumis kateissa  1989 
+Unsub  1989 
+The Freeway Maniac  1989 
+Two to Tango  1989 
+Sorb  1989 
+На грани безумия  1989 
+The Edge of Power  1989 
+Charithram  1989 
+Вещественное доказательство  1989 
+La casa al final de la calle  1989 
+Mil Gayee Manzil Mujhe  1989 
+Раздетая для убийства 2  1989 
+Январский человек  1989 
+Глубоководная звезда шесть  1989 
+Sang gong kei bing 3  1989 
+Umang  1989 
+Jungle Ke Jalwe  1989 
+Kissa Pehli Raat Ka  1989 
+Khel Jawani Ka  1989 
+Milan Ki Pyas  1989 
+Jawani Ka Khoon  1989 
+Qafir Jawaani  1989 
+Junglee Jawaani  1989 
+Jawani Solah Saal Ki  1989 
+Jawani Ki Qurbani  1989 
+Pehli Raat  1989 
+I Love You Teacher  1989 
+Kameena Kahin Kaa  1989 
+Mielött befejezi röptét a denevér  1989 
+Gazeteci kiz  1988 
+The Heaping Bouncy Breasts That Smothered a Midget  1988 
+Ji qing sha shou  1988 
+Sapik Kadin  1988 
+Qing chun sha ren qu  1988 
+Kirmizi gece  1988 
+Danger in Paradise  1988 
+Diamond in the Rough  1988 
+Jiang hu you liu  1988 
+Qing huo  1988 
+Amatören  1988 
+Biri beni gözlüyor  1988 
+Aai Pahije  1988 
+Dolar  1988 
+Yao nu xi shen  1988 
+Qing suo gao wei xin  1988 
+Aberrações de Uma Prostituta  1988 
+Spook  1988 
+La pequeña muerte  1988 
+Muerte brutal  1988 
+Citando a la muerte  1988 
+Un asesino anda suelto  1988 
+Vengador callejero  1988 
+El hijo de Camelia la Texana  1988 
+The Terrorists  1988 
+El violador infernal  1988 
+Mardangi  1988 
+Dinastia sangrienta  1988 
+Colorbar  1988 
+Si li tao sheng  1988 
+Witness  1988 
+Dongling da dao II  1988 
+Xue jian Jialaman  1988 
+Xue hun  1988 
+Ci sha Wang Jingwei  1988 
+De grueso calibre  1988 
+Muertes anunciadas  1988 
+Семейная фотография  1988 
+Killing American Style  1988 
+Moonnam Mura  1988 
+Manu Uncle  1988 
+Cobra Force  1988 
+Mistério no Colégio Brasil  1988 
+The Mutagen  1988 
+Scorpion Thunderbolt  1988 
+Side Roads  1988 
+Antima Theerpu  1988 
+Aparan  1988 
+Dharam Shatru  1988 
+Woh Phir Aayegi  1988 
+Aranyakam  1988 
+Ghayal Sherni  1988 
+Rapid Fire  1988 
+Hawkeye  1988 
+Aakhari Poratam  1988 
+Aakhri Adaalat  1988 
+Die Stimme  1988 
+Дьявольское тяготение  1988 
+The Jogger  I 
+Cheri and the Pirates  1988 
+Blood Orgy of the Leather Girls  1988 
+Deadly Obsession  1988 
+Ziek  1988 
+Giallo alla regola  1988 
+Vaarallinen peli  1988 
+Jing nu chu zheng  1988 
+Isku mereltä  1988 
+To Make a Killing  1988 
+The Shadowed Mind  1988 
+Inocencia mortal  1988 
+Sanaton sopimus  1988 
+Eagles Law  1988 
+Dead End City  1988 
+Children of the Empire  1988 
+Yin she mou sha an  1988 
+Agni Natchathiram  1988 
+Воры в законе  1988 
+Fast Gun  1988 
+Dear John  1988 
+El placer de la venganza  1988 
+The Rat  1988 
+Itanong mo sa buwan  1988 
+Lolita chijoku  1988 
+Заживо в западне  1988 
+Drugi covek  1988 
+Бабушкин дом  1988 
+Masacre en Río Grande  1988 
+Не будите спящего полицейского  1988 
+Thrilled to Death  1988 
+Daenam  1988 
+Yu yan qing nong  1988 
+Yee dam hung seon  1988 
+Bestia nocturna  1988 
+Gharam El Afaie  1988 
+Пьяный рассвет  1988 
+Миссисипи в огне  1988 
+Mise En Scène  1988 
+Noche de buitres  1988 
+Ярость зверя  1988 
+Der Fluch  1988 
+Naamiomurhaaja  1988 
+La réception  1988 
+Slipping Into Darkness  1988 
+Игра по правилам  1988 
+Sotto il vestito niente II  1988 
+Пин  1988 
+Dharamyudh  1988 
+Sha chu huang guo  1988 
+Последний ритуал  1988 
+Paris by Night  1988 
+Mong ming yuen yeung  1988 
+Сердце полуночи  1988 
+Детские игры  1988 
+Baby Doll  1988 
+Чyжие среди нас  1988 
+Лунная соната  1988 
+Cacería implacable  1988 
+Killing Blue  1988 
+Игра в прятки  1988 
+The Emissary  1988 
+Sti skia tou fovou  1988 
+O fakellos Polk ston aera  1988 
+Human Error  1988 
+Ночь страха 2  1988 
+Дважды мертвый  1988 
+Линия смерти  1988 
+Служебная вечеринка  1988 
+Juokse henkesi edestä  1988 
+Blackout  1988 
+Huet yee tin si  1988 
+Tappava himo  1988 
+Aarre  1988 
+Тяжкие телесные повреждения  1988 
+Bad Blood  1988 
+Shadow Dancing  1988 
+Private War  1988 
+Lethal Woman  1988 
+Polttavat rahat  1988 
+Brothers in Arms  1988 
+Kaksoiskosto  1988 
+Aag Ke Sholay  1988 
+Поцелуй  1988 
+Sandakot na bala  1988 
+Varjoja yössä  1988 
+La Dolce Morta  1988 
+Коэн и Тейт  1988 
+Baton Rouge  1988 
+Huet mui gwai  1988 
+Заклятие долины змей  1988 
+Воля вселенной  1988 
+Quicker Than the Eye  1988 
+In Dangerous Company  1988 
+Dangerous Love  1988 
+Апартаменты ноль  1988 
+Hotel Snack Bar  1988 
+Der Kuß des Tigers  1988 
+Kunnes kuolema erottaa  1988 
+The Most Dangerous Man in the World  1988 
+Служители дьявола  1988 
+Trinetrudu  1988 
+Игла  1988 
+Seven Hours to Judgment  1988 
+Посланник смерти  1988 
+Tyttö keinussa  1988 
+Адвокат для убийцы  1988 
+Tiyanak  1988 
+Janam Janam  1988 
+Борьба за выживание  1988 
+Восставший из ада 2  1988 
+Georgia  1988 
+Связанные насмерть  1988 
+Убить священника  1988 
+El placer de matar  1988 
+Волшебная миля  1988 
+Zakhmi Aurat  1988 
+Шоссе  1988 
+Душители  1988 
+Wide Scream Theater  1988 
+The Dawning  1988 
+The Carrier  1988 
+The Darkside  1988 
+Исчезновение  1988 
+Торжество порока  1988 
+Плотник  1988 
+Kuuma pako  1988 
+Пугала  1988 
+Герой и Ужас  1988 
+Thanthram  1988 
+Il nido del ragno  1988 
+Foxtrot  1988 
+Sweetwater  1988 
+Преданный  1988 
+Murha suorana lähetyksenä  1988 
+Hok hau fung wan  1988 
+Herdeiros do Solar the Usher  1988 
+Perfect Victims  1988 
+Missione finale  1988 
+Полицейская история 2  1988 
+Жажда мести  1988 
+Qualcuno in ascolto  1988 
+Sha zhi lian  1988 
+Капля  1988 
+Алиса  1988 
+Forbidden Sun  1988 
+Soora Samhaaram  1988 
+Зловещий незнакомец  1988 
+Клетка тигра  1988 
+August 1  1988 
+Mauri  1988 
+Акира  1988 
+Список смертников  1988 
+Крепкий орешек  1988 
+Успеть до полуночи  1988 
+Фантазм 2  1988 
+Racconti di donne  1988 
+Seng fat dak ging  1988 
+Täydellinen murhaaja  1988 
+Dong chang die xue  1988 
+Gracias por los servicios  1988 
+Glembajevi  1988 
+Из тьмы  1988 
+Lethal Pursuit  1988 
+Stay Tuned for Murder  1988 
+Lessons in Suspense  1988 
+Les pyramides bleues  1988 
+Errore fatale  1988 
+Pattanapravesam  1988 
+Красная жара  1988 
+Jhansi rani  1988 
+Президио  1988 
+Полтергейст 3  1988 
+Asesino nocturno  1988 
+Zabij mnie glino  1988 
+Hatya  1988 
+Addicted to Love  1988 
+Канзас  1988 
+Polttopiste Jakarta  1988 
+Murder Rap  1988 
+Samyuktha  1988 
+Рэмбо III  1988 
+Клуб самоубийц  1988 
+Mohabbat Ke Dushman  1988 
+Kabzaa  1988 
+Роковой звонок  1988 
+На острие топора  1988 
+Amerikkalainen ruletti  1988 
+The Shaman  1988 
+Дверь  1988 
+Полночный переход  1988 
+The Dreaming  1988 
+Prisoner of Rio  1988 
+Woh Mili Thi  1988 
+Страшный лес  1988 
+Вымогательство  1988 
+Смертельная ярость  1988 
+Thunder of Gigantic Serpent  1988 
+Игуана  1988 
+Истребитель  1988 
+The Courier  1988 
+Искажения  1988 
+Закат  1988 
+Rakkautensa uhri  1988 
+Pilsaui domangja  1988 
+Ek Hi Maqsad  1988 
+Леди в белом  1988 
+El complot dels anells  1988 
+Vampire at Midnight  1988 
+Сказки госпиталя Гимли  1988 
+Цвета  1988 
+Свидание со смертью  1988 
+Дорогая Елена Сергеевна  1988 
+Плохие сны  1988 
+Над законом  1988 
+Juego diabólico  1988 
+Backwoods  1988 
+Седьмое знамение  1988 
+Demonwarp  1988 
+Pahan matkassa  1988 
+Кровавая среда  1988 
+Радиочастота убийства  1988 
+Chil soyeo bokseong  1988 
+Непобедимый тигр  1988 
+Fa nei qing  1988 
+Маленький Никита  1988 
+Мертв по прибытии  1988 
+Беспредел  I 
+Маскарад  1988 
+Nainen yöjunassa  1988 
+Uiheomhan hyanggi  1988 
+Спинорог Пикассо  1988 
+The Drifter  1988 
+Нет выбора  1988 
+Подмастерье убийцы  1988 
+Удаленный контроль  1988 
+Barcelona Connection  1988 
+Неукротимый  1988 
+Oru CBI Diary Kurippu  1988 
+Rorret  1988 
+Огонь на поражение  1988 
+Боевик Джексон  1988 
+Амстердамский кошмар  1988 
+Полицейский  1988 
+Сама невинность  1988 
+Train  1988 
+City Wolf  1988 
+Возможно в другое время  1988 
+Fatal Pulse  1988 
+Tentazione  1988 
+Дом с привидениями  1988 
+Teito monogatari  1988 
+Con el odio en la piel  1988 
+Кошка  1988 
+Hum Farishte Nahin  1988 
+Blood Screams  1988 
+Khooni Insaan  1988 
+Krodh Jawani Ka  1988 
+Jawani Ka Rog  1988 
+Vaasna Ki Bhookh  1988 
+Gumrah Jawani  1988 
+Achanak  I 
+Vaasna Ke Aag  1988 
+Padosi Ki Biwi  1988 
+Nightwatch  1988 
+Gli incubi di Dario Argento  1987 
+Lian se xiang  1987 
+Qiang xia liu ren  1987 
+Well of Treason  1987 
+Operation Hit Squad  1987 
+Девственницы из ада  1987 
+La esperanza  1987 
+Antavgeies pathous  1987 
+Bello efecto de muerte  1987 
+Revenge of the Street Warrior  1987 
+Andhaa Yudh  1987 
+Caceria de narcos  1987 
+La bruja de la vecindad  1987 
+La pandilla sin rostro  1987 
+Pandilla sanguinaria  1987 
+Adorables criminales  1987 
+Las zorras  1987 
+Policía salvaje  1987 
+Persecución criminal  1987 
+Juventud rebelde  1987 
+Herencia maldita  1987 
+Asalto cotidiano  1987 
+Persecución sangrienta  1987 
+El vagón de la muerte  1987 
+Mente asesina  1987 
+Геометрия  1987 
+Testigo de un crimen  1987 
+Noche de justicia  1987 
+Naam O Nishan  1987 
+Inaam Dus Hazaar  1987 
+Los ojos del muerto  1987 
+Khazana  1987 
+Face to Face  I 
+Tenth of a Second  1987 
+Project Nightmare  1987 
+Overdose  1987 
+Rrethi i kujtesës  1987 
+Yhteys tuntemattomaan  1987 
+Boomiyile Rajakkanmar  1987 
+January Oru Orma  1987 
+Días de violencia  1987 
+Kaun Kitney Pani Mein  1987 
+Horas Fatais  1987 
+Poovizhi Vasalile  1987 
+Maha Yatra  1987 
+Nocturno amor que te vas  1987 
+Trágico terremoto en México  1987 
+Taking Care  1987 
+Der gläserne Himmel  1987 
+Le diaboliche  1987 
+Code Name Vengeance  1987 
+Barang Terlarang  1987 
+Initiation  1987 
+Watan Ke Rakhwale  1987 
+Дежа вю  1987 
+Silverhawk  1987 
+Silent Chase  1987 
+Love Potion  1987 
+Hot Child in the City  1987 
+Демон из рая  1987 
+Clandestinos  1987 
+Blood Sisters  1987 
+Ампир  1987 
+Адская школа  1989 
+Criminally Insane 2  1987 
+Десять негритят  1987 
+Huwag mong buhayin ang bangkay  1987 
+Jebu Donga  1987 
+Camino al infierno  1987 
+Caribe  1987 
+Ужас в опере  1987 
+Terror on Alcatraz  1987 
+Многократное уничтожение  1987 
+Duch  1987 
+Сбрось маму с поезда  1987 
+Чокнутая  1987 
+Холодная сталь  1987 
+Ulkopuolinen  1987 
+Body Contact  1987 
+Yeau  1987 
+Ori no naka no hoshigaru onnatachi  1987 
+The Stranger  1987 
+City of Shadows  1987 
+Страж времени  1987 
+Yan man ying hung  1987 
+Metsästyskausi  1987 
+WAR  1987 
+Vaaran varjossa  1987 
+Полицейский по найму  1987 
+Rahsia  1987 
+Мистика на Бали  1987 
+Цветы на чердаке  1987 
+Possession  1987 
+Тюремное пекло  1987 
+Helsinki Napoli All Night Long  1987 
+Сиеста  1987 
+Белое зло  1987 
+Игра в прятки  1987 
+The Gemini Factor  1987 
+Смертельная добыча  1987 
+Hanyeoui bang  1987 
+O kloios  1987 
+Ätherrausch  1987 
+Miljoonapyykki  1987 
+Нападение птиц  1987 
+Lain ulkopuolella  1987 
+Скрытые  1987 
+Смертельная красотка  1987 
+Призрак смерти  1987 
+Ratkaiseva peli  1987 
+Mauro el mojado  1987 
+Поцелуй папочку на ночь  1987 
+Темная башня  1987 
+Тюрьма  1987 
+Terror Squad  1987 
+Крик совы  1987 
+Res aldrig på enkel biljett  1987 
+Rage to Kill  1987 
+Take Two  1987 
+Связь через Майами  1987 
+Cobra nero  1987 
+Энигма  1987 
+Kudrat Ka Kanoon  1987 
+Подозреваемый  1987 
+Ничья земля  1987 
+Ночной полёт  1987 
+Время убивать  1987 
+Deep Sea Conspiracy  1987 
+Cacería humana  1987 
+Смертельная иллюзия  1987 
+Der Joker  1987 
+Anak ni Zuma  1987 
+Espejos rotos  1987 
+Olor a muerte  1987 
+Tian shi xing dong  1987 
+Skulden  1987 
+Barrios altos  1987 
+Backfire  1987 
+Open House  1987 
+Välähdys menneisyydestä  1987 
+Los años del miedo  1987 
+Ruby Rosen tarina  1987 
+Неистовство  1987 
+Безликие  1987 
+Родной отель  1987 
+Чикаго блюз  1987 
+Бестселлер  1987 
+Hollywood Cop  1987 
+Zoeken naar Eileen  1987 
+Yi luan qing mi  1987 
+Директор  1987 
+Роковое влечение  1987 
+Twin Twisters  1987 
+Janusui bulggot yeoja  1987 
+La rusa  1987 
+Возвращение в Салем  1987 
+Восставший из ада  1987 
+Пять углов  1987 
+Влечение  1987 
+Tapaus Rubicon  1987 
+Смерть телохранителя  1987 
+Игорный дом  1987 
+Avam  1987 
+Poker  1987 
+Sang gong kei bing 2  1987 
+Убийства по чёткам  1987 
+Casa de citas  1987 
+Закон Чёрного орла  1987 
+Duet ming ga yan  1987 
+Blindside  1987 
+Tong tian da dao  1987 
+Agent trouble  1987 
+Нет выхода  1987 
+Kuoleman kumppani  1987 
+Straight Flush  1987 
+Слежка  1987 
+Schmutz  1987 
+7 Saal Baad  1987 
+New Delhi  1987 
+Bukchineun yeoja  1987 
+Pasivadi Pranam  1987 
+Робокоп  1987 
+Безжалостная охота  1987 
+Qi zheng piao piao  1987 
+Блеф  1987 
+Vapauden hinta  1987 
+Jahizieh Baraye Robab  1987 
+La trasgressione  1987 
+Внутреннее пространство  1987 
+Гость  1987 
+Искры из глаз  1987 
+Kätketty kaupunki  1987 
+Закатив глаза  1987 
+Delitti  1987 
+Wolwedans in die Skemer  1987 
+Верующие  1987 
+After Midnight  1987 
+Gongjunge deun naui maenbal  1987 
+Неприкасаемые  1987 
+Piec kobiet na tle morza  1987 
+Sam Barlowin kosto  1987 
+От шёпота до крика  1987 
+Похищенная  1987 
+Cassandra  1987 
+Вражеская территория  1987 
+Masterblaster  1987 
+Las esclavas  1987 
+Sam tiu yat baak  1987 
+Крутые ребята не танцуют  1987 
+Иштар  1987 
+Obsesión de venganza  1987 
+Танец смерти  1987 
+Отходная молитва  1987 
+Шагнувший в огонь  1987 
+Правосудие Стила  1987 
+Bu ye tian  1987 
+Mascara  1987 
+Мэлоун  1987 
+Палачи  1987 
+Все меры предосторожности  1987 
+Город чудищ  1987 
+Wild Thing  1987 
+Проект Икс  1987 
+Фотография Джойи  1987 
+Caramelle da uno sconosciuto  1987 
+Adela  1987 
+Los dueños del silencio  1987 
+Primal Scream  1987 
+Искривленный вниз  1987 
+Wahem  1987 
+Prettykill  1987 
+Itihaas  1987 
+Iris  1987 
+Мучительная боль  1987 
+Noiduttu  1987 
+Раздетая для убийства  1987 
+Уличный парень  1987 
+Conexión criminal  1987 
+Чeтвертый протокол  1987 
+Одиночка  1987 
+Murhan käsikirjoitus  I 
+Le scorpion  1987 
+Смертельное оружие  1987 
+Сердце Ангела  1987 
+Siu sang mung ging wan  1987 
+Thanatos  1987 
+Fataal  1987 
+Gozaresh yek ghatl  1987 
+Luoti luodista  1987 
+Policía judicial federal  1987 
+Yo el ejecutor  1987 
+Blonde Dolly  1987 
+War Dog  1987 
+Бегущий человек  1987 
+Il giorno prima  1987 
+Город в огне  1987 
+Anjaam  1987 
+Policía  1987 
+Маски  1987 
+Ассоциация злоумышленников  1987 
+Закон желания  1987 
+Чeрная вдова  1987 
+Cross  1987 
+Dast Neveshteha  1987 
+Molaghat  1987 
+Telesm  1987 
+Смерть зимой  1987 
+Водолей  1987 
+Ying hung ho hon  1987 
+Loha  1987 
+Воздушный волк  1987 
+Отчим  1987 
+Ледяные тропики  1987 
+Jalwa  1987 
+Profumo  1987 
+Jäähyväiset presidentille  1987 
+Окно спальни  1987 
+Tagos ng dugo  1987 
+Убийство  1987 
+Родственник  1987 
+The Visit  1987 
+Society  1987 
+Naag Mani  1987 
+Jawani Ki Pyas  1987 
+Tu Meri Main Tera  1987 
+Kachchi Jawani  1987 
+Jawani Ke Jalwe  1987 
+Main Aur Tum  1987 
+Mi mi jin ku  1986 
+Hostage  I 
+Black Crusader  1986 
+Short Night  1986 
+Günesten de sicak  1986 
+Kusatma  1986 
+Manyak  1986 
+Bei ban zhe  1986 
+Чужестранка  1986 
+Kort geluk  1986 
+Såsom i en känsla  1986 
+Ilahi adalet  1986 
+Xiong di you zhong  1986 
+Mavi yolculuk  1986 
+Guri  1986 
+Antony Mur Naam  1986 
+Huang dao qiang sheng  1986 
+Сражение  1986 
+Palay Khan  1986 
+Jhanjaar  1986 
+Three Men on Fire  1986 
+Inteqam Ki Aag  1986 
+Jeeva  1986 
+Años mas tarde  1986 
+Cuo wei  1986 
+Chao guo jie xing dong  1986 
+Bo si mao zai xing dong  1986 
+Shiroi yabô  1986 
+Mandhira Punnagai  1986 
+Casos de alarma  1986 
+Yo te amo Catalina  1986 
+Oteldeki cinayet  1986 
+Sobharaj  1986 
+Iniyum Kurukshethram  1986 
+Bilanggo sa dilim  1986 
+Aalaapana  1986 
+Aaj Jhale Mukt Mi  1986 
+High School Spirits  1986 
+Murieron a la mitad del rio  1986 
+Motín en la cárcel  1986 
+Dark Harvest  1986 
+Project  1986 
+Women in Trouble  1986 
+Aadamkhor  1986 
+Maa Ki Saugandh  1986 
+Commando Fury  1986 
+Kauhuloma  1986 
+Mera Dharam  1986 
+Лакер некрофаг  1986 
+Las Vegas Serial Killer  1986 
+Jwala  1986 
+Las inocentes  1986 
+Kotkasaari  1986 
+La casa del buon ritorno  1986 
+Black Tunnel  1986 
+Колдовская доска  1986 
+Birds of Prey  1986 
+Все против одного  1986 
+На следующее утро  1986 
+Без пощады  1986 
+Alindog  1986 
+Robachicos  1986 
+Камикадзе  1986 
+Следы оборотня  1986 
+Captive  1986 
+City in Panic  1986 
+Zoning  1986 
+Зло во благо  1986 
+Большой кайф  1986 
+Берег москитов  1986 
+Взять живым или мёртвым  1986 
+Предатель  1986 
+Резня в школе  1986 
+Безумие улиц  1986 
+Aagantuka  1986 
+Гнев  1986 
+Unnatural Causes  1986 
+Дикая штучка  1986 
+Сошествие в ад  1986 
+Дух мщения  1986 
+Shadows on the Wall  1986 
+If Looks Could Kill  1986 
+Lain nimessä  1986 
+Adiós pequeña  1986 
+La Alacrana  1986 
+Возлюбленные повелителя ночи  1986 
+Sensi  1986 
+Trespasses  1986 
+Tähtäimessä  1986 
+Кошмар в летнем лагере  1986 
+Vain askel hulluuteen  1986 
+Smart Money  1986 
+Bamui yujeong  1986 
+Yeojaga bameul dulyeowohalya 2  1986 
+Saya no iru tousizu  1986 
+Смертельный друг  1986 
+Veendum  1986 
+A garrote limpio  1986 
+Pasión lejana  1986 
+Pokerinaama  1986 
+El trailer asesino  1986 
+Jade Jungle  1986 
+Голливудский Гарри  1986 
+Stin kopsi tou oneirou  1986 
+The Night Stalker  1986 
+Кровь охотника  1986 
+Имя розы  1986 
+Kainin kirous  1986 
+Потроха красавицы  1986 
+Blue Moon  1986 
+Опознание  1986 
+Nyayavidhi  1986 
+Gaeuleul namgigo gan salang  1986 
+Aavanazhi  1986 
+Poovinnu Puthiya Poonthennal  1986 
+Карающая сила  1986 
+Mort un dimanche de pluie  1986 
+Bandera negra  1986 
+Confidential  1986 
+Ночь карандашей  1986 
+Tuhoava kipu  1986 
+Samundar  1986 
+The Fantasist  1986 
+Имя  1986 
+Bullies  1986 
+La guêpe  1986 
+Dan Oniroku hebi to muchi  1986 
+Девушки из исправительной колонии  1986 
+Крайности  1986 
+Кинотюрьма будущего  1986 
+Banter  1986 
+Дьявольский мед  1986 
+Le môme  1986 
+Puzzle  1986 
+Охотник на людей  1986 
+Улица полумесяца  1986 
+Волки  1986 
+Карма  1986 
+Атомная школа  1986 
+Извне  1986 
+Светлое будущее  1986 
+Policía de narcóticos  1986 
+Ai shitî  1986 
+Слишком серьёзная игра  1986 
+Честная игра  1986 
+Yeogokseong  1986 
+Противоборство  1986 
+California Crisis  1986 
+Rajavinte Makan  1986 
+Чужие  1986 
+Balgan High Heels  1986 
+Charari buldeongeoriga doerira  1986 
+Беги без оглядки  1986 
+Peechha Karro  1986 
+Манхэттенский проект  1986 
+Hitlar  1986 
+El Towk Wa El Eswera  1986 
+Без компромиссов  1986 
+El extraño hijo del Sheriff  1986 
+Tuomittujen maa  1986 
+Психо 3  1986 
+Красный перец  1986 
+Veta  1986 
+Africadalli Sheela  1986 
+Кобра  1986 
+Tou chuet sam woo hoi  1986 
+Затаившийся  1986 
+Sarab  1986 
+Bridge to Nowhere  1986 
+Shadow Play  1986 
+Mustat muistot  1986 
+Abducted  1986 
+В опасной близости  1986 
+La machine à découdre  1986 
+Попавший в западню  1986 
+Ты умрешь в полночь  1986 
+Noitatuli  1986 
+Звёздный кристалл  1986 
+The Ladies Club  1986 
+Bhagwaan Dada  1986 
+8 миллионов способов умереть  1986 
+Закон Мерфи  1986 
+Correccional de mujeres  1986 
+Il mostro di Firenze  1986 
+Locket  1986 
+Красная зона  1986 
+Doña Lupe  1986 
+Бабушка  1986 
+Неоновые маньяки  1986 
+Нулевые ребята  1986 
+The Eleventh Commandment  1986 
+Kariyila Kattu Pole  1986 
+El cafre  1986 
+Mokry szmal  1986 
+Царь зла  1986 
+Безмолвие  1986 
+The Naked Cage  1986 
+Матадор  1986 
+Springen  1986 
+Raat Ke Baad  1986 
+Sokea luottamus  1986 
+Singhasan  1986 
+Nag van Vrees  1986 
+Vartha  1986 
+Сальвадор  1986 
+Mania  1986 
+Голливудская полиция нравов  1986 
+Blackout  1986 
+Shart  1986 
+Menu total  1986 
+Lulú de noche  1986 
+Club Life  1986 
+Сведение счетов  1986 
+Jaal  1986 
+Виндикатор  1986 
+Брокер  1986 
+Отряд Дельта  1986 
+Killing Cars  1986 
+Zangha  1986 
+Механические убийцы  1986 
+Любовница в снах  1986 
+Иллюзия убийства  1986 
+Matanza en Matamoros  1986 
+Mayhem  1986 
+Qatl  1986 
+Valekuvia  1986 
+Dluznicy smierci  1986 
+Bishimai nikudorei  1986 
+Кочевники  1986 
+Железный орёл  1986 
+Попутчик  1986 
+Lola  1986 
+Miss Magnum  1986 
+Рождённый американцем  1986 
+Kiraathakudu  1986 
+Восход Черной луны  1986 
+La joven y la tentación  1986 
+Khooni Jawaani  1986 
+Aadhi Zindagi Aadhi Maut  1986 
+Синий бархат  1986 
+Utenfor hullet venter katten  1985 
+El Terella  1985 
+Murderous Intent  1985 
+Arzu  1985 
+Where Evil Dwells  1985 
+Dong fang wu shen  1985 
+Vahset kasirgasi  1985 
+O Barco do Desejo  1985 
+Inferno Thunderbolt  1985 
+Saturday Night Frights  1985 
+Nagual  1985 
+En el pais de Alicia  1985 
+Cuando la noche llega  1985 
+Secuestro sangriento  1985 
+Pesadilla  1985 
+Malditos polleros  1985 
+La habitación que silva  1985 
+Dulce espiritu  1985 
+Damian  1985 
+La dama solitaria  1985 
+No se lo digas a nadie  1985 
+Thanatos  1985 
+Basamat fawk al maa  1985 
+Sin salida  1985 
+Kali Basti  1985 
+Narco terror  1985 
+Shi jie qi an de zhui hou xian suo  1985 
+Felicidad de la señora Consuelo  1985 
+Taraj  1985 
+Huan qi zhi xing  1985 
+Escape sangriento  1985 
+La tumba del mojado  1985 
+Pembalasan Rambu  1985 
+Killer contro killers  1985 
+Counter Measures  1985 
+Asgjë nuk harrohet  1985 
+Pathamudayam  1985 
+El narco  1985 
+To remali tis Athinas  1985 
+De loper  1985 
+Out of the Darkness  1985 
+Sdelka  1985 
+Haveli  1985 
+Parayanumvayya Parayathirikkanumvayya  1985 
+Anveshana  1985 
+Accident  1985 
+Murderlust  1985 
+Murhaaja saapuu öisin  1985 
+Läimäys  1985 
+Kaçis  1985 
+Ates çemberi  1985 
+Dead End  1985 
+Blue Ice  1985 
+Ping an ye  1985 
+Kauhujen kylä  1985 
+Xiang Gang tu fu  1985 
+La esclava blanca  1985 
+Blood Red  1985 
+Bahía blanca  1985 
+Матч состоится в любую погоду  1985 
+Полицейская история  1985 
+Разгадка  1985 
+Сумятица в мыслях  1985 
+Extraña Regresión  1985 
+Молодой Шерлок Холмс  1985 
+Yeoja yeoja  1985 
+Terror y encajes negros  1985 
+Blood Tracks  1985 
+Подземный мир  1985 
+Крепость  1985 
+Bhavani Junction  1985 
+Insaaf Main Karoonga  1985 
+Kuherruskuukausi  1985 
+El Tofan  1985 
+Hum Naujawan  1985 
+Muhan  1985 
+Réaction directe  1985 
+Karimpin Poovinakkare  1985 
+Confessions of a Serial Killer  1985 
+Мишень  1985 
+Kohtalokas syrjähyppy  1985 
+Saeggalitneun namja  1985 
+Aa Neram Alppa Dooram  1985 
+Eomi  1985 
+Жажда смерти 3  1985 
+Соседские мальчишки  1985 
+Горячая цель  1985 
+Jian dong xiao xiong  1985 
+Noises  1985 
+Frendeistä parhaat  1985 
+Thunder Run  1985 
+Kilimanjaro  1985 
+Защита империи  1985 
+Medium  1985 
+Война Страйкера  1985 
+Sang sei sin  1985 
+Zahn um Zahn  1985 
+Otra vuelta de tuerca  1985 
+Saavi  1985 
+Коммандос  1985 
+Остров дикарей  1985 
+Вторжение в США  1985 
+Thulasidala  1985 
+El elegido  1985 
+Zabicie ciotki  1985 
+Обитель  1985 
+Leng xie tu fu  1985 
+Bras de fer  1985 
+Сердце дракона  1985 
+Внезапная смерть  1985 
+Junior  1985 
+Nirakkoottu  1985 
+Приятный разговор  1985 
+Tex e il signore degli abissi  1985 
+Зазубренное лезвие  1985 
+Полиция  1985 
+Плавучий маяк  1985 
+Компрометирующие позы  1985 
+Historias violentas  1985 
+Умирают только дважды  1985 
+Предупреждение  1985 
+Слово полицейского  1985 
+Год Дракона  1985 
+После работы  I 
+Telephone  1985 
+Colpi di luce  1985 
+Sucedió en el internado  1985 
+Моли о смерти  1985 
+El maleficio II  1985 
+La caravana de la muerte  1985 
+Abathumbi  1985 
+Годзилла 1985  1985 
+The Naked Country  1985 
+Чeловек в красном ботинке  1985 
+Trial Run  1985 
+Кошмар на кладбище  1985 
+Иди и смотри  1985 
+Завещание Холкрофта  1985 
+Yellow Pages  1985 
+День мертвецов  1985 
+Затмение  1985 
+Bhago Bhoot Aayaa  1985 
+Жизненная сила  1985 
+Juego sucio en Casablanca  1985 
+Покровитель  1985 
+The Armchair Hacker  1985 
+Дикие гуси 2  1985 
+Haudattu saalis  1985 
+Amazonin aarre  1985 
+Красное каление  1985 
+La fuga del rojo  1985 
+Вид на убийство  1985 
+Древнейшая профессия  1985 
+Acosada  1985 
+Sairaalapeli  1985 
+Baidurya Rahasya  1985 
+Смертельное состязание  1985 
+Кодекс молчания  1985 
+Contrato con la muerte  1985 
+The Sphinx  1985 
+Return  I 
+Adieu blaireau  1985 
+Первостепенный риск  1985 
+Balidaan  1985 
+Стик  1985 
+9 смертей ниндзя  1985 
+Мата Хари  1985 
+Клик  1985 
+Strings  1985 
+Vaarallinen suhde  1985 
+Кошачий глаз  1985 
+Ee Sabdam Innathe Sabdam  1985 
+Manchurian Avenger  1985 
+Jawaab  1985 
+Подземка  1985 
+Назойливый полицейский  1985 
+Raman Sreeraman  1985 
+Dödspolare  1985 
+Aitbaar  1985 
+Адская дыра  1985 
+Wildschut  1985 
+Pimeys odottaa  1985 
+Execution of a Dead Man  1985 
+Seijo densetsu  1985 
+Zuma  1985 
+Kuroi shitagi no onna  1985 
+After Darkness  1985 
+Kuvahait  1985 
+Zamana  1985 
+В ночи  1985 
+Viettiensä orja  1985 
+Скверный сезон  1985 
+Crimen en familia  1985 
+Смерть во французском саду  1985 
+Eendag vir Altyd  1985 
+Пояс Ориона  1985 
+Свидетель  1985 
+De prooi  1985 
+Farar  1985 
+Milad  1985 
+Toña machetes  1985 
+Blood Debts  1985 
+Urgence  1985 
+Yongho sanggwon  1985 
+Playa prohibida  1985 
+Серп и Мартинес  1985 
+Агенты Сокол и Снеговик  1985 
+Новые детишки  1985 
+Parfait amour  1985 
+Oru Kaidhiyin Diary  1985 
+Pournami Alaigal  1985 
+Walking the Edge  1985 
+Brigade des moeurs  1985 
+Fragments of Terror  1985 
+Punk City  1985 
+Kab Tak Pukaroon  1985 
+Uske Baad  1985 
+Savage  1985 
+Prsten  1984 
+Wu hao ji yao yuan  1984 
+Малиновое вино  1984 
+Tian tian tian lan  1984 
+Dai qiang guo jing  1984 
+Testigo ocular  1984 
+The Saturday Late Show  1984 
+Cui hua kuang mo  1984 
+Os homes e a noite  1984 
+Sin rastro  1984 
+Un ensayo  1984 
+Killing Time  II 
+The Jogger  1984 
+Mujhe Shakti Do  1984 
+Siete en la mira  1984 
+Tras el horizonte  1984 
+La divina Lola  1984 
+Irupatthi Naalu Mani Neram  1984 
+Jugandose la vida  1984 
+El regreso del carro rojo  1984 
+Nooravathu Naal  1984 
+Uyarangalil  1984 
+Manasariyathe  1984 
+Death Raiders  1984 
+Njeriu prej dheu  1984 
+Zakhmi Sher  1984 
+Rock of Ages  1984 
+The Gold Medal  1984 
+Viaton uhri  1984 
+Neiata sti laspi  1984 
+Snafu  1984 
+Teresa altri desideri  1984 
+Asalto en Tijuana  1984 
+Ying zi jun tuan  1984 
+En retirada  1984 
+Akalmand  1984 
+Special Request  1984 
+Dimension  1984 
+Andhi Gali  1984 
+For Services Rendered  1984 
+Jailhouse Girls  1984 
+Tummuva keskiyö  1984 
+Gadis berwajah seribu  1984 
+Контузия  1984 
+To Kill a Stranger  1984 
+Väärä mies  1984 
+Lipstick and Blood  1984 
+Kanoon Kya Karega  1984 
+Arizona  1984 
+Код допуска  1984 
+Vultures  1984 
+The Dark Side to Love  1984 
+Psychosickle  1984 
+Rainfox  1984 
+Alapaap  1984 
+Седьмая мишень  1984 
+Годзилла  1984 
+Thrillkill  1984 
+Охота на роботов  I 
+Космическая одиссея 2010  1984 
+The Secret Servant  1984 
+Оргии Калигулы  1984 
+Karishmaa  1984 
+Cane arrabbiato  1984 
+Глаза за окном спальни  1984 
+Paluuta ei ole olemassa  1984 
+Nocaut  1984 
+El otro  II 
+Yan gui fa kuang  1984 
+Спецэффекты  1984 
+Без вести пропавшие  1984 
+Courage  1984 
+Pimeässä vaanii kuolema  1984 
+Xian shen  1984 
+Awaaz  1984 
+Суррогат  1984 
+Experience  1984 
+Дар дьявола  1984 
+Режь и беги  1984 
+Der Sohn des Bullen  1984 
+Тихое безумство  1984 
+Перворожденный  1984 
+Американская мечтательница  1984 
+O Lugar do Morto  1984 
+Les trottoirs de Bangkok  1984 
+Condemned  1984 
+Похититель сердец  1984 
+Преступление на почве страсти  1984 
+Poppers  1984 
+Подставное тело  1984 
+Человек с Майорки  1984 
+Женщины в гневе  1984 
+Yön saalistajat  1984 
+Diamond Connection  1984 
+Christina y la reconversión sexual  1984 
+Shrant  1984 
+Импульс  1984 
+Zuster Lydia zoekt het geluk  1984 
+Särkyneet peilit  1984 
+Sköna juveler  1984 
+Valkoinen tuli  1984 
+The Sound of Murder  1984 
+Охотник  I 
+Misteryo sa tuwa  1984 
+Кровавая акула  1984 
+Andar Baahar  1984 
+Дом тайн и загадок Хаммера  1984 
+Narttu  1984 
+Мститель 2  1984 
+Buio in città  1984 
+Расчленитель  1984 
+Slagskämpen  1984 
+Вспышка  1984 
+Dreams Come True  1984 
+Mujeres salvajes  1984 
+Stress  1984 
+Nandri  1984 
+Петля  1984 
+Пейзаж снов  1984 
+Rûju  1984 
+Красный рассвет  1984 
+La triche  1984 
+Dharm Aur Qanoon  1984 
+Филадельфийский эксперимент  1984 
+Todo o nada  1984 
+Mahiru no kirisakima  1984 
+Крик о помощи  1984 
+Disconnected  1984 
+Der Mord mit der Schere  1984 
+Detenute violente  1984 
+Basag ang pula  1984 
+Город страха  1984 
+Der Auslöser  1984 
+Окрапленный университет  1984 
+Совершенные незнакомцы  1984 
+Плащ и кинжал  1984 
+Gritos de ansiedad  1984 
+Sang gong kei bing  1984 
+Kraj rata  1984 
+SF Shinseiki Lensman  1984 
+Мутант  1984 
+У холмов есть глаза 2  1984 
+Сорвать маску  1984 
+Дикие улицы  1984 
+Die Story  1984 
+Noches sin lunas ni soles  1984 
+Опасные чары  1984 
+Душитель против душителя  1984 
+Opasni trag  1984 
+Улицы в огне  1984 
+Приказано взять живым  1984 
+Di 8 dian  1984 
+Qing gui  1984 
+Посол  1984 
+Shao nu ji zhong ying  1984 
+Закусочная на шоссе 66  1984 
+De grens  1984 
+Impatto mortale  1984 
+Стукач  1984 
+Дневник террориста  1984 
+Tausend Augen  1984 
+Элемент преступления  1984 
+Super  1984 
+La muerte del chacal  1984 
+Порождающая огонь  1984 
+Shang tian jiu ming  1984 
+Алфавитный город  1984 
+Вниз  1984 
+Wu ming huo  1984 
+Они играют с огнём  1984 
+Кровавое посвящение  1984 
+Воины затерянного мира  1984 
+Mongnyeo han  1984 
+Viva la vie  1984 
+Les fauves  1984 
+Диагональ слона  1984 
+Devanthakudu  1984 
+Maati Maangey Khoon  1984 
+Syntipukki  1984 
+El diablo y la dama  1984 
+Vengeance  1984 
+Peng you xiong di  1984 
+Matinya Seorang Patriot  1984 
+Skorpioni  1984 
+Загадка уединенного мотеля  1984 
+Авантюристы  1984 
+The Enchanted  1984 
+Просто кровь  1984 
+Athirathram  1984 
+Dekkaritarina Polar  1984 
+Viimeinen kesä  1984 
+Huang huo  1984 
+Свидание с незнакомцем  1984 
+El corazón de la noche  1984 
+Убийство Майка  1984 
+Дети кукурузы  1984 
+Ночь тысячи наслаждений  1984 
+Несмотря ни на что  1984 
+Ночные воришки  1984 
+Конфискатор  1984 
+Das Autogramm  1984 
+Morgen in Alabama  1984 
+Luna de sangre  1984 
+Vetri  1984 
+Лэсситер  1984 
+Moord in Extase  1984 
+Le garde du corps  1984 
+Милая семейка  1984 
+Shilat  1984 
+Взломщики  1984 
+Trauma  1984 
+Воины 2072  1984 
+Perverse oltre le sbarre  1984 
+Единственный выживший  1984 
+Inquilaab  1984 
+Noche de carnaval  1984 
+Obliteration  1984 
+UFO Kidnapped  1984 
+Meri Adaalat  1984 
+Ночной дозор  1984 
+Облава  1984 
+Голубой гром  1984 
+Violated  1984 
+Yahan Sub Kushal Hai  1984 
+Silky  1984 
+Main Qatil Hoon  1984 
+Bad Aur Badnaam  1984 
+Горе невинным  1984 
+Nu tai bao  1983 
+Jin fen ye cha  1983 
+Heugsamgwi  1983 
+The Hereafter  1983 
+Senator  1983 
+Hei mei gui  1983 
+Shei ren liaojie wo  1983 
+Yi chu jing hun  1983 
+Agent 123  1983 
+Budak Nafsu  1983 
+Portrait of an Assassin  1983 
+Günesin tutuldugu gün  1983 
+Barzakhiha  1983 
+Un cuento  1983 
+Historias paralelas  1983 
+Faraib  1983 
+Haadsaa  1983 
+Te ji jing bao 333  1983 
+Çöl  1983 
+Malayur Mambattiyaan  1983 
+Caceria de traficantes  1983 
+Passport  1983 
+Mortuary  II 
+La venganza de Maria  1983 
+Terror en los barrios  1983 
+Chakravyuha  1983 
+Mission Thunderbolt  1983 
+O viasmos mias monahis  1983 
+Prathigna  1983 
+Iniyenkilum  1983 
+Momentos de Prazer e Agonia  1983 
+The Antwerp Killer  1983 
+Lock  1983 
+Love in Hong Kong  1983 
+Hanging Heart  1983 
+O stohos  1983 
+O gyros tou thanatou  1983 
+Bhookambam  1983 
+Marakkillorikkalum  1983 
+W  I 
+Страх  I 
+Magash Hakesef  1983 
+The Basement  1983 
+A Próxima Vítima  1983 
+Pedot  1983 
+Viraj periculos  1983 
+Naiset kaltereiden takana  1983 
+SS Operation Wolf Cub  1983 
+Terrorin uhrit  1983 
+Sangre en mis zapatos  1983 
+The Prodigal Planet  1983 
+Phatik Chand  1983 
+Ложь  1983 
+El enigma del yate  1983 
+La desconocida  1983 
+Правила охоты  1983 
+Семя призрака  1983 
+Huumekuriirit  1983 
+Meneko  1983 
+Необычайная отвага  1983 
+Парк Горького  1983 
+Силквуд  1983 
+Кристина  1983 
+Внезапный удар  1983 
+Bijo nawa geshô  1983 
+Mystère  1983 
+Isanghan gwangye  1983 
+Неизвестная тварь  1983 
+Chessgame  1983 
+Cross Country  1983 
+Bajo la metralla  1983 
+Hakujasho  1983 
+Thunder  1983 
+Dugong buhay  1983 
+Ангелочек  1983 
+Qayamat  1983 
+Вне закона  1983 
+Мертвая зона  1983 
+Nogare no machi  1983 
+Yeojaga bameul dulyeowohalya  1983 
+Paanchwin Manzil  1983 
+An qu  1983 
+Giochi carnali  1983 
+Сладкая банда  1983 
+Horis martyres  1983 
+Ypogeia diadromi  1983 
+I parexigisi  1983 
+Мозговой штурм  1983 
+Почетный консул  1983 
+Los renglones torcidos de Dios  1983 
+Il pino azzurro  1983 
+Eloonjääneiden vyöhyke  1983 
+Viimeinen lento pakoon  1983 
+Стоны наслаждения  1983 
+El arreglo  II 
+Cazador de asesinos  1983 
+Kieroa peliä  1983 
+Le faucon  1983 
+Месть ниндзя  1983 
+Meng gui chu long  1983 
+Молодые воины  1983 
+Membrane  1983 
+La crime  1983 
+Длина волны  1983 
+Побег из Бронкса  1983 
+System ohne Schatten  1983 
+La java des ombres  1983 
+Куджо  1983 
+Лезвие в ночи  1983 
+Скорей бы воскресенье  1983 
+Звездная палата  1983 
+El crack dos  1983 
+Okasareta fukushû  1983 
+Gabi kung sumikat ang araw  1983 
+Seiteki hanzai  1983 
+Пригород  1983 
+Чeлюcти 3  1983 
+Kaappausyritys  1983 
+Deulgae  1983 
+Al Sada El Mortashon  1983 
+Flics de choc  1983 
+Tian shi zhuang xie  1983 
+Deadly Force  1983 
+Baram baram baram  1983 
+Jos ovaj put  1983 
+Nos arnab  1983 
+Haltéroflic  1983 
+Осьминожка  1983 
+Jaanejaan  1983 
+Психо 2  1983 
+Женщины за решеткой  1983 
+0shiui hotel  1983 
+Эврика  1983 
+Военные игры  1983 
+El arreglo  I 
+На последнем дыхании  1983 
+Las sobrinas del diablo  1983 
+Dead Bunnies  1983 
+Экватор  1983 
+Yi miao jue sheng si  1983 
+Halo taxi  1983 
+Эммануэль в тюрьме  1983 
+Intohimon lunnaat  I 
+Mahaan  1983 
+Miumui sewol  1983 
+Aa Rathri  1983 
+Одинокий волк МакКуэйд  1983 
+Een zaak van leven of dood  1983 
+Balles perdues  1983 
+Oriental Techniques in Pain and Pleasure  1983 
+China Lake  1983 
+Delitto carnale  1983 
+Julie Darling  1983 
+Treci kljuc  1983 
+Бегство Эдди Мэйкона  1983 
+Плохие мальчики  1983 
+Чeтвертый мужчина  1983 
+Amerikan painajainen  1983 
+Feng xie  1983 
+Abhilasha  I 
+Плащ  1983 
+За 10 минут до полуночи  1983 
+Danielin junamatka  1983 
+Смертельная поездка  1983 
+Занавес  1983 
+Asalto al Banco Central  1983 
+Via degli specchi  1983 
+La noche de los sexos abiertos  1983 
+Убийца полицейских  1983 
+Измена  1983 
+Лорды дисциплины  1983 
+Я вышла замуж за тень  1983 
+Смерть на взлете  1983 
+Lang nu shen long jian  1983 
+Особое задание  1983 
+Безумная миссия 2  1983 
+Голубой гром  1983 
+Видеодром  1983 
+Dada  1983 
+Неукротимый  1983 
+Оливия  1983 
+Самооборона  1983 
+Midnight Heat  1983 
+Die Insel der blutigen Plantage  1983 
+Цена риска  1983 
+Mangal Pandey  1983 
+Сладкие 16  1983 
+Xue zhong xue  1983 
+Baisers exotiques  1983 
+I kathodos  1983 
+Siskiyan  1983 
+Lie hu xing dong  1982 
+Za pai da jin ji  1982 
+Creature Feature  II 
+The Secret of Seagull Island  1982 
+Hei juan tao  1982 
+Shou xing di yu nu  1982 
+Hei shi fu ren  1982 
+Xin ai de ren  1982 
+Xue ran ye mu dan  1982 
+Tan yu  1982 
+Da dao luo wang  1982 
+Weird II  1982 
+Murder in the Mist  1982 
+Il nano erotico  1982 
+Nu xing zhu yi  1982 
+Theater Bizarre  1982 
+Xie zhou  1982 
+El lago  1982 
+El cartero llama por última vez  1982 
+Chambal Ke Daku  1982 
+A Noite do Amor Eterno  1982 
+The Caffeine File  1982 
+Zakhmee Insaan  1982 
+Dongfang Jian  1982 
+Wang you cao  1982 
+Yezhaam Rathri  1982 
+Ponmudy  1982 
+John Jaffer Janardhanan  1982 
+Anton Muze  1982 
+Sahasa Simha  1982 
+Aakrosam  1982 
+Pemburu  1982 
+Sara Varsham  1982 
+Runaway Nightmare  1982 
+Sumbandh  1982 
+Deadly Sunday  1982 
+Остров крови  1982 
+De potloodmoorden  1982 
+Padayottam  1982 
+Apocalisse di un terremoto  1982 
+Kiss of Medusa  1982 
+Tensão no Rio  1982 
+La belva dalla calda pelle  1982 
+The Story of Prunella  1982 
+Desolation Angels  1982 
+Qiang kou xia de xiao bai he  1982 
+Бугимен  1982 
+Женская тюрьма в Амазонии  1982 
+Король комедии  1982 
+Tangiers  1982 
+Escrito en la niebla  1982 
+Varhainen syksy  1982 
+Tirkistelijä  1982 
+Последствия  1982 
+Haplos  1982 
+Возвращение резидента  1982 
+La furia de los karatecas  1982 
+Pi li da niu  1982 
+Vai avanti tu che mi vien da ridere  1982 
+City Nights  1982 
+Los ojos de un niño  1982 
+Cosa fácil  1982 
+48 чaсов  1982 
+Пытки девушки деревянным конём  1982 
+Девушки исчезают  1982 
+Difendimi dalla notte  1982 
+Чёрная комната  1982 
+Giro City  1982 
+Miwo miwo miwo  1982 
+Lie huo qing chun  1982 
+The Harlem Valentine Day  1982 
+BrainWaves  1982 
+Tappava petos  1982 
+Samraat  1982 
+Доносчик  1982 
+The Plains of Heaven  1982 
+Seiha  1982 
+Девушка из Триеста  1982 
+Дрожь  1982 
+The Clairvoyant  1982 
+Крысы  1982 
+Yamakinkarudu  1982 
+Телепат  1982 
+A Dangerous Summer  1982 
+Banno  1982 
+Энигма  1982 
+Anametrisi  1982 
+Jousiampuja  1982 
+Muerte en el Río Grande  1982 
+Убийца  1982 
+Blood Song  1982 
+Días de combate  1982 
+Blood Bride  1982 
+Vortex  1982 
+Van de koele meren des doods  1982 
+Les yeux rouges  1982 
+Hotel Villa Goerne  1982 
+Белая роза  1982 
+Hua jie  1982 
+Jugando con la muerte  1982 
+Угроза исчезновения видов  1982 
+Yao ming du hu li  1982 
+Насилие в женской тюрьме  1982 
+Catharsis  1982 
+Ye lang bang  1982 
+The Concrete Jungle  1982 
+Morte in Vaticano  1982 
+Золотая жила  1982 
+Der Westen leuchtet  1982 
+Жидкое небо  1982 
+Куски  1982 
+Сера и елей  1982 
+Joyonghan bang  1982 
+The Eyes of the Amaryllis  1982 
+Одни во тьме  1982 
+Высшая точка  1982 
+Asesinato en el Comité Central  1982 
+Hei yu da tao wang  1982 
+Yokmangui neup  1982 
+Victims  1982 
+Вынужденная месть  1982 
+Shi Jie  1982 
+Каратели  1982 
+Камикадзе 1989  1982 
+Salangui noye  1982 
+Leng yan sha ji  1982 
+Солдат  1982 
+Haluan rakastella  1982 
+Wakalt Al Balah  1982 
+Класс 1984  1982 
+Sha chu xi ying pan  1982 
+Prison très spéciale pour femmes  1982 
+Curse of Welwitschia  1982 
+Бегущий по лезвию  1982 
+Zlocin u skoli  1982 
+Honeymoon Horror  1982 
+Огненный лис  1982 
+Лес  1982 
+Выродок  1982 
+Blinds  1982 
+Una di troppo  1982 
+Mo jie  1982 
+Мошенничество  1982 
+Las pobres ilegales  1982 
+Попавшиеся  1982 
+Звонки  1982 
+Призраки шляпника  1982 
+Zapach psiej siersci  1982 
+Kaliyugaya  1982 
+Полтергейст  1982 
+Fighting Back  I 
+Piru irti  1982 
+Crosstalk  1982 
+Zei xing  1982 
+Афера  1982 
+Mélodie pour Manuella  1982 
+Мёртвые пледов не носят  1982 
+Неправый прав  1982 
+Upír z Feratu  1982 
+The Scarecrow  1982 
+Chong po hei xuan wo  1982 
+Шок  1982 
+Angaeneun yeojacheoleom sogsaginda  1982 
+Akuma no heya  1982 
+Teesri Aankh  1982 
+Игра в убийство  1982 
+Shen tan xiao xiong  1982 
+Безмолвный гнев  1982 
+En la tormenta  1982 
+Северная звезда  1982 
+Lie tou  1982 
+Стрельба по живым мишеням  1982 
+Suraag  1982 
+Смертельная ловушка  1982 
+Sha ren mei gui  1982 
+Shou xin  1982 
+Chi se Xiang Wei she  1982 
+Khatte ghermez  1982 
+Long tou lao da  1982 
+Часы посещения  1982 
+Litan  1982 
+Hei Long Lao da  1982 
+Gopichand Jasoos  1982 
+Jing hun feng yu ye  1982 
+Пропавший без вести  1982 
+Жажда смерти 2  1982 
+Abendgrauen  1982 
+Тысяча миллиардов долларов  1982 
+Chi qing qi nu zi  1982 
+Apocalipsis sexual  1982 
+Пересечение границы  1982 
+Freedom  1982 
+Retrato de una mujer casada  1982 
+Полиция нравов  1982 
+Незнакомец наблюдает  1982 
+Соблазнение  1982 
+Долина Смерти  1982 
+Безумная миссия  1982 
+Haathkadi  1982 
+Deadly Alliance  1982 
+El chanfle II  1982 
+Pyaara Dost  1982 
+Kong bu de qing ren  1981 
+Shang Hai she hui dang an  1981 
+Re xue  1981 
+Fatayat Haerat  1981 
+Zhi ye xiong shou  1981 
+Jie du  1981 
+Out of Order  1981 
+Suspense Theater  1981 
+Srigala  1981 
+Ladaaku  1981 
+Zwei Stunden zu spät  1981 
+Jeene Ki Arzoo  1981 
+A transzport  1981 
+Raktham  1981 
+Ariyappedatha Rahasyam  1981 
+Feng huang nu sha xing  1981 
+La cassure  1981 
+Attimari  1981 
+Ahimsa  1981 
+Raaz  1981 
+Aalemane  1981 
+De terugtocht  1981 
+Dhuan  1981 
+Akriet  1981 
+Professor Pyarelal  1981 
+Хранитель призрака  1981 
+Lifepod  1981 
+Инкубус  1981 
+Саламандра  1981 
+Notturno con grida  1981 
+Luger  1981 
+Lovely But Deadly  1981 
+Fatal Encounter  1981 
+Bad Blood  1981 
+Amanda by Night  1981 
+Paydirt  1981 
+Cómo quieres que sea  1981 
+Zamaane Ko Dikhana Hai  1981 
+Kisapmata  1981 
+Команда Шарки  1981 
+История с привидениями  1981 
+Перекачивание капитала  1981 
+Любитель  1981 
+Гиблое дело  1981 
+Operation Leo  1981 
+Ek Aur Ek Gyarah  1981 
+Rastro de muerte  1981 
+Hei se da heng  1981 
+Fei bao xing dong  1981 
+Змеиный яд  1981 
+Hei xi yi  1981 
+Перед самым рассветом  1981 
+Meri Aawaz Suno  1981 
+Nosangeseo  1981 
+Убийство в китайском ресторане  1981 
+Без злого умысла  1981 
+Мужское дело  1981 
+La coralillo  1981 
+The Orchard End Murder  1981 
+Kopfschuß  1981 
+Chettaniki Kallu Levu  1981 
+Рев  1981 
+Безумец  1981 
+Сотворивший красоток  1981 
+Chung fung che  1981 
+Tik Tik Tik  1981 
+Профессионал  1981 
+Резня в больнице  1981 
+Мёртвые дети  1981 
+Тату  1981 
+Nu wang feng  1981 
+Ojo por ojo  1981 
+Demasiado para Gálvez  1981 
+Xie ying wu  1981 
+Tuhon katu  1981 
+Frankfurt Kaiserstraße  1981 
+The Tiffany Minx  1981 
+Pájaros de ciudad  1981 
+Ghungroo Ki Awaaz  1981 
+Reborn  1981 
+Буки  1981 
+Fuego en el mar  1981 
+Южное гостеприимство  1981 
+Ulvetid  1981 
+Девушка с рыжими волосами  1981 
+Gu  1981 
+Murhapeli  1981 
+De la misteriosa Buenos Aires  1981 
+El infierno de todos tan temido  1981 
+За шкуру полицейского  1981 
+A Can you nan  1981 
+Contacto Chicano  1981 
+Под предварительным следствием  1981 
+Жар тела  1981 
+La mujer del ministro  1981 
+Kings and Desperate Men  1981 
+Искажения  1981 
+Бешеные лисы  1981 
+Око за око  1981 
+Смертельное благословение  1981 
+Адская ночь  1981 
+Время реванша  1981 
+Волки  1981 
+Ушко иголки  1981 
+Входит ниндзя  1981 
+Возвышение и падение Иди Амина  1981 
+Jarretelles roses sur bas noirs  1981 
+La seducción  1981 
+Выживший  1981 
+Early Warning  1981 
+Прокол  1981 
+Ночное предупреждение  1981 
+Незнакомец  1981 
+Las braceras  1981 
+Только для твоих глаз  1981 
+Ritam zlocina  1981 
+Комиссар полиции и Малыш  1981 
+La capilla ardiente  1981 
+Трупомания  1981 
+Under the Mountain  1981 
+Дворец крушений  1981 
+Kiinanpommi  1981 
+Du ming yi tiao long  1981 
+Samwonnyeo  1981 
+С Днем Рождения меня  1981 
+Поклонник  1981 
+Jie shi huang hou  1981 
+Image of the Beast  1981 
+The Nightmare Man  1981 
+Чyжая земля  1981 
+Дом ужаса  1981 
+Судьба  1981 
+День окончания школы  1981 
+Jigoku nawa shûdôjo  1981 
+The Battle of Broken Hill  1981 
+La madrastra  1981 
+Кровавый день рождения  1981 
+Wardat  1981 
+Kurutta kajitsu  1981 
+Circle of Power  1981 
+Ангел мщения  1981 
+Рука  1981 
+Viidakon kosto  1981 
+Mangalsutra  1981 
+Ночные ястребы  1981 
+Un assassin qui passe  1981 
+Kudrat  1981 
+Fen ku lou  1981 
+Nu xing de fu chou  1981 
+Взлом  1981 
+Смертельная охота  1981 
+Boр  1981 
+Кровавая луна  1981 
+Садомания  1981 
+Ai sha  1981 
+Paméla  1981 
+Почтальон всегда звонит дважды  1981 
+Путь Каттера  1981 
+Chehre Pe Chehra  1981 
+Лазейка  1981 
+Дива  1981 
+Nie zhong  1981 
+Kazhugu  1981 
+Love Story  1981 
+Дорожные игры  1981 
+Последний экзамен  1981 
+Santaj  1981 
+Maravillas  1981 
+Barsaat Ki Ek Raat  1981 
+Xian ren  1981 
+Katkera matka vapauteen  1981 
+Очевидец  1981 
+Сфинкс  1981 
+Мой кровавый Валентин  1981 
+Глаза незнакомца  1981 
+Krodhi  1981 
+Subway Riders  1981 
+Вечерняя школа  1981 
+Другой ад  1981 
+Mang nu yu gou  1981 
+Sunday Night Thriller  1981 
+Daai hung so  1981 
+The Treachery Game  1981 
+Сканнеры  1981 
+Abichar  1981 
+The Jogger  1980 
+Shuang long guo jiang  1980 
+Shadow Play  1980 
+Narada Vijaya  1980 
+Ghoulie Movie  1980 
+Beqasoor  1980 
+Polladhavan  1980 
+Stella Lugosi  1980 
+El cazador nocturno  1980 
+Delusion  1980 
+Bun pheng hip lek  1980 
+Dead End  1980 
+The Errand  1980 
+Shadows of the Mind  1980 
+Çirpinis  1980 
+Teen Ekkey  1980 
+Jack el destripador  1980 
+Katil Kaun  1980 
+Dhamaka  1980 
+Zakhmon Ke Nishan  1980 
+Patthar Se Takkar  1980 
+Wu du mang mang  1980 
+Shanhu dao shang de shi guang  1980 
+Lan se dang an  1980 
+405 mou sha an  1980 
+Engrenage  1980 
+Sakthi  1980 
+Manushya Mrugam  1980 
+Moorkhan  1980 
+Angaadi  1980 
+El Guardaespaldas  1980 
+Groping  1980 
+Theekkadal  1980 
+The Long Island Cannibal Massacre  1980 
+Savage Encounter  1980 
+Detik 12 Malam  1980 
+Savage Hunt  1980 
+Moodupani  1980 
+Испанский вариант  1980 
+The Last Prom  1980 
+Hard Sensation  1980 
+Rahmet ve gazap  1980 
+The Killings at Outpost Zeta  1980 
+Moyna Tadanta  1980 
+Khanjar  1980 
+La mondana nuda  1980 
+Leather Persuasion  1980 
+Deadline  1980 
+Viciosas al desnudo  1980 
+Vengeance  1980 
+Trhauma  1980 
+Terror on Tour  1980 
+Taxi Chor  1980 
+Эротическая симфония  1980 
+Возвращение  1980 
+Morir de miedo  1980 
+Ek Gunah Aur Sahi  1980 
+Крик раненого  1980 
+Mie jue qi qi  1980 
+El hombre sin miedo  1980 
+Другие ипостаси  1980 
+Новогоднее зло  1980 
+Зеркало треснуло  1980 
+Королевство алмазов  1980 
+Формула  1980 
+El peatón  1980 
+Ночное убийство  1980 
+Changbakui yeoja  1980 
+Красивая жизнь  1980 
+Город зомби  1980 
+Las grandes aguas  1980 
+Опасные контакты первого вида  1980 
+Speed Driver  1980 
+Ato de Violência  1980 
+Ты лучше смотри в оба  1980 
+San gau  1980 
+Emilio Varela vs Camelia la Texana  1980 
+Потерянные души  1980 
+Exodos kindynou  1980 
+La gemella erotica  1980 
+Аллигатор  1980 
+Ад живых мертвецов  1980 
+Angela Markado  1980 
+Con la muerte en ancas  1980 
+Дом на краю парка  1980 
+Gay Salomé  1980 
+Троих нужно убрать  1980 
+Final Assignment  1980 
+Чердак  1980 
+Кошмары  1980 
+Террор каннибалов  1980 
+Aquella casa en las afueras  1980 
+Затемнение  1980 
+Шпана  1980 
+Ye ye mo dao de nu ren  1980 
+Крики в ночи  1980 
+Поезд страха  1980 
+Первый смертный грех  1980 
+Шизоид  1980 
+Area maldita  1980 
+Предостережение  1980 
+День мамочки  1980 
+Ariella  1980 
+Невидимое  1980 
+Zaakol  1980 
+Глория  1980 
+Xian guo ti tou  1980 
+Долгая Страстная пятница  1980 
+Следите за вдовцом  1980 
+Фобия  1980 
+Verinen ajojahti  1980 
+Poliziotto solitudine e rabbia  1980 
+Chicoasén  1980 
+Ночь охоты  1980 
+Октагон  1980 
+Tappajien verkossa  1980 
+Tito vs Tito  1980 
+Адский мотель  1980 
+Ming jian  1980 
+Последний охотник  1980 
+Переполох  1980 
+Контрабанда  1980 
+Traficantes de pánico  1980 
+Апокалипсис каннибалов  1980 
+Поднять Титаник  1980 
+Jiu shi zhe  1980 
+Охотник  1980 
+Zende bad  1980 
+La dinastía de Dracula  1980 
+Бритва  1980 
+Мститель  1980 
+Школьный бал  1980 
+Пираты XX века  1980 
+Xie  1980 
+Mi yue guai shou  1980 
+The Border  1980 
+Ombre  1980 
+Вирус  1980 
+Друзья навек  1980 
+Остров  1980 
+La sucesion  1980 
+Долг чести  1980 
+The Raven  1980 
+Mieletön kosto  1980 
+Stir  1980 
+Carnada  1980 
+Red Rose  1980 
+Mater amatísima  1980 
+Mies josta tuli miljonääri  1980 
+Frontera  1980 
+Экипаж  1980 
+Двойной негатив  1980 
+Jin shou zhi  1980 
+Kaltgestellt  1980 
+Маньяк  1980 
+Cauchemar  1980 
+Пятница 13  1980 
+Дикая охота короля Стаха  1980 
+Apinajahti  1980 
+Катафалк  1980 
+Die xian  1980 
+Лесной наблюдатель  1980 
+Locusts and Wild Honey  1980 
+Lootmaar  1980 
+Holocaust 2  1980 
+Boiling Point  1980 
+Ye che  1980 
+Нетерпение чувств  1980 
+Захват в Северном море  1980 
+Когда кончилось время  1980 
+Арлекин  1980 
+La muchacha de las bragas de oro  1980 
+Побег из ада  1980 
+Трюкач  1980 
+Flygnivå 450  1980 
+Zhi shou zhe tian  1980 
+Пылающий поезд  1980 
+Vacanze per un massacro  1980 
+Chunaoti  1980 
+Xuan ji  1980 
+Timelapse  1980 
+Il medium  1980 
+Usansokui se yeoja  1980 
+Корабль смерти  1980 
+Pesadilla mortal  1980 
+Bothor El Shaytan  1980 
+Жертва  1980 
+Девятая конфигурация  1980 
+Saboot  1980 
+Attentatet  1980 
+Сатурн 3  1980 
+Человек пума  1980 
+Разыскивающий  1980 
+Wolf Lake  1980 
+The Legend of Alfred Packer  1980 
+Американский жиголо  1980 
+Saturday Night Dead  II 
+Туман  1980 
+Всем спокойной ночи  1980 
+Kali Ghata  1980 
+Ночь жонглёра  1980 
+Преступный репортаж  1980 
+Окна  1980 
+Sarvasakshi  1980 
+Irtautuminen  1980 
+Do Premee  1980 
+Девушка из спального вагона  1980 
+Haine  1980 
+Wsciekly  1980 
+Dam Maro Dam  1980 
+Billa  1980 
+Shock Theatre  I 
+Time of the Eagle  1979 
+Intikam kadini  1979 
+Bao mi ju de qiang sheng  1979 
+Du cheng feng yun  1979 
+Du guo chou cheng  1979 
+Minus Zero  1979 
+Repeater  1979 
+Gandharvya Kanya  1979 
+Creature Feature  1979 
+Labyrinth  II 
+Shock Theatre  II 
+Children and Ponds  1979 
+Sabuj Dwiper Raja  1979 
+Lakhan  1979 
+Hotel Cairo Luna Park  1979 
+Nagin Aur Suhagan  1979 
+Jaandaar  1979 
+Las golfas del talón  1979 
+Fotomatar  1979 
+Shu guang  1979 
+The Eliminator  1979 
+Aavesham  1979 
+Diversion  1979 
+Puthiya Velicham  1979 
+La pistolera  1979 
+La mafia de la frontera  1979 
+Black Island  1979 
+Massacre em Caxias  1979 
+Belinda dos Orixás na Praia dos Desejos  1979 
+Bagula Bhagat  1979 
+Sarapanjaram  1979 
+Play Motel  1979 
+Le mani di una donna sola  1979 
+Slachtvee  1979 
+María de mi corazón  1979 
+The Hollywood Strangler Meets the Skid Row Slasher  1979 
+Золотая леди  1979 
+Кровь в Венеции  1979 
+El año de la peste  1979 
+Un om în loden  1979 
+Aiyoku no target  1979 
+Куба  1979 
+Человеческий фактор  1979 
+La banda del Polvo Maldito  1979 
+Ulkopuolinen  1979 
+Qi sha  1979 
+Shokei yugi  1979 
+Немой крик  1979 
+Cardiac Arrest  1979 
+Natural Enemies  1979 
+Fung gip  1979 
+Остров Медвежий  1979 
+Lo scoiattolo  1979 
+Human Experiments  1979 
+The Quatermass Conclusion  1979 
+Ehna Betoa El Otobees  1979 
+Метеор  1979 
+Pasión por el peligro  1979 
+I ora tou lykou  1979 
+El látigo contra Satanás  1979 
+Agria oikogeneia  1979 
+Duel in de diepte  1979 
+Смерть на автостопе  1979 
+Teinityttöjen villi viikonloppu  1979 
+Жажда  1979 
+Sensività  1979 
+Meng zai Sha mei miao zhen tan  1979 
+Kuoleman käsi  1979 
+Guyanan joukkomurha  1979 
+Сука  1979 
+Правосудие для всех  1979 
+Jääkylmä kuolema  1979 
+Una rata en la oscuridad  1979 
+Nuits très chaudes aux Caraïbes  1979 
+Umarli rzucaja cien  1979 
+Libidine  1979 
+Yeongnyeo  1979 
+Mysafiri  1979 
+The Dumb Waiter  1979 
+Путешествие в машине времени  1979 
+Kronprinsen  1979 
+Mafian kummisedät  1979 
+Когда звонит незнакомец  1979 
+Черный камень  1979 
+Erótica  1979 
+Крёстный отец диско  1979 
+Bloody Marlene  1979 
+Duniya Meri Jeb Mein  1979 
+Naan Vaazha Vaippen  1979 
+Matar por matar  1979 
+Cadena perpetua  1979 
+Монастырские соблазны  1979 
+Возрождение золотого волка  1979 
+Cheung nui cheung ngoi  1979 
+Delirium  1979 
+Una donna di notte  1979 
+La guerra santa  1979 
+Cuo wu de di yi bu  1979 
+Из глубин  1979 
+Узы крови  1979 
+Лунный гонщик  1979 
+Surakksha  1979 
+Побег из Алькатраса  1979 
+Bandera rota  1979 
+Пророчество  1979 
+Свояки  1979 
+Убийца с электродрелью  1979 
+El poder de las tinieblas  1979 
+Gamines à tout faire  1979 
+The Omega Factor  1979 
+Отважный парень  1979 
+Paraclete  1979 
+Alastonkuva  1979 
+Гарпия  1979 
+Midnight Blue  1979 
+Школа Малибу  1979 
+Леди исчезает  1979 
+Весёлые истории про ворованные вещи  1979 
+Con uñas y dientes  1979 
+Oretachi ni haka wa nai  1979 
+Дом повешенной на Больничном Спуске  1979 
+Penthouse de la muerte  1979 
+Сила одиночки  1979 
+Зима приносит смерть  1979 
+Очертания грядущего  1979 
+Последнее объятие  1979 
+Эффекты  1979 
+Midare karakuri  1979 
+Survival Run  1979 
+Во тьме  1979 
+Выселенные  1979 
+The Scythe  1979 
+От Корлеоне до Бруклина  1979 
+Человек на коленях  1979 
+Guang tou shi er jiao wa  1979 
+Безумный Макс  1979 
+Огневая мощь  1979 
+Слепое пятно  1979 
+The Great Gambler  1979 
+Oppaga itda  1979 
+Torino centrale del vizio  1979 
+Fermate il colpevole  1980 
+Muqabla  1979 
+Спасите Конкорд  1979 
+The Great Riviera Bank Robbery  1979 
+Roman i Magda  1979 
+Загадки песков  1979 
+Kesän hurjat seksiorgiat  1979 
+Llámenme Mike  1979 
+Собаки  1979 
+Китайский синдром  1979 
+Mojados  1979 
+Шествие золотых зверей  1979 
+Злой дух Ямбуя  1979 
+Anacrusa  1979 
+Stop Susan Williams  1979 
+The Curse of Dracula  1979 
+Die Totenschmecker  1979 
+Ашанти  1979 
+Il porno shop della settima strada  1979 
+Dinero maldito  1979 
+Агата  1979 
+Insanlari seveceksin  1979 
+Воины  1979 
+Убийство по приказу  1979 
+Search and Destroy  1979 
+Mutaatio  1979 
+La hija del contrabando  1979 
+Saahas  1979 
+Amavas Ka Chand  1979 
+Gawaah  1979 
+Aakhri Kasam  1979 
+Labeye Tigh  1978 
+Ahlam Al Fata Al Taeer  1978 
+Takye bar baad  1978 
+Enough Cuts for a Murder  1978 
+Be dadam beres rafigh  1978 
+Yin shou  1978 
+Operation Diamond Racket  1978 
+Sahit  1978 
+Wendigo  1978 
+Lal Kothi  1978 
+Kiladi Kittu  1978 
+Nu jiao tong yuan  1978 
+Sha mo tuo ling  1978 
+Dinglong zhen  1978 
+El desencarnado  1978 
+Mil millas al sur  1978 
+Image of Death  1978 
+O Estripador de Mulheres  1978 
+Операция Восток  1978 
+As Filhas do Fogo  1978 
+Khoon Ka Badla Khoon  1978 
+The Ganja Express  1978 
+Dynamite  1978 
+A Morte transparente  1978 
+Convoi de filles  1978 
+Chakravyuha  1978 
+Отпущение грехов  1978 
+Bersaglio altezza uomo  1978 
+Кровавая тень прошлого  1978 
+Sketches of a Strangler  1978 
+Le prix de la liberté  1978 
+The Playbirds  1978 
+Kaala Aadmi  1978 
+Naiset kaltereiden takana  1978 
+Death Drug  1978 
+Il commissario di ferro  1978 
+Kissa häkissä  1978 
+Anjaam  1978 
+Звездная мишень  1978 
+Большое ограбление поезда  1978 
+Lao guo jie  1978 
+Satsujin yugi  1978 
+The Hitter  1978 
+La ciudad maldita  1978 
+Indagine su un delitto perfetto  1978 
+Тридцать девять ступеней  1978 
+La casa del pelícano  1978 
+Аморальность  1978 
+Horimsa daetonggwan  1978 
+Ratas del asfalto  1978 
+El complot mongol  1978 
+Пятый этаж  1978 
+Сахар  1978 
+The Kirlian Witness  1978 
+Чужая зона  1978 
+Corleone  1978 
+Xuan wo  1978 
+Dou sha  1978 
+Flashing Lights  1978 
+Долгий уикенд  1978 
+Развозчики денег  1978 
+Пчелы  1978 
+Красная роза  1978 
+Хэллоуин  1978 
+Сестра Урсулы  1978 
+Любовь под вопросом  1978 
+Обитатели холмов  1978 
+Демон  1978 
+Послушай  1978 
+Запомни мое имя  1978 
+Большой сговор  1978 
+La muerte del soplon  1978 
+La parte del león  1978 
+Барракуда  1978 
+Тени знойного лета  1978 
+A Fuga  1978 
+Yhden miehen oikeus  1978 
+Can ku da fen shi  1978 
+Cianura si picatura de ploaie  1978 
+Kôtei no inai hachigatsu  1978 
+Ensalada Baudelaire  1978 
+Henkensä edestä  1978 
+Violación fatal  1978 
+Mannen i skuggan  1978 
+Молчаливый партнер  1978 
+Da lu qiang ren  1978 
+Рассвет мертвецов  1978 
+The Dark Ride  1978 
+Гибель мадам Леман  1978 
+Лавина  1978 
+Power Play  1978 
+La hora del jaguar  1978 
+Красная загадка  1978 
+Мальчики из Бразилии  1978 
+La banda del gobbo  1978 
+Terremoto en Guatemala  1978 
+Mga mata ni Angelita  1978 
+Salaliitto  1978 
+Kuolema Ateenassa  1978 
+Blue Movie  1978 
+Bian fu chuan qi  1978 
+Doramundo  1978 
+Пираньи  1978 
+Глаза Лоры Марс  1978 
+Five Days from Home  1978 
+Циклон  1978 
+El niño y el tiburón  1978 
+Рой  1978 
+Грязная игра  1978 
+Когда тебе двадцать  1978 
+Ángel negro  1978 
+Eroticna kankei  1978 
+Shaytan Al Jazzirah  1978 
+Night Creature  1978 
+Llovizna  1978 
+Натали в нацистском аду  1978 
+Дикие гуси  1978 
+Pimennys  1978 
+Чeлюсти 2  1978 
+Возвращение  1978 
+Mataron a Camelia la Texana  1978 
+Дешёвый детектив  1978 
+Водитель  1978 
+El huerto del Francés  1978 
+Происшествие  1978 
+La visita del vicio  1978 
+Её называли Бильбао  1978 
+Couleur chair  1978 
+Инцидент Альфа  1978 
+Я плюю на ваши могилы  1978 
+Боевые псы  1978 
+Виолетта Нозьер  1978 
+Полуночный экспресс  1978 
+Главарь мафии  1978 
+Nacht zonder zegen  1978 
+Зло  1978 
+Los violadores del amanecer  1978 
+Бабочка на плече  1978 
+Sweeney 2  1978 
+Смертельный спорт  1978 
+В интересах государства  1978 
+Седьмая женщина  1978 
+Кулак  1978 
+Tarao Bannai  1978 
+Se yu sha ren kuang  1978 
+Baron Von Wolfstein Presents Saturday Night with the Monsters  1978 
+Doubles  1978 
+Kahlekarkuri  1978 
+Aparichita  1978 
+Игра смерти  1978 
+The Mafu Cage  1978 
+Friday Night Thriller  1978 
+Вечный сон  1978 
+Ярость  1978 
+Кошмар дома на холмах  1978 
+Flores de papel  1978 
+Mirrors  1978 
+The Misunderstanding  1978 
+Silmät tähtien takaa  1978 
+Pensione paura  1978 
+Пчелиная матка  1978 
+Куколки за колючей проволокой  1978 
+Las mariposas disecadas  1978 
+Poliziotto senza paura  1978 
+Einer muß die Leiche sein  1978 
+Астральный фактор  1978 
+Кровные узы  1978 
+

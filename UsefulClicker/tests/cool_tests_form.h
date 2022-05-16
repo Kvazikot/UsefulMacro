@@ -29,6 +29,8 @@ public:
     void fullScreen();
     void createButtons();
     void timerEvent(QTimerEvent* event);
+    void showEvent(QShowEvent* event);
+
     ~CoolTestsForm();
 
 private slots:
@@ -65,10 +67,18 @@ private slots:
 
     void on_clickimgTest_clicked();
 
+    void on_foreachTest1_clicked();
+
+    void on_foreachTest2_clicked();
+
+    void on_foreachTest3_clicked();
+
+    void on_foreachTest4_clicked();
+
 signals:
     void stopExecutionSignal();
 
-public slots:
+public slots:    
     void currentStep(const QDomNode& currentNode, Delays delays);
     void slotSetAttrs(QMap<QString,QString> attrs);
     void buttonDetectorOut(QMap<QString, QString> attrs);

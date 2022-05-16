@@ -24,10 +24,43 @@ transform tag list to shell
 <shell cmd="wscript.exe ./unknown_genius.vbs select_rand_word C:\Projects\UsefulClicker\lists\6000_inventions_confucius_20_century.txt" />
 -->
 
-<func name="List_test" no_delay="1" >
-    <list name="common_english" filename="./lists/common_english_shuffled.txt" sep="\n"/>
-    <list f="select_rand_word" name="common_english"/>
+<func name="init" no_delay="1" >
+    <list name="common_english" filename="./lists/common_english_shuffled.txt" sep="\n" />
+    <list name="Thrillers_beetwen_1979-1989" filename="./lists/Thrillers_beetwen_1979-1989.txt" />
+    <list f="select_rand_word" name="common_english" />
+    <table name="movies" filename="movies.csv" header="Title Year Format" />
+    <table name="movies" fromlist="Thrillers_beetwen_1979-1989" header = "Title Year Format" />
 </func>
+
+<func name="Torrent_search" >
+  <shell cmd="cmd /C `echo `#{i}` >> tmp.txt` " />
+</func>
+
+<func name="Foreach_test1">
+  <foreach list="Thrillers_beetwen_1979-1989"  do="Torrent_search"/>
+  <shell cmd="notepad.exe tmp.txt" />
+</func>
+
+<func name="Foreach_test2">
+  <foreach list="Thrillers_beetwen_1979-1989" range="10:100:1">
+    <list f="append" name="search_requests" arg="item_{i}"/>
+  </foreach>
+  <list f="to_xml" name="search_requests" />
+  <list f="show" name="search_requests" editor="notepad.exe" />
+  <cmd c="show search_requests" />
+  <cmd c="search_requests.append({i})" />
+</func>
+
+<func name="Foreach_test3">
+  <foreach table="movies"  do="sort[Year]" />
+  <cmd c="show movies" />
+</func>
+
+<func name="Foreach_test4">
+  <foreach table_from="movies" table_to="movies_1983"  filterBy="Year" />
+  <cmd c="show movies_1983" />
+</func>
+
 
 <func name="Youtube search by list" >
     <click button="left" x="1700" y="416" comment="click in chrome window" />

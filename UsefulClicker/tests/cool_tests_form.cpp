@@ -56,6 +56,7 @@ CoolTestsForm::CoolTestsForm(QWidget *parent) :
     ui(new Ui::CoolTestsForm)
 {
     MainWindow* window = MainWindow::getInstance();
+    window->setLogWindow(ui->logEdit);
     QString fn = ":/tests/UsefulClicker_tests.xml";
     window->loadDocument(fn);    
     ui->setupUi(this);
@@ -86,6 +87,15 @@ CoolTestsForm::CoolTestsForm(QWidget *parent) :
 
     startTimer(1000);
     //runFunction("Change font");
+}
+
+
+void CoolTestsForm::showEvent(QShowEvent* event)
+{
+    MainWindow* window = MainWindow::getInstance();
+    window->setLogWindow(ui->logEdit);
+    InterpreterWin64*  interpreter = static_cast<InterpreterWin64*>(window->getInterpreter());
+    interpreter->init(*window->getDoc());
 }
 
 void CoolTestsForm::cursorPositionChanged()
@@ -193,7 +203,7 @@ void CoolTestsForm::runFunction(QString func_name)
     InterpreterWin64*  interpreter = static_cast<InterpreterWin64*>(window->getInterpreter());
     connect(interpreter, SIGNAL(setCurrentNode(const QDomNode&,Delays)), this, SLOT(currentStep(const QDomNode&,Delays)));
     connect(this, SIGNAL(stopExecutionSignal()), interpreter, SLOT(stop()));
-    interpreter->executeFunction(doc->documentElement(), doc->documentElement(), func_name);
+    interpreter->executeFunction(func_name);
     qDebug() << __FUNCTION__ << " ~~~~~ EXECUTION DONE ~~~~~!";
     testIsRunningFlag = false;
     ui->testStatusLabel->setText("SELECT THE TEST");
@@ -209,10 +219,10 @@ void CoolTestsForm::currentStep(const QDomNode& currentNode, Delays delays)
     ui->testStatusLabel->setText(currentStepText);
     ui->logEdit->appendPlainText(currentStepText);
     // get node value as text
-    QString str1;
-    QTextStream ss(&str1);
-    ss << currentNode;
-    ui->logEdit->appendPlainText(ss.readAll());
+//    QString str1;
+//    QTextStream ss(&str1);
+//    ss << currentNode;
+//    ui->logEdit->appendPlainText(ss.readAll());
 
     auto s = QString("delay_fixed = %1 milliseconds delay_random = %2 milliseconds total = %3")
             .arg(delays.delay_fixed)
@@ -355,5 +365,29 @@ void CoolTestsForm::on_typeTest2_clicked()
 void CoolTestsForm::on_typeTest_clicked(bool checked)
 {
      runFunction("Type test");
+}
+
+
+void CoolTestsForm::on_foreachTest1_clicked()
+{
+    runFunction("Foreach_test1");
+}
+
+
+void CoolTestsForm::on_foreachTest2_clicked()
+{
+    runFunction("Foreach_test2");
+}
+
+
+void CoolTestsForm::on_foreachTest3_clicked()
+{
+    runFunction("Foreach_test3");
+}
+
+
+void CoolTestsForm::on_foreachTest4_clicked()
+{
+    runFunction("Foreach_test4");
 }
 

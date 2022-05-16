@@ -12,6 +12,7 @@
 #include "interpreter/interpreterwin64.h"
 #include "model/clickermodel.h"
 #include "cv/dspmodule.h"
+#include "ui/mainwindow.h"
 #include "windows.h"
 #include "settings/clickersettings.h"
 #include <windows.h>
@@ -19,6 +20,12 @@
 #include <QRect>
 #include <QRegularExpression>
 
+#define log(msg) MainWindow::getInstance()->log(msg)
+void log2(const char* fmt,...);
+#define log2(fmt, msg) log2(fmt,msg)
+
+static QMap<QString, std::vector<QString>> global_lists;
+static QMap<QString, QVariant> global_vars;
 static DspModule* dsp;
 using namespace cv;
 
@@ -26,6 +33,62 @@ InterpreterWin64::InterpreterWin64()
     : AbstractInterpreter(), stopFlag(false)
 {
     dsp = new DspModule();
+}
+
+void InterpreterWin64::init(QDomDocument& dom)
+{
+    // run every function which name contains word "init"
+    QDomNodeList nodes = dom.elementsByTagName("func");
+    for(int i = 0; i < nodes.count(); i++)
+    {
+        QDomNode elm = nodes.at(i);
+        if( elm.toElement().hasAttribute("name") )
+        {
+            auto name = elm.toElement().attribute("name");
+            functionMap[name] = elm;
+        }
+
+        if( elm.isElement() )
+        {
+            if( elm.toElement().attribute("name").contains("init") )
+            {
+                executeFunction(elm.toElement().attribute("name"));
+            }
+        }
+    }
+
+    // cache lists
+}
+
+
+QDomNode InterpreterWin64::populateVars(QDomNode nodE)
+{
+    QDomNode node = nodE.cloneNode(true);
+    int N = node.toElement().attributes().count();
+    for(int i=0; i < N; i++)
+    {
+        QString attr = node.attributes().item(i).nodeName();
+        QString value = node.attributes().item(i).nodeValue();
+
+        //$(UsefulClicker)/images/21.03.12.119.png
+        QRegularExpression reVar("[#{]{2}([\\w_]+)[}]{1}");
+        auto match = reVar.match(value);
+        QString clickerPath = QDir::currentPath();
+        // change relative path ./ on absolute path
+        if( match.hasMatch() )
+        {
+            auto varname = match.capturedTexts()[1];
+            if( global_vars.find(varname) != global_vars.end() )
+            {
+                //value = global_vars[varname].toString();
+                QString val = global_vars[varname].toString();
+                value = value.replace(reVar, val);
+                node.toElement().setAttribute(attr,value);
+            }
+        }
+        log("-+-+-+: >>>> : " + attr + "=" + value);
+    }
+    return node;
 }
 
 void send_key2(QVector<WORD>& vkeys, bool keyUp)
@@ -443,9 +506,28 @@ void InterpreterWin64::stop()
     stopFlag = true;
 }
 
+// executeFunction NON RECURSIVE VERSION
+void InterpreterWin64::executeFunction(QString function_name)
+{
+    if ( functionMap.find(function_name)!=functionMap.end())
+    {
+        QDomNode node = functionMap[function_name];
+        if(node.hasChildNodes())
+        {
+            for(int i=0; i < node.childNodes().count(); i++)
+            {
+                QDomNode child = node.childNodes().at(i);
+                execute(child);
+            }
+        }
+    }
 
+}
+
+// executeFunction RECURSIVE VERSION
 void InterpreterWin64::executeFunction(const QDomNode& rootNode, QDomNode funcNode, QString function_name)
 {
+
 
     QDomNode domNode = rootNode.firstChild();
     QDomElement domElement;
@@ -475,6 +557,7 @@ void InterpreterWin64::executeFunction(const QDomNode& rootNode, QDomNode funcNo
         domNode = domNode.nextSibling();
     }
 
+
 }
 
 int InterpreterWin64::executeShellCommand(const QDomNode& node)
@@ -484,8 +567,9 @@ int InterpreterWin64::executeShellCommand(const QDomNode& node)
     if( node.toElement().hasAttribute("cmd") )
     {
         cmd = node.toElement().attribute("cmd");
+        cmd = cmd.replace('`',"\"");
         args = cmd.split(" ");
-        cmd = args[0];
+            cmd = args[0];
         args.pop_front();
         ShellExecuteA(0, 0, (char*)cmd.toStdString().c_str(), (char*)args.join(" ").toStdString().c_str(), 0, SW_NORMAL);
     }
@@ -496,8 +580,8 @@ QString decodePath(QString filename)
 {
 
     //$(UsefulClicker)/images/21.03.12.119.png
-    QRegularExpression reEnv("[$(]{2}([\\w_]+)[)]{1}");
-    auto match = reEnv.match(filename);
+    QRegularExpression reVar("[$(]{2}([\\w_]+)[)]{1}");
+    auto match = reVar.match(filename);
     QString clickerPath = QDir::currentPath();
     // change relative path ./ on absolute path
     auto pos = filename.indexOf("./")+1;
@@ -567,7 +651,6 @@ int InterpreterWin64::executeScrollDown(const QDomNode& node)
     return 1;
 }
 
-static QMap<QString, std::vector<QString>> global_lists;
 
 int InterpreterWin64::executeList(const QDomNode& node)
 {
@@ -590,7 +673,7 @@ int InterpreterWin64::executeList(const QDomNode& node)
     if (f.open(QIODevice::ReadOnly))
     {
         QTextStream ts(&f);
-
+        QStringList list;
         if(f.size() > 1024*1024)
         {
             std::uniform_int_distribution<int> distribution(0,f.size());
@@ -604,17 +687,19 @@ int InterpreterWin64::executeList(const QDomNode& node)
         }
         else
         {
-            QStringList list = ts.readAll().split("\n");
+            list = ts.readAll().split("\n");
             for( auto s: list)
                 str.push_back(s);
             std::random_shuffle(str.begin(),str.end());
         }
         global_lists[name] = str;
+        global_vars[name] = list;
     }
     else // load list from previous defined named lists (global_lists map)
     {
         QTextStream ts(&f);
         QStringList list = tag_body.split("\n");
+        global_vars[name] = list;
         for( auto s: list)
             str.push_back(s);
         std::random_shuffle(str.begin(),str.end());
@@ -638,7 +723,8 @@ int InterpreterWin64::executeList(const QDomNode& node)
             std::uniform_int_distribution<int> distribution(0,str.size());
             int n = distribution(generator);  // generates number in the range 1..6
             outputString = str[n];
-            show_message("selecting ",outputString);
+            log("selecting " + outputString);
+            log2("list size = %d", str.size());
         }
     }
     clipboard->setText(outputString);
@@ -655,9 +741,44 @@ int InterpreterWin64::executeDblClick(const QDomNode& node)
 }
 
 
+// <foreach list="Thrillers_beetwen_1979-1989" range="10:100:1">
+int InterpreterWin64::executeForeach(const QDomNode& node)
+{
+    QString list_name = node.toElement().attribute("list");
+    QString range = node.toElement().attribute("range");
+    QString do_fun = node.toElement().attribute("do");
+    QStringList l = range.split(":");
+    QStringList list = global_vars[list_name].toStringList();
+    int from=0, to=list.size(), step=1;
+
+    if( l.size() > 2 )
+    {
+        bool ok;
+        from = l[0].toInt(&ok);
+        if(!ok) return -1;
+        to = l[1].toInt(&ok);
+        if(!ok) return -1;
+        if( l.size() == 3 )
+            step = l[2].toInt(&ok);
+        if(!ok) return -1;
+    }
+
+    for(int idx=from; idx < to; idx+=step)
+    {
+        QString val = list[idx];
+        val = val.replace("\r","");
+        val = val.replace("\n","");
+        global_vars["i"] = val;
+        executeFunction(do_fun);
+    }
+    return 1;
+}
+
+
 std::map<std::string, method_t> interpreter_func_map{{"click",&InterpreterWin64::executeClick},
                                 {"type",&InterpreterWin64::executeType},
                                 {"shell",&InterpreterWin64::executeShellCommand},
+                                {"foreach",&InterpreterWin64::executeForeach},
                                 {"list",&InterpreterWin64::executeList},
                                 {"clickimg",&InterpreterWin64::executeClickImg},
                                 {"dblclick",&InterpreterWin64::executeDblClick},
@@ -668,7 +789,7 @@ std::map<std::string, method_t> interpreter_func_map{{"click",&InterpreterWin64:
 int InterpreterWin64::execute(const QDomNode& node)
 {
     QString name = node.toElement().tagName().toLocal8Bit();
-    if( !validNodes.contains( name  ) ) return -1;
+   // if( !validNodes.contains( name  ) ) return -1;
 
 
     //
@@ -678,14 +799,22 @@ int InterpreterWin64::execute(const QDomNode& node)
     while(n++ < repeats)
     {
         if( stopFlag ) return 0;
-
+       auto node_with_vars = populateVars(node);
        // find method in table by name of xml node
        auto kv = interpreter_func_map.find(name.toStdString());
+       QString str1, str2;
+       QTextStream ss(&str1);
+       ss << "EXEC --->" << node;
+       ss << "EXEC with VARS--->" << node_with_vars;
+       //ss << "PARENT NODE ----------------> ";
+       //ss << node.parentNode();
+       log(ss.readAll());
 
        // call the method
        if( kv != interpreter_func_map.end())
        {
-             (this->*(kv->second))(node);
+
+             (this->*(kv->second))(node_with_vars);
 
              // check that there is no no_delay flag
             if( !node.parentNode().toElement().hasAttribute("no_delay") )
@@ -702,6 +831,13 @@ int InterpreterWin64::execute(const QDomNode& node)
             emit setCurrentNode(node, currentDelays);
 
        }
+       else
+       {
+            log("unknown tag at line 34: " + name);
+
+
+       }
+
     }
 
     return 0;

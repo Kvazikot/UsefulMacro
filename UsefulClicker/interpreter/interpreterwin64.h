@@ -3,8 +3,9 @@
 
 #include <QObject>
 #include <QDomNode>
-
+#include <QMap>
 #include "interpreter/interpreter.h"
+
 void hotKey(char* hot_key);
 QString decodePath(QString filename);
 
@@ -12,6 +13,7 @@ class InterpreterWin64 : public AbstractInterpreter
 {
     Q_OBJECT    
 public:
+    QMap<QString, QDomNode> functionMap;
     QStringList validNodes = {"hotkey","click","dblclick","shell","dblclick","type",
                               "keydown","list","keyup","scrollup","scrolldown","clickimg",
                               "func"};
@@ -23,7 +25,10 @@ public:
     QRect parseRect(const QDomNode& node);
     void MySleep(QDateTime endTime);
 
+    void init(QDomDocument& dom);
+
     void MainLoop();
+    QDomNode populateVars(QDomNode node);
     int execute(const QDomNode& node) override;
     int executeHotkey(const QDomNode& node);
     int executeClick(const QDomNode& node);
@@ -35,6 +40,8 @@ public:
     int executeScrollDown(const QDomNode& node);
     int executeList(const QDomNode& node);
     void executeFunction(const QDomNode& rootNode, QDomNode funcNode, QString function_name);
+    void executeFunction(QString function_name);
+    int executeForeach(const QDomNode& node);
 signals:
     void setCurrentNode(const QDomNode& currentNode, Delays delays);
 
