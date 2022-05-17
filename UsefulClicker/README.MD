@@ -32,6 +32,22 @@ He also signs the sequence number of the action next to the button.
 All this can be arranged in a full-screen semi-transparent widget.
 The "Next Frame" and "Previous Frame" buttons at the top of the screen.
 That is, the clicker also works in the clicker programming mode. To return the previous window e.g.
+## The idea for an astronomical number of screenshots for reverse engineering human software (came from Marvell comics)
+We need to create an astronomical number of screenshots for all sorts of programs and operating systems.
+Each dialog box is unique to the program. Therefore, the clicker will be oriented towards reverse engineering of traditional software.
+Soon, according to the idea of ​​Elon Musk, all traditional software i.e. the expertise of some engineer will replace neural networks.
+But we need to prepare a description of the functions of every program on Earth that has ever existed.
+So that the future AGI can use these compiled programs for its calculations.
+So that he does not need to invent the wheel, roughly speaking
+Since AGI thinks orders of magnitude faster than humans, it will be able to use human software
+in such interesting combinations that people never even dreamed of. But this information should be available.
+In order not to waste time on reverse engineering.
+Perhaps at some stage AGI will be able to explore various software written by people.
+By disassembling it.
+To do this, I provided the Function Description window, which a person must fill out.
+  
+This idea is explained in more detail in the next video.
+https://youtu.be/BYM5G5CIgS8
 
 ## Reformulation of the problem (5/6/2022) . Few new thoughts. 
 Check UsefulClicker on noisy data. 
@@ -57,22 +73,7 @@ Next stage is actualy has more teoretical than practical sense at this point.
 ## Compression
 It is necessary to make such programs for the clicker so that they take up a minimum of bytes and do a maximum of useful work. It is possible to add additional information so that it can be restored in case of errors in the communication channel. Here you can compress the information using not only artificial neural networks, but also the slightly forgotten information theory of Claude Shannon's [1]. 
 
-## The idea for an astronomical number of screenshots for reverse engineering human software (came from Marvell comics)
-We need to create an astronomical number of screenshots for all sorts of programs and operating systems.
-Each dialog box is unique to the program. Therefore, the clicker will be oriented towards reverse engineering of traditional software.
-Soon, according to the idea of ​​Elon Musk, all traditional software i.e. the expertise of some engineer will replace neural networks.
-But we need to prepare a description of the functions of every program on Earth that has ever existed.
-So that the future AGI can use these compiled programs for its calculations.
-So that he does not need to invent the wheel, roughly speaking
-Since AGI thinks orders of magnitude faster than humans, it will be able to use human software
-in such interesting combinations that people never even dreamed of. But this information should be available.
-In order not to waste time on reverse engineering.
-Perhaps at some stage AGI will be able to explore various software written by people.
-By disassembling it.
-To do this, I provided the Function Description window, which a person must fill out.
-  
-This idea is explained in more detail in the next video.
-https://youtu.be/BYM5G5CIgS8
+
 
   
 # Macro recording with code generation of optimal xml code,
