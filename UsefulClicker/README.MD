@@ -268,5 +268,7 @@ fig.5 Cool test program
 
 
   
-References
+## References
 THE MATHEMATICAL THEORY OF COMMUNICATION CLAUDE E. SHANNON, WARREN WEAVER
+Engineering a Compiler (Keith Cooper, Linda Torczon) 
+CS 61B - Data Structures - Jonathan Shewchuk
