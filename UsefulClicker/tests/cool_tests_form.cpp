@@ -391,3 +391,21 @@ void CoolTestsForm::on_foreachTest4_clicked()
     runFunction("Foreach_test4");
 }
 
+
+void CoolTestsForm::on_expressionTest12_clicked()
+{
+    runFunction("12 expression test");
+}
+
+
+void CoolTestsForm::on_generatorsTest_clicked()
+{
+    runFunction("Generators test");
+}
+
+
+void CoolTestsForm::on_pirateBayTest_clicked()
+{
+    runFunction("PirateBay test");
+}
+

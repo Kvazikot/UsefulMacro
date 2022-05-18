@@ -48,82 +48,36 @@
 **
 ****************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef TREEITEM_H
+#define TREEITEM_H
 
-#include "ui/ui_mainwindow.h"
-#include "model/clickermodel.h"
-#include "xml/clickerdocument.h"
-#include "interpreter/interpreter.h"
-#include <QMouseEvent>
-#include <QTimerEvent>
-#include <QMainWindow>
-#include <QPlainTextEdit>
+#include <QVariant>
+#include <QList>
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+//! [0]
+class TreeItem
 {
-    Q_OBJECT
-
 public:
-    MainWindow(QWidget *parent = nullptr);
-    void setLogWindow(QPlainTextEdit* logWindow);
-    void timerEvent(QTimerEvent* event);
-    //Main Action of the Application UsefulClicker
-    void traverseTree(const QModelIndex &index, const QDomNode& targetNode, QTreeView *view);
-    void mousePressEvent(QMouseEvent* event);
-    void mouseMoveEvent(QMouseEvent* event);
-    void loadDocument(QString filename);
-    void loadSettings();
-    QAction* createAction(QString icon, QString text, bool addPlusFlag=true);
-    static MainWindow* getInstance();
-    static MainWindow* instance;
-    QAction* last_action_triggered;
+    explicit TreeItem(const QList<QVariant> &data, TreeItem *parent = nullptr);
+    ~TreeItem();
 
-public slots:
-    void updateActions();
-    void contextMenuActionTriggered();
-    void updateStatus(const QString&, bool);
-    void applyChangesXml();
-    void contextMenuEvent(QContextMenuEvent *event);
-    void about();
-    void pause();
-    void new_fun();
-    void openXml();
-    void save(){saveToFile(current_filename);}
-    void saveToFile(QString& filename=current_filename);
-    void setNextItem(QModelIndex& index);
-    void reloadFromFile(QString& filename);
-    void functionSelected(const QString&);
-    void reloadFromMemory();
-    void reload();
-    ClickerDocument* getDoc();
-    void setDoc(ClickerDocument* doc);
-    AbstractInterpreter* getInterpreter();
-    void itemActivated(const QModelIndex &);
-    void xmlChanged();
-    void log(QString msg);
-    void slotSetAttrs(QMap<QString,QString> attrs_map);
-    void insertXmlString(QString xml_string);
-
-private slots:
-    void insertChild();
-    void applyChanges();
-    void commentChanged();
-    void insertRow();
-    void removeRow();
-    void setCurentDomNode(QDomNode& currentNode);
-
+    TreeItem *child(int number);
+    int childCount() const;
+    int columnCount() const;
+    QVariant data(int column) const;
+    bool insertChildren(int position, int count, int columns);
+    bool insertColumns(int position, int columns);
+    TreeItem *parent();
+    bool removeChildren(int position, int count);
+    bool removeColumns(int position, int columns);
+    int childNumber() const;
+    bool setData(int column, const QVariant &value);
 
 private:
-    QPlainTextEdit*  logWindow;
-    ClickerModel* model=0;
-    ClickerDocument* doc;
-    ClickerDocument  defaultDoc;
-    static QString current_filename;
-    QAction* playAction;
-    bool pauseFlag;
-    int n_cycle;
-
+    QList<TreeItem *> childItems;
+    QList<QVariant> itemData;
+    TreeItem *parentItem;
 };
+//! [0]
 
-#endif // MAINWINDOW_H
+#endif // TREEITEM_H

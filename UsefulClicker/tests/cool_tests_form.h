@@ -75,6 +75,12 @@ private slots:
 
     void on_foreachTest4_clicked();
 
+    void on_expressionTest12_clicked();
+
+    void on_generatorsTest_clicked();
+
+    void on_pirateBayTest_clicked();
+
 signals:
     void stopExecutionSignal();
 

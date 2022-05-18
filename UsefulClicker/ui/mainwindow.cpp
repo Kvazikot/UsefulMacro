@@ -72,6 +72,8 @@
 
 #include "ui/mainwindow.h"
 #include "dialogtype.h"
+#include <stdarg.h>
+#include <stdio.h>
 #include <QToolBar>
 #include <QFile>
 #include <QPushButton>
@@ -95,6 +97,7 @@
 #include "ui/shelldialog.h"
 #include "interpreter/interpreter.h"
 #include "interpreter/interpreterwin64.h"
+#include "log/logger.h"
 
 MainWindow* MainWindow::instance;
 static InterpreterWin64* interpreter = 0;
@@ -209,7 +212,15 @@ MainWindow::MainWindow(QWidget *parent)
     updateActions();
 }
 
+void MainWindow::setLogWindow(QPlainTextEdit* wnd)
+{
+    logWindow = wnd;
+}
 
+void MainWindow::log(QString msg)
+{
+   logWindow->appendPlainText(msg);
+}
 
 void MainWindow::xmlChanged()
 {
@@ -231,10 +242,10 @@ void drawPlus(QImage& act_image, QPixmap& plus)
 }
 
 
-
 void MainWindow::contextMenuActionTriggered()
 {
     QAction* act = static_cast<QAction*>(sender());
+    last_action_triggered = act;
     qDebug() << __FUNCTION__ << act->text();
     if( action_map.contains(act->text()) )
     {
@@ -266,14 +277,88 @@ void MainWindow::contextMenuEvent(QContextMenuEvent *event)
     menu.addAction(createAction(":/images/mouse_scroll.png", "Add scroll down"));
     menu.addAction(createAction(":/images/mouse_scroll.png", "Add scroll up"));
     menu.addSeparator();
-    menu.addAction(createAction(":/images/keyboard_icon.png", "Add keydown action"));
+    menu.addAction(createAction(":/images/keyboard_icon.png", "Add keydown"));
     menu.addAction(createAction(":/images/type.png", "Add type"));
     menu.addAction(createAction(":/images/Terminal-icon.png", "Add Shell"));
     menu.addAction(createAction(":/images/area_icon.png", "Add image click"));
+    menu.addAction(createAction(":/images/area_icon.png", "Area click"));
     menu.addSeparator();
     menu.addAction(createAction(":/images/clock-icon.png", "Set delay for this"));
     menu.exec(event->globalPos());
 }
+
+void MainWindow::slotSetAttrs(QMap<QString,QString> attrs_map)
+{
+    QString xml_string;
+    //for()
+    QString act = last_action_triggered->text();
+    if( act.contains("left click") )
+    {
+        xml_string = QString("<click button=\"left\" x=\"%1\" y=\"%2\" />")
+                            .arg(attrs_map["x"])
+                            .arg(attrs_map["y"]);
+    }
+    if( act.contains("right click") )
+    {
+        xml_string = QString("<click button=\"right\" x=\"%1\" y=\"%2\" />")
+                            .arg(attrs_map["x"])
+                            .arg(attrs_map["y"]);
+    }
+
+    if( act.contains("scroll down") )
+    {
+        xml_string = QString("<scrolldown repeats=\"5\" />");
+    }
+
+    if( act.contains("scroll up") )
+    {
+        xml_string = QString("<scrollup repeats=\"5\" />");
+    }
+
+    if( act.contains("Add keydown") )
+    {
+        xml_string = QString("<hotkey hotkey=\"ctrl + v\" delay_fixed=\"450\" repeats=\"6\" />");
+    }
+
+    if( act.contains("Area") )
+    {
+        xml_string = QString("<click button=\"left\" area=\"%1\" />").arg(attrs_map["area"]);
+    }
+
+    if( act.contains("image click") )
+    {
+        xml_string = QString("<clickimg targetImg=\"%1\" button=\"left\" delay_fixed=\"1000\"> </clickimg>").arg(attrs_map["targetImg"]);
+    }
+
+    if( act.contains("Add type") )
+    {
+        if(!attrs_map.contains("mode"))
+            xml_string = QString("<type> %1 </type>").arg(attrs_map["text"]);
+        else
+            xml_string = QString("<type mode=\"%2\"> %1 </type>").arg(attrs_map["text"]).arg(attrs_map["mode"]);
+
+    }
+
+
+    insertXmlString(xml_string);
+
+    Log("--- Context menu event -------");
+    Log(last_action_triggered->text());
+    for(auto it = attrs_map.begin(); it != attrs_map.end(); it++)
+    {
+        Log( it.key() + "=" + it.value());
+    }
+
+}
+
+
+void MainWindow::insertXmlString(QString xml_string)
+{
+    QString xml = xmlEditor->toPlainText();
+    xml = xml.replace("\n</func>","\n"+xml_string+"\n</func>");
+    xmlEditor->setText(xml);
+}
+
 
 void MainWindow::new_fun()
 {

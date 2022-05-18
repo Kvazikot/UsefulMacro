@@ -48,82 +48,66 @@
 **
 ****************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef DOMITEM_H
+#define DOMITEM_H
 
-#include "ui/ui_mainwindow.h"
-#include "model/clickermodel.h"
-#include "xml/clickerdocument.h"
-#include "interpreter/interpreter.h"
-#include <QMouseEvent>
-#include <QTimerEvent>
-#include <QMainWindow>
-#include <QPlainTextEdit>
+#include <QDomNode>
+#include <QHash>
+#include <QPoint>
+/*
+ *  fragment of an XML sheme
+<func name = "SetUrl" arg0="https://www.youtube.com/results?search_query=" comment="function sets url in chrome browser" >
+  <arg n="0" comment="url"> https://www.youtube.com/results?search_query= </arg>
+  <click area="Rect(0,1,200,200)">
+  <click x="10" y="20">
+  <dblclick x="10" y="20">
+  <mouseup x="10" y="20" delay_fixed="1000" delay_random="300" repeat="10">
+  <mousedown x="10" y="20">
+  <hotkey> ctrl + C </hotkey>
+  <type> this is text to insert . There $(arg0) is python variable  </type>
+  <keydown arg0="F6"/>
+  <keyup arg0="F6"/>
+  <scrollup x="10" y="20"/>
+  <scrolldown />
+</func>
+*/
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+class DomItem
 {
-    Q_OBJECT
-
 public:
-    MainWindow(QWidget *parent = nullptr);
-    void setLogWindow(QPlainTextEdit* logWindow);
-    void timerEvent(QTimerEvent* event);
-    //Main Action of the Application UsefulClicker
-    void traverseTree(const QModelIndex &index, const QDomNode& targetNode, QTreeView *view);
-    void mousePressEvent(QMouseEvent* event);
-    void mouseMoveEvent(QMouseEvent* event);
-    void loadDocument(QString filename);
-    void loadSettings();
-    QAction* createAction(QString icon, QString text, bool addPlusFlag=true);
-    static MainWindow* getInstance();
-    static MainWindow* instance;
-    QAction* last_action_triggered;
+    DomItem(const QDomNode &node, int row, DomItem *parent = nullptr);
+    ~DomItem();
+    DomItem *child(int i);
+    DomItem *parent();
+    QDomNode node() const;
+    int row() const;
+    virtual int parse();
+    bool setData(int column, const QVariant &value, int role);
 
-public slots:
-    void updateActions();
-    void contextMenuActionTriggered();
-    void updateStatus(const QString&, bool);
-    void applyChangesXml();
-    void contextMenuEvent(QContextMenuEvent *event);
-    void about();
-    void pause();
-    void new_fun();
-    void openXml();
-    void save(){saveToFile(current_filename);}
-    void saveToFile(QString& filename=current_filename);
-    void setNextItem(QModelIndex& index);
-    void reloadFromFile(QString& filename);
-    void functionSelected(const QString&);
-    void reloadFromMemory();
-    void reload();
-    ClickerDocument* getDoc();
-    void setDoc(ClickerDocument* doc);
-    AbstractInterpreter* getInterpreter();
-    void itemActivated(const QModelIndex &);
-    void xmlChanged();
-    void log(QString msg);
-    void slotSetAttrs(QMap<QString,QString> attrs_map);
-    void insertXmlString(QString xml_string);
 
-private slots:
-    void insertChild();
-    void applyChanges();
-    void commentChanged();
-    void insertRow();
-    void removeRow();
-    void setCurentDomNode(QDomNode& currentNode);
+    // common parametres for every clicker node
+    // parsed in class DomItem via parse() procedure
+    int delay_fixed;
+    int delay_random;
+    int repeat;
 
 
 private:
-    QPlainTextEdit*  logWindow;
-    ClickerModel* model=0;
-    ClickerDocument* doc;
-    ClickerDocument  defaultDoc;
-    static QString current_filename;
-    QAction* playAction;
-    bool pauseFlag;
-    int n_cycle;
+    QDomNode domNode;
+    QHash<int, DomItem *> childItems;
+    DomItem *parentItem;
+    int rowNumber;
 
 };
 
-#endif // MAINWINDOW_H
+
+class ClickItem : public DomItem
+{
+public:
+    QPoint point;
+    ClickItem(const QDomNode &node, int row, DomItem *parent = nullptr);
+    ~ClickItem();
+    int parse();
+};
+
+#endif // DOMITEM_H

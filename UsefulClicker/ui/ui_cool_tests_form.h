@@ -82,6 +82,18 @@ public:
     QGridLayout *gridLayout;
     QPushButton *pushButton_7;
     QPushButton *pushButton_6;
+    QWidget *tab_3;
+    QGroupBox *groupBox_13;
+    QGroupBox *groupBox_12;
+    QPushButton *foreachTest1;
+    QPushButton *foreachTest2;
+    QPushButton *foreachTest3;
+    QPushButton *foreachTest4;
+    QGroupBox *groupBox_14;
+    QPushButton *expressionTest12;
+    QPushButton *generatorsTest;
+    QGroupBox *groupBox_15;
+    QPushButton *pirateBayTest;
     QWidget *tab_2;
     QGroupBox *groupBox_8;
     QGridLayout *gridLayout_9;
@@ -156,7 +168,7 @@ public:
         tab->setObjectName(QString::fromUtf8("tab"));
         groupBox_7 = new QGroupBox(tab);
         groupBox_7->setObjectName(QString::fromUtf8("groupBox_7"));
-        groupBox_7->setGeometry(QRect(190, 150, 151, 91));
+        groupBox_7->setGeometry(QRect(190, 150, 161, 101));
         gridLayout_7 = new QGridLayout(groupBox_7);
         gridLayout_7->setObjectName(QString::fromUtf8("gridLayout_7"));
         createTestXml = new QPushButton(groupBox_7);
@@ -239,7 +251,7 @@ public:
 
         groupBox_4 = new QGroupBox(tab);
         groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
-        groupBox_4->setGeometry(QRect(360, 10, 171, 141));
+        groupBox_4->setGeometry(QRect(360, 10, 191, 151));
         gridLayout_4 = new QGridLayout(groupBox_4);
         gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
         spinBox = new QSpinBox(groupBox_4);
@@ -266,7 +278,7 @@ public:
 
         groupBox_10 = new QGroupBox(tab);
         groupBox_10->setObjectName(QString::fromUtf8("groupBox_10"));
-        groupBox_10->setGeometry(QRect(559, 10, 61, 141));
+        groupBox_10->setGeometry(QRect(559, 10, 81, 141));
         verticalLayout = new QVBoxLayout(groupBox_10);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         allScreens = new QRadioButton(groupBox_10);
@@ -304,6 +316,42 @@ public:
         gridLayout->addWidget(pushButton_6, 1, 0, 1, 1);
 
         tabWidget->addTab(tab, QString());
+        tab_3 = new QWidget();
+        tab_3->setObjectName(QString::fromUtf8("tab_3"));
+        groupBox_13 = new QGroupBox(tab_3);
+        groupBox_13->setObjectName(QString::fromUtf8("groupBox_13"));
+        groupBox_13->setGeometry(QRect(10, 0, 541, 311));
+        groupBox_12 = new QGroupBox(groupBox_13);
+        groupBox_12->setObjectName(QString::fromUtf8("groupBox_12"));
+        groupBox_12->setGeometry(QRect(20, 30, 141, 241));
+        foreachTest1 = new QPushButton(groupBox_12);
+        foreachTest1->setObjectName(QString::fromUtf8("foreachTest1"));
+        foreachTest1->setGeometry(QRect(10, 30, 121, 31));
+        foreachTest2 = new QPushButton(groupBox_12);
+        foreachTest2->setObjectName(QString::fromUtf8("foreachTest2"));
+        foreachTest2->setGeometry(QRect(10, 70, 121, 31));
+        foreachTest3 = new QPushButton(groupBox_12);
+        foreachTest3->setObjectName(QString::fromUtf8("foreachTest3"));
+        foreachTest3->setGeometry(QRect(10, 110, 121, 31));
+        foreachTest4 = new QPushButton(groupBox_12);
+        foreachTest4->setObjectName(QString::fromUtf8("foreachTest4"));
+        foreachTest4->setGeometry(QRect(10, 150, 121, 31));
+        groupBox_14 = new QGroupBox(groupBox_13);
+        groupBox_14->setObjectName(QString::fromUtf8("groupBox_14"));
+        groupBox_14->setGeometry(QRect(180, 30, 171, 241));
+        expressionTest12 = new QPushButton(groupBox_14);
+        expressionTest12->setObjectName(QString::fromUtf8("expressionTest12"));
+        expressionTest12->setGeometry(QRect(10, 30, 151, 29));
+        generatorsTest = new QPushButton(groupBox_14);
+        generatorsTest->setObjectName(QString::fromUtf8("generatorsTest"));
+        generatorsTest->setGeometry(QRect(10, 80, 151, 29));
+        groupBox_15 = new QGroupBox(groupBox_13);
+        groupBox_15->setObjectName(QString::fromUtf8("groupBox_15"));
+        groupBox_15->setGeometry(QRect(370, 30, 161, 241));
+        pirateBayTest = new QPushButton(groupBox_15);
+        pirateBayTest->setObjectName(QString::fromUtf8("pirateBayTest"));
+        pirateBayTest->setGeometry(QRect(20, 30, 121, 29));
+        tabWidget->addTab(tab_3, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
         groupBox_8 = new QGroupBox(tab_2);
@@ -347,7 +395,7 @@ public:
         QObject::connect(buttonBox, &QDialogButtonBox::accepted, CoolTestsForm, qOverload<>(&QDialog::accept));
         QObject::connect(buttonBox, &QDialogButtonBox::rejected, CoolTestsForm, qOverload<>(&QDialog::reject));
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(CoolTestsForm);
@@ -392,6 +440,18 @@ public:
         pushButton_7->setText(QCoreApplication::translate("CoolTestsForm", "Compose Message ", nullptr));
         pushButton_6->setText(QCoreApplication::translate("CoolTestsForm", "Compose Message ", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("CoolTestsForm", "Main tests (13)", nullptr));
+        groupBox_13->setTitle(QCoreApplication::translate("CoolTestsForm", "Language tests", nullptr));
+        groupBox_12->setTitle(QCoreApplication::translate("CoolTestsForm", "foreach loop tests", nullptr));
+        foreachTest1->setText(QCoreApplication::translate("CoolTestsForm", "Foreach_test1", nullptr));
+        foreachTest2->setText(QCoreApplication::translate("CoolTestsForm", "Foreach_test2", nullptr));
+        foreachTest3->setText(QCoreApplication::translate("CoolTestsForm", "Foreach_test3", nullptr));
+        foreachTest4->setText(QCoreApplication::translate("CoolTestsForm", "Foreach_test4", nullptr));
+        groupBox_14->setTitle(QCoreApplication::translate("CoolTestsForm", "Expression calculator", nullptr));
+        expressionTest12->setText(QCoreApplication::translate("CoolTestsForm", "12 Expressions test", nullptr));
+        generatorsTest->setText(QCoreApplication::translate("CoolTestsForm", "Generators test", nullptr));
+        groupBox_15->setTitle(QCoreApplication::translate("CoolTestsForm", "Torrent downloader tests", nullptr));
+        pirateBayTest->setText(QCoreApplication::translate("CoolTestsForm", "PirateBay test", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("CoolTestsForm", "Test page 2", nullptr));
         groupBox_8->setTitle(QCoreApplication::translate("CoolTestsForm", "Painter tests", nullptr));
         pushButton_2->setText(QCoreApplication::translate("CoolTestsForm", "Area click test", nullptr));
         pushButton_5->setText(QCoreApplication::translate("CoolTestsForm", "Drawing Face Test", nullptr));
@@ -399,7 +459,7 @@ public:
         pushButton_9->setText(QCoreApplication::translate("CoolTestsForm", "Record mouse trajectory ", nullptr));
         pushButton_8->setText(QCoreApplication::translate("CoolTestsForm", "Interactive cv test", nullptr));
         pushButton_10->setText(QCoreApplication::translate("CoolTestsForm", "Play mouse trajectory", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("CoolTestsForm", "Test page 2", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("CoolTestsForm", "Test page 3", nullptr));
     } // retranslateUi
 
 };

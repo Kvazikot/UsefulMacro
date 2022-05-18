@@ -106,14 +106,6 @@ int ClickerModel::columnCount(const QModelIndex &parent) const
     return 3;
 }
 
-QDomNode ClickerModel::getNodeByIndex(const QModelIndex &index)
-{
-    const DomItem *item = static_cast<DomItem*>(index.internalPointer());
-    DomItem *item1 = (DomItem*)(index.internalPointer());
-    const QDomNode node = item->node();
-    return node;
-}
-
 QVariant ClickerModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
@@ -243,7 +235,6 @@ bool ClickerModel::setData(const QModelIndex &index, const QVariant &value, int 
         result = item1->setData(2, value, role);
 
     }
-
     qDebug() << __FUNCTION__ << " " << value;
 
     if (result)
@@ -272,7 +263,7 @@ QVariant ClickerModel::headerData(int section, Qt::Orientation orientation,
             case 0:
                 return tr("#");
             case 1:
-                return tr("Tag name");
+                return tr("Name");
             case 2:
                 return tr("Attributes");
             case 3:
@@ -302,7 +293,6 @@ QModelIndex ClickerModel::index(int row, int column, const QModelIndex &parent) 
 //! [8]
     DomItem *childItem = parentItem->child(row);
     if (childItem)
-        if(childItem->node().nodeName()!="#comment")
         return createIndex(row, column, childItem);
     return QModelIndex();
 }

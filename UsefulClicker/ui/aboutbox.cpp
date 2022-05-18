@@ -19,6 +19,11 @@
 ```
 */
 
+#include <QMediaPlayer>
+#include <QVideoWidget>
+#include <QSoundEffect>
+#include <QPointer>
+#include <QDir>
 #include "aboutbox.h"
 #include "ui/coordselector.h"
 #include "ui/ui_aboutbox.h"
@@ -40,5 +45,20 @@ AboutBox::~AboutBox()
 void AboutBox::on_buttonBox_accepted()
 {
     done(1);
+}
+
+
+void AboutBox::on_whatchMovie_clicked()
+{
+    QMediaPlayer *player = new QMediaPlayer(this);
+
+    player->setSource((QUrl::fromLocalFile(QDir::currentPath() + "/video/video1866726317.mp4")));
+    //player->setVolume(10);
+    QVideoWidget* videoWidget = new QVideoWidget(this);
+    videoWidget->setGeometry(ui->textEdit->geometry());
+    player->setVideoOutput(videoWidget);
+
+    videoWidget->show();
+    player->play();
 }
 

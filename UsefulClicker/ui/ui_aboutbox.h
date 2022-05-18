@@ -14,17 +14,21 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
-#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QTextEdit>
+#include <QtWidgets/QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_AboutBox
 {
 public:
-    QHBoxLayout *horizontalLayout;
+    QGridLayout *gridLayout;
     QTextEdit *textEdit;
+    QVBoxLayout *verticalLayout;
     QDialogButtonBox *buttonBox;
+    QPushButton *whatchMovie;
 
     void setupUi(QDialog *AboutBox)
     {
@@ -32,8 +36,8 @@ public:
             AboutBox->setObjectName(QString::fromUtf8("AboutBox"));
         AboutBox->resize(609, 256);
         AboutBox->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 85, 0);"));
-        horizontalLayout = new QHBoxLayout(AboutBox);
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        gridLayout = new QGridLayout(AboutBox);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         textEdit = new QTextEdit(AboutBox);
         textEdit->setObjectName(QString::fromUtf8("textEdit"));
         textEdit->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 0);\n"
@@ -41,14 +45,24 @@ public:
         textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-        horizontalLayout->addWidget(textEdit);
+        gridLayout->addWidget(textEdit, 0, 0, 1, 1);
 
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         buttonBox = new QDialogButtonBox(AboutBox);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setOrientation(Qt::Vertical);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 
-        horizontalLayout->addWidget(buttonBox);
+        verticalLayout->addWidget(buttonBox);
+
+        whatchMovie = new QPushButton(AboutBox);
+        whatchMovie->setObjectName(QString::fromUtf8("whatchMovie"));
+
+        verticalLayout->addWidget(whatchMovie);
+
+
+        gridLayout->addLayout(verticalLayout, 0, 1, 1, 1);
 
 
         retranslateUi(AboutBox);
@@ -82,6 +96,7 @@ public:
                         "   \\</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Courier New';\">                                            './_____/</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Courier New';\">copyright by Vladimir Baranov (Kvazikot)email: vsbaranov83@gmail.comgithub: http://github.com/Kvazikot/UsefulMacro/UsefulClicker</span></p></body></html>", nullptr));
+        whatchMovie->setText(QCoreApplication::translate("AboutBox", "Watch Movie", nullptr));
     } // retranslateUi
 
 };

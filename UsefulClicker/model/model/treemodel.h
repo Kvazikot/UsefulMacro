@@ -48,82 +48,60 @@
 **
 ****************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef TREEMODEL_H
+#define TREEMODEL_H
 
-#include "ui/ui_mainwindow.h"
-#include "model/clickermodel.h"
-#include "xml/clickerdocument.h"
-#include "interpreter/interpreter.h"
-#include <QMouseEvent>
-#include <QTimerEvent>
-#include <QMainWindow>
-#include <QPlainTextEdit>
+#include <QAbstractItemModel>
+#include <QModelIndex>
+#include <QVariant>
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+class TreeItem;
+
+//! [0]
+class TreeModel : public QAbstractItemModel
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    void setLogWindow(QPlainTextEdit* logWindow);
-    void timerEvent(QTimerEvent* event);
-    //Main Action of the Application UsefulClicker
-    void traverseTree(const QModelIndex &index, const QDomNode& targetNode, QTreeView *view);
-    void mousePressEvent(QMouseEvent* event);
-    void mouseMoveEvent(QMouseEvent* event);
-    void loadDocument(QString filename);
-    void loadSettings();
-    QAction* createAction(QString icon, QString text, bool addPlusFlag=true);
-    static MainWindow* getInstance();
-    static MainWindow* instance;
-    QAction* last_action_triggered;
+    TreeModel(const QStringList &headers, const QString &data,
+              QObject *parent = nullptr);
+    ~TreeModel();
+//! [0] //! [1]
 
-public slots:
-    void updateActions();
-    void contextMenuActionTriggered();
-    void updateStatus(const QString&, bool);
-    void applyChangesXml();
-    void contextMenuEvent(QContextMenuEvent *event);
-    void about();
-    void pause();
-    void new_fun();
-    void openXml();
-    void save(){saveToFile(current_filename);}
-    void saveToFile(QString& filename=current_filename);
-    void setNextItem(QModelIndex& index);
-    void reloadFromFile(QString& filename);
-    void functionSelected(const QString&);
-    void reloadFromMemory();
-    void reload();
-    ClickerDocument* getDoc();
-    void setDoc(ClickerDocument* doc);
-    AbstractInterpreter* getInterpreter();
-    void itemActivated(const QModelIndex &);
-    void xmlChanged();
-    void log(QString msg);
-    void slotSetAttrs(QMap<QString,QString> attrs_map);
-    void insertXmlString(QString xml_string);
+    QVariant data(const QModelIndex &index, int role) const override;
+    QVariant headerData(int section, Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const override;
 
-private slots:
-    void insertChild();
-    void applyChanges();
-    void commentChanged();
-    void insertRow();
-    void removeRow();
-    void setCurentDomNode(QDomNode& currentNode);
+    QModelIndex index(int row, int column,
+                      const QModelIndex &parent = QModelIndex()) const override;
+    QModelIndex parent(const QModelIndex &index) const override;
 
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+//! [1]
+
+//! [2]
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
+    bool setData(const QModelIndex &index, const QVariant &value,
+                 int role = Qt::EditRole) override;
+    bool setHeaderData(int section, Qt::Orientation orientation,
+                       const QVariant &value, int role = Qt::EditRole) override;
+
+    bool insertColumns(int position, int columns,
+                       const QModelIndex &parent = QModelIndex()) override;
+    bool removeColumns(int position, int columns,
+                       const QModelIndex &parent = QModelIndex()) override;
+    bool insertRows(int position, int rows,
+                    const QModelIndex &parent = QModelIndex()) override;
+    bool removeRows(int position, int rows,
+                    const QModelIndex &parent = QModelIndex()) override;
+    void setupModelData(const QStringList &lines, TreeItem *parent);
+    TreeItem *rootItem;
 
 private:
-    QPlainTextEdit*  logWindow;
-    ClickerModel* model=0;
-    ClickerDocument* doc;
-    ClickerDocument  defaultDoc;
-    static QString current_filename;
-    QAction* playAction;
-    bool pauseFlag;
-    int n_cycle;
+    TreeItem *getItem(const QModelIndex &index) const;
 
 };
+//! [2]
 
-#endif // MAINWINDOW_H
+#endif // TREEMODEL_H
