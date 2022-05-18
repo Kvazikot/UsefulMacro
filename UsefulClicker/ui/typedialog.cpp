@@ -1,4 +1,5 @@
 #include "typedialog.h"
+#include "log/logger.h"
 #include "ui/widgets/keyboardbutton.h"
 #include "ui_typedialog.h"
 
@@ -14,10 +15,12 @@ TypeDialog::TypeDialog(QString mode) :
     ui(new Ui::TypeDialog)
 {
     ui->setupUi(this);
-    KeyboardButton* button = new KeyboardButton(this);
-    button->setGeometry(0,0,100,100);
-    button->show();
 
+}
+
+void TypeDialog::click()
+{
+    Log("click cliker");
 }
 
 
@@ -32,6 +35,7 @@ void TypeDialog::on_buttonBox_accepted()
     attrs["text"] = ui->plainTextEdit->toPlainText();
     if( ui->checkBox->isChecked() )
         attrs["mode"] = "copy_paste";
+    attrs["hotkey"] = ui->keySequenceEdit->keySequence().toString(QKeySequence::SequenceFormat::NativeText);
     emit sigSetAttrs(attrs);
 }
 

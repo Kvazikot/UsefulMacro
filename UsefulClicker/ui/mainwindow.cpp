@@ -339,6 +339,11 @@ void MainWindow::slotSetAttrs(QMap<QString,QString> attrs_map)
 
     }
 
+    if( act.contains("keydown") )
+    {
+        xml_string = QString("<hotkey hotkey=\"%1\" />").arg(attrs_map["hotkey"]);
+    }
+
 
     insertXmlString(xml_string);
 

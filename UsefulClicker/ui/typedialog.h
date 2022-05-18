@@ -14,6 +14,8 @@ public:
     QMap<QString,QString> attrs;
     explicit TypeDialog(QWidget *parent = nullptr);
     explicit TypeDialog(QString mode);
+    //void mousePressEvent(QMouseEvent *ev) override;
+    //void timerEvent(QTimerEvent* event) override;
 
     ~TypeDialog();
 
@@ -22,6 +24,7 @@ signals:
 
 private slots:
     void on_buttonBox_accepted();
+    void click();
 
 private:
     Ui::TypeDialog *ui;
