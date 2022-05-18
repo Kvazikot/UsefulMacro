@@ -1,5 +1,6 @@
 QT += core gui widgets xml svg
 QT += multimedia
+QT += multimediawidgets
 QMAKE_CXXFLAGS += -std=c++17
 TARGET = UsefulClicker
 UI_DIR = "./ui"
@@ -68,6 +69,8 @@ LIBS+=-L$$OPENCV_451_PATH\\build_mingw\\lib\\ -lopencv_shape455.dll
 
 
 SOURCES += main.cpp \
+    interpreter/expression_calculator.cpp \
+    log/logger.cpp \
     tests/cool_tests_form.cpp \
     interpreter/interpreter.cpp \
     interpreter/interpreterpy.cpp \
@@ -83,6 +86,7 @@ SOURCES += main.cpp \
     ui/imagesearchdialog.cpp \
     ui/mainwindow.cpp \
     ui/shelldialog.cpp \
+    ui/typedialog.cpp \
     ui/widgets/areabutton.cpp \
     ui/widgets/comboedit.cpp \
     ui/widgets/crossbutton.cpp \
@@ -106,10 +110,13 @@ SOURCES += main.cpp \
     #model/treemodel.cpp
 
 HEADERS += \
+    interpreter/expression_calculator.h \
+    log/logger.h \
     myproxystyle.h \
     tests/cool_tests_form.h \
     cv/dspmodule.h \
     tests/highlighter.h \
+    ui/typedialog.h \
     ui/widgets/qconsole.h \
     ui/coordselector.h \
     ui/dialogtype.h \
@@ -154,7 +161,8 @@ FORMS += \
     ui/imagesearchdialog.ui \
     ui/mainwindow.ui \
     ui/screenbuttonsdetector.ui \
-    ui/shelldialog.ui
+    ui/shelldialog.ui \
+    ui/typedialog.ui
 
 RESOURCES += \
     res.qrc

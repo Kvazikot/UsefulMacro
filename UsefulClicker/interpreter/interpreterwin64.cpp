@@ -11,18 +11,17 @@
 #include <windef.h>
 #include "interpreter/interpreterwin64.h"
 #include "model/clickermodel.h"
+#include "log/logger.h"
 #include "cv/dspmodule.h"
 #include "ui/mainwindow.h"
 #include "windows.h"
+#include "./interpreter/expression_calculator.h"
 #include "settings/clickersettings.h"
 #include <windows.h>
 #include <random>
 #include <QRect>
 #include <QRegularExpression>
 
-#define log(msg) MainWindow::getInstance()->log(msg)
-void log2(const char* fmt,...);
-#define log2(fmt, msg) log2(fmt,msg)
 
 static QMap<QString, std::vector<QString>> global_lists;
 static QMap<QString, QVariant> global_vars;
@@ -86,7 +85,7 @@ QDomNode InterpreterWin64::populateVars(QDomNode nodE)
                 node.toElement().setAttribute(attr,value);
             }
         }
-        log("-+-+-+: >>>> : " + attr + "=" + value);
+        Log("-+-+-+: >>>> : " + attr + "=" + value);
     }
     return node;
 }
@@ -723,8 +722,8 @@ int InterpreterWin64::executeList(const QDomNode& node)
             std::uniform_int_distribution<int> distribution(0,str.size());
             int n = distribution(generator);  // generates number in the range 1..6
             outputString = str[n];
-            log("selecting " + outputString);
-            log2("list size = %d", str.size());
+            Log("selecting " + outputString);
+            Log2("list size = %d", str.size());
         }
     }
     clipboard->setText(outputString);
@@ -740,6 +739,45 @@ int InterpreterWin64::executeDblClick(const QDomNode& node)
     executeClick(node);
 }
 
+int InterpreterWin64::executeCheck(const QDomNode& node)
+{
+    for(int i=0; i < node.attributes().count(); i++)
+    {
+        QDomNode attr = node.attributes().item(i);
+        QString varName = attr.nodeName();
+        if( global_vars.find(varName) != global_vars.end())
+        {
+            if ( global_vars[varName] == attr.nodeValue() )
+            {
+                QString str = "CHECK.... " + varName + "==" + attr.nodeValue();
+                str += "........OK!";
+                Log(str);
+            }
+            else
+            {
+                QString str = "CHECK.... " + varName + "!=" + attr.nodeValue() + "   ";
+                str += varName + "=" + global_vars[varName].toString();
+                str += "........FAIL!";
+                Log(str);
+            }
+        }
+    }
+    return 0;
+}
+
+int InterpreterWin64::executeSet(const QDomNode& node)
+{
+    for(int i = 0; i < node.attributes().count(); i++)
+    {
+        QDomNode attr = node.attributes().item(i);
+        QString varName = attr.nodeName();
+        QString expression = attr.nodeValue();
+        ExpressionCalculator calc;
+        QString result;
+        calc.compute(expression, result);
+    }
+    return 1;
+}
 
 // <foreach list="Thrillers_beetwen_1979-1989" range="10:100:1">
 int InterpreterWin64::executeForeach(const QDomNode& node)
@@ -780,6 +818,8 @@ std::map<std::string, method_t> interpreter_func_map{{"click",&InterpreterWin64:
                                 {"shell",&InterpreterWin64::executeShellCommand},
                                 {"foreach",&InterpreterWin64::executeForeach},
                                 {"list",&InterpreterWin64::executeList},
+                                {"set",&InterpreterWin64::executeSet},
+                                {"check",&InterpreterWin64::executeCheck},
                                 {"clickimg",&InterpreterWin64::executeClickImg},
                                 {"dblclick",&InterpreterWin64::executeDblClick},
                                 {"scrollup",&InterpreterWin64::executeScrollUp},
@@ -808,7 +848,7 @@ int InterpreterWin64::execute(const QDomNode& node)
        ss << "EXEC with VARS--->" << node_with_vars;
        //ss << "PARENT NODE ----------------> ";
        //ss << node.parentNode();
-       log(ss.readAll());
+       Log(ss.readAll());
 
        // call the method
        if( kv != interpreter_func_map.end())
@@ -833,7 +873,7 @@ int InterpreterWin64::execute(const QDomNode& node)
        }
        else
        {
-            log("unknown tag at line 34: " + name);
+            Log("unknown tag at line 34: " + name);
 
 
        }

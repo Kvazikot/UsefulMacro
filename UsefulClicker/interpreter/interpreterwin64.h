@@ -31,6 +31,8 @@ public:
     QDomNode populateVars(QDomNode node);
     int execute(const QDomNode& node) override;
     int executeHotkey(const QDomNode& node);
+    int executeCheck(const QDomNode& node);
+    int executeSet(const QDomNode& node);
     int executeClick(const QDomNode& node);
     int executeDblClick(const QDomNode& node);
     int executeType(const QDomNode& node);
