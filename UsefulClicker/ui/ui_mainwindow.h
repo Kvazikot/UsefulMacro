@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
@@ -21,6 +22,7 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextEdit>
+#include <QtWidgets/QToolButton>
 #include <QtWidgets/QTreeView>
 #include <QtWidgets/QWidget>
 #include "xml/xmleditor.h"
@@ -52,6 +54,13 @@ public:
     QGroupBox *groupBox_3;
     QGridLayout *gridLayout_2;
     QTextEdit *commentEditor;
+    QGroupBox *groupBox_5;
+    QToolButton *leftClick;
+    QToolButton *keyboardClick;
+    QToolButton *areaClick;
+    QToolButton *imageClick;
+    QToolButton *typeTag;
+    QToolButton *toolButton_7;
     QGroupBox *groupBox_4;
     QGridLayout *gridLayout_4;
     XmlEditor *xmlEditor;
@@ -140,6 +149,56 @@ public:
 
         horizontalLayout->addWidget(groupBox_3);
 
+        groupBox_5 = new QGroupBox(groupBox_2);
+        groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
+        groupBox_5->setMinimumSize(QSize(130, 0));
+        leftClick = new QToolButton(groupBox_5);
+        leftClick->setObjectName(QString::fromUtf8("leftClick"));
+        leftClick->setGeometry(QRect(10, 40, 23, 23));
+        leftClick->setMouseTracking(true);
+        leftClick->setToolTipDuration(2000);
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/images/mouse_left_click.png"), QSize(), QIcon::Normal, QIcon::Off);
+        leftClick->setIcon(icon);
+        leftClick->setToolButtonStyle(Qt::ToolButtonIconOnly);
+        keyboardClick = new QToolButton(groupBox_5);
+        keyboardClick->setObjectName(QString::fromUtf8("keyboardClick"));
+        keyboardClick->setGeometry(QRect(40, 40, 23, 23));
+        keyboardClick->setToolTipDuration(2000);
+        QIcon icon1;
+        icon1.addFile(QString::fromUtf8(":/images/keyboard_color.png"), QSize(), QIcon::Normal, QIcon::Off);
+        keyboardClick->setIcon(icon1);
+        areaClick = new QToolButton(groupBox_5);
+        areaClick->setObjectName(QString::fromUtf8("areaClick"));
+        areaClick->setGeometry(QRect(70, 40, 23, 23));
+        areaClick->setToolTipDuration(2000);
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8(":/images/area_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        areaClick->setIcon(icon2);
+        imageClick = new QToolButton(groupBox_5);
+        imageClick->setObjectName(QString::fromUtf8("imageClick"));
+        imageClick->setGeometry(QRect(100, 40, 23, 23));
+        imageClick->setToolTipDuration(2000);
+        QIcon icon3;
+        icon3.addFile(QString::fromUtf8(":/images/image.png"), QSize(), QIcon::Normal, QIcon::Off);
+        imageClick->setIcon(icon3);
+        typeTag = new QToolButton(groupBox_5);
+        typeTag->setObjectName(QString::fromUtf8("typeTag"));
+        typeTag->setGeometry(QRect(10, 70, 23, 23));
+        typeTag->setToolTipDuration(2000);
+        QIcon icon4;
+        icon4.addFile(QString::fromUtf8(":/images/type.png"), QSize(), QIcon::Normal, QIcon::Off);
+        typeTag->setIcon(icon4);
+        toolButton_7 = new QToolButton(groupBox_5);
+        toolButton_7->setObjectName(QString::fromUtf8("toolButton_7"));
+        toolButton_7->setGeometry(QRect(40, 70, 23, 23));
+        toolButton_7->setToolTipDuration(2000);
+        QIcon icon5;
+        icon5.addFile(QString::fromUtf8(":/images/clock-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        toolButton_7->setIcon(icon5);
+
+        horizontalLayout->addWidget(groupBox_5);
+
         groupBox_4 = new QGroupBox(groupBox_2);
         groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -153,7 +212,7 @@ public:
         xmlEditor = new XmlEditor(groupBox_4);
         xmlEditor->setObjectName(QString::fromUtf8("xmlEditor"));
 
-        gridLayout_4->addWidget(xmlEditor, 0, 0, 1, 1);
+        gridLayout_4->addWidget(xmlEditor, 1, 0, 1, 1);
 
 
         horizontalLayout->addWidget(groupBox_4);
@@ -167,7 +226,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 1273, 25));
+        menubar->setGeometry(QRect(0, 0, 1273, 21));
         fileMenu = new QMenu(menubar);
         fileMenu->setObjectName(QString::fromUtf8("fileMenu"));
         actionsMenu = new QMenu(menubar);
@@ -242,6 +301,34 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:700;\">This function is cooking eggs and mix them with wiskey</span></p></body></html>", nullptr));
+        groupBox_5->setTitle(QCoreApplication::translate("MainWindow", "Available Tags", nullptr));
+#if QT_CONFIG(tooltip)
+        leftClick->setToolTip(QCoreApplication::translate("MainWindow", "<html><head/><body><p>Click tag</p></body></html>", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(whatsthis)
+        leftClick->setWhatsThis(QCoreApplication::translate("MainWindow", "<html><head/><body><p>Click tag</p></body></html>", nullptr));
+#endif // QT_CONFIG(whatsthis)
+        leftClick->setText(QCoreApplication::translate("MainWindow", "Left click", nullptr));
+#if QT_CONFIG(tooltip)
+        keyboardClick->setToolTip(QCoreApplication::translate("MainWindow", "Hotkey", nullptr));
+#endif // QT_CONFIG(tooltip)
+        keyboardClick->setText(QCoreApplication::translate("MainWindow", "Hotkey", nullptr));
+#if QT_CONFIG(tooltip)
+        areaClick->setToolTip(QCoreApplication::translate("MainWindow", "Area click", nullptr));
+#endif // QT_CONFIG(tooltip)
+        areaClick->setText(QCoreApplication::translate("MainWindow", "Area click", nullptr));
+#if QT_CONFIG(tooltip)
+        imageClick->setToolTip(QCoreApplication::translate("MainWindow", "Image click", nullptr));
+#endif // QT_CONFIG(tooltip)
+        imageClick->setText(QCoreApplication::translate("MainWindow", "Click on image", nullptr));
+#if QT_CONFIG(tooltip)
+        typeTag->setToolTip(QCoreApplication::translate("MainWindow", "Type click", nullptr));
+#endif // QT_CONFIG(tooltip)
+        typeTag->setText(QCoreApplication::translate("MainWindow", "Type", nullptr));
+#if QT_CONFIG(tooltip)
+        toolButton_7->setToolTip(QCoreApplication::translate("MainWindow", "Delay", nullptr));
+#endif // QT_CONFIG(tooltip)
+        toolButton_7->setText(QCoreApplication::translate("MainWindow", "...", nullptr));
         groupBox_4->setTitle(QCoreApplication::translate("MainWindow", "Xml editor", nullptr));
         fileMenu->setTitle(QCoreApplication::translate("MainWindow", "&File", nullptr));
         actionsMenu->setTitle(QCoreApplication::translate("MainWindow", "&Actions", nullptr));

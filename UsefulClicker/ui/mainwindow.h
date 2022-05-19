@@ -73,11 +73,12 @@ public:
     void mousePressEvent(QMouseEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
     void loadDocument(QString filename);
+    void XmlStringFromUniversalDialog(QMap<QString,QString> attrs_map);
     void loadSettings();
     QAction* createAction(QString icon, QString text, bool addPlusFlag=true);
     static MainWindow* getInstance();
     static MainWindow* instance;
-    QAction* last_action_triggered;
+    QString last_action_triggered;
 
 public slots:
     void updateActions();
@@ -112,7 +113,14 @@ private slots:
     void insertRow();
     void removeRow();
     void setCurentDomNode(QDomNode& currentNode);
+    void on_leftClick_clicked();
+    void on_keyboardClick_clicked();
 
+    void on_areaClick_clicked();
+
+    void on_imageClick_clicked();
+
+    void on_typeTag_clicked();
 
 private:
     QPlainTextEdit*  logWindow;

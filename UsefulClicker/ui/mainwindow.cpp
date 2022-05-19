@@ -245,7 +245,7 @@ void drawPlus(QImage& act_image, QPixmap& plus)
 void MainWindow::contextMenuActionTriggered()
 {
     QAction* act = static_cast<QAction*>(sender());
-    last_action_triggered = act;
+    last_action_triggered = act->text();
     qDebug() << __FUNCTION__ << act->text();
     if( action_map.contains(act->text()) )
     {
@@ -287,11 +287,88 @@ void MainWindow::contextMenuEvent(QContextMenuEvent *event)
     menu.exec(event->globalPos());
 }
 
+void MainWindow::XmlStringFromUniversalDialog(QMap<QString,QString> attrs_map)
+{
+    QString xml_string;
+    auto event = attrs_map["event"];
+    bool withDelayFlag = attrs_map["withDelayFlag"].toInt();
+    if(withDelayFlag)
+    {
+        if(event == "hotkey")
+            xml_string = QString("<hotkey hotkey=\"%1\" delay_fixed=\"%2\" delay_random=\"%3\" repeats=\"%4\" />")
+                        .arg(attrs_map["hotkey"])
+                        .arg(attrs_map["delay_fixed"])
+                        .arg(attrs_map["delay_random"])
+                        .arg(attrs_map["repeats"]);
+        if(event == "click")
+            xml_string = QString("<click button=\"%1\" x=\"%2\" y=\"%3\" delay_fixed=\"%4\" delay_random=\"%5\" repeats=\"%6\"/>")
+                                .arg(attrs_map["button"])
+                                .arg(attrs_map["x"])
+                                .arg(attrs_map["y"])
+                                .arg(attrs_map["delay_fixed"])
+                                .arg(attrs_map["delay_random"])
+                                .arg(attrs_map["repeats"]);
+
+        if(event == "scroll")
+        {
+            if( attrs_map["delta"].toInt() > 0)
+                xml_string = QString("<scrollup delta=\"%1\" delay_fixed=\"%2\" delay_random=\"%3\" repeats=\"%4\"/>")
+                             .arg(attrs_map["delta"])
+                             .arg(attrs_map["delay_fixed"])
+                             .arg(attrs_map["delay_random"])
+                             .arg(attrs_map["repeats"]);
+
+            else
+                xml_string = QString("<scrolldown delta=\"%1\" delay_fixed=\"%2\" delay_random=\"%3\" repeats=\"%4\"/>")
+                             .arg(attrs_map["delta"])
+                             .arg(attrs_map["delay_fixed"])
+                             .arg(attrs_map["delay_random"])
+                             .arg(attrs_map["repeats"]);
+
+
+        }
+    }
+    else // without delay attributes (default delay)
+    {
+        if(event == "hotkey")
+            xml_string = QString("<hotkey hotkey=\"%1\" />")
+                        .arg(attrs_map["hotkey"]);
+        if(event == "click")
+            xml_string = QString("<click button=\"%1\" x=\"%2\" y=\"%3\" />")
+                                .arg(attrs_map["button"])
+                                .arg(attrs_map["x"])
+                                .arg(attrs_map["y"]);
+
+        if(event == "scroll")
+        {
+            if( attrs_map["delta"].toInt() > 0)
+                xml_string = QString("<scrollup delta=\"%1\" />")
+                             .arg(attrs_map["delta"]);
+
+            else
+                xml_string = QString("<scrolldown delta=\"%1\" />")
+                             .arg(attrs_map["delta"]);
+
+
+        }
+
+    }
+
+    insertXmlString(xml_string);
+}
+
 void MainWindow::slotSetAttrs(QMap<QString,QString> attrs_map)
 {
     QString xml_string;
     //for()
-    QString act = last_action_triggered->text();
+
+    if( attrs_map.contains("event") )
+    {
+        XmlStringFromUniversalDialog(attrs_map);
+        return;
+    }
+
+    QString act = last_action_triggered;
     if( act.contains("left click") )
     {
         xml_string = QString("<click button=\"left\" x=\"%1\" y=\"%2\" />")
@@ -347,12 +424,6 @@ void MainWindow::slotSetAttrs(QMap<QString,QString> attrs_map)
 
     insertXmlString(xml_string);
 
-    Log("--- Context menu event -------");
-    Log(last_action_triggered->text());
-    for(auto it = attrs_map.begin(); it != attrs_map.end(); it++)
-    {
-        Log( it.key() + "=" + it.value());
-    }
 
 }
 
@@ -780,4 +851,39 @@ void MainWindow::updateActions()
 }
 
 
+
+
+
+void MainWindow::on_leftClick_clicked()
+{
+    last_action_triggered = "left click";
+    createDialog(this, DialogType::MOUSE_DIALOG);
+}
+
+
+void MainWindow::on_keyboardClick_clicked()
+{
+    last_action_triggered = "hotkey";
+    createDialog(this, DialogType::MOUSE_DIALOG);
+}
+
+
+void MainWindow::on_areaClick_clicked()
+{
+    last_action_triggered = "Area click";
+    createDialog(this, DialogType::AREA_SELECTOR);
+}
+
+void MainWindow::on_imageClick_clicked()
+{
+    last_action_triggered = "Add image click";
+    createDialog(this, DialogType::SCREEN_BUTTONS_DETECTOR);
+}
+
+
+void MainWindow::on_typeTag_clicked()
+{
+    last_action_triggered =  "Add type";
+    createDialog(this, DialogType::TYPE_DIALOG);
+}
 

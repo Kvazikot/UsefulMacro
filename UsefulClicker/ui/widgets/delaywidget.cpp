@@ -41,6 +41,13 @@ DelayWidget::DelayWidget(QWidget *parent)
     startTimer(10);
 }
 
+void DelayWidget::mouseReleaseEvent(QMouseEvent* event)
+{
+    event->accept();
+
+}
+
+
 void DelayWidget::showEvent(QShowEvent* event)
 {
     showFullScreen();
@@ -98,15 +105,19 @@ void DelayWidget::timerEvent(QTimerEvent* event)
 
     static char num[100];
     sprintf(num,"%3.1f",angle);
+    delay_fixed = angle;
     widget->setText("text12424-4", QString(num));
 
     // set random delay text
     sprintf(num,"%3.1f",dist/10);
+    delay_random = (dist/10);
     widget->setText("text12424", QString(num));
 
     // set repeats
     sprintf(num,"%03d",repeats);
     widget->setText("text12424-7", QString(num));
+
+
 
     widget->LoadRenderDOM();
 
@@ -167,7 +178,10 @@ void DelayWidget::keyPressEvent(QKeyEvent* event)
 {
     event->accept();
     if( event->key() == Qt::Key_Return )
+    {
+        emit ready();
         close();
+    }
 }
 
 void DelayWidget::wheelEvent(QWheelEvent* event)

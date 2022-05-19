@@ -79,6 +79,7 @@ SOURCES += main.cpp \
     tests/highlighter.cpp \
     ui/coordselector.cpp \
     ui/createdialog.cpp \
+    ui/mousedialog.cpp \
     ui/screenbuttonsdetector.cpp \
     ui/aboutbox.cpp \
     ui/areaselectordialog.cpp \
@@ -116,6 +117,7 @@ HEADERS += \
     tests/cool_tests_form.h \
     cv/dspmodule.h \
     tests/highlighter.h \
+    ui/mousedialog.h \
     ui/typedialog.h \
     ui/widgets/qconsole.h \
     ui/coordselector.h \
@@ -160,6 +162,7 @@ FORMS += \
     ui/coordselector.ui \
     ui/imagesearchdialog.ui \
     ui/mainwindow.ui \
+    ui/mousedialog.ui \
     ui/screenbuttonsdetector.ui \
     ui/shelldialog.ui \
     ui/typedialog.ui

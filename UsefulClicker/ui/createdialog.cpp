@@ -6,6 +6,7 @@
 #include "ui/shelldialog.h"
 #include "ui/widgets/keyboardbutton.h"
 #include "ui/typedialog.h"
+#include "ui/mousedialog.h"
 #include "ui/widgets/delaywidget.h"
 
 void createDialog(QObject* receiver_object, DialogType dialog_type)
@@ -54,8 +55,12 @@ void createDialog(QObject* receiver_object, DialogType dialog_type)
             TypeDialog* dlg = new TypeDialog("keydown");
             receiver_object->connect(dlg, SIGNAL(sigSetAttrs(QMap<QString,QString>)), receiver_object, SLOT(slotSetAttrs(QMap<QString,QString>)));
             dlg->show();
-
-
+        }break;
+        case MOUSE_DIALOG:
+        {
+            MouseDialog* dlg = new MouseDialog();
+            receiver_object->connect(dlg, SIGNAL(sigSetAttrs(QMap<QString,QString>)), receiver_object, SLOT(slotSetAttrs(QMap<QString,QString>)));
+            dlg->show();
         }break;
 
     }

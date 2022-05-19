@@ -12,7 +12,8 @@ enum DialogType
     SHELL_COMMAND_DIALOG=3,
     TYPE_DIALOG=4,
     DELAY_WIDGET=5,
-    KEYDOWN_DIALOG=6
+    KEYDOWN_DIALOG=6,
+    MOUSE_DIALOG=7
 };
 
 static QMap<QString, DialogType> action_map{{"Add image click", SCREEN_BUTTONS_DETECTOR},
