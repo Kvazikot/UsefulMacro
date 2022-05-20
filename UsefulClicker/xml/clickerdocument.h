@@ -15,6 +15,7 @@ public:
     explicit ClickerDocument();
     QDomNode filter(QDomNode rootNode);
     QString getContent(QDomDocument& document);
+    QDomNode createNodeFromString(QString xml);
     void getFunctionsList(const QDomNode& rootNode, QStringList& outList);
     QDomNode findNodeByName(const QDomNode& rootNode, QString name);
     QString getFunction(QString funcname);

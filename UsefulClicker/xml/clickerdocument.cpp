@@ -59,6 +59,18 @@ QString ClickerDocument::getFunction(QString funcname)
     return str;
 }
 
+QDomNode ClickerDocument::createNodeFromString(QString xml)
+{
+    QDomDocument* doc = new QDomDocument();
+    //xml = "<?xml version='1.0'?><xml>" + xml + "</xml>";
+    if( doc->setContent( xml ) )
+    {
+        QDomElement root = doc->documentElement();
+        return root.firstChild();
+    }
+    return  QDomNode();
+}
+
 bool ClickerDocument::checkXmlSyntax(QString xml )
 {
     QDomNode node;

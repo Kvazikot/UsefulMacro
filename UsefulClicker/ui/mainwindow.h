@@ -105,6 +105,7 @@ public slots:
     void log(QString msg);
     void slotSetAttrs(QMap<QString,QString> attrs_map);
     void insertXmlString(QString xml_string);
+    void modifyXmlString(QString xml_string);
 
 private slots:
     void insertChild();

@@ -26,6 +26,7 @@ CoordSelector::CoordSelector(QWidget *parent, bool withEasterEgg) :
     setWindowFlags(Qt::Widget );
     setAttribute(Qt::WA_NoSystemBackground, true);
     setAttribute(Qt::WA_TranslucentBackground, true);
+    setAttribute(Qt::WA_AlwaysStackOnTop, true);
     setAttribute(Qt::WA_WState_WindowOpacitySet);
     setAttribute(Qt::WA_PaintOnScreen); // not needed in Qt 5.2 and up
     setCursor(Qt::CrossCursor);
@@ -52,6 +53,7 @@ CoordSelector::CoordSelector(QWidget *parent, bool withEasterEgg) :
     frame = 0;
 
     startTimer(10);
+    QTimer::singleShot(10000, this, SLOT(clickDelay()));
 
 }
 
@@ -258,13 +260,14 @@ void CoordSelector::on_doneButton_clicked()
 
 void CoordSelector::showEvent(QShowEvent* event)
 {    
-    setWindowState(Qt::WindowFullScreen);
+    //setWindowState(Qt::WindowFullScreen);
     //QTimer::singleShot(500, this, SLOT(slotFullScreen()));
     if( screenNum > QGuiApplication::screens().size() ) return;
     QScreen* screen = QGuiApplication::screens()[screenNum];
     setGeometry(screen->geometry());
     setCursor(Qt::CrossCursor);
     event->accept();
+    showFullScreen();
 }
 
 void CoordSelector::closeDelaySlot()

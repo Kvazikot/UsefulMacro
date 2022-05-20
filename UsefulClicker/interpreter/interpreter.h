@@ -34,6 +34,8 @@
 // Позднее я сделаю абстрактный платформонезависимый интерфейс
 // И вынесу платформозависимую часть в отдельный файл
 //-----------------------------------------------------
+void hotKey(char* hot_key);
+void MouseClick(QPoint coordinates, Qt::MouseButton button);
 
 struct Delays
 {

@@ -168,6 +168,7 @@ public:
         QIcon icon1;
         icon1.addFile(QString::fromUtf8(":/images/keyboard_color.png"), QSize(), QIcon::Normal, QIcon::Off);
         keyboardClick->setIcon(icon1);
+        keyboardClick->setCheckable(true);
         areaClick = new QToolButton(groupBox_5);
         areaClick->setObjectName(QString::fromUtf8("areaClick"));
         areaClick->setGeometry(QRect(70, 40, 23, 23));
@@ -226,7 +227,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 1273, 21));
+        menubar->setGeometry(QRect(0, 0, 1273, 25));
         fileMenu = new QMenu(menubar);
         fileMenu->setObjectName(QString::fromUtf8("fileMenu"));
         actionsMenu = new QMenu(menubar);
@@ -303,24 +304,36 @@ public:
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:700;\">This function is cooking eggs and mix them with wiskey</span></p></body></html>", nullptr));
         groupBox_5->setTitle(QCoreApplication::translate("MainWindow", "Available Tags", nullptr));
 #if QT_CONFIG(tooltip)
-        leftClick->setToolTip(QCoreApplication::translate("MainWindow", "<html><head/><body><p>Click tag</p></body></html>", nullptr));
+        leftClick->setToolTip(QCoreApplication::translate("MainWindow", "<html><head/><body><p>Click tag (F1)</p></body></html>", nullptr));
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(whatsthis)
         leftClick->setWhatsThis(QCoreApplication::translate("MainWindow", "<html><head/><body><p>Click tag</p></body></html>", nullptr));
 #endif // QT_CONFIG(whatsthis)
         leftClick->setText(QCoreApplication::translate("MainWindow", "Left click", nullptr));
+#if QT_CONFIG(shortcut)
+        leftClick->setShortcut(QCoreApplication::translate("MainWindow", "F1", nullptr));
+#endif // QT_CONFIG(shortcut)
 #if QT_CONFIG(tooltip)
-        keyboardClick->setToolTip(QCoreApplication::translate("MainWindow", "Hotkey", nullptr));
+        keyboardClick->setToolTip(QCoreApplication::translate("MainWindow", "<html><head/><body><p>Hotkey (F1)</p></body></html>", nullptr));
 #endif // QT_CONFIG(tooltip)
         keyboardClick->setText(QCoreApplication::translate("MainWindow", "Hotkey", nullptr));
+#if QT_CONFIG(shortcut)
+        keyboardClick->setShortcut(QCoreApplication::translate("MainWindow", "F2", nullptr));
+#endif // QT_CONFIG(shortcut)
 #if QT_CONFIG(tooltip)
-        areaClick->setToolTip(QCoreApplication::translate("MainWindow", "Area click", nullptr));
+        areaClick->setToolTip(QCoreApplication::translate("MainWindow", "<html><head/><body><p>Area click (F3)</p></body></html>", nullptr));
 #endif // QT_CONFIG(tooltip)
         areaClick->setText(QCoreApplication::translate("MainWindow", "Area click", nullptr));
+#if QT_CONFIG(shortcut)
+        areaClick->setShortcut(QCoreApplication::translate("MainWindow", "F3", nullptr));
+#endif // QT_CONFIG(shortcut)
 #if QT_CONFIG(tooltip)
-        imageClick->setToolTip(QCoreApplication::translate("MainWindow", "Image click", nullptr));
+        imageClick->setToolTip(QCoreApplication::translate("MainWindow", "Image click (F4)", nullptr));
 #endif // QT_CONFIG(tooltip)
         imageClick->setText(QCoreApplication::translate("MainWindow", "Click on image", nullptr));
+#if QT_CONFIG(shortcut)
+        imageClick->setShortcut(QCoreApplication::translate("MainWindow", "F4", nullptr));
+#endif // QT_CONFIG(shortcut)
 #if QT_CONFIG(tooltip)
         typeTag->setToolTip(QCoreApplication::translate("MainWindow", "Type click", nullptr));
 #endif // QT_CONFIG(tooltip)

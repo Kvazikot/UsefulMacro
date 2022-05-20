@@ -35,7 +35,10 @@ public:
 
     void retranslateUi(QDialog *AreaSelectorDialog)
     {
-        AreaSelectorDialog->setWindowTitle(QCoreApplication::translate("AreaSelectorDialog", "Dialog", nullptr));
+        AreaSelectorDialog->setWindowTitle(QCoreApplication::translate("AreaSelectorDialog", "Select screen area using this window", nullptr));
+#if QT_CONFIG(tooltip)
+        AreaSelectorDialog->setToolTip(QCoreApplication::translate("AreaSelectorDialog", "<html><head/><body><p>Select screen area using this window</p></body></html>", nullptr));
+#endif // QT_CONFIG(tooltip)
     } // retranslateUi
 
 };

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QTextEdit>
+#include <QKeyEvent>
 #include <QDomNode>
 #include "clickerdocument.h"
 
@@ -18,6 +19,7 @@ public:
     void newFun(QString name);
     void applyChanges();
     void enableChangeEvent(bool enableFlag);
+    void keyPressEvent(QKeyEvent* event) override;
     QString cutFunctionName(QString& xml);
 public slots:
     void onTextChange();

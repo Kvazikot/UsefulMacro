@@ -20,6 +20,7 @@
 */
 
 #include <QMediaPlayer>
+#include <QTimer>
 #include <QVideoWidget>
 #include <QSoundEffect>
 #include <QPointer>
@@ -33,6 +34,11 @@ AboutBox::AboutBox(QWidget *parent) :
     ui(new Ui::AboutBox)
 {
     ui->setupUi(this);
+    QTimer::singleShot(1000, this, SLOT(delayedSlot()));
+}
+
+void AboutBox::delayedSlot()
+{
     CoordSelector* dlg = new CoordSelector(this, true);
     dlg->showFullScreen();
 }

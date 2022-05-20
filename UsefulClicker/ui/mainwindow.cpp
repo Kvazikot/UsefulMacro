@@ -308,6 +308,13 @@ void MainWindow::XmlStringFromUniversalDialog(QMap<QString,QString> attrs_map)
                                 .arg(attrs_map["delay_fixed"])
                                 .arg(attrs_map["delay_random"])
                                 .arg(attrs_map["repeats"]);
+        if(event == "area")
+            xml_string = QString("<click button=\"%1\" area=\"%2\" delay_fixed=\"%3\" delay_random=\"%4\" repeats=\"%5\"/>")
+                                .arg(attrs_map["button"])
+                                .arg(attrs_map["area"])
+                                .arg(attrs_map["delay_fixed"])
+                                .arg(attrs_map["delay_random"])
+                                .arg(attrs_map["repeats"]);
 
         if(event == "scroll")
         {
@@ -338,7 +345,10 @@ void MainWindow::XmlStringFromUniversalDialog(QMap<QString,QString> attrs_map)
                                 .arg(attrs_map["button"])
                                 .arg(attrs_map["x"])
                                 .arg(attrs_map["y"]);
-
+        if(event == "area")
+            xml_string = QString("<click button=\"%1\" area=\"%2\" />")
+                                .arg(attrs_map["button"])
+                                .arg(attrs_map["area"]);
         if(event == "scroll")
         {
             if( attrs_map["delta"].toInt() > 0)
@@ -349,6 +359,20 @@ void MainWindow::XmlStringFromUniversalDialog(QMap<QString,QString> attrs_map)
                 xml_string = QString("<scrolldown delta=\"%1\" />")
                              .arg(attrs_map["delta"]);
 
+            if( attrs_map["wheel_repeats"] != "0" )
+            {
+                if( attrs_map["delta"].toInt() > 0)
+                    xml_string = QString("<scrollup delta=\"%1\"  repeats=\"%2\" />")
+                                 .arg(attrs_map["delta"])
+                                 .arg(attrs_map["wheel_repeats"]);
+
+                else
+                    xml_string = QString("<scrolldown delta=\"%1\"  repeats=\"%2\" />")
+                                 .arg(attrs_map["delta"])
+                                 .arg(attrs_map["wheel_repeats"]);
+               modifyXmlString(xml_string);
+               return;
+            }
 
         }
 
@@ -435,6 +459,15 @@ void MainWindow::insertXmlString(QString xml_string)
     xmlEditor->setText(xml);
 }
 
+void MainWindow::modifyXmlString(QString xml_string)
+{
+    QString xml = xmlEditor->toPlainText();
+    QStringList lines = xml.split("\n");
+    int idx = lines.size()-3;
+    if(idx>0)
+      lines[idx] = xml_string;
+    xmlEditor->setText(lines.join("\n"));
+}
 
 void MainWindow::new_fun()
 {
@@ -857,14 +890,14 @@ void MainWindow::updateActions()
 void MainWindow::on_leftClick_clicked()
 {
     last_action_triggered = "left click";
-    createDialog(this, DialogType::MOUSE_DIALOG);
+    createDialog(this, DialogType::MOUSE_DIALOG, "click");
 }
 
 
 void MainWindow::on_keyboardClick_clicked()
 {
     last_action_triggered = "hotkey";
-    createDialog(this, DialogType::MOUSE_DIALOG);
+    createDialog(this, DialogType::MOUSE_DIALOG, "hotkey");
 }
 
 

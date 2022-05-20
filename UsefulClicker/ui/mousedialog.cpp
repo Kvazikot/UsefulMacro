@@ -5,6 +5,7 @@
 #include <QMouseEvent>
 #include <QTimer>
 #include "cv/dspmodule.h"
+#include "ui/areaselectordialog.h"
 #include "mousedialog.h"
 #include "interpreter/interpreter.h"
 #include "ui_mousedialog.h"
@@ -24,6 +25,7 @@ MouseDialog::MouseDialog(QWidget *parent) :
     ui->setupUi(this);
     ui->delayWidget->hide();
     withDelayFlag = false;
+    wheel_repeats = 0;
 
     QImage bg_image(300,300,QImage::Format_ARGB32);
     bg_image.fill(QColor(100,100,100,0));
@@ -33,6 +35,52 @@ MouseDialog::MouseDialog(QWidget *parent) :
     startTimer(10);
 }
 
+void MouseDialog::slotAreaSelected(QRect area, QPointF p)
+{
+    QMap<QString, QString> attrs;
+    attrs["event"] = "area";
+    attrs["button"] = "left";
+    attrs["area"] = QString("QRect(%1,%2,%3,%4)").
+                    arg(area.left()).
+                    arg(area.top()).
+                    arg(area.right()).
+                    arg(area.bottom());
+    emit sigSetAttrs(attrs);
+    close();
+}
+
+void MouseDialog::showOnlyMouse()
+{
+    hideLabels();
+    ui->label->show();
+    ui->label_2->show();
+    ui->label_3->show();
+    ui->label_4->show();
+    ui->label_5->show();
+    ui->label_6->show();
+    ui->tipLabel->show();
+}
+
+void MouseDialog::showOnlyKeyboard()
+{
+    hideLabels();
+    ui->keySequenceLabel->show();
+    ui->label_8->show();
+    ui->tipLabel->show();
+}
+
+void MouseDialog::hideLabels()
+{
+    ui->label->hide();
+    ui->label_2->hide();
+    ui->label_3->hide();
+    ui->label_4->hide();
+    ui->label_5->hide();
+    ui->label_6->hide();
+    ui->label_8->hide();
+    ui->tipLabel->hide();
+    ui->keySequenceLabel->hide();
+}
 
 void MouseDialog::keyPressEvent(QKeyEvent* event)
 {
@@ -44,12 +92,25 @@ void MouseDialog::keyPressEvent(QKeyEvent* event)
         withDelayFlag = true;
         ui->delayWidget->setHidden(!ui->delayWidget->isHidden());
         if( ui->delayWidget->isHidden() )
-            ui->keySequenceLabel_2->setText( "Press F2 again to accept delay values");
+            ui->tipLabel->setText( "Press F2 again to accept delay values");
         else
-            ui->keySequenceLabel_2->setText( "Press F2 to set delays");
+            ui->tipLabel->setText( "Press F2 to set delays");
         return;
     }
+
     //if( event->key() == Qt::Key_Delete)  clear();
+    if( event->key() == Qt::Key_F3)
+    {
+        AreaSelectorDialog* dlg = new AreaSelectorDialog(this);
+        setWindowOpacity(0);
+        dlg->setWindowOpacity(0.6);
+        dlg->fullScreen();
+        auto str = "";
+        ui->tipLabel->setText(str);
+        hideLabels();
+
+        connect(dlg, SIGNAL(sigSetRect(QRect, QPointF)), this, SLOT(slotAreaSelected(QRect, QPointF)));
+    }
 
 
     Qt::KeyboardModifiers m = event->modifiers();
@@ -82,14 +143,14 @@ void MouseDialog::keyReleaseEvent(QKeyEvent *event)
             str+= "repeats = " + attrs["repeats"];
             QString html = QString("<html><head/><body><p><span style=\" font-size:18pt; font-weight:700; color:#00007f;\">%1</span></p></body></html>")
                            .arg(str);
-            ui->keySequenceLabel_2->setText(html);
+            ui->tipLabel->setText(html);
         }
         else
         {
             QString str = "Press F2 to set delays.";
             QString html = QString("<html><head/><body><p><span style=\" font-size:18pt; font-weight:700; color:#00007f;\">%1</span></p></body></html>")
                            .arg(str);
-            ui->keySequenceLabel_2->setText(html);
+            ui->tipLabel->setText(html);
         }
         return;
     }
@@ -152,26 +213,26 @@ void MouseDialog::wheelEvent(QWheelEvent* event)
     QMap<QString, QString> attrs;
     auto s = QString("%1").arg(event->angleDelta().y());
     attrs["event"] = "scroll";
+    attrs["wheel_repeats"] = QString::number(wheel_repeats);
     attrs["delta"] = s;
     attrs["delay_fixed"] = QString::number(ui->delayWidget->delay_fixed);
     attrs["delay_random"] = QString::number(ui->delayWidget->delay_random);
     attrs["repeats"] = QString::number(ui->delayWidget->repeats);
     attrs["withDelayFlag"] = QString::number(withDelayFlag);
     emit sigSetAttrs(attrs);
-    close();
+    event->accept();
+    wheel_repeats++;
+    lastWheelEvent.restart();
+
+    //close();
 }
 
 
-void MouseDialog::paintEvent( QPaintEvent* event)
-{
-    QPainter painter(this);
-
-
-    frame++;
-}
 
 void MouseDialog::timerEvent(QTimerEvent* event)
 {
+    if( wheel_repeats > 0 && lastWheelEvent.elapsed() > 1000 )
+        close();
     repaint();
     event->accept();
 }

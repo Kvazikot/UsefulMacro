@@ -20,6 +20,57 @@ XmlEditor::XmlEditor(QWidget *parent)
 
 }
 
+void XmlEditor::keyPressEvent(QKeyEvent* event)
+{
+    event->accept();
+    QTextEdit::keyPressEvent(event);
+
+    // swap neibour text lines
+    if( event->key() == Qt::Key::Key_Up
+            && event->modifiers().testFlag( Qt::ControlModifier ) )
+    {
+        QString xml = toPlainText();
+        auto lines = xml.split("\n");
+        int sum=0, i=0;
+        int cursorPos = textCursor().position();
+        for(auto l : lines)
+        {
+            sum+=l.size();
+            if( sum > cursorPos )
+            {
+                cursorPos = xml.indexOf(l);
+                //mark line
+                //textCursor().beginEditBlock()
+                //textCursor().removeSelectedText();
+                //selectAll()
+                QList<QTextEdit::ExtraSelection> selections;
+                auto cursor = textCursor();
+                cursor.select(QTextCursor::LineUnderCursor);
+                QTextFormat format;
+                QTextEdit::ExtraSelection es;
+                es.format.setBackground(Qt::red);
+                es.cursor = cursor;
+                selections.push_back(es);
+                setExtraSelections(selections);
+                break;
+            }
+            i++;
+        }
+        //swap 2 adjacment lines
+        //qSwap(lines[i],lines[i-1]);
+        textCursor().insertText(lines[i-1]+"\n");
+        cursorPos = textCursor().position();
+        textCursor().setPosition(cursorPos+lines[i-1].size());
+        textCursor().insertText(lines[i]+"\n");
+        //textCursor().setPosition(cursorPos);
+    }
+
+    if( event->key() == Qt::Key::Key_Z
+            && event->modifiers().testFlag( Qt::ControlModifier ) )
+        document()->undo();
+
+}
+
 void XmlEditor::enableChangeEvent(bool enableFlag)
 {
    enableChangeFlag = enableFlag;

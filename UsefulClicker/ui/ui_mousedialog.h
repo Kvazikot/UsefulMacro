@@ -29,7 +29,7 @@ public:
     QLabel *label_3;
     QLabel *label_5;
     DelayWidget *delayWidget;
-    QLabel *keySequenceLabel_2;
+    QLabel *tipLabel;
 
     void setupUi(QDialog *MouseDialog)
     {
@@ -79,12 +79,12 @@ public:
         delayWidget = new DelayWidget(MouseDialog);
         delayWidget->setObjectName(QString::fromUtf8("delayWidget"));
         delayWidget->setGeometry(QRect(290, 360, 641, 411));
-        keySequenceLabel_2 = new QLabel(MouseDialog);
-        keySequenceLabel_2->setObjectName(QString::fromUtf8("keySequenceLabel_2"));
-        keySequenceLabel_2->setGeometry(QRect(40, 310, 391, 261));
-        keySequenceLabel_2->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
-        keySequenceLabel_2->setAlignment(Qt::AlignCenter);
-        keySequenceLabel_2->setWordWrap(true);
+        tipLabel = new QLabel(MouseDialog);
+        tipLabel->setObjectName(QString::fromUtf8("tipLabel"));
+        tipLabel->setGeometry(QRect(40, 310, 391, 261));
+        tipLabel->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
+        tipLabel->setAlignment(Qt::AlignCenter);
+        tipLabel->setWordWrap(true);
 
         retranslateUi(MouseDialog);
 
@@ -102,7 +102,7 @@ public:
         label_2->setText(QCoreApplication::translate("MouseDialog", "<html><head/><body><p><span style=\" font-size:20pt; font-weight:700; color:#ff0000;\">Press left buton</span></p></body></html>", nullptr));
         label_3->setText(QString());
         label_5->setText(QString());
-        keySequenceLabel_2->setText(QCoreApplication::translate("MouseDialog", "<html><head/><body><p><span style=\" font-size:24pt; font-weight:700; color:#00007f;\">Press F2 to set delay</span></p></body></html>", nullptr));
+        tipLabel->setText(QCoreApplication::translate("MouseDialog", "<html><head/><body><p><span style=\" font-size:24pt; font-weight:700; color:#00007f;\">Press F2 to set delay</span></p><p><span style=\" font-size:24pt; font-weight:700; color:#00007f;\">Press F3 to set area</span></p></body></html>", nullptr));
     } // retranslateUi
 
 };

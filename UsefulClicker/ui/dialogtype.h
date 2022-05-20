@@ -27,6 +27,6 @@ static QMap<QString, DialogType> action_map{{"Add image click", SCREEN_BUTTONS_D
                                      {"Set delay for this", DELAY_WIDGET},
                                     };
 
-void createDialog(QObject* receiver_object, DialogType dialog_type);
+void createDialog(QObject* receiver_object, DialogType dialog_type, QString args="");
 
 #endif // DIALOGTYPE_H

@@ -35,7 +35,6 @@ void TypeDialog::on_buttonBox_accepted()
     attrs["text"] = ui->plainTextEdit->toPlainText();
     if( ui->checkBox->isChecked() )
         attrs["mode"] = "copy_paste";
-    attrs["hotkey"] = ui->keySequenceEdit->keySequence().toString(QKeySequence::SequenceFormat::NativeText);
     emit sigSetAttrs(attrs);
 }
 

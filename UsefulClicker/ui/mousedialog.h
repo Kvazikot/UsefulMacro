@@ -2,6 +2,7 @@
 #define MOUSEDIALOG_H
 
 #include <QDialog>
+#include <QElapsedTimer>
 #include "cv/dspmodule.h"
 
 namespace Ui {
@@ -20,7 +21,9 @@ public:
     QPixmap cursor_pixmap;
     HWND userWindow;
     std::vector<QRect> rects;
+    QElapsedTimer lastWheelEvent;
     int screenNum;
+    int wheel_repeats;
     QString sequence;
     DspModule* dsp;
     int frame;
@@ -32,9 +35,10 @@ public:
     void keyReleaseEvent(QKeyEvent *event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void mousePressEvent(QMouseEvent* event) override;
-    void paintEvent( QPaintEvent* event) override;
     void wheelEvent(QWheelEvent* event) override;
-
+    void hideLabels();
+    void showOnlyKeyboard();
+    void showOnlyMouse();
     explicit MouseDialog(QWidget *parent = nullptr);
     ~MouseDialog();
 
@@ -43,6 +47,7 @@ signals:
 
 public slots:
     void afterclick();
+    void slotAreaSelected(QRect, QPointF);
 
 private:
     Ui::MouseDialog *ui;
