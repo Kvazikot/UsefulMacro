@@ -174,7 +174,7 @@
                                      </DElement>
                                     </base-DElement>
                                     <object>{123a9ef6-fda4-4125-b792-778827370f57}</object>
-                                    <name>xml description</name>
+                                    <name>xml meta meta language</name>
                                     <pos>x:345;y:-635</pos>
                                     <rect>x:-140;y:-40;w:280;h:80</rect>
                                     <auto-sized>false</auto-sized>
@@ -198,7 +198,7 @@
                                     </base-DElement>
                                     <object>{c0964d5d-0f8e-40d1-aebf-c83041480da9}</object>
                                     <name>C Interface to function &quot;Post twit&quot;   </name>
-                                    <pos>x:250;y:-445</pos>
+                                    <pos>x:260;y:-375</pos>
                                     <rect>x:-115;y:-20;w:230;h:40</rect>
                                     <auto-sized>false</auto-sized>
                                     <visual-role>0</visual-role>
@@ -249,24 +249,6 @@
                                    </DObject>
                                   </base-DObject>
                                  </DComponent>
-                                </instance>
-                               </item>
-                               <item>
-                                <instance type="DDependency">
-                                 <DDependency>
-                                  <base-DRelation>
-                                   <DRelation>
-                                    <base-DElement>
-                                     <DElement>
-                                      <uid>{a0a4095f-06e5-40b0-998d-2438fa5d5da6}</uid>
-                                     </DElement>
-                                    </base-DElement>
-                                    <object>{4e70ccca-5b17-4788-a7ee-eea5ff3c48c6}</object>
-                                    <a>{fab4f75c-8d46-45ab-82de-a8f90dc56c17}</a>
-                                    <b>{cd44986a-d459-4e9d-b70b-b51f24cc77e4}</b>
-                                   </DRelation>
-                                  </base-DRelation>
-                                 </DDependency>
                                 </instance>
                                </item>
                                <item>
@@ -870,9 +852,85 @@
                                  </DDependency>
                                 </instance>
                                </item>
+                               <item>
+                                <instance type="DDependency">
+                                 <DDependency>
+                                  <base-DRelation>
+                                   <DRelation>
+                                    <base-DElement>
+                                     <DElement>
+                                      <uid>{d2cfdc10-530e-4c4f-b8b3-9cbf95684ca1}</uid>
+                                     </DElement>
+                                    </base-DElement>
+                                    <object>{50219a28-85a8-451d-ab65-14afd96ead30}</object>
+                                    <a>{297fcbc1-6279-4ae2-b5f3-8e248085a0fa}</a>
+                                    <b>{2c3a0e09-2b60-4900-acc2-66c80bb5d8e9}</b>
+                                   </DRelation>
+                                  </base-DRelation>
+                                 </DDependency>
+                                </instance>
+                               </item>
+                               <item>
+                                <instance type="DDependency">
+                                 <DDependency>
+                                  <base-DRelation>
+                                   <DRelation>
+                                    <base-DElement>
+                                     <DElement>
+                                      <uid>{ffb9af45-ffd5-4ae2-aa5f-4c39928d92ac}</uid>
+                                     </DElement>
+                                    </base-DElement>
+                                    <object>{a3f3d565-fa45-469d-b192-85413f468552}</object>
+                                    <a>{fab4f75c-8d46-45ab-82de-a8f90dc56c17}</a>
+                                    <b>{cd44986a-d459-4e9d-b70b-b51f24cc77e4}</b>
+                                   </DRelation>
+                                  </base-DRelation>
+                                 </DDependency>
+                                </instance>
+                               </item>
+                               <item>
+                                <instance type="DDependency">
+                                 <DDependency>
+                                  <base-DRelation>
+                                   <DRelation>
+                                    <base-DElement>
+                                     <DElement>
+                                      <uid>{280f982f-0666-43d4-8833-b760d3fb35aa}</uid>
+                                     </DElement>
+                                    </base-DElement>
+                                    <object>{05580e2d-af87-4877-a41c-69964e0bba39}</object>
+                                    <a>{f222c768-38e4-4bca-817f-7b0caba6281e}</a>
+                                    <b>{95954021-f05c-4e61-bdd9-ab02386a5c5e}</b>
+                                   </DRelation>
+                                  </base-DRelation>
+                                 </DDependency>
+                                </instance>
+                               </item>
+                               <item>
+                                <instance type="DItem">
+                                 <DItem>
+                                  <base-DObject>
+                                   <DObject>
+                                    <base-DElement>
+                                     <DElement>
+                                      <uid>{9d52712d-7725-4c16-82e1-4a2294c758ac}</uid>
+                                     </DElement>
+                                    </base-DElement>
+                                    <object>{34b4664d-94c4-41f6-8569-0fcc8f86460d}</object>
+                                    <name>New Actor</name>
+                                    <pos>x:705;y:-300</pos>
+                                    <rect>x:-10;y:-20;w:20;h:40</rect>
+                                    <visual-role>0</visual-role>
+                                   </DObject>
+                                  </base-DObject>
+                                  <variety>actor</variety>
+                                  <shape-editable>false</shape-editable>
+                                 </DItem>
+                                </instance>
+                               </item>
                               </qlist>
                              </elements>
-                             <last-modified>1653132563398</last-modified>
+                             <last-modified>1653133238897</last-modified>
                              <toolbarid>UseCases</toolbarid>
                             </MDiagram>
                            </base-MDiagram>
@@ -894,7 +952,7 @@
                                <uid>{123a9ef6-fda4-4125-b792-778827370f57}</uid>
                               </MElement>
                              </base-MElement>
-                             <name>xml description</name>
+                             <name>xml meta meta language</name>
                              <relations>
                               <handles>
                                <handles>
@@ -936,6 +994,28 @@
                                         </base-MElement>
                                         <a>{123a9ef6-fda4-4125-b792-778827370f57}</a>
                                         <b>{3c09f7f6-03b2-4047-a7f2-7da3f7056b06}</b>
+                                       </MRelation>
+                                      </base-MRelation>
+                                     </MDependency>
+                                    </instance>
+                                   </target>
+                                  </handle>
+                                 </item>
+                                 <item>
+                                  <handle>
+                                   <uid>{a3f3d565-fa45-469d-b192-85413f468552}</uid>
+                                   <target>
+                                    <instance type="MDependency">
+                                     <MDependency>
+                                      <base-MRelation>
+                                       <MRelation>
+                                        <base-MElement>
+                                         <MElement>
+                                          <uid>{a3f3d565-fa45-469d-b192-85413f468552}</uid>
+                                         </MElement>
+                                        </base-MElement>
+                                        <a>{123a9ef6-fda4-4125-b792-778827370f57}</a>
+                                        <b>{ccb01f0d-a979-4427-beb2-06415860d958}</b>
                                        </MRelation>
                                       </base-MRelation>
                                      </MDependency>
@@ -1211,6 +1291,28 @@
                                    </target>
                                   </handle>
                                  </item>
+                                 <item>
+                                  <handle>
+                                   <uid>{50219a28-85a8-451d-ab65-14afd96ead30}</uid>
+                                   <target>
+                                    <instance type="MDependency">
+                                     <MDependency>
+                                      <base-MRelation>
+                                       <MRelation>
+                                        <base-MElement>
+                                         <MElement>
+                                          <uid>{50219a28-85a8-451d-ab65-14afd96ead30}</uid>
+                                         </MElement>
+                                        </base-MElement>
+                                        <a>{3c09f7f6-03b2-4047-a7f2-7da3f7056b06}</a>
+                                        <b>{9995dde6-c2bc-4c10-b7e0-5368f555f888}</b>
+                                       </MRelation>
+                                      </base-MRelation>
+                                     </MDependency>
+                                    </instance>
+                                   </target>
+                                  </handle>
+                                 </item>
                                 </qlist>
                                </handles>
                               </handles>
@@ -1303,6 +1405,28 @@
                                         </base-MElement>
                                         <a>{877021cb-2bc0-4a2b-9fc9-3d1ccc3f9a78}</a>
                                         <b>{2fb08eb3-9128-495e-9085-e1b3e96e2c03}</b>
+                                       </MRelation>
+                                      </base-MRelation>
+                                     </MDependency>
+                                    </instance>
+                                   </target>
+                                  </handle>
+                                 </item>
+                                 <item>
+                                  <handle>
+                                   <uid>{05580e2d-af87-4877-a41c-69964e0bba39}</uid>
+                                   <target>
+                                    <instance type="MDependency">
+                                     <MDependency>
+                                      <base-MRelation>
+                                       <MRelation>
+                                        <base-MElement>
+                                         <MElement>
+                                          <uid>{05580e2d-af87-4877-a41c-69964e0bba39}</uid>
+                                         </MElement>
+                                        </base-MElement>
+                                        <a>{877021cb-2bc0-4a2b-9fc9-3d1ccc3f9a78}</a>
+                                        <b>{22c8b00d-1134-47cc-9ce9-49a435eafaef}</b>
                                        </MRelation>
                                       </base-MRelation>
                                      </MDependency>
@@ -1977,6 +2101,29 @@
                            </base-MObject>
                            <variety-editable>false</variety-editable>
                            <variety>usecase</variety>
+                          </MItem>
+                         </instance>
+                        </target>
+                       </handle>
+                      </item>
+                      <item>
+                       <handle>
+                        <uid>{34b4664d-94c4-41f6-8569-0fcc8f86460d}</uid>
+                        <target>
+                         <instance type="MItem">
+                          <MItem>
+                           <base-MObject>
+                            <MObject>
+                             <base-MElement>
+                              <MElement>
+                               <uid>{34b4664d-94c4-41f6-8569-0fcc8f86460d}</uid>
+                              </MElement>
+                             </base-MElement>
+                             <name>New Actor</name>
+                            </MObject>
+                           </base-MObject>
+                           <variety-editable>false</variety-editable>
+                           <variety>actor</variety>
                           </MItem>
                          </instance>
                         </target>
