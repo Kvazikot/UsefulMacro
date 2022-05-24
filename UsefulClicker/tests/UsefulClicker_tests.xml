@@ -26,6 +26,7 @@ transform tag list to shell
 
 <!-- init section (every function that has "init" substring in its name) -->
 <func name="init" no_delay="1" >
+    <list name="apocaliptoLib" filename="./apocaliptoLib/ApocaliptoLIB_list.txt" sep="\n" >
     <list name="common_english" filename="./lists/common_english_shuffled.txt" sep="\n" />
     <list name="Thrillers_beetwen_1979-1989" filename="./lists/Thrillers_beetwen_1979-1989.txt" />
     <list f="select_rand_word" name="common_english" />
@@ -135,9 +136,9 @@ transform tag list to shell
  <hotkey hotkey="F6"/>
  <type mode="copy_paste" text="https://twitter.com/" />
  <hotkey keysequence="enter" delay_ms="1000"/>
- <clickimg targetImg="$(UsefulClicker)/images/12.25.21.047.png" button="left" delay_fixed="1000"> </clickimg>
+ <clickimg targetImg="$(UsefulClicker)/images/18.13.00.332.png" button="left" delay_fixed="1000"> </clickimg>
  <type mode="copy_paste" text="Это пример текста который был сгенерирован программой UsefulClicker сегодня." delay_fixed="1000"/>
- <hotkey keysequence="enter" delay_ms="1000"/>
+ <hotkey keysequence="ctrl+enter" delay_ms="1000"/>
 </func>
 
 <func name="Scroll Test">

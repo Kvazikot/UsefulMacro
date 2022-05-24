@@ -1,0 +1,23 @@
+<?xml version='1.0'?>
+<xml>
+
+<!-- init section (every function that has "init" substring in its name) -->
+<func name="init" no_delay="1" >
+    <list name="apocaliptoLib" filename="./apocaliptoLib/ApocaliptoLIB_list.txt" sep="\n" >
+</func>
+
+<!-- This function is using in "foreach" loop-->
+<func name="Add loop var to temp file" >
+  <shell cmd="cmd /C `echo `#{i}` >> tmp.txt` " />
+</func>
+
+<!-- Foreach loop test (with function call in do attribute )-->
+<func name="Foreach_test1">
+  <foreach list="Thrillers_beetwen_1979-1989"  do="Add loop var to temp file"/>
+  <shell cmd="notepad.exe tmp.txt" />
+</func>
+
+
+</xml>
+
+
