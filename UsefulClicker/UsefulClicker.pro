@@ -69,6 +69,8 @@ LIBS+=-L$$OPENCV_451_PATH\\build_mingw\\lib\\ -lopencv_shape455.dll
 
 
 SOURCES += main.cpp \
+    apocaliptoLib/apocaliptolib.cpp \
+    globals.cpp \
     interpreter/expression_calculator.cpp \
     log/logger.cpp \
     tests/cool_tests_form.cpp \
@@ -92,6 +94,7 @@ SOURCES += main.cpp \
     ui/widgets/comboedit.cpp \
     ui/widgets/crossbutton.cpp \
     ui/widgets/delaywidget.cpp \
+    ui/widgets/dimensionswidget.cpp \
     ui/widgets/keyboardbutton.cpp \
     ui/widgets/mousebutton.cpp \
     ui/widgets/shellbutton.cpp \
@@ -111,6 +114,9 @@ SOURCES += main.cpp \
     #model/treemodel.cpp
 
 HEADERS += \
+    apocaliptoLib/apocaliptolib.h \
+    cv/rectangle_descriptor.h \
+    globals.h \
     interpreter/expression_calculator.h \
     log/logger.h \
     myproxystyle.h \
@@ -119,6 +125,7 @@ HEADERS += \
     tests/highlighter.h \
     ui/mousedialog.h \
     ui/typedialog.h \
+    ui/widgets/dimensionswidget.h \
     ui/widgets/qconsole.h \
     ui/coordselector.h \
     ui/dialogtype.h \
@@ -155,6 +162,7 @@ HEADERS += \
 # install
 
 FORMS += \
+    apocaliptoLib/apocaliptolib.ui \
     tests/cool_tests_form.ui \
     ui/aboutbox.ui \
     ui/areaselectordialog.ui \
@@ -165,12 +173,14 @@ FORMS += \
     ui/mousedialog.ui \
     ui/screenbuttonsdetector.ui \
     ui/shelldialog.ui \
-    ui/typedialog.ui
+    ui/typedialog.ui \
+    ui/widgets/dimensionswidget.ui
 
 RESOURCES += \
     res.qrc
 
 DISTFILES += \
+    codegen/codegen_model.qmodel \
     settings/UsefulClicker.ini \
     tests/UsefulClicker_tests.xml \
     xml/sheme1.xml \
