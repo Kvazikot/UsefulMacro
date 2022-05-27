@@ -129,7 +129,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
     </rect>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -139,7 +139,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
      <property name="geometry">
       <rect>
        <x>190</x>
-       <y>150</y>
+       <y>190</y>
        <width>161</width>
        <height>101</height>
       </rect>
@@ -170,7 +170,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
        <x>10</x>
        <y>150</y>
        <width>171</width>
-       <height>131</height>
+       <height>211</height>
       </rect>
      </property>
      <property name="title">
@@ -184,13 +184,6 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="QPushButton" name="typeTest">
-        <property name="text">
-         <string> Type test (#1)</string>
-        </property>
-       </widget>
-      </item>
       <item row="3" column="0">
        <widget class="QPushButton" name="pushButton_3">
         <property name="text">
@@ -198,10 +191,24 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
         </property>
        </widget>
       </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="typeTest">
+        <property name="text">
+         <string> Type test (#1)</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="0">
        <widget class="QPushButton" name="typeTest2">
         <property name="text">
          <string>Type test 2 (#2)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QPushButton" name="changeFontWindows11">
+        <property name="text">
+         <string>Change font Windows 11</string>
         </property>
        </widget>
       </item>
@@ -247,7 +254,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
      <property name="geometry">
       <rect>
        <x>190</x>
-       <y>240</y>
+       <y>300</y>
        <width>141</width>
        <height>61</height>
       </rect>
@@ -269,7 +276,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
      <property name="geometry">
       <rect>
        <x>360</x>
-       <y>150</y>
+       <y>200</y>
        <width>281</width>
        <height>151</height>
       </rect>
@@ -300,14 +307,21 @@ text-decoration: underline;</string>
        <x>360</x>
        <y>10</y>
        <width>191</width>
-       <height>151</height>
+       <height>181</height>
       </rect>
      </property>
      <property name="title">
       <string>4. CV tests</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_4">
-      <item row="3" column="0">
+      <item row="2" column="0">
+       <widget class="QPushButton" name="clickimgTest">
+        <property name="text">
+         <string>clickimg test (#13)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
        <widget class="QSpinBox" name="spinBox">
         <property name="prefix">
          <string>cannyThreshold = </string>
@@ -334,10 +348,10 @@ text-decoration: underline;</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QPushButton" name="clickimgTest">
+      <item row="3" column="0">
+       <widget class="QPushButton" name="clickrectTest">
         <property name="text">
-         <string>clickimg test (#13)</string>
+         <string>clickrect test (#14)</string>
         </property>
        </widget>
       </item>
@@ -349,7 +363,7 @@ text-decoration: underline;</string>
        <x>559</x>
        <y>10</y>
        <width>81</width>
-       <height>141</height>
+       <height>181</height>
       </rect>
      </property>
      <property name="title">
@@ -633,154 +647,6 @@ text-decoration: underline;</string>
        <widget class="QPushButton" name="pushButton_10">
         <property name="text">
          <string>Play mouse trajectory</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="tab_4">
-    <attribute name="title">
-     <string>ApocalyptoLIB</string>
-    </attribute>
-    <widget class="QPushButton" name="pushButton">
-     <property name="geometry">
-      <rect>
-       <x>270</x>
-       <y>30</y>
-       <width>121</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>D</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>931</width>
-       <height>301</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 900 9pt &quot;Segoe UI&quot;;
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(9, 41, 4, 255), stop:0.085 rgba(2, 79, 0, 255), stop:0.19 rgba(50, 147, 22, 255), stop:0.275 rgba(236, 191, 49, 255), stop:0.39 rgba(243, 61, 34, 255), stop:0.555 rgba(135, 81, 60, 255), stop:0.667 rgba(121, 75, 255, 255), stop:0.825 rgba(164, 255, 244, 255), stop:0.885 rgba(104, 222, 71, 255), stop:1 rgba(93, 128, 0, 255));
-</string>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; color:#000000;&quot;&gt;apocaliptoLIB &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; color:#000000;&quot;&gt;List of books &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; color:#000000;&quot;&gt;that help humanity &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; color:#000000;&quot;&gt;to recreate &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; color:#000000;&quot;&gt;civilization after &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; color:#000000;&quot;&gt;colapse &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_2">
-     <property name="geometry">
-      <rect>
-       <x>380</x>
-       <y>390</y>
-       <width>191</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/Kvazikot/site-apocaliptoLib&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;URL of the project on github&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>290</x>
-       <y>290</y>
-       <width>621</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;downloading &amp;quot;The knowledge how to ... &amp;quot;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-    <widget class="QTableWidget" name="tableWidget">
-     <property name="geometry">
-      <rect>
-       <x>320</x>
-       <y>30</y>
-       <width>611</width>
-       <height>241</height>
-      </rect>
-     </property>
-     <row>
-      <property name="text">
-       <string/>
-      </property>
-     </row>
-     <column>
-      <property name="text">
-       <string>№</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Book title</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Author</string>
-      </property>
-     </column>
-     <item row="0" column="0">
-      <property name="text">
-       <string>1</string>
-      </property>
-     </item>
-     <item row="0" column="1">
-      <property name="text">
-       <string>Build Your Own Metal Working Shop from Scrap. The Metal Shaper </string>
-      </property>
-     </item>
-     <item row="0" column="2">
-      <property name="text">
-       <string>D. Gingery </string>
-      </property>
-     </item>
-    </widget>
-    <widget class="QWidget" name="">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>330</y>
-       <width>931</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QPushButton" name="downloadZlibWithSurfshark">
-        <property name="text">
-         <string>Download books from zlib 
- with Surfshark VPN </string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QProgressBar" name="progressBar">
-        <property name="value">
-         <number>55</number>
-        </property>
-        <property name="format">
-         <string>34 book from 144  Downloaded</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="downloadZlibWithSurfshark_2">
-        <property name="text">
-         <string>Download books from zlib 
- without VPN </string>
         </property>
        </widget>
       </item>

@@ -15,6 +15,7 @@
 #include "cv/dspmodule.h"
 #include "ui/mainwindow.h"
 #include "windows.h"
+#include "globals.h"
 #include "./interpreter/expression_calculator.h"
 #include "settings/clickersettings.h"
 #include <windows.h>
@@ -23,8 +24,6 @@
 #include <QRegularExpression>
 
 
-static QMap<QString, std::vector<QString>> global_lists;
-static QMap<QString, QVariant> global_vars;
 static DspModule* dsp;
 using namespace cv;
 
@@ -77,10 +76,10 @@ QDomNode InterpreterWin64::populateVars(QDomNode nodE)
         if( match.hasMatch() )
         {
             auto varname = match.capturedTexts()[1];
-            if( global_vars.find(varname) != global_vars.end() )
+            if( Globals::global_vars.find(varname) != Globals::global_vars.end() )
             {
                 //value = global_vars[varname].toString();
-                QString val = global_vars[varname].toString();
+                QString val = Globals::global_vars[varname].toString();
                 value = value.replace(reVar, val);
                 node.toElement().setAttribute(attr,value);
             }
@@ -122,61 +121,6 @@ void send_key3(QVector<WORD>& vkeys, bool keyUp)
     SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
 }
 
-void KeySequence(char* hot_key, int delay_ms)
-{
-    QVector<WORD> vkeys;
-    QStringList keys = QString(hot_key).split('+');
-    int k = 0;
-    // keyup events
-    for(QString tok : keys)
-    {
-        tok = tok.toLower();
-        SHORT c = (int)tok[0].toLower().toLatin1()-32;
-        k = VkKeyScanA(c);
-        if(tok == "left")
-           k = VK_LEFT;
-        if(tok == "right")
-           k = VK_RIGHT;
-        if(tok == "down")
-           k  = VK_DOWN;
-        if(tok == "up")
-            k = VK_UP;
-        if(tok == "enter")
-         k = VK_RETURN;
-        INPUT inputs[2];
-        ZeroMemory(inputs, sizeof(inputs));
-        inputs[0].type = INPUT_KEYBOARD;
-        inputs[0].ki.wVk = k;
-        SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
-    }
-
-
-
-    // keydown events
-    for(QString tok : keys)
-    {
-        tok = tok.toLower();
-        SHORT c = (int)tok[0].toLower().toLatin1()-32;
-        k = VkKeyScanA(c);
-        if(tok == "left")
-           k = VK_LEFT;
-        if(tok == "right")
-           k = VK_RIGHT;
-        if(tok == "down")
-           k  = VK_DOWN;
-        if(tok == "up")
-            k = VK_UP;
-        if(tok == "enter")
-         k = VK_RETURN;
-        INPUT inputs[2];
-        ZeroMemory(inputs, sizeof(inputs));
-        inputs[0].type = INPUT_KEYBOARD;
-        inputs[0].ki.wVk = k;
-        inputs[0].ki.dwFlags = KEYEVENTF_KEYUP;
-        SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
-    }
-
-}
 
 void ScrollDown()
 {
@@ -208,60 +152,61 @@ void ScrollUp()
     */
 }
 
+
+std::set<WORD> modifiers_set { VK_CONTROL, VK_MENU, VK_SHIFT} ;
+
+std::map<char*, WORD> keys_map{ {"ctrl", VK_CONTROL}, {"alt", VK_MENU}, {"shift", VK_SHIFT}, {"F1", VK_F1}, {"F2", VK_F2}, {"F3", VK_F3},
+                                      {"F4", VK_F4}, {"F5", VK_F5}, {"F6", VK_F6},
+                                      {"F7", VK_F7}, {"F8", VK_F8}, {"F9", VK_F9},
+                                      {"F10", VK_F10}, {"F10", VK_F11},{"F10", VK_F12},
+                                      {"return", VK_RETURN},{"enter", VK_RETURN},
+                                      {"escape", VK_ESCAPE},{"up", VK_UP},{"left", VK_LEFT},
+                                      {"right", VK_RIGHT},{"up", VK_UP},{"down", VK_DOWN},
+                                      {"tab", VK_TAB},{"back", VK_BACK},{"insert", VK_INSERT},
+                                      {"delete", VK_DELETE},{"lwin", VK_LWIN},{"rwin", VK_RWIN},{"space", VK_SPACE}};
+
 void Key(char* hot_key)
 {
-    //SendCtrlA();
-    //return;
-    if( strlen(hot_key) > 200 ) return;
+    if( strlen(hot_key) < 1 ) return;
+    if( strlen(hot_key) > 30 ) return;
+
     QVector<WORD> vkeys;
-    char c = hot_key[strlen(hot_key)-1];
-    SHORT code = c-32;
-    code = VkKeyScanA(c);
+    QString key(hot_key);
 
-    if( strstr(hot_key, "F1") !=NULL )
-        vkeys.push_back(VK_F1);
-    if( strstr(hot_key, "F2") !=NULL )
-        vkeys.push_back(VK_F2);
-    if( strstr(hot_key, "F3") !=NULL )
-        vkeys.push_back(VK_F3);
-    if( strstr(hot_key, "F4") !=NULL )
-        vkeys.push_back(VK_F4);
-    if( strstr(hot_key, "F5") !=NULL )
-        vkeys.push_back(VK_F5);
-    if( strstr(hot_key, "F6") !=NULL )
-        vkeys.push_back(VK_F6);
-    if( strstr(hot_key, "F7") !=NULL )
-        vkeys.push_back(VK_F7);
-    if( strstr(hot_key, "F8") !=NULL )
-        vkeys.push_back(VK_F8);
-    if( strstr(hot_key, "F9") !=NULL )
-        vkeys.push_back(VK_F9);
-    if( strstr(hot_key, "F10") !=NULL )
-        vkeys.push_back(VK_F10);
-    if( strstr(hot_key, "F11") !=NULL )
-        vkeys.push_back(VK_F11);
-    if( strstr(hot_key, "F12") !=NULL )
-        vkeys.push_back(VK_F12);
-    if( strstr(hot_key, "shift") !=NULL )
-        vkeys.push_back(VK_SHIFT);
-    if( strstr(hot_key, "ctrl") !=NULL )
-        vkeys.push_back(VK_CONTROL);
-    if( strstr(hot_key, "alt") !=NULL )
-        vkeys.push_back(VK_MENU);
-    if( strstr(hot_key, "win") !=NULL )
-        vkeys.push_back(VK_LWIN);
-    if( strstr(hot_key, "enter") !=NULL )
-        vkeys.push_back(VK_RETURN);
-    if( strstr(hot_key, "return") !=NULL )
-        vkeys.push_back(VK_RETURN);
-    if( strstr(hot_key, "home") !=NULL )
-        vkeys.push_back(VK_HOME);
-    if( strstr(hot_key, "up") !=NULL )
-        vkeys.push_back(VK_UP);
-    if( strstr(hot_key, "down") !=NULL )
-        vkeys.push_back(VK_DOWN);
+    // delete spaces
+    key = key.replace(" ","");
 
-    vkeys.push_back(code);
+    // key combination is exactly one key
+    if( key.size() == 1 )
+    {
+        char c = key[0].toLatin1();
+        SHORT code = c-32;
+        code = VkKeyScanA(c);
+        vkeys.push_back(code);
+    }
+    else
+    {
+
+        for(auto it=keys_map.begin(); it!=keys_map.end(); it++)
+            if( key.contains(it->first) )
+                vkeys.push_back(it->second);
+
+        // check that all keys already added tu vkeys is modifiers
+        bool allModifiers = true;
+        for(auto k : vkeys)
+            if( modifiers_set.find(k) == modifiers_set.end())
+                allModifiers = false;
+
+        if( allModifiers )
+        {
+            // add to vkeys array last character in input string as key code
+            char c = hot_key[strlen(hot_key)-1];
+            SHORT code = c-32;
+            code = VkKeyScanA(c);
+            vkeys.push_back(code);
+        }
+    }
+
 
     if(vkeys.size() == 2)
     {
@@ -284,9 +229,9 @@ Delays InterpreterWin64::parseDelays(const QDomNode& node)
 {
     Delays delays;
 
-    delays.delay_fixed = ATTR("delay_fixed").toFloat();
-    delays.delay_random = ATTR("delay_random").toFloat();
-    delays.repeat =  ATTR("repeat").toFloat();
+    delays.delay_fixed = node.toElement().attribute("delay_fixed", "1000").toFloat();
+    delays.delay_random = node.toElement().attribute("delay_random", "1").toFloat();
+    delays.repeat =  node.toElement().attribute("repeats", "1").toFloat();
 
     return delays;
 }
@@ -381,18 +326,19 @@ BOOLEAN nanosleep(LONGLONG ns){
     return TRUE;
 }
 
-void InterpreterWin64::MySleep(QDateTime endTime)
+void InterpreterWin64::MySleep(long delay)
 {
     const auto MAX_DELAY_SEC = 20;
-    QDateTime startTime = QDateTime::currentDateTime();
+
+    this->elapsedTimer.restart();
+
+    if(float(delay)/1000. > MAX_DELAY_SEC)
+        return;
     while(1)
     {
-        QDateTime currentTime = QDateTime::currentDateTime();
-        if( currentTime.msecsTo(endTime) < 0)
-            break;
-        if( startTime.secsTo(currentTime) >  MAX_DELAY_SEC)
-            break;
-        nanosleep(1000); // sleep 1000 nanoseconds
+        if( elapsedTimer.elapsed() > delay )
+            return;
+        nanosleep(1000*10); // sleep 10 microseconds
         QCoreApplication::processEvents(QEventLoop::AllEvents, MAX_DELAY_SEC);
     }
 
@@ -406,13 +352,6 @@ int InterpreterWin64::executeHotkey(const QDomNode& node)
         str = node.toElement().attribute("hotkey");
         str = str.replace(" ","");
         Key((char*)str.toLocal8Bit().toStdString().c_str());
-    }
-    if( node.toElement().hasAttribute("keysequence") )
-    {
-        str = node.toElement().attribute("keysequence");
-        str = str.replace(" ","");
-        auto delay_ms = node.toElement().attribute("delay_ms").toInt();
-        KeySequence((char*)str.toLocal8Bit().toStdString().c_str(), delay_ms);
     }
 
 
@@ -486,13 +425,12 @@ int InterpreterWin64::executeType(const QDomNode& node)
     {
         char str[3];
         str[0] = (*c).toLatin1();
-        str[1] = '\0';
+        str[1] = ' ';
         str[2] = '\0';
 
         Key(str);
         long delay = 1;
-        QDateTime t = QDateTime::currentDateTime().addMSecs(delay);
-        MySleep(t);
+        MySleep(delay);
 
     }
 
@@ -517,10 +455,20 @@ void InterpreterWin64::executeFunction(QString function_name)
             {
                 QDomNode child = node.childNodes().at(i);
                 execute(child);
+                if( stopFlag )
+                {
+                    Log("EXIT executeFunction");
+                    return;
+                }
             }
         }
     }
 
+}
+
+void InterpreterWin64::resetStopFlag()
+{
+    stopFlag = false;
 }
 
 // executeFunction RECURSIVE VERSION
@@ -544,7 +492,11 @@ void InterpreterWin64::executeFunction(const QDomNode& rootNode, QDomNode funcNo
             }
 
         }
-        if( stopFlag ) return;
+        if( stopFlag )
+        {
+            Log("EXIT executeFunction");
+            return;
+        }
         //getFunctionsList(domNode, outList);
         if( domNode.parentNode() == funcNode)
         {
@@ -691,24 +643,24 @@ int InterpreterWin64::executeList(const QDomNode& node)
                 str.push_back(s);
             std::random_shuffle(str.begin(),str.end());
         }
-        global_lists[name] = str;
-        global_vars[name] = list;
+        Globals::global_lists[name] = str;
+        Globals::global_vars[name] = list;
     }
     else // load list from previous defined named lists (global_lists map)
     {
         QTextStream ts(&f);
         QStringList list = tag_body.split("\n");
-        global_vars[name] = list;
+        Globals::global_vars[name] = list;
         for( auto s: list)
             str.push_back(s);
         std::random_shuffle(str.begin(),str.end());
-        if( global_lists.contains(name))
+        if( Globals::global_lists.contains(name))
         {
-            str = global_lists[name];
+            str = Globals::global_lists[name];
             //show_message("list found in global",name);
         }
         else
-            global_lists[name] = str;
+            Globals::global_lists[name] = str;
     }
     QString outputString;
     for( auto s: str)
@@ -745,9 +697,9 @@ int InterpreterWin64::executeCheck(const QDomNode& node)
     {
         QDomNode attr = node.attributes().item(i);
         QString varName = attr.nodeName();
-        if( global_vars.find(varName) != global_vars.end())
+        if( Globals::global_vars.find(varName) != Globals::global_vars.end())
         {
-            if ( global_vars[varName] == attr.nodeValue() )
+            if ( Globals::global_vars[varName] == attr.nodeValue() )
             {
                 QString str = "CHECK.... " + varName + "==" + attr.nodeValue();
                 str += "........OK!";
@@ -756,7 +708,7 @@ int InterpreterWin64::executeCheck(const QDomNode& node)
             else
             {
                 QString str = "CHECK.... " + varName + "!=" + attr.nodeValue() + "   ";
-                str += varName + "=" + global_vars[varName].toString();
+                str += varName + "=" + Globals::global_vars[varName].toString();
                 str += "........FAIL!";
                 Log(str);
             }
@@ -786,7 +738,7 @@ int InterpreterWin64::executeForeach(const QDomNode& node)
     QString range = node.toElement().attribute("range");
     QString do_fun = node.toElement().attribute("do");
     QStringList l = range.split(":");
-    QStringList list = global_vars[list_name].toStringList();
+    QStringList list = Globals::global_vars[list_name].toStringList();
     int from=0, to=list.size(), step=1;
 
     if( l.size() > 2 )
@@ -806,12 +758,39 @@ int InterpreterWin64::executeForeach(const QDomNode& node)
         QString val = list[idx];
         val = val.replace("\r","");
         val = val.replace("\n","");
-        global_vars["i"] = val;
+        Globals::global_vars["i"] = val;
         executeFunction(do_fun);
     }
     return 1;
 }
 
+
+int InterpreterWin64::executeClickRect(const QDomNode& node)
+{
+    QString button;
+    RectangleDescriptor d;
+
+    d.fromDomNode(node);
+    int kernel = node.toElement().attribute("kernel_size", "4").toInt();
+    int screen = node.toElement().attribute("screen_num", "0").toInt();
+
+    dsp->searchRect(screen, kernel, d);
+
+    if ( dsp->matchedRectangle.height() < 10 ) return 0;
+    if ( dsp->matchedRectangle.width() < 10 ) return 0;
+
+    QString s = QString("executeClickRect %1 %2").arg(dsp->matchedRectangle.center().x())
+                      .arg(dsp->matchedRectangle.center().y());
+    //Log(s);
+
+    if( button == "left" ||  button == "")
+        MouseClick(dsp->matchedRectangle, Qt::MouseButton::LeftButton);
+    if( button == "right")
+        MouseClick(dsp->matchedRectangle, Qt::MouseButton::RightButton);
+
+
+    return 0;
+}
 
 std::map<std::string, method_t> interpreter_func_map{{"click",&InterpreterWin64::executeClick},
                                 {"type",&InterpreterWin64::executeType},
@@ -820,6 +799,7 @@ std::map<std::string, method_t> interpreter_func_map{{"click",&InterpreterWin64:
                                 {"list",&InterpreterWin64::executeList},
                                 {"set",&InterpreterWin64::executeSet},
                                 {"check",&InterpreterWin64::executeCheck},
+                                {"clickrect",&InterpreterWin64::executeClickRect},
                                 {"clickimg",&InterpreterWin64::executeClickImg},
                                 {"dblclick",&InterpreterWin64::executeDblClick},
                                 {"scrollup",&InterpreterWin64::executeScrollUp},
@@ -835,11 +815,15 @@ int InterpreterWin64::execute(const QDomNode& node)
     //
     int repeats = ATTR("repeats").toInt();
     int n = 0;
+    QDomNode node_with_vars;
 
-    while(n++ < repeats)
+    while(n < repeats)
     {
-        if( stopFlag ) return 0;
-       auto node_with_vars = populateVars(node);
+       if( stopFlag )
+       {
+           return 0;
+       }
+       if(n == 0) node_with_vars = populateVars(node);
        // find method in table by name of xml node
        auto kv = interpreter_func_map.find(name.toStdString());
        QString str1, str2;
@@ -862,9 +846,8 @@ int InterpreterWin64::execute(const QDomNode& node)
                  // make a delay
                  currentDelays = parseDelays(node);
                  long delay = currentDelays.delay_fixed + (currentDelays.delay_random * (float)rand()/RAND_MAX);
-                 qDebug() << "delay " << delay;
-                 QDateTime t = QDateTime::currentDateTime().addMSecs(delay);
-                 MySleep(t);
+                 //qDebug() << "delay " << delay;
+                 MySleep(delay);
             }
             //QThread::msleep(delay);
             //nanosleep(delay * 10e6);
@@ -878,6 +861,7 @@ int InterpreterWin64::execute(const QDomNode& node)
 
        }
 
+       n++;
     }
 
     return 0;

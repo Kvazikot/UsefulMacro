@@ -61,6 +61,7 @@ public:
     QToolButton *imageClick;
     QToolButton *typeTag;
     QToolButton *toolButton_7;
+    QToolButton *rectClick;
     QGroupBox *groupBox_4;
     QGridLayout *gridLayout_4;
     XmlEditor *xmlEditor;
@@ -197,6 +198,13 @@ public:
         QIcon icon5;
         icon5.addFile(QString::fromUtf8(":/images/clock-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
         toolButton_7->setIcon(icon5);
+        rectClick = new QToolButton(groupBox_5);
+        rectClick->setObjectName(QString::fromUtf8("rectClick"));
+        rectClick->setGeometry(QRect(70, 70, 23, 23));
+        rectClick->setToolTipDuration(2000);
+        QIcon icon6;
+        icon6.addFile(QString::fromUtf8(":/images/rect_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        rectClick->setIcon(icon6);
 
         horizontalLayout->addWidget(groupBox_5);
 
@@ -227,7 +235,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 1273, 25));
+        menubar->setGeometry(QRect(0, 0, 1273, 21));
         fileMenu = new QMenu(menubar);
         fileMenu->setObjectName(QString::fromUtf8("fileMenu"));
         actionsMenu = new QMenu(menubar);
@@ -342,6 +350,13 @@ public:
         toolButton_7->setToolTip(QCoreApplication::translate("MainWindow", "Delay", nullptr));
 #endif // QT_CONFIG(tooltip)
         toolButton_7->setText(QCoreApplication::translate("MainWindow", "...", nullptr));
+#if QT_CONFIG(tooltip)
+        rectClick->setToolTip(QCoreApplication::translate("MainWindow", "<html><head/><body><p>Area click (F3)</p></body></html>", nullptr));
+#endif // QT_CONFIG(tooltip)
+        rectClick->setText(QCoreApplication::translate("MainWindow", "Rectangle click", nullptr));
+#if QT_CONFIG(shortcut)
+        rectClick->setShortcut(QCoreApplication::translate("MainWindow", "F3", nullptr));
+#endif // QT_CONFIG(shortcut)
         groupBox_4->setTitle(QCoreApplication::translate("MainWindow", "Xml editor", nullptr));
         fileMenu->setTitle(QCoreApplication::translate("MainWindow", "&File", nullptr));
         actionsMenu->setTitle(QCoreApplication::translate("MainWindow", "&Actions", nullptr));

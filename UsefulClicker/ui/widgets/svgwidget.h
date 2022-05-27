@@ -42,6 +42,7 @@ public:
     void rotateNode(QString id, float degree);
     void rotateNode(QString id, QPointF center, float degree);
     void setText(QString group_id, QString text);
+    void setTransform(QString id, QString transform);
     QPointF  mapToViewbox(QPoint p, QRectF viewbox);
     QRectF   mapToViewbox(QRectF p, QRectF viewbox);
     QTransform getViewBoxTransform();

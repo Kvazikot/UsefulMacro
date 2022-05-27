@@ -319,6 +319,17 @@ QRectF SvgWidget::getRect(QString id)
     return rect;
 }
 
+void SvgWidget::setTransform(QString id, QString transform)
+{
+    QDomElement path_node;
+    QMap<QString, QDomElement>::iterator it;
+    it = elementByID.find(id);
+    if( it!=elementByID.end() )
+    {
+        path_node = it.value();
+        path_node.setAttribute("transform", transform);
+    }
+}
 
 void SvgWidget::setRadialGradient(QString id, QRadialGradient g)
 {

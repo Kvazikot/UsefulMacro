@@ -8,16 +8,18 @@
 #include <opencv2/imgproc.hpp>
 #include "cv/dspmodule.h"
 #include "ui/screenbuttonsdetector.h"
+#include "ui/widgets/dimensionswidget.h"
 #include "ui/ui_screenbuttonsdetector.h"
 
 using namespace cv;
 static DspModule* dsp;
 
 ScreenButtonsDetector::ScreenButtonsDetector(QWidget *parent, int screenNumber):
-    QDialog(parent),
+    QDialog(parent), parent_dialog(parent),
     ui(new Ui::ScreenButtonsDetector)
 {
     ui->setupUi(this);
+    attrs["nodename"] = "clickimg";
     setWindowFlags(Qt::Widget );
     setParent(0); // Create TopLevel-Widget
     setAttribute(Qt::WA_NoSystemBackground, true);
@@ -33,6 +35,7 @@ ScreenButtonsDetector::ScreenButtonsDetector(QWidget *parent, int screenNumber):
     //fullscreenMode = false;
     //DspModule
     dsp = new DspModule();
+    Hide();
 
     startTimer(10);
 }
@@ -50,33 +53,70 @@ bool ScreenButtonsDetector::setScreenNumber(int n)
     return true;
 }
 
+void ScreenButtonsDetector::Hide()
+{
+    setWindowOpacity(0);
+    ui->tipLabel->hide();
+    parent_dialog->hide();
+}
+
+void ScreenButtonsDetector::Show()
+{
+    setWindowOpacity(0.400000);
+    ui->tipLabel->show();
+    //parent_dialog->show();
+}
+
 void ScreenButtonsDetector::mousePressEvent(QMouseEvent* event)
 {
     event->accept();
 
     //process selected rectangle
-    QMap<QString, QString> attrs;
-    QString v = QString("QRect(%1,%2,%3,%4)").arg(selected_rect.left())
-            .arg(selected_rect.top())
-            .arg(selected_rect.width())
-            .arg(selected_rect.height());
-    attrs["area"] = v;
-    QString filename;
-    dsp->saveImage(selected_rect, filename);
-    filename = filename.replace("\"","");
-    attrs["targetImg"] = filename;
-    attrs["kernel_size"] = QString::number(dsp->kernel_size);
-    attrs["nodename"] = "clickimg";
-    //rect_image.save(str);
+    if( attrs["nodename"] == "clickimg" )
+    {
+        QString filename;
+        dsp->saveImage(selected_rect, filename);
+        filename = filename.replace("\"","");
+        attrs["targetImg"] = filename;
+        attrs["kernel_size"] = QString::number(dsp->kernel_size);
+    }
 
-
+    if( attrs["nodename"] == "clickrect" )
+    {
+        attrs["kernel_size"] = QString::number(dsp->kernel_size);
+        rectangle_descriptor.writeToMap(attrs);
+    }
 
     emit sigSetAttrs(attrs);
 
 
+    parent_dialog->show();
     close();
 
 }
+
+void ScreenButtonsDetector::keyPressEvent(QKeyEvent* event)
+{
+    event->accept();
+    if( event->key() == Qt::Key::Key_F2)
+    {
+        DimensionsWidget* dimensions = new DimensionsWidget(this);
+        attrs["nodename"] = "clickrect";
+        QRect r = rect();
+        QPoint c = r.center();
+        QRect dimensions_geometry = QRect(c.x()-r.width()/2,
+                                          c.y()-r.height()/2,
+                                          r.width()/2,
+                                          r.height()/2);
+        dimensions_geometry = rect();
+        dimensions->setGeometry(dimensions_geometry);
+        dimensions->showFullScreen();
+
+
+    }
+
+}
+
 
 void ScreenButtonsDetector::mouseMoveEvent(QMouseEvent* event)
 {
@@ -106,11 +146,14 @@ void ScreenButtonsDetector::paintEvent( QPaintEvent* event)
     if( screenNum > QGuiApplication::screens().size() ) return;
     QScreen* screen = QGuiApplication::screens()[screenNum];
 
+    int n = 0;
     for( auto r: rects)
     {
         if( r.contains(mpos) )
         {
             selected_rect = r;
+            rectangle_descriptor.setRect(selected_rect);
+            rectangle_descriptor.setNumber(n);
             painter.fillRect(r, Qt::red);
         }
         else
@@ -121,9 +164,18 @@ void ScreenButtonsDetector::paintEvent( QPaintEvent* event)
             QPointF p2 = QPointF(this->mapFromGlobal(r.bottomRight()));
             QRectF scaledRect = QRectF(p1,p2);
             painter.fillRect(scaledRect, Qt::green);
+            QString similarity = QString::number(n);
+            QFont f;
+            f.setBold(true);
+            f.setPixelSize(24);
+            painter.setFont(f);
+            painter.setPen(Qt::yellow);
+            if( attrs["nodename"] == "clickrect" )
+                painter.drawText(scaledRect.topLeft(), similarity);
             //qDebug() << __FUNCTION__ << "r trqanslated" << r;
 
         }
+        n++;
     }
 
     QFont f;
@@ -136,6 +188,7 @@ void ScreenButtonsDetector::paintEvent( QPaintEvent* event)
     QString message;
     message = QString("kernel_size = %1 Select image to search. Use mouse wheel for fine tuning. ");
     message = message.arg(QString::number(dsp->kernel_size));
+
     if( (screen->logicalDotsPerInch()) != 96)
         message = "Please set screen scale to 100% in Desktop settings!";
 
@@ -166,7 +219,7 @@ void ScreenButtonsDetector::setImage()
 }
 
 
-void ScreenButtonsDetector::showEvent(QShowEvent* event)
+void ScreenButtonsDetector::init()
 {
     //setWindowState(Qt::WindowFullScreen);
 
@@ -181,9 +234,15 @@ void ScreenButtonsDetector::showEvent(QShowEvent* event)
     setScreen(screen);
     setCursor(Qt::CrossCursor);
     dsp->detectButtons(screenNum, dsp->kernel_size, rects);
-    event->accept();
     showFullScreen();
-    //QTimer::singleShot(3000, this,  SLOT(setImage()));
+    Show();
+
+}
+
+void ScreenButtonsDetector::showEvent(QShowEvent* event)
+{
+    QTimer::singleShot(500, this,  SLOT(init()));
+    event->accept();
 }
 
 ScreenButtonsDetector::~ScreenButtonsDetector()

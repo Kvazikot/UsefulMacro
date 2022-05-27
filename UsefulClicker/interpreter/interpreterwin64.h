@@ -19,16 +19,19 @@ public:
                               "func"};
 
     bool stopFlag;
+    QElapsedTimer elapsedTimer;
     Delays currentDelays;
     InterpreterWin64();
     Delays parseDelays(const QDomNode& node)  override;
     QRect parseRect(const QDomNode& node);
-    void MySleep(QDateTime endTime);
+    void MySleep(long delay);
+    QVariant get_var(QString varname);
 
     void init(QDomDocument& dom);
 
     void MainLoop();
     QDomNode populateVars(QDomNode node);
+    void resetStopFlag();
     int execute(const QDomNode& node) override;
     int executeHotkey(const QDomNode& node);
     int executeCheck(const QDomNode& node);
@@ -38,6 +41,7 @@ public:
     int executeType(const QDomNode& node);
     int executeShellCommand(const QDomNode& node);
     int executeClickImg(const QDomNode& node);
+    int executeClickRect(const QDomNode& node);
     int executeScrollUp(const QDomNode& node);
     int executeScrollDown(const QDomNode& node);
     int executeList(const QDomNode& node);

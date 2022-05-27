@@ -278,6 +278,32 @@ p, li { white-space: pre-wrap; }
                <normaloff>:/images/clock-icon.png</normaloff>:/images/clock-icon.png</iconset>
              </property>
             </widget>
+            <widget class="QToolButton" name="rectClick">
+             <property name="geometry">
+              <rect>
+               <x>70</x>
+               <y>70</y>
+               <width>23</width>
+               <height>23</height>
+              </rect>
+             </property>
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Area click (F3)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="toolTipDuration">
+              <number>2000</number>
+             </property>
+             <property name="text">
+              <string>Rectangle click</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../res.qrc">
+               <normaloff>:/images/rect_icon.png</normaloff>:/images/rect_icon.png</iconset>
+             </property>
+             <property name="shortcut">
+              <string>F3</string>
+             </property>
+            </widget>
            </widget>
           </item>
           <item>
@@ -318,7 +344,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>1273</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">

@@ -81,6 +81,10 @@ private slots:
 
     void on_pirateBayTest_clicked();
 
+    void on_changeFontWindows11_clicked();
+
+    void on_clickrectTest_clicked();
+
 signals:
     void stopExecutionSignal();
 

@@ -123,6 +123,8 @@ private slots:
 
     void on_typeTag_clicked();
 
+    void on_rectClick_clicked();
+
 private:
     QPlainTextEdit*  logWindow;
     ClickerModel* model=0;
@@ -132,6 +134,7 @@ private:
     QAction* playAction;
     bool pauseFlag;
     int n_cycle;
+    QVector<QString> cached_messages;
 
 };
 

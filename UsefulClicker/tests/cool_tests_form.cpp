@@ -94,8 +94,6 @@ void CoolTestsForm::showEvent(QShowEvent* event)
 {
     MainWindow* window = MainWindow::getInstance();
     window->setLogWindow(ui->logEdit);
-    InterpreterWin64*  interpreter = static_cast<InterpreterWin64*>(window->getInterpreter());
-    interpreter->init(*window->getDoc());
 }
 
 void CoolTestsForm::cursorPositionChanged()
@@ -146,38 +144,44 @@ void CoolTestsForm::on_buttonsDetector1_clicked()
 
 void CoolTestsForm::buttonDetectorOut(QMap<QString, QString> attrs)
 {
-    QString xmlstring = QString("<clickimg ");
+    QString xmlstring;
+    xmlstring = QString("<%1 ").arg(attrs["nodename"]);
     for(auto kv=attrs.begin(); kv!=attrs.end(); kv++)
         if( kv.key()!="nodename")
             xmlstring+=kv.key()+"=\""+kv.value()+"\" ";
     xmlstring+="/>";
-    //QPixmap
-    auto fn = attrs["targetImg"].replace("\"","");
-    fn = decodePath(fn);
 
-    ui->buttonImage->setPixmap(QPixmap(fn));
+    if( attrs.contains("targetImg") )
+    {
+        auto fn = attrs["targetImg"].replace("\"","");
+        fn = decodePath(fn);
+        ui->buttonImage->setPixmap(QPixmap(fn));
+    }
     ui->logEdit->appendPlainText(xmlstring);
+}
+
+void ExecuteXmlString(QString xml)
+{
+
+    MainWindow* window = MainWindow::getInstance();
+    QDomDocument doc;
+    if( doc.setContent( xml ) )
+    {
+        QDomElement root = doc.documentElement();
+        InterpreterWin64*  interpreter = static_cast<InterpreterWin64*>(window->getInterpreter());
+        interpreter->execute(root);
+    }
+
 }
 
 void CoolTestsForm::on_clickimgTest_clicked()
 {
-    auto lines = ui->logEdit->toPlainText().split("\n");
-    MainWindow* window = MainWindow::getInstance();
+    hide();
     ui->buttonImage->setPixmap(QPixmap());
-//    ClickerDocument* doc = window->getDoc();
-    QDomDocument doc;
-    //xml = "<?xml version='1.0'?><xml>" + xml + "</xml>";
+    auto lines = ui->logEdit->toPlainText().split("\n");
     auto xml = lines.back();
-    if( doc.setContent( xml ) )
-    {
-        QDomElement root = doc.documentElement();
-        //QDomNode node = doc->createNodeFromString( lines.back() );
-        InterpreterWin64*  interpreter = static_cast<InterpreterWin64*>(window->getInterpreter());
-        interpreter->execute(root);
-
-    }
-
-
+    ExecuteXmlString(xml);
+    show();
 }
 
 
@@ -407,5 +411,21 @@ void CoolTestsForm::on_generatorsTest_clicked()
 void CoolTestsForm::on_pirateBayTest_clicked()
 {
     runFunction("PirateBay test");
+}
+
+
+void CoolTestsForm::on_changeFontWindows11_clicked()
+{
+    runFunction("Change font Windows 11");
+}
+
+
+void CoolTestsForm::on_clickrectTest_clicked()
+{
+    hide();
+    auto lines = ui->logEdit->toPlainText().split("\n");
+    auto xml = lines.back();
+    ExecuteXmlString(xml);
+    show();
 }
 

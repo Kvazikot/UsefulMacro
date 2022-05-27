@@ -112,7 +112,7 @@ MainWindow::MainWindow(QWidget *parent)
     setupUi(this);
     setWindowTitle("UsefulClicker");
     instance = this;
-
+    logWindow = 0;
     const QStringList headers({tr("#"), tr("Title"), tr("Description")});
 
     startTimer(50);
@@ -130,6 +130,7 @@ MainWindow::MainWindow(QWidget *parent)
     //--------------------------------------------------------------------
     loadSettings();
     interpreter = new InterpreterWin64();
+    interpreter->init(*getDoc());
 
     //--------------------------------------------------------------------
 
@@ -219,7 +220,18 @@ void MainWindow::setLogWindow(QPlainTextEdit* wnd)
 
 void MainWindow::log(QString msg)
 {
-   logWindow->appendPlainText(msg);
+   if( logWindow )
+   {
+       //insertPlainText
+       auto cursor = logWindow->textCursor();
+       cursor.movePosition(QTextCursor::Start);
+       QString time = QDateTime::currentDateTime().toString("[hh:mm:ss.zzz] ");
+       cursor.insertText(time + msg + "\n");
+       cursor.movePosition(QTextCursor::Start);
+       logWindow->setTextCursor(cursor);
+   }
+   else
+       cached_messages.push_back(msg);
 }
 
 void MainWindow::xmlChanged()
@@ -429,6 +441,14 @@ void MainWindow::slotSetAttrs(QMap<QString,QString> attrs_map)
     if( act.contains("image click") )
     {
         xml_string = QString("<clickimg targetImg=\"%1\" button=\"left\" delay_fixed=\"1000\"> </clickimg>").arg(attrs_map["targetImg"]);
+    }
+
+
+    if( act.contains("rectangle click") )
+    {
+        xml_string = QString("<clickrectn=\"%1\" button=\"left\" n=\"%2\" rect=\"200x140\" area_tolerance=\"5%%\" ratio_tolerance=\"2%%\"  /> ")
+                     .arg(attrs_map["targetImg"])
+                     .arg(attrs_map["targetImg"]);
     }
 
     if( act.contains("Add type") )
@@ -671,11 +691,12 @@ void MainWindow::pause()
 {
     pauseFlag = ! pauseFlag;
     if( pauseFlag )
+    {
        playAction->setIcon(QIcon(":/images/play.png"));
+    }
     else
     {
        playAction->setIcon(QIcon(":/images/pause.jpg"));
-
        MainWindow* window = MainWindow::getInstance();
        QDomDocument* doc = static_cast<QDomDocument*>(window->getDoc());
        InterpreterWin64*  interpreter = static_cast<InterpreterWin64*>(window->getInterpreter());
@@ -918,5 +939,12 @@ void MainWindow::on_typeTag_clicked()
 {
     last_action_triggered =  "Add type";
     createDialog(this, DialogType::TYPE_DIALOG);
+}
+
+
+void MainWindow::on_rectClick_clicked()
+{
+    last_action_triggered = "Add rectangle click";
+    createDialog(this, DialogType::SCREEN_BUTTONS_DETECTOR, "rect_mode");
 }
 

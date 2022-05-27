@@ -52,14 +52,19 @@ public:
     AbstractInterpreter()
     {}
     void MainLoop();
+    virtual void init(QDomDocument& dom)=0;
+    virtual void resetStopFlag()=0;
     virtual int execute(const QDomNode& node)=0;
     virtual Delays parseDelays(const QDomNode& node)=0;
     virtual int process(const QDomNode& domNode);
     void TraverseXmlNode(const QDomNode& node);
+    virtual void executeFunction(QString function_name)=0;
 signals:
     void setCurrentNode(QDomNode& currentNode);
 
 public slots:
+    virtual void stop()=0;
+
 /*
     virtual void Play()=0;
     virtual void StepForward()=0;
