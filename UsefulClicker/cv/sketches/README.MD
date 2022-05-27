@@ -20,3 +20,5 @@
 */
 is my scetches for cv part of UsefulClicker.
 ![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/cv/sketches/galaxy_cluster_shitt.jpg)
+![image](https://github.com/Kvazikot/UsefulMacro/blob/master/UsefulClicker/cv/sketches/path_matcher_idea.jpg)
+
