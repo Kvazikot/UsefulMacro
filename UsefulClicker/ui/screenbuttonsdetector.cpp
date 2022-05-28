@@ -1,5 +1,6 @@
 #include <QScreen>
 #include <QPushButton>
+#include <QRandomGenerator>
 #include <QPainter>
 #include <QTimer>
 #include <QDateTime>
@@ -79,19 +80,19 @@ void ScreenButtonsDetector::mousePressEvent(QMouseEvent* event)
         filename = filename.replace("\"","");
         attrs["targetImg"] = filename;
         attrs["kernel_size"] = QString::number(dsp->kernel_size);
+        emit sigSetAttrs(attrs);
+        parent_dialog->show();
+        close();
     }
 
     if( attrs["nodename"] == "clickrect" )
     {
         attrs["kernel_size"] = QString::number(dsp->kernel_size);
         rectangle_descriptor.writeToMap(attrs);
+        train.Generate(4, selected_rect, rects);
+        emit sigSetAttrs(attrs);
     }
 
-    emit sigSetAttrs(attrs);
-
-
-    parent_dialog->show();
-    close();
 
 }
 
@@ -140,6 +141,79 @@ void ScreenButtonsDetector::wheelEvent(QWheelEvent* event)
 
 }
 
+int calc_area(QRect r) {return r.width()*r.height(); }
+
+void Train::computeRectangleMaps(std::vector<QRect>& in_rects, t_rectmap& out_xMap, t_rectmap& out_yMap)
+{
+    for(int n_rect = 0; n_rect < in_rects.size(); n_rect++ )
+    {
+        auto& r = in_rects[n_rect];
+        for(int x=r.topLeft().x(); x!=r.topRight().x(); x++ )
+             out_xMap[x].insert(n_rect);
+        for(int y=r.topLeft().y(); y!=r.bottomLeft().y(); y++ )
+           out_yMap[y].insert(n_rect);
+    }
+    for(auto it=out_xMap.begin(); it!=out_xMap.end(); it++)
+    {
+        int maxAreaIndex;
+        int maxArea = std::numeric_limits<int>::min();
+        for(auto n_rect = it->second.begin(); n_rect != it->second.end(); n_rect++)
+        {
+            int area = calc_area(in_rects[*n_rect]);
+            if(  area > maxArea)
+            {
+                maxArea = area;
+                maxAreaIndex = *n_rect;
+            }
+        }
+        it->second.clear();
+        it->second.insert(maxAreaIndex);
+
+    }
+}
+
+QPoint randomPointInRect(QRect& r)
+{
+    QRandomGenerator rng(QDateTime::currentDateTime().toMSecsSinceEpoch());
+    return QPoint(r.left() + rng.bounded(r.width()),
+                  r.top() + rng.bounded(r.height()));
+}
+
+void Train::Generate(int n_Wagons, QRect startingRect, std::vector<QRect>& in_rects)
+{
+    computeRectangleMaps(in_rects, xMap, yMap);
+
+    Wagons.clear();
+    Wagons.resize(n_Wagons);
+
+    Wagons[0] = Wagon(startingRect, randomPointInRect(startingRect));
+
+    QRandomGenerator rng(QDateTime::currentDateTime().toMSecsSinceEpoch());
+    for(int i=1; i < n_Wagons; i++)
+    {
+        auto& randomRect = in_rects[rng.bounded(in_rects.size()-1)];
+        Wagons[i] = Wagon(randomRect, randomPointInRect(startingRect));
+    }
+
+}
+
+void ScreenButtonsDetector::drawTrain(QPainter& painter, Train& train, QColor boarder_color, QColor fill_color)
+{
+    painter.save();
+    auto prev_junction_point = QPoint();
+    for(auto& w : train.Wagons)
+    {
+        painter.setPen(boarder_color);
+        painter.drawRect(w.bounds);
+        painter.setPen(Qt::red);
+        painter.drawLine(w.junction_point, prev_junction_point);
+        painter.fillRect(w.bounds, fill_color);
+        prev_junction_point = w.junction_point;
+    }
+    painter.restore();
+}
+
+
 void ScreenButtonsDetector::paintEvent( QPaintEvent* event)
 {
     QPainter painter(this);
@@ -171,7 +245,10 @@ void ScreenButtonsDetector::paintEvent( QPaintEvent* event)
             painter.setFont(f);
             painter.setPen(Qt::yellow);
             if( attrs["nodename"] == "clickrect" )
+            {
+                drawTrain(painter, train, Qt::black, Qt::yellow);
                 painter.drawText(scaledRect.topLeft(), similarity);
+            }
             //qDebug() << __FUNCTION__ << "r trqanslated" << r;
 
         }
@@ -239,6 +316,7 @@ void ScreenButtonsDetector::init()
 
 }
 
+
 void ScreenButtonsDetector::showEvent(QShowEvent* event)
 {
     QTimer::singleShot(500, this,  SLOT(init()));
@@ -248,4 +326,5 @@ void ScreenButtonsDetector::showEvent(QShowEvent* event)
 ScreenButtonsDetector::~ScreenButtonsDetector()
 {
     delete ui;
+    delete dsp;
 }

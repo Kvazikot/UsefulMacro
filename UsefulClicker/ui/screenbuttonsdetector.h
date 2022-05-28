@@ -4,6 +4,8 @@
 #include <vector>
 #include <QDialog>
 #include <QShowEvent>
+#include <QVector2D>
+#include <set>
 #include <QTimerEvent>
 #include <QMouseEvent>
 #include <QKeyEvent>
@@ -16,6 +18,55 @@ namespace Ui {
 class ScreenButtonsDetector;
 }
 
+typedef std::map<int, std::set<int> > t_rectmap;
+
+struct Wagon
+{
+    float d[4];
+    QPoint junction_point;
+    QRect  bounds;
+
+    Wagon(){}
+
+    Wagon(QRect  bounds, QPoint junction_point) :
+        bounds(bounds), junction_point(junction_point)
+    {
+        calcDistances();
+    }
+
+    void calcDistances()
+    {
+        d[0] = QVector2D(junction_point - bounds.topLeft()).length();
+        d[1] = QVector2D(junction_point - bounds.topRight()).length();
+        d[2] = QVector2D(junction_point - bounds.bottomLeft()).length();
+        d[3] = QVector2D(junction_point - bounds.bottomRight()).length();
+    }
+
+    QString toString()
+    {
+        QString out;
+        out+=QString::number(junction_point.x())+",";
+        out+=QString::number(junction_point.y())+",";
+        for(int i=0; i < 4; i++ )
+            out+=QString::number(d[i])+",";
+        return out;
+    }
+};
+
+struct Train
+{
+    t_rectmap xMap, yMap;
+    std::vector<Wagon> Wagons;
+    void computeRectangleMaps(std::vector<QRect>& in_rects, t_rectmap& out_xMap, t_rectmap& out_yMap);
+    void Generate(int n_Wagons, QRect startingRect, std::vector<QRect>& in_rects);
+    QString toString()
+    {
+        QString out;
+        for(auto w : Wagons) out+=w.toString();
+        return out;
+    }
+};
+
 
 class ScreenButtonsDetector : public QDialog
 {
@@ -23,6 +74,8 @@ class ScreenButtonsDetector : public QDialog
 
 public:
     explicit ScreenButtonsDetector(QWidget *parent = nullptr, int screenNumber=0);
+    Train train;
+
     QWidget* parent_dialog;
     QMap<QString, QString> attrs;
     std::vector<QRect> rects;
@@ -32,6 +85,7 @@ public:
     RectangleDescriptor rectangle_descriptor;
     void Hide();
     void Show();
+    void drawTrain(QPainter& painter, Train& train, QColor boarder_color=Qt::black, QColor fill_color=Qt::yellow);
     void keyPressEvent(QKeyEvent* event);
     bool setScreenNumber(int n);
     void showEvent(QShowEvent* event);
@@ -40,6 +94,7 @@ public:
     void mousePressEvent(QMouseEvent* event);
     void paintEvent( QPaintEvent* event);
     void wheelEvent(QWheelEvent* event);
+    void drawTrain(Train& train);
     ~ScreenButtonsDetector();
 
 public slots:
