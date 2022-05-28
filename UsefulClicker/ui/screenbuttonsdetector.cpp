@@ -89,7 +89,7 @@ void ScreenButtonsDetector::mousePressEvent(QMouseEvent* event)
     {
         attrs["kernel_size"] = QString::number(dsp->kernel_size);
         rectangle_descriptor.writeToMap(attrs);
-        train.Generate(4, selected_rect, rects);
+        train.Generate(4, rectangle_descriptor.number, rects);
         emit sigSetAttrs(attrs);
     }
 
@@ -179,28 +179,35 @@ QPoint randomPointInRect(QRect& r)
                   r.top() + rng.bounded(r.height()));
 }
 
-void Train::Generate(int n_Wagons, QRect startingRect, std::vector<QRect>& in_rects)
+void Train::Generate(int n_Wagons, int startingRect, std::vector<QRect>& in_rects)
 {
     computeRectangleMaps(in_rects, xMap, yMap);
 
     Wagons.clear();
     Wagons.resize(n_Wagons);
 
-    Wagons[0] = Wagon(startingRect, randomPointInRect(startingRect));
 
-    QRandomGenerator rng(QDateTime::currentDateTime().toMSecsSinceEpoch());
+    Wagons[0] = Wagon(in_rects[startingRect], randomPointInRect(in_rects[startingRect]));
+
+
+    qDebug() << " startingRect= " << startingRect;
+    srand(QDateTime::currentDateTime().toMSecsSinceEpoch());
     for(int i=1; i < n_Wagons; i++)
     {
-        auto& randomRect = in_rects[rng.bounded(in_rects.size()-1)];
-        Wagons[i] = Wagon(randomRect, randomPointInRect(startingRect));
+        int n = startingRect + (5 - rand()%10);
+        qDebug() << " n= " << n;
+        auto& randomRect = in_rects[n];
+        Wagons[i] = Wagon(randomRect, randomPointInRect(randomRect));
     }
 
 }
 
 void ScreenButtonsDetector::drawTrain(QPainter& painter, Train& train, QColor boarder_color, QColor fill_color)
 {
+    if( train.Wagons.size() == 0 ) return;
     painter.save();
-    auto prev_junction_point = QPoint();
+    auto prev_junction_point = QPoint(train.Wagons[0].junction_point);
+    int n=0;
     for(auto& w : train.Wagons)
     {
         painter.setPen(boarder_color);
@@ -208,7 +215,9 @@ void ScreenButtonsDetector::drawTrain(QPainter& painter, Train& train, QColor bo
         painter.setPen(Qt::red);
         painter.drawLine(w.junction_point, prev_junction_point);
         painter.fillRect(w.bounds, fill_color);
+        painter.drawText(w.bounds.center(), QString::number(n));
         prev_junction_point = w.junction_point;
+        n++;
     }
     painter.restore();
 }
@@ -246,8 +255,7 @@ void ScreenButtonsDetector::paintEvent( QPaintEvent* event)
             painter.setPen(Qt::yellow);
             if( attrs["nodename"] == "clickrect" )
             {
-                drawTrain(painter, train, Qt::black, Qt::yellow);
-                painter.drawText(scaledRect.topLeft(), similarity);
+                //painter.drawText(scaledRect.topLeft(), similarity);
             }
             //qDebug() << __FUNCTION__ << "r trqanslated" << r;
 
@@ -274,6 +282,7 @@ void ScreenButtonsDetector::paintEvent( QPaintEvent* event)
     else
         painter.drawText(rect().x()+100,600, message);
 
+    drawTrain(painter, train, Qt::black, Qt::yellow);
 
    // painter.drawText(geometry().left(),1000, s);
 }

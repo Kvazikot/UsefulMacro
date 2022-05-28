@@ -57,8 +57,11 @@ struct Train
 {
     t_rectmap xMap, yMap;
     std::vector<Wagon> Wagons;
+    Train()
+    {
+    }
     void computeRectangleMaps(std::vector<QRect>& in_rects, t_rectmap& out_xMap, t_rectmap& out_yMap);
-    void Generate(int n_Wagons, QRect startingRect, std::vector<QRect>& in_rects);
+    void Generate(int n_Wagons, int startingRect, std::vector<QRect>& in_rects);
     QString toString()
     {
         QString out;
