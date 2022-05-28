@@ -9,6 +9,7 @@
 #include <QTimerEvent>
 #include <QMouseEvent>
 #include <QKeyEvent>
+#include <QPainterPath>
 #include <QPaintEvent>
 #include <QWheelEvent>
 #include "ui/dialogtype.h"
@@ -62,6 +63,7 @@ struct Train
     }
     void computeRectangleMaps(std::vector<QRect>& in_rects, t_rectmap& out_xMap, t_rectmap& out_yMap);
     void Generate(int n_Wagons, int startingRect, std::vector<QRect>& in_rects);
+    void GenerateSpiral(int n_Wagons, int startingRect, std::vector<QRect>& in_rects);
     QString toString()
     {
         QString out;
@@ -77,7 +79,10 @@ class ScreenButtonsDetector : public QDialog
 
 public:
     explicit ScreenButtonsDetector(QWidget *parent = nullptr, int screenNumber=0);
-    Train train;
+
+    std::vector<Train* > trains;
+    const int max_trains = 4;
+    QPainterPath path;
 
     QWidget* parent_dialog;
     QMap<QString, QString> attrs;

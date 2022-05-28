@@ -2,6 +2,7 @@
 #include <QPushButton>
 #include <QRandomGenerator>
 #include <QPainter>
+#include <QPainterPath>
 #include <QTimer>
 #include <QDateTime>
 #include <QDir>
@@ -14,6 +15,7 @@
 
 using namespace cv;
 static DspModule* dsp;
+QPainterPath GenerateSpiral(QPoint origin, int Npoints=200);
 
 ScreenButtonsDetector::ScreenButtonsDetector(QWidget *parent, int screenNumber):
     QDialog(parent), parent_dialog(parent),
@@ -88,8 +90,15 @@ void ScreenButtonsDetector::mousePressEvent(QMouseEvent* event)
     if( attrs["nodename"] == "clickrect" )
     {
         attrs["kernel_size"] = QString::number(dsp->kernel_size);
+        path = GenerateSpiral(selected_rect.center());
         rectangle_descriptor.writeToMap(attrs);
-        train.Generate(4, rectangle_descriptor.number, rects);
+        trains.clear();
+        for(int i=0; i < max_trains; i++)
+        {
+            Train* train = new Train();
+            train->Generate(4, rectangle_descriptor.number, rects);
+            trains.push_back(train);
+        }
         emit sigSetAttrs(attrs);
     }
 
@@ -179,8 +188,35 @@ QPoint randomPointInRect(QRect& r)
                   r.top() + rng.bounded(r.height()));
 }
 
+
+
+QPainterPath GenerateSpiral(QPoint origin, int Npoints)
+{
+    QPainterPath path;
+    QList<QPointF> spiral_points;
+    //Npoints = 20000;
+    const float a = 2;
+    const float b = 3;
+    const float c = 1;
+    const int N_loops = 10;
+    //polar coordinates formula for spiral
+    float dt = qDegreesToRadians(1);
+    float theta = 0;
+    while(theta < qDegreesToRadians(360*N_loops))
+    {
+        float r = a + b * pow(theta, 1./c);
+        float x = origin.x() + r * cos(theta);
+        float y = origin.y() + r * sin(theta);
+        spiral_points.push_back(QPointF(x,y));
+        theta+=dt;
+    }
+    path.addPolygon(spiral_points);
+    return path;
+}
+
 void Train::Generate(int n_Wagons, int startingRect, std::vector<QRect>& in_rects)
 {
+
     computeRectangleMaps(in_rects, xMap, yMap);
 
     Wagons.clear();
@@ -188,7 +224,6 @@ void Train::Generate(int n_Wagons, int startingRect, std::vector<QRect>& in_rect
 
 
     Wagons[0] = Wagon(in_rects[startingRect], randomPointInRect(in_rects[startingRect]));
-
 
     qDebug() << " startingRect= " << startingRect;
     srand(QDateTime::currentDateTime().toMSecsSinceEpoch());
@@ -282,7 +317,36 @@ void ScreenButtonsDetector::paintEvent( QPaintEvent* event)
     else
         painter.drawText(rect().x()+100,600, message);
 
-    drawTrain(painter, train, Qt::black, Qt::yellow);
+    std::set<int> colset;
+    const int max_colors=100;
+    QColor cols[max_colors];
+    for(int i=0; i < max_colors; i++)
+        cols[i] = QColor(rand()%255,rand()%255,rand()%255,255);
+
+    //drawTrain(painter, trains[0], Qt::black, cols[0]);
+    QPen pen;
+    pen.setWidth(10);
+    pen.setColor(Qt::red);
+    painter.setPen(pen);
+    painter.drawPath(path);
+
+    /*
+    for(auto t : trains)
+    {
+        bool ok=false;
+        //while(!ok)
+        {
+            int picked_n = rand()%max_colors;
+            QColor picked_col = cols[picked_n];
+            if( colset.find(picked_n)==colset.end())
+            {
+                drawTrain(painter, *t, Qt::black, picked_col);
+                colset.insert(picked_n);
+                ok = true;
+            }
+        }
+    }
+    */
 
    // painter.drawText(geometry().left(),1000, s);
 }
