@@ -37,7 +37,6 @@ def mat2img(mat,channels):
         mat = cv2.cvtColor(mat, cv2.COLOR_GRAY2BGR)
     out_image = QImage(mat.data, mat.shape[0], mat.shape[1], 4, QImage.Format_RGB32)
     return out_image
-    
 
 class Dsp:
     def __init__(self):
@@ -45,6 +44,37 @@ class Dsp:
         self.rects = []
         print("hello DSP!")
         self.detectButtons(0, 10, self.rects)
+    
+    def area(self, r):
+        return self.rects[r].width() * self.rects[r].height()
+    
+    def max_area(self, r1, r2):
+        if self.area(r1) > self.area(r2):
+            return r1
+        else:
+            return r2    
+            
+    def createMap(self, ranges):
+        xmin = ranges[0][0]
+        xmax = ranges[1][0]
+        ymin = ranges[0][1]
+        ymax = ranges[1][1]        
+        xMap = {1: set([])}
+        yMap = {1: set([])}
+        for x in range(xmin, xmax, 1):
+            xMap[x] = set([])
+        for y in range(ymin, ymax, 1):            
+            yMap[y] = set([])
+        n_rect = 0
+        for n_rect in range(1,len(self.rects),1):
+            r = self.rects[n_rect]
+            for x in range(r.left(), r.right(), 1):
+                if xMap.get(x) != None:
+                    xMap[x].add(n_rect)
+            for y in range(r.top(), r.bottom(), 1):
+                    yMap[y].add(n_rect)
+            n_rect+=1
+                    
         
     def detectButtons(self, screen_num, kernel_size, rects):
         if len(QApplication.screens()) < screen_num :
@@ -102,9 +132,10 @@ class Dsp:
                 y = stats[i, cv2.CC_STAT_TOP]
                 w = stats[i, cv2.CC_STAT_WIDTH]
                 h = stats[i, cv2.CC_STAT_HEIGHT]
-                print(x)
+                
                 #if  ( w < maxRectWidth) and (h < maxRectHeight ) and (w > 0) and (h >0) :
                 rects.append(QRect(x,y,w,h));
+        self.createMap()
         
 
 
@@ -121,7 +152,7 @@ class Example(QWidget):
         self.tipLabel = QLabel(self)
         self.dsp.detectButtons(0, 4, self.rects)
         self.image = QImage('./rect_images\\00.06.36.730.png')
-        self.tipLabel.setStyleSheet("font-size:24pt;")
+        self.tipLabel.setStyleSheet("font-size:24pt; color: blue;")
         #tip+="F1 - save selected rectangle area to ./square dir"
         tip="F1 - start collecting training samples\n"
         tip+="F2 - train neural network\n"
