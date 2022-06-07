@@ -57,9 +57,9 @@ def gen_rect(image_size):
     gray_image = ImageOps.grayscale(canvas2)
     #plt.imshow(canvas1)
     trs = transforms.ToTensor()
-    label = torch.Tensor([label])
-    
-    return trs( (255 - np.asarray(gray_image)) / 255.0), label
+    image_tensor = trs( (255 - np.asarray(gray_image)) / 255.0).type(torch.FloatTensor)
+    #print(image_tensor.)
+    return image_tensor, label
 
 def text_phantom(canvas, text, size):
     # Availability is platform dependent
@@ -113,7 +113,6 @@ def GenerateImageDataset():
         rect, label = gen_rect(image_size)            
         rect_tensors.append(rect)
         labels.append(label)
-    trs = transforms.ToTensor()
     dataset = ImageDataset(rect_tensors, labels)
     grid = torchvision.utils.make_grid(rect_tensors, nrow=10, padding=10)
     show(grid)    

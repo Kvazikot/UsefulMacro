@@ -20,7 +20,7 @@ train_dataset = torchvision.datasets.MNIST(root='../../data/',
                                             transform=transforms.ToTensor(),
                                             download=True)
 
-#train_dataset = GenerateImageDataset()
+train_dataset1 = GenerateImageDataset()
 #testloader = torch.utils.data.DataLoader(rect_dataset, batch_size=16, shuffle=True)
 
 # Data loader
@@ -28,6 +28,10 @@ train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
                                            batch_size=batch_size, 
                                            shuffle=True)
 print(next(iter(train_dataset)))
+print('------------------------------------')
+print('------------------------------------')
+print('------------------------------------')
+print(next(iter(train_dataset1)))
 sys.exit(0)
 
 # Convolutional neural network (two convolutional layers)
