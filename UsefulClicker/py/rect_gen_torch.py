@@ -42,7 +42,6 @@ def gen_rect(image_size):
     r = 100 / random.randint(1, 10)  
     canvas1 = canvas
     label = 0
-    print(r)
     if r < 20:    
         draw.ellipse([0,0,w,h],fill="rgb(25,30,150)", outline="rgb(255,255,150)", width=5)
         label = 1
@@ -105,8 +104,8 @@ class ImageDataset(Dataset):
         return image, label
 
 def GenerateImageDataset():
-    num_rects = 30
-    image_size = [32,32]
+    num_rects = 100*100
+    image_size = [28,28]
     rect_tensors = []
     labels = []
     for i in range(0,num_rects,1):
@@ -120,4 +119,4 @@ def GenerateImageDataset():
 
 
 dataset=GenerateImageDataset()
-print(next(iter(dataset)))
+#print(next(iter(dataset)))

@@ -9,30 +9,30 @@ from rect_gen_torch import GenerateImageDataset
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 # Hyper parameters
-num_epochs = 5
-num_classes = 10
+num_epochs = 100
+num_classes = 4
 batch_size = 100
 learning_rate = 0.001
 
 # MNIST dataset
-train_dataset = torchvision.datasets.MNIST(root='../../data/',
+train_dataset1 = torchvision.datasets.MNIST(root='../../data/',
                                             train=True, 
                                             transform=transforms.ToTensor(),
                                             download=True)
 
-train_dataset1 = GenerateImageDataset()
+train_dataset = GenerateImageDataset()
 #testloader = torch.utils.data.DataLoader(rect_dataset, batch_size=16, shuffle=True)
 
 # Data loader
 train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
                                            batch_size=batch_size, 
                                            shuffle=True)
-print(next(iter(train_dataset)))
+#print(next(iter(train_dataset)))
 print('------------------------------------')
 print('------------------------------------')
 print('------------------------------------')
-print(next(iter(train_dataset1)))
-sys.exit(0)
+#print(next(iter(train_dataset1)))
+#sys.exit(0)
 
 # Convolutional neural network (two convolutional layers)
 class ConvNet(nn.Module):
@@ -69,10 +69,11 @@ for epoch in range(num_epochs):
     for i, (images, labels) in enumerate(train_loader):
         images = images.to(device)
         labels = labels.to(device)
+        #print(f'images size = {images.size()}')
         
         # Forward pass
         outputs = model(images)
-        print(labels)
+        #print(labels)
         loss = criterion(outputs, labels)
         
         # Backward and optimize
