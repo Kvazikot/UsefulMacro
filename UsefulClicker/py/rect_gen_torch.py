@@ -11,9 +11,13 @@ import random
 import numpy as np
 from torchvision import transforms
 from PIL.ImageFilter import *
-from PIL import ImageFilter
+from PIL import ImageFilter, ImageOps
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 import numpy as np
+from torch.utils.data import Dataset
+#from torchvision import datasets
+#from torchvision.transforms import ToTensor
+from torch.utils.data import DataLoader , TensorDataset
 
 alphabet = 'zxcvbnmasdfghjkqwertyui'
 
@@ -21,12 +25,12 @@ def rand_string(min_l, max_l):
     out=""
     n_symbols = random.randint(min_l, max_l)
     while n_symbols > 0:
-        n = random.randint(0, len(alphabet) )
+        n = random.randint(0, len(alphabet)-1 )
         out+=alphabet[n] 
         n_symbols-=1
     return out
+
     
-     
 
 def gen_rect(image_size):
     canvas = Image.new('RGB', image_size, (255, 255, 255))
@@ -37,18 +41,25 @@ def gen_rect(image_size):
     #draw.rectangle([0,0,w,h])
     r = 100 / random.randint(1, 10)  
     canvas1 = canvas
+    label = 0
     print(r)
     if r < 20:    
         draw.ellipse([0,0,w,h],fill="rgb(25,30,150)", outline="rgb(255,255,150)", width=5)
+        label = 1
     if r > 20 and r < 80:
         draw.rectangle([0,0,w,h],fill="rgb(25,30,150)", outline="rgb(255,255,150)", width=5)
-    if r > 80:
+        label = 2
+    if r > 60:
         canvas1 = text_phantom(canvas, rand_string(1,10), image_size[0])
+        label = 3
     
     canvas2 = canvas1.filter(ImageFilter.GaussianBlur(3))
+    gray_image = ImageOps.grayscale(canvas2)
     #plt.imshow(canvas1)
     trs = transforms.ToTensor()
-    return trs( (255 - np.asarray(canvas2)) / 255.0)
+    label = torch.Tensor([label])
+    
+    return trs( (255 - np.asarray(gray_image)) / 255.0), label
 
 def text_phantom(canvas, text, size):
     # Availability is platform dependent
@@ -62,7 +73,7 @@ def text_phantom(canvas, text, size):
     draw = ImageDraw.Draw(canvas)
     offset = ((size - text_width) // 2,
               (size - text_height) // 2)
-    white = "#0000AA"
+    white = "#0004AA"
     draw.text(offset, text, font=pil_font, fill=white)
     # Convert the canvas into an array with values in [0, 1]
     #return (255 - np.asarray(canvas)) / 255.0
@@ -72,16 +83,42 @@ def show(img):
     npimg = img.numpy()
     plt.imshow(np.transpose(npimg, (1,2,0)), interpolation='nearest')
 
-w = torch.randn(10,3,200,640)
-num_rects = 10
-image_size = [128,128]
-rect_tensors = []
-for i in range(0,num_rects,1):
-    t = gen_rect(image_size)            
-    rect_tensors.append(t)
-    
-#text_phantom()
-#plt.imshow(text_phantom('A', 200))
-#plt.imshow(text_phantom('Longer text', 200))
-grid = torchvision.utils.make_grid(rect_tensors, nrow=num_rects, padding=10)
-show(grid)
+
+
+class ImageDataset(Dataset):
+    def __init__(self, rect_tensors, img_labels, transform=None, target_transform=None):
+        self.img_labels = img_labels
+        self.rect_tensors = rect_tensors
+        self.transform = transform
+        self.target_transform = target_transform
+
+    def __len__(self):
+        return len(self.rect_tensors)
+
+    def __getitem__(self, idx):        
+        image = self.rect_tensors[idx]
+        label = self.img_labels[idx]
+        if self.transform:
+            image = self.transform(image)
+        if self.target_transform:
+            label = self.target_transform(label)
+        return image, label
+
+def GenerateImageDataset():
+    num_rects = 30
+    image_size = [32,32]
+    rect_tensors = []
+    labels = []
+    for i in range(0,num_rects,1):
+        rect, label = gen_rect(image_size)            
+        rect_tensors.append(rect)
+        labels.append(label)
+    trs = transforms.ToTensor()
+    dataset = ImageDataset(rect_tensors, labels)
+    grid = torchvision.utils.make_grid(rect_tensors, nrow=10, padding=10)
+    show(grid)    
+    return dataset
+
+
+dataset=GenerateImageDataset()
+print(next(iter(dataset)))

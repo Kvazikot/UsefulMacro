@@ -14,46 +14,15 @@ import torch.nn.functional as F
 import os
 import pandas as pd
 from torchvision.io import read_image
-
-
-# batch_size = 4
-# trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
-#                                         download=True)
-# trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,
-#                                           shuffle=True, num_workers=1)
-# testset = torchvision.datasets.CIFAR10(root='./data', train=False,
-#                                        download=True)
-# testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
-#                                          shuffle=False, num_workers=1)
-# classes = ('plane', 'car', 'bird', 'cat','deer', 'dog', 'frog', 'horse', 'ship', 'truck')
-
-
-class CustomImageDataset(Dataset):
-    def __init__(self, annotations_file, img_dir, transform=None, target_transform=None):
-        self.img_labels = pd.read_csv(annotations_file)
-        self.img_dir = img_dir
-        self.transform = transform
-        self.target_transform = target_transform
-
-    def __len__(self):
-        return len(self.img_labels)
-
-    def __getitem__(self, idx):
-        img_path = os.path.join(self.img_dir, self.img_labels.iloc[idx, 0])
-        image = read_image(img_path)
-        label = self.img_labels.iloc[idx, 1]
-        if self.transform:
-            image = self.transform(image)
-        if self.target_transform:
-            label = self.target_transform(label)
-        return image, label
-
+from torch.utils.data import Dataset
+from rect_gen_torch import GenerateImageDataset
+from torch.utils.data import DataLoader , TensorDataset
 
 # CNN implementation
 class Net(nn.Module):
     def __init__(self):
         super().__init__()
-        self.conv1 = nn.Conv2d(3, 6, 5)
+        self.conv1 = nn.Conv2d(1, 1, 5)
         self.pool = nn.MaxPool2d(2, 2)
         self.conv2 = nn.Conv2d(6, 16, 5)
         self.fc1 = nn.Linear(16 * 5 * 5, 120)
@@ -71,18 +40,29 @@ class Net(nn.Module):
 
 
 net = Net()
-
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
+
+rect_dataset = GenerateImageDataset()
+#testloader = torch.utils.data.DataLoader(rect_dataset, batch_size=16, shuffle=True)
+trainloader =  torch.utils.data.DataLoader(rect_dataset, batch_size = 16, shuffle=True)
 
 if __name__ ==  '__main__':
     
     for epoch in range(2):  # loop over the dataset multiple times
     
         running_loss = 0.0
-        for i, data in enumerate(trainloader, 0):
+        for i, data in enumerate(rect_dataset, 0):
             # get the inputs; data is a list of [inputs, labels]
             inputs, labels = data
+            print("----input size----")
+            print(inputs.size())
+            print(labels.size())
+            #print(f'labels size = {labels.size()}')
+            #print(f'rects size = {rects.size())}')
+            #inputs = torch.stack([rects, labels])
+            
+            print(labels)
     
             # continue
             # zero the parameter gradients
@@ -106,12 +86,13 @@ print('Finished Training')
 #PATH = './cifar_net.pth'
 #torch.save(net.state_dict(), PATH)
 
-sys.exit(0)
-# TEST THE NETWORK
 
-dataiter = iter(testloader)
-images, labels = dataiter.next()
+#sys.exit(0)
+    
+# TEST THE NETWORK
+#dataiter = iter(testloader)
+#images, labels = dataiter.next()
 
 # print images
-imshow(torchvision.utils.make_grid(images))
-print('GroundTruth: ', ' '.join(f'{classes[labels[j]]:5s}' for j in range(4)))
+#imshow(torchvision.utils.make_grid(images))
+#print('GroundTruth: ', ' '.join(f'{classes[labels[j]]:5s}' for j in range(4)))
