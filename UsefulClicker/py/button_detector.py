@@ -91,7 +91,7 @@ class Dsp:
         cv2.imshow("w1", canny_output)
         
         #ret, binary = cv2.threshold(s,40,255,cv2.THRESH_BINARY)
-        contours, hierarchy = cv2.findContours(canny_output, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        contours, hierarchy = cv2.findContours(m_gradient, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         print(f'contours num = {len(contours)}')
         contourIdx = 0
         for c in contours:
