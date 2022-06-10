@@ -28,7 +28,7 @@ import cv2
 import numpy as np
 from  cv2 import connectedComponentsWithStats
 from PyQt5.QtWidgets import QWidget, QApplication, QLabel
-from PyQt5.QtGui import QPainter, QColor, QFont, QImage, QPixmap, QCursor 
+from PyQt5.QtGui import QPainter, QColor, QFont, QImage, QPixmap, QCursor, QPainterPath, QPolygonF
 from PyQt5.QtCore import Qt, QRect, QPoint 
 
 def mat2img(mat,channels):
@@ -78,8 +78,10 @@ class Dsp:
         
         b.setsize(screenshot.height() * screenshot.width() * channels_count)
         areaImg = np.frombuffer(b, np.uint8).reshape((screenshot.height(), screenshot.width(), channels_count))
+        self.areaImg = areaImg
         # drawing black frame around screenshot to avoid countour damage
         #cv2.rectangle(areaImg,(0,0),(areaImg.shape[1],areaImg.shape[0]),(0,0,0),thickness=20)
+        
         # convert to grayscale
         im_gray = cv2.cvtColor(areaImg, cv2.COLOR_BGR2GRAY)
         im_gray = cv2.blur( im_gray, (3,3) );
@@ -90,25 +92,30 @@ class Dsp:
         M = cv2.getStructuringElement(cv2.MORPH_CROSS, (3,3))        
         m_gradient = cv2.morphologyEx(im_gray, cv2.MORPH_GRADIENT, M)
         canny_output = cv2.Canny(m_gradient, thresh, thresh * 2 )
-        cv2.imshow("w0", canny_output)
+        #cv2.imshow("w0", canny_output)
         canny_output = cv2.dilate(canny_output, rect_kernel)
-        cv2.imshow("w1", canny_output)
+        #cv2.imshow("w1", canny_output)
         
         #ret, binary = cv2.threshold(s,40,255,cv2.THRESH_BINARY)
         #
         #(m_gradient.shape[0],m_gradient.shape[1])
                    
         #print((0,0),(m_gradient.shape[1], m_gradient.shape[0]))
-        cv2.imshow('w0',m_gradient)
-        contours, hierarchy = cv2.findContours(m_gradient, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-        print(f'contours num = {len(contours)}')
+        #cv2.imshow('w0',m_gradient)
+        
+        # -------------- CONTOURS         
+        self.contours, self.hierarchy = cv2.findContours(m_gradient, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)        
+        self.contours_filtred = []
+        print(self.contours[1])
+        print(f'contours num = {len(self.contours)}')
         contourIdx = 0
-        for c in contours:
+        for c in self.contours:
             x,y,w,h = cv2.boundingRect(c)
-            if w>5 and h>10:
+            if w>5 and h>10 and w < m_gradient.shape[0] and h < m_gradient.shape[1]:
                 #cv2.rectangle(areaImg,(x,y),(x+w,y+h),(255,5,0),1)
+                self.contours_filtred.append(c)
                 countour_color = (random.randint(100, 255),random.randint(100, 255),random.randint(100, 255))
-                cv2.drawContours(areaImg, contours, contourIdx, countour_color,thickness=2)
+                cv2.drawContours(areaImg, self.contours, contourIdx, countour_color,thickness=2)
             contourIdx+=1
         cv2.imshow('w1',areaImg)
         
@@ -187,6 +194,8 @@ class Example(QWidget):
     def initUI(self):
         self.dsp = Dsp()
         self.screen_num = 0
+        self.label = 1
+        self.selected_cntr = []
         #self.setWindowOpacity(0.8)
         self.tipLabel = QLabel(self)
         self.rects = self.dsp.detectButtons(self.screen_num, 4)
@@ -220,10 +229,54 @@ class Example(QWidget):
         
     def timerEvent(self, event):
         self.repaint()
+        
+    def drawContours(self, img, cnts, idx_matched):
+        # -------------- CONTOURS         
+        #self.contours, self.hierarchy = cv2.findContours(m_gradient, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)        
+        contourIdx = 0
+        for c in cnts:
+           countour_color = (255,0,0)
+           if contourIdx in idx_matched:
+               cv2.drawContours(img, cnts, contourIdx, countour_color,thickness=2)
+               print('000000000000000000000===============')
+           contourIdx+=1
+        
+    def pickCountour(self,mpos):
+        self.idx_matched = ([])
+        contourIdx = 0        
+        for c in self.dsp.contours_filtred:
+            x,y,w,h = cv2.boundingRect(c)
+            square = w*h            
+            if x < mpos.x() and y < mpos.y() and (x + w) > mpos.x() and (y + h) > mpos.y() :
+                countour_color = (255,255,255)
+                #cv2.rectangle(self.dsp.m_gradient, (x,y), (x+w,y+h),(255,255,255),-1)
+                cv2.drawContours(self.dsp.m_gradient, self.dsp.contours_filtred, contourIdx, countour_color,thickness=2)
+                #print(c)
+                self.selected_cntr = c
+                print('pickContour ' + str(QRect(x,y,w,h)))
+                self.idx_matched.append(contourIdx)
+                return QRect(x,y,w,h)
+        
+        contourIdx+=1
+        
+    def pickRect(self, mpos):        
+        for r in self.dsp.rects:
+            if r.contains(mpos):
+                return r
+    
+    def pickSample(self):
+        r = self.pickCountour(self.mpos)
+        cv2.imshow("w0", self.dsp.m_gradient)
+        
+        #cv2.imshow("w1", self.dsp.areaImg)
+        
+        print('pickSample')
+        print('pickCountour  ' + str(r))
+        return self.dsp.m_gradient #[r.top():r.bottom(),r.left():r.right()]
             
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
-            m_piece = self.dsp.m_gradient[0:100,0:100]
+            m_piece = self.pickSample() 
             now = datetime.datetime.now()
             current_time = now.strftime("%H.%M.%S.png")
             fname='./data/{l}/{t}.png'.format(t=current_time,l=self.label)
@@ -253,13 +306,21 @@ class Example(QWidget):
         qp.drawImage(0,0,self.dsp.screenshot)
         #qp.drawImage(0,0,self.dsp.m_gradient)
         qp.fillRect(self.rect(), QColor(1,1,1,110))        
-        
+        path = QPainterPath()        
+        polygon = QPolygonF()
+        path.addPolygon(polygon)
+        for p in self.selected_cntr:
+            #print('point from selected contour ' + str(p))
+            polygon.append(QPoint(p[0][0],p[0][1]))
+        path.addPolygon(polygon)
+        qp.setPen(Qt.white)
+        qp.drawPath(path)
 
-        for r in self.rects:
-            if r.contains(self.mpos):
-                qp.fillRect(r, QColor(244,1,1,110))
-            else:
-                qp.fillRect(r, QColor(1,244,1,110))
+        # for r in self.rects:
+        #     if r.contains(self.mpos):
+        #         qp.fillRect(r, QColor(244,1,1,110))
+        #     else:
+        #         qp.fillRect(r, QColor(1,244,1,110))
             
         qp.end()
 
