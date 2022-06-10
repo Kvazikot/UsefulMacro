@@ -104,7 +104,7 @@ class ImageDataset(Dataset):
         return image, label
 
 def GenerateImageDataset():
-    num_rects = 100*100
+    num_rects = 100
     image_size = [28,28]
     rect_tensors = []
     labels = []

@@ -7,7 +7,8 @@ from rect_gen_torch import GenerateImageDataset
 
 # Device configuration
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-
+#print(device)
+#print(torch.version.cuda)
 # Hyper parameters
 num_epochs = 100
 num_classes = 4
@@ -15,10 +16,10 @@ batch_size = 100
 learning_rate = 0.001
 
 # MNIST dataset
-train_dataset1 = torchvision.datasets.MNIST(root='../../data/',
-                                            train=True, 
-                                            transform=transforms.ToTensor(),
-                                            download=True)
+# train_dataset1 = torchvision.datasets.MNIST(root='../../data/',
+#                                             train=True, 
+#                                             transform=transforms.ToTensor(),
+#                                             download=True)
 
 train_dataset = GenerateImageDataset()
 #testloader = torch.utils.data.DataLoader(rect_dataset, batch_size=16, shuffle=True)
@@ -31,8 +32,8 @@ train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
 print('------------------------------------')
 print('------------------------------------')
 print('------------------------------------')
-#print(next(iter(train_dataset1)))
-#sys.exit(0)
+print(next(iter(train_dataset)))
+sys.exit(0)
 
 # Convolutional neural network (two convolutional layers)
 class ConvNet(nn.Module):
