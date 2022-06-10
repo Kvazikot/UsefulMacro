@@ -23,6 +23,7 @@ import datetime
 # This is our shell command, executed by Popen.
 import os
 import sys
+import random
 import cv2
 import numpy as np
 from  cv2 import connectedComponentsWithStats
@@ -88,6 +89,20 @@ class Dsp:
         cv2.imshow("w0", canny_output)
         canny_output = cv2.dilate(canny_output, rect_kernel)
         cv2.imshow("w1", canny_output)
+        
+        #ret, binary = cv2.threshold(s,40,255,cv2.THRESH_BINARY)
+        contours, hierarchy = cv2.findContours(canny_output, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        print(f'contours num = {len(contours)}')
+        contourIdx = 0
+        for c in contours:
+            x,y,w,h = cv2.boundingRect(c)
+            if w>5 and h>10:
+                cv2.rectangle(areaImg,(x,y),(x+w,y+h),(255,5,0),1)
+                countour_color = (random.randint(100, 255),random.randint(100, 255),random.randint(100, 255))
+                cv2.drawContours(areaImg, contours, contourIdx, countour_color)
+            contourIdx+=1
+        cv2.imshow('w1',areaImg)
+        
         #cv2.imshow("w1", canny_output)
         
         self.m_gradient = m_gradient #mat2img(im_gray, 1)
