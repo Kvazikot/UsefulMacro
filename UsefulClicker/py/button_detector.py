@@ -78,11 +78,15 @@ class Dsp:
         
         b.setsize(screenshot.height() * screenshot.width() * channels_count)
         areaImg = np.frombuffer(b, np.uint8).reshape((screenshot.height(), screenshot.width(), channels_count))
+        # drawing black frame around screenshot to avoid countour damage
+        #cv2.rectangle(areaImg,(0,0),(areaImg.shape[1],areaImg.shape[0]),(0,0,0),thickness=20)
+        # convert to grayscale
         im_gray = cv2.cvtColor(areaImg, cv2.COLOR_BGR2GRAY)
         im_gray = cv2.blur( im_gray, (3,3) );
         #cv2.imshow("w0", im_gray)
-        rect_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (kernel_size, kernel_size))
         
+        #------------- PREFILTERING operations
+        rect_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (kernel_size, kernel_size))        
         M = cv2.getStructuringElement(cv2.MORPH_CROSS, (3,3))        
         m_gradient = cv2.morphologyEx(im_gray, cv2.MORPH_GRADIENT, M)
         canny_output = cv2.Canny(m_gradient, thresh, thresh * 2 )
@@ -91,15 +95,20 @@ class Dsp:
         cv2.imshow("w1", canny_output)
         
         #ret, binary = cv2.threshold(s,40,255,cv2.THRESH_BINARY)
+        #
+        #(m_gradient.shape[0],m_gradient.shape[1])
+                   
+        #print((0,0),(m_gradient.shape[1], m_gradient.shape[0]))
+        cv2.imshow('w0',m_gradient)
         contours, hierarchy = cv2.findContours(m_gradient, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         print(f'contours num = {len(contours)}')
         contourIdx = 0
         for c in contours:
             x,y,w,h = cv2.boundingRect(c)
             if w>5 and h>10:
-                cv2.rectangle(areaImg,(x,y),(x+w,y+h),(255,5,0),1)
+                #cv2.rectangle(areaImg,(x,y),(x+w,y+h),(255,5,0),1)
                 countour_color = (random.randint(100, 255),random.randint(100, 255),random.randint(100, 255))
-                cv2.drawContours(areaImg, contours, contourIdx, countour_color)
+                cv2.drawContours(areaImg, contours, contourIdx, countour_color,thickness=2)
             contourIdx+=1
         cv2.imshow('w1',areaImg)
         
@@ -200,6 +209,8 @@ class Example(QWidget):
         self.startTimer(100)
 
     def keyPressEvent(self, event):
+        self.label = event.key() - Qt.Key_0
+        print(f'current label is {self.label}')
         if event.key() == Qt.Key_Q:
             self.close()
             
@@ -214,8 +225,10 @@ class Example(QWidget):
         if event.button() == Qt.LeftButton:
             m_piece = self.dsp.m_gradient[0:100,0:100]
             now = datetime.datetime.now()
-            current_time = now.strftime("square%H.%M.%S.png")
-            cv2.imwrite('./square/{t}.png'.format(t=current_time), m_piece)            
+            current_time = now.strftime("%H.%M.%S.png")
+            fname='./data/{l}/{t}.png'.format(t=current_time,l=self.label)
+            print(f'sample writed {fname}')
+            cv2.imwrite(fname, m_piece)            
         
     def showEvent(self, a0):
         rect2 = self.rect()
@@ -251,6 +264,10 @@ class Example(QWidget):
         qp.end()
 
 
+def createDataDirs():
+    max_labels = 10
+    for i in range(1,max_labels,1):
+        os.makedirs(f"./data/{i}", exist_ok = True)
 
 def main():
     app = QApplication(sys.argv)
@@ -260,6 +277,7 @@ def main():
 
 
 if __name__ == '__main__':
+    createDataDirs()
     main()
 
 path = "./rect_images"
@@ -269,7 +287,7 @@ for root,d_names,f_names in os.walk(path):
 	for f in f_names:
 		fname.append(os.path.join(root, f))
 
-q
+
 #p = subprocess.Popen("dir", stdout=subprocess.PIPE, shell=True)
 #print(p.communicate())
 
