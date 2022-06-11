@@ -20,6 +20,7 @@
 
 import subprocess
 import datetime
+from collections import deque
 # This is our shell command, executed by Popen.
 import os
 import sys
@@ -205,6 +206,8 @@ def clamp(minvalue, value, maxvalue):
     return max(minvalue, min(value, maxvalue))
 
 
+#------------------------------------------------------------------------------
+
 
 class Example(QWidget):
 
@@ -218,11 +221,11 @@ class Example(QWidget):
         self.label = 1
         self.selected_contours_image = None
         self.selected_cntr = []
-        self.selected_cntrs = ([])        
+        self.selected_cntrs = deque()
+        self.cntr2label_map = {"cntrIndex": -1}
         #self.setWindowOpacity(0.8)
         self.tipLabel = QLabel(self)
         self.rects = self.dsp.detectButtons(self.screen_num, 4)
-
         self.image = QImage('./rect_images\\00.06.36.730.png')
         
         
@@ -241,6 +244,7 @@ class Example(QWidget):
         self.mpos = QPoint(1,1)
         #sys.exit(0)
         self.show()
+        self.pickCountour(QPoint(-1,-1))
         self.startTimer(100)
 
     def keyPressEvent(self, event):
@@ -251,13 +255,14 @@ class Example(QWidget):
         if event.key() == Qt.Key_Q:
             self.close()
         if (event.modifiers() & Qt.ControlModifier) and (event.key() == Qt.Key_Z):
-            print(f'selected_contrs before pop={self.selected_cntrs}')
-            self.selected_cntrs.pop(len(self.selected_cntrs)-1)
-            print(f'selected_contrs after pop={self.selected_cntrs}')
-            tmp = cv2.cvtColor(self.dsp.m_gradient, cv2.COLOR_GRAY2RGB)  
-            self.drawSelectedContours(tmp, self.selected_cntrs, thickness=2)
+            self.selected_cntrs.pop()
+            self.updateCntrImage()
             #cv2.imshow("w0",tmp)
 
+    def updateCntrImage(self):
+        tmp = cv2.cvtColor(self.dsp.m_gradient, cv2.COLOR_GRAY2RGB)  
+        self.drawSelectedContours(tmp, self.selected_cntrs, thickness=2)
+        self.selected_contours_image = mat2img(tmp, 4)
             
 
     def mouseMoveEvent(self, event):
@@ -291,8 +296,29 @@ class Example(QWidget):
 
         colorIndex = clamp(1, self.label, len(color_tab1)) 
         
-        self.selected_cntrs.append((minSquareIndex,colorIndex))
+        removed_indexes = []
+        
+        if minSquareIndex==0:
+           self.selected_contours_image = mat2img(self.dsp.m_gradient, 4)
+        else:
 
+          if minSquareIndex not in self.cntr2label_map.keys():
+             self.cntr2label_map[minSquareIndex] = colorIndex
+             self.selected_cntrs.append((minSquareIndex, colorIndex))
+          else: 
+              if self.cntr2label_map[minSquareIndex] == -1:
+                 self.cntr2label_map[minSquareIndex] = colorIndex
+                 self.selected_cntrs.append((minSquareIndex, colorIndex))
+              else:
+                  # if countour alredy selected deselect 
+                  for c in self.selected_cntrs:
+                      if c[0] == minSquareIndex:
+                          removed_indexes.append(c)
+                          self.cntr2label_map[minSquareIndex] = -1
+                          
+        for c in removed_indexes:
+            self.selected_cntrs.remove(c)        
+            
         #countour_color = color_tab1[colorIndex]
         #cv2.rectangle(self.dsp.m_gradient, (x,y), (x+w,y+h),(255,255,255),-1)
         tmp = cv2.cvtColor(self.dsp.m_gradient, cv2.COLOR_GRAY2RGB)  
@@ -301,7 +327,7 @@ class Example(QWidget):
 
         #print(c)
         self.selected_cntr = self.dsp.contours_filtred[minSquareIndex]
-        print('pickContour ' + str(QRect(x,y,w,h)))
+        #print('pickContour ' + str(QRect(x,y,w,h)))
         #cv2.imshow("w0", tmp)
         return QRect(0,0,100,100)        
         
@@ -316,8 +342,8 @@ class Example(QWidget):
         
         #cv2.imshow("w1", self.dsp.areaImg)
         
-        print('pickSample')
-        print('pickCountour  ' + str(r))
+        #print('pickSample')
+        #print('pickCountour  ' + str(r))
         return self.dsp.m_gradient #[r.top():r.bottom(),r.left():r.right()]
             
     def mousePressEvent(self, event):
@@ -361,7 +387,7 @@ class Example(QWidget):
             polygon.append(QPoint(p[0][0],p[0][1]))
         path.addPolygon(polygon)
         qp.setPen(Qt.white)
-        qp.drawPath(path)
+        #qp.drawPath(path)
 
         # for r in self.rects:
         #     if r.contains(self.mpos):
