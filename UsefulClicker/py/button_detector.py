@@ -34,8 +34,21 @@ from PyQt5.QtCore import Qt, QRect, QPoint
 def mat2img(mat,channels):
     if channels == 1:
         mat = cv2.cvtColor(mat, cv2.COLOR_GRAY2BGR)
-    out_image = QImage(mat.data, mat.shape[0], mat.shape[1], 4, QImage.Format_RGB32)
-    return out_image
+    pix = QPixmap(mat.shape[1], mat.shape[0])
+    is_success, im_buf_arr = cv2.imencode(".png", mat)
+    byte_im = im_buf_arr.tobytes()
+    pix.loadFromData(byte_im)
+    print('mat2img mat shape' + str(mat.shape))
+    print('mat2img img size' + str(pix.size().width()))
+    return pix.toImage()
+
+def img2mat(qimag, channels_count):
+        outImg = np.zeros((qimag.height(), qimag.width() ,3), dtype=np.uint8)
+        bufersize = qimag.height() * qimag.width() * 4
+        b = qimag.bits()               
+        b.setsize(qimag.height() * qimag.width() * channels_count)
+        outImg = np.frombuffer(b, np.uint8).reshape((qimag.height(), qimag.width(), channels_count))
+        return outImg
 
 def area(rect):
     return rect.width() * rect.height()
@@ -117,7 +130,7 @@ class Dsp:
                 countour_color = (random.randint(100, 255),random.randint(100, 255),random.randint(100, 255))
                 cv2.drawContours(areaImg, self.contours, contourIdx, countour_color,thickness=2)
             contourIdx+=1
-        cv2.imshow('w1',areaImg)
+        #cv2.imshow('w1',areaImg)
         
         #cv2.imshow("w1", canny_output)
         
@@ -203,12 +216,16 @@ class Example(QWidget):
         self.dsp = Dsp()
         self.screen_num = 0
         self.label = 1
+        self.selected_contours_image = None
         self.selected_cntr = []
         self.selected_cntrs = ([])        
         #self.setWindowOpacity(0.8)
         self.tipLabel = QLabel(self)
         self.rects = self.dsp.detectButtons(self.screen_num, 4)
+
         self.image = QImage('./rect_images\\00.06.36.730.png')
+        
+        
         self.tipLabel.setStyleSheet("font-size:24pt;")
         #tip+="F1 - save selected rectangle area to ./square dir"
         tip="F1 - start collecting training samples\n"
@@ -239,7 +256,7 @@ class Example(QWidget):
             print(f'selected_contrs after pop={self.selected_cntrs}')
             tmp = cv2.cvtColor(self.dsp.m_gradient, cv2.COLOR_GRAY2RGB)  
             self.drawSelectedContours(tmp, self.selected_cntrs, thickness=2)
-            cv2.imshow("w0",tmp)
+            #cv2.imshow("w0",tmp)
 
             
 
@@ -280,10 +297,12 @@ class Example(QWidget):
         #cv2.rectangle(self.dsp.m_gradient, (x,y), (x+w,y+h),(255,255,255),-1)
         tmp = cv2.cvtColor(self.dsp.m_gradient, cv2.COLOR_GRAY2RGB)  
         self.drawSelectedContours(tmp, self.selected_cntrs, thickness=2)
+        self.selected_contours_image = mat2img(tmp, 4)
+
         #print(c)
         self.selected_cntr = self.dsp.contours_filtred[minSquareIndex]
         print('pickContour ' + str(QRect(x,y,w,h)))
-        cv2.imshow("w0", tmp)
+        #cv2.imshow("w0", tmp)
         return QRect(0,0,100,100)        
         
     def pickRect(self, mpos):        
@@ -330,8 +349,9 @@ class Example(QWidget):
     def paintEvent(self, event):
         qp = QPainter()
         qp.begin(self)
-        qp.drawImage(0,0,self.dsp.screenshot)
-        #qp.drawImage(0,0,self.dsp.m_gradient)
+        #qp.drawImage(0,0,tmp)
+        if self.selected_contours_image != None:
+            qp.drawImage(0,0,self.selected_contours_image)
         qp.fillRect(self.rect(), QColor(1,1,1,110))        
         path = QPainterPath()        
         polygon = QPolygonF()
@@ -343,11 +363,11 @@ class Example(QWidget):
         qp.setPen(Qt.white)
         qp.drawPath(path)
 
-        for r in self.rects:
-            if r.contains(self.mpos):
-                qp.fillRect(r, QColor(244,1,1,110))
-            else:
-                qp.fillRect(r, QColor(1,244,1,110))
+        # for r in self.rects:
+        #     if r.contains(self.mpos):
+        #         qp.fillRect(r, QColor(244,1,1,110))
+        #     else:
+        #         qp.fillRect(r, QColor(1,244,1,110))
             
         qp.end()
 
