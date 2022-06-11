@@ -184,6 +184,14 @@ class Dsp:
        
         
 
+color_tab1 = [(255,255,255),(255,0,0),(255,255,0),(255,0,255),(0,0,255)]
+color_tab2 = [(0,255,255),(255,128,0),(128,255,0),(128,0,255),(0,0,128)]
+color_tab1.append(color_tab2)
+
+def clamp(minvalue, value, maxvalue):
+    return max(minvalue, min(value, maxvalue))
+
+
 
 class Example(QWidget):
 
@@ -196,6 +204,7 @@ class Example(QWidget):
         self.screen_num = 0
         self.label = 1
         self.selected_cntr = []
+        self.selected_cntrs = ([])        
         #self.setWindowOpacity(0.8)
         self.tipLabel = QLabel(self)
         self.rects = self.dsp.detectButtons(self.screen_num, 4)
@@ -230,19 +239,16 @@ class Example(QWidget):
     def timerEvent(self, event):
         self.repaint()
         
-    def drawContours(self, img, cnts, idx_matched):
-        # -------------- CONTOURS         
-        #self.contours, self.hierarchy = cv2.findContours(m_gradient, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)        
-        contourIdx = 0
-        for c in cnts:
-           countour_color = (255,0,0)
-           if contourIdx in idx_matched:
-               cv2.drawContours(img, cnts, contourIdx, countour_color,thickness=2)
-               print('000000000000000000000===============')
-           contourIdx+=1
+    def drawSelectedContours(self, img, selected_cntrs, thickness=2):
+        print(f'selected_cntrs={selected_cntrs}')
+        for c in selected_cntrs:
+           contourIdx = c[0]
+           colorIdx = c[1]
+           countour_color = color_tab1[colorIdx]
+           cv2.drawContours(img, self.dsp.contours_filtred, contourIdx, countour_color, thickness=2)
         
+   
     def pickCountour(self,mpos):
-        self.idx_matched = ([])
         contourIdx = 0        
         minSquare = 80000*80000
         minSquareIndex = 0
@@ -253,16 +259,22 @@ class Example(QWidget):
                 if square < minSquare:
                     minSquare = square
                     minSquareIndex = contourIdx
+                    print(f'selected = {contourIdx}');
             contourIdx+=1
 
-        countour_color = (255,255,255)
+        colorIndex = clamp(1, self.label, len(color_tab1)) 
+        
+        self.selected_cntrs.append((minSquareIndex,colorIndex))
+
+        countour_color = color_tab1[colorIndex]
         #cv2.rectangle(self.dsp.m_gradient, (x,y), (x+w,y+h),(255,255,255),-1)
-        cv2.drawContours(self.dsp.m_gradient, self.dsp.contours_filtred, minSquareIndex, countour_color,thickness=2)
+        tmp = cv2.cvtColor(self.dsp.m_gradient, cv2.COLOR_GRAY2RGB)  
+        self.drawSelectedContours(tmp, self.selected_cntrs, thickness=2)
         #print(c)
         self.selected_cntr = self.dsp.contours_filtred[minSquareIndex]
         print('pickContour ' + str(QRect(x,y,w,h)))
-        self.idx_matched.append(contourIdx)
-        #return QRect(x,y,w,h)        
+        cv2.imshow("w0", tmp)
+        return QRect(0,0,100,100)        
         
     def pickRect(self, mpos):        
         for r in self.dsp.rects:
@@ -271,7 +283,7 @@ class Example(QWidget):
     
     def pickSample(self):
         r = self.pickCountour(self.mpos)
-        cv2.imshow("w0", self.dsp.m_gradient)
+        
         
         #cv2.imshow("w1", self.dsp.areaImg)
         
@@ -321,11 +333,11 @@ class Example(QWidget):
         qp.setPen(Qt.white)
         qp.drawPath(path)
 
-        # for r in self.rects:
-        #     if r.contains(self.mpos):
-        #         qp.fillRect(r, QColor(244,1,1,110))
-        #     else:
-        #         qp.fillRect(r, QColor(1,244,1,110))
+        for r in self.rects:
+            if r.contains(self.mpos):
+                qp.fillRect(r, QColor(244,1,1,110))
+            else:
+                qp.fillRect(r, QColor(1,244,1,110))
             
         qp.end()
 
