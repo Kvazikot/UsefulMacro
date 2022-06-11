@@ -244,20 +244,25 @@ class Example(QWidget):
     def pickCountour(self,mpos):
         self.idx_matched = ([])
         contourIdx = 0        
+        minSquare = 80000*80000
+        minSquareIndex = 0
         for c in self.dsp.contours_filtred:
             x,y,w,h = cv2.boundingRect(c)
-            square = w*h            
+            square = w*h
             if x < mpos.x() and y < mpos.y() and (x + w) > mpos.x() and (y + h) > mpos.y() :
-                countour_color = (255,255,255)
-                #cv2.rectangle(self.dsp.m_gradient, (x,y), (x+w,y+h),(255,255,255),-1)
-                cv2.drawContours(self.dsp.m_gradient, self.dsp.contours_filtred, contourIdx, countour_color,thickness=2)
-                #print(c)
-                self.selected_cntr = c
-                print('pickContour ' + str(QRect(x,y,w,h)))
-                self.idx_matched.append(contourIdx)
-                return QRect(x,y,w,h)
-        
-        contourIdx+=1
+                if square < minSquare:
+                    minSquare = square
+                    minSquareIndex = contourIdx
+            contourIdx+=1
+
+        countour_color = (255,255,255)
+        #cv2.rectangle(self.dsp.m_gradient, (x,y), (x+w,y+h),(255,255,255),-1)
+        cv2.drawContours(self.dsp.m_gradient, self.dsp.contours_filtred, minSquareIndex, countour_color,thickness=2)
+        #print(c)
+        self.selected_cntr = self.dsp.contours_filtred[minSquareIndex]
+        print('pickContour ' + str(QRect(x,y,w,h)))
+        self.idx_matched.append(contourIdx)
+        #return QRect(x,y,w,h)        
         
     def pickRect(self, mpos):        
         for r in self.dsp.rects:
