@@ -227,10 +227,20 @@ class Example(QWidget):
         self.startTimer(100)
 
     def keyPressEvent(self, event):
-        self.label = event.key() - Qt.Key_0
+        val = event.key() - Qt.Key_0
+        if val in range(1,10):
+            self.label = clamp(1,val,10)
         print(f'current label is {self.label}')
         if event.key() == Qt.Key_Q:
             self.close()
+        if (event.modifiers() & Qt.ControlModifier) and (event.key() == Qt.Key_Z):
+            print(f'selected_contrs before pop={self.selected_cntrs}')
+            self.selected_cntrs.pop(len(self.selected_cntrs)-1)
+            print(f'selected_contrs after pop={self.selected_cntrs}')
+            tmp = cv2.cvtColor(self.dsp.m_gradient, cv2.COLOR_GRAY2RGB)  
+            self.drawSelectedContours(tmp, self.selected_cntrs, thickness=2)
+            cv2.imshow("w0",tmp)
+
             
 
     def mouseMoveEvent(self, event):
@@ -266,7 +276,7 @@ class Example(QWidget):
         
         self.selected_cntrs.append((minSquareIndex,colorIndex))
 
-        countour_color = color_tab1[colorIndex]
+        #countour_color = color_tab1[colorIndex]
         #cv2.rectangle(self.dsp.m_gradient, (x,y), (x+w,y+h),(255,255,255),-1)
         tmp = cv2.cvtColor(self.dsp.m_gradient, cv2.COLOR_GRAY2RGB)  
         self.drawSelectedContours(tmp, self.selected_cntrs, thickness=2)
