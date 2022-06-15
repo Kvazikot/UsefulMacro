@@ -77,10 +77,8 @@ It is necessary to make such programs for the clicker so that they take up a min
 It neccessary to implement short one string encoding of clicker instructins.
 For the small band-width communicatioons like brain net.
 ```  
-<!-- example of short instruction string for Useful Clicker
-<short>
+<!-- example of short program for Useful Clicker
 xy,140:122,ctrl+f,"banana republic gdp",enter,cr,56,cb,"next"
-</short>
 ```  
 xyl,140:122 - mouse click, left button in point with coordinates (140,120) <br/>
 cr,56 - click rectangle object on the page with number #56 <br/>
