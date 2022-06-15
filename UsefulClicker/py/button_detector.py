@@ -242,12 +242,33 @@ class Example(QWidget):
         self.show()
         self.pickCountour(QPoint(-1,-1))
         self.startTimer(100)
+        
+    def save(self, img, selected_cntrs):
+        print("saving training samples...")
+        for c in selected_cntrs:
+           contourIdx = c[0]
+           label = c[1]
+           countour = self.dsp.contours_filtred[contourIdx]
+           x,y,w,h = cv2.boundingRect(countour)
+           print(f'{x} {y} {w} {h}')
+           roi=img[y:y+h,x:x+w]
+           #cv2.imshow("roi", roi)
+           number = random.randint(0,100000)
+           n_str="sample_{:d}_{:0d}".format(label,number)
+           path=f'./data/{label}/{n_str}.png'
+           print("saving " + path)
+           cv2.imwrite(path, roi)
+        
 
     def keyPressEvent(self, event):
         val = event.key() - Qt.Key_0
         if val in range(1,10):
             self.label = clamp(1,val,10)
         print(f'current label is {self.label}')
+        
+        if event.key() == Qt.Key_F2:
+            self.save(self.dsp.m_gradient, self.selected_cntrs)
+
         if event.key() == Qt.Key_F5:
             self.hide()
             QTimer.singleShot(1000, self.show)
@@ -349,11 +370,6 @@ class Example(QWidget):
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             m_piece = self.pickSample() 
-            now = datetime.datetime.now()
-            current_time = now.strftime("%H.%M.%S.png")
-            fname='./data/{l}/{t}.png'.format(t=current_time,l=self.label)
-            print(f'sample writed {fname}')
-            cv2.imwrite(fname, m_piece)            
         
     def showEvent(self, a0):
         rect2 = self.rect()
