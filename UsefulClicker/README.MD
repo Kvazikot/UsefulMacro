@@ -82,9 +82,9 @@ For the small band-width communicatioons like brain net.
 xy,140:122,ctrl+f,"banana republic gdp",enter,cr,56,cb,"next"
 </short>
 ```  
-xyl,140:122 - mouse click, left button in point with coordinates (140,120)
-cr,56 - click rectangle object on the page with number #56
-cb,"next" - click "next" button 
+xyl,140:122 - mouse click, left button in point with coordinates (140,120) <br/>
+cr,56 - click rectangle object on the page with number #56 <br/>
+cb,"next" - click "next" button  <br/>
   
 # Macro recording with code generation of optimal xml code,
   * input: for which mouse trajectory and keyboard events.  
