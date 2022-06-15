@@ -21,6 +21,7 @@
 import subprocess
 import datetime
 from collections import deque
+
 # This is our shell command, executed by Popen.
 import os
 import sys
@@ -30,7 +31,8 @@ import numpy as np
 from  cv2 import connectedComponentsWithStats
 from PyQt5.QtWidgets import QWidget, QApplication, QLabel
 from PyQt5.QtGui import QPainter, QColor, QFont, QImage, QPixmap, QCursor, QPainterPath, QPolygonF
-from PyQt5.QtCore import Qt, QRect, QPoint 
+from PyQt5.QtCore import Qt, QRect, QPoint, QTimer
+
 
 def mat2img(mat,channels):
     if channels == 1:
@@ -104,8 +106,8 @@ class Dsp:
         #------------- PREFILTERING operations
         rect_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (kernel_size, kernel_size))        
         M = cv2.getStructuringElement(cv2.MORPH_CROSS, (3,3))        
-        m_gradient = cv2.morphologyEx(im_gray, cv2.MORPH_GRADIENT, M)
-        canny_output = cv2.Canny(m_gradient, thresh, thresh * 2 )
+        self.m_gradient = cv2.morphologyEx(im_gray, cv2.MORPH_GRADIENT, M)
+        canny_output = cv2.Canny(self.m_gradient, thresh, thresh * 2 )
         #cv2.imshow("w0", canny_output)
         canny_output = cv2.dilate(canny_output, rect_kernel)
         #cv2.imshow("w1", canny_output)
@@ -118,24 +120,25 @@ class Dsp:
         #cv2.imshow('w0',m_gradient)
         
         # -------------- CONTOURS         
-        self.contours, self.hierarchy = cv2.findContours(m_gradient, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)        
+        self.contours, self.hierarchy = cv2.findContours(self.m_gradient, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)        
         self.contours_filtred = []
         print(self.contours[1])
         print(f'contours num = {len(self.contours)}')
         contourIdx = 0
         for c in self.contours:
             x,y,w,h = cv2.boundingRect(c)
-            if w>5 and h>10 and w < m_gradient.shape[0] and h < m_gradient.shape[1]:
+            if w>5 and h>10 and w < self.m_gradient.shape[0] and h < self.m_gradient.shape[1]:
                 #cv2.rectangle(areaImg,(x,y),(x+w,y+h),(255,5,0),1)
                 self.contours_filtred.append(c)
                 countour_color = (random.randint(100, 255),random.randint(100, 255),random.randint(100, 255))
-                cv2.drawContours(areaImg, self.contours, contourIdx, countour_color,thickness=2)
+                cv2.drawContours(self.m_gradient, self.contours, contourIdx, countour_color,thickness=2)
             contourIdx+=1
         #cv2.imshow('w1',areaImg)
         
         #cv2.imshow("w1", canny_output)
         
-        self.m_gradient = m_gradient #mat2img(im_gray, 1)
+        #self.m_gradient = m_gradient #mat2img(im_gray, 1)
+        
         #cv2.imshow("w0", m_gradient)
         
 
@@ -152,11 +155,10 @@ class Dsp:
         mapX = {0: set([1,23])}
         mapY = {0: set([1,23])}
         
-        print('m_gradient shape' + str(m_gradient.shape))
         
-        for x in range(0, m_gradient.shape[1], 1):
+        for x in range(0, self.m_gradient.shape[1], 1):
             mapX[x] = set([])
-        for y in range(0, m_gradient.shape[0], 1):
+        for y in range(0, self.m_gradient.shape[0], 1):
             mapY[y] = set([])  
 
         n_rect = 0
@@ -225,20 +227,14 @@ class Example(QWidget):
         self.cntr2label_map = {"cntrIndex": -1}
         #self.setWindowOpacity(0.8)
         self.tipLabel = QLabel(self)
-        self.rects = self.dsp.detectButtons(self.screen_num, 4)
         self.image = QImage('./rect_images\\00.06.36.730.png')
         
         
-        self.tipLabel.setStyleSheet("font-size:24pt;")
+        self.tipLabel.setStyleSheet("font-size:24pt; color: red; background: white")
         #tip+="F1 - save selected rectangle area to ./square dir"
-        tip="F1 - start collecting training samples\n"
-        tip+="F2 - train neural network\n"
-        tip+="F3 - detect squares\n"
-        tip+="PRESS left mouse button if its a RECTANGLE\n"
-        tip+="PRESS left mouse button if its NOT a RECTANGLE\n"
-        tip+="q - quit this window"
-        self.tipLabel.setAlignment(Qt.AlignLeft)
-        #self.tipLabel.setText(tip)
+        tip="F2 - Confirm saving training samples from current screen. q - quit this window F5 - hide window on 1 sec"
+        self.tipLabel.setAlignment(Qt.AlignBottom)
+        self.tipLabel.setText(tip)
         self.setWindowTitle('Drawing')
         self.setMouseTracking(1)
         self.mpos = QPoint(1,1)
@@ -252,6 +248,10 @@ class Example(QWidget):
         if val in range(1,10):
             self.label = clamp(1,val,10)
         print(f'current label is {self.label}')
+        if event.key() == Qt.Key_F5:
+            self.hide()
+            QTimer.singleShot(1000, self.show)
+            
         if event.key() == Qt.Key_Q:
             self.close()
         if (event.modifiers() & Qt.ControlModifier) and (event.key() == Qt.Key_Z):
@@ -357,10 +357,15 @@ class Example(QWidget):
         
     def showEvent(self, a0):
         rect2 = self.rect()
+        self.rects = self.dsp.detectButtons(self.screen_num, 4)
+        self.updateCntrImage()
+        self.repaint()
+
         #if len(QApplication.screens()) < self.screen_num :
         #   return
         screen = QApplication.screens()[self.screen_num]
         self.setGeometry(screen.geometry())
+        self.tipLabel.move(100, screen.geometry().bottom()-40)
 
         #rect2.setTopLeft(self.rect().center())
         #rect2.setTop(rect2.center().y())
@@ -403,16 +408,25 @@ def createDataDirs():
     for i in range(1,max_labels,1):
         os.makedirs(f"./data/{i}", exist_ok = True)
 
-def main():
+
+ex = None
+
+def main2():
     app = QApplication(sys.argv)
     ex = Example()
     ex.showFullScreen()
+    createDataDirs()
     sys.exit(app.exec_())
 
+def hide():
+    if not ex.isHidden():
+        ex.hide()
+    else:
+        ex.showFullScreen()
 
-if __name__ == '__main__':
-    createDataDirs()
-    main()
+if __name__ == '__main__':    
+    main2()
+
 
 path = "./rect_images"
 
