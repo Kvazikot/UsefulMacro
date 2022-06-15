@@ -73,8 +73,18 @@ Next stage is actualy has more teoretical than practical sense at this point.
 ## Compression
 It is necessary to make such programs for the clicker so that they take up a minimum of bytes and do a maximum of useful work. It is possible to add additional information so that it can be restored in case of errors in the communication channel. Here you can compress the information using not only artificial neural networks, but also the slightly forgotten information theory of Claude Shannon's [1]. 
 
-
-
+## Short UC code
+It neccessary to implement short one string encoding of clicker instructins.
+For the small band-width communicatioons like brain net.
+```  
+<!-- example of short instruction string for Useful Clicker
+<short>
+xy,140:122,ctrl+f,"banana republic gdp",enter,cr,56,cb,"next"
+</short>
+```  
+xyl,140:122 - mouse click, left button in point with coordinates (140,120)
+cr,56 - click rectangle object on the page with number #56
+cb,"next" - click "next" button 
   
 # Macro recording with code generation of optimal xml code,
   * input: for which mouse trajectory and keyboard events.  
