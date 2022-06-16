@@ -221,6 +221,7 @@ class Example(QWidget):
         self.dsp = Dsp()
         self.screen_num = 0
         self.label = 1
+        self.sample_dim = (32, 32)
         self.selected_contours_image = None
         self.selected_cntr = []
         self.selected_cntrs = deque()
@@ -250,14 +251,24 @@ class Example(QWidget):
            label = c[1]
            countour = self.dsp.contours_filtred[contourIdx]
            x,y,w,h = cv2.boundingRect(countour)
+           
            print(f'{x} {y} {w} {h}')
-           roi=img[y:y+h,x:x+w]
-           #cv2.imshow("roi", roi)
+           #roi=img[y:y+h,x:x+w]
+           roi = np.zeros((h, w, 3), dtype=np.uint8)
+           for p in countour:
+               p[0][0]-=x
+               p[0][1]-=y
+        
+           countours = [countour]
+           cv2.drawContours(roi, countours, 0, (255,0,0), 30)
+           resized = cv2.resize(roi, self.sample_dim, interpolation = cv2.INTER_AREA)
+           
+           cv2.imshow("resized", resized)
            number = random.randint(0,100000)
            n_str="sample_{:d}_{:0d}".format(label,number)
            path=f'./data/{label}/{n_str}.png'
            print("saving " + path)
-           cv2.imwrite(path, roi)
+           cv2.imwrite(path, resized)
         
 
     def keyPressEvent(self, event):
