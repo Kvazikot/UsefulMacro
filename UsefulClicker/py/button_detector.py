@@ -21,8 +21,6 @@
 import subprocess
 import datetime
 from collections import deque
-
-# This is our shell command, executed by Popen.
 import os
 import sys
 import random
@@ -221,7 +219,7 @@ class Example(QWidget):
         self.dsp = Dsp()
         self.screen_num = 0
         self.label = 1
-        self.sample_dim = (32, 32)
+        self.sample_dim = (28, 28)
         self.selected_contours_image = None
         self.selected_cntr = []
         self.selected_cntrs = deque()
@@ -253,21 +251,24 @@ class Example(QWidget):
            x,y,w,h = cv2.boundingRect(countour)
            
            print(f'{x} {y} {w} {h}')
-           #roi=img[y:y+h,x:x+w]
+           areaRoi=self.dsp.areaImg[y:y+h,x:x+w]
            roi = np.zeros((h, w, 3), dtype=np.uint8)
            for p in countour:
                p[0][0]-=x
                p[0][1]-=y
         
            countours = [countour]
-           cv2.drawContours(roi, countours, 0, (255,0,0), 30)
+           cv2.drawContours(roi, countours, 0, (255,255,255), 2)
            resized = cv2.resize(roi, self.sample_dim, interpolation = cv2.INTER_AREA)
            
-           cv2.imshow("resized", resized)
+           #cv2.imshow("w0", resized)
            number = random.randint(0,100000)
            n_str="sample_{:d}_{:0d}".format(label,number)
            path=f'./data/{label}/{n_str}.png'
            print("saving " + path)
+           cv2.imwrite(path, resized)
+           path=f'./data/9/{n_str}.png'
+           resized = cv2.resize(areaRoi, self.sample_dim, interpolation = cv2.INTER_AREA)
            cv2.imwrite(path, resized)
         
 
@@ -279,6 +280,7 @@ class Example(QWidget):
         
         if event.key() == Qt.Key_F2:
             self.save(self.dsp.m_gradient, self.selected_cntrs)
+            self.close()
 
         if event.key() == Qt.Key_F5:
             self.hide()
@@ -286,6 +288,7 @@ class Example(QWidget):
             
         if event.key() == Qt.Key_Q:
             self.close()
+            
         if (event.modifiers() & Qt.ControlModifier) and (event.key() == Qt.Key_Z):
             self.selected_cntrs.pop()
             self.updateCntrImage()
