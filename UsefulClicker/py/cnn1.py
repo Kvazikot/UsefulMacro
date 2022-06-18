@@ -7,38 +7,11 @@ import torchvision.transforms as transforms
 from rect_gen_torch import GenerateImageDataset
 from folder_dataset import FolderDataset
 
-# Device configuration
-#device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-device = torch.device("cpu")
-
-#print(device)
-#print(torch.version.cuda)
 # Hyper parameters
 num_epochs = 100
-num_classes = 3
+num_classes = 4
 batch_size = 16
-learning_rate = 0.001
-
-# MNIST dataset
-# train_dataset = torchvision.datasets.MNIST(root='../../data/',
-#                                              train=True, 
-#                                              transform=transforms.ToTensor(),
-#                                              download=True)
-
-#train_dataset = GenerateImageDataset(num_recs)
-train_dataset = FolderDataset()
-#testloader = torch.utils.data.DataLoader(rect_dataset, batch_size=16, shuffle=True)
-
-# Data loader
-train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
-                                           batch_size=batch_size, 
-                                           shuffle=True)
-#print(next(iter(train_dataset)))
-print('------------------------------------')
-print('------------------------------------')
-print('------------------------------------')
-print(train_dataset.img_labels)
-#sys.exit(0)
+learning_rate = 0.01
 
 # Convolutional neural network (two convolutional layers)
 class ConvNet(nn.Module):
@@ -63,64 +36,93 @@ class ConvNet(nn.Module):
         out = self.fc(out)
         return out
 
-model = ConvNet(num_classes).to(device)
-
-# Loss and optimizer
-criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
-
-
-# variables for drawing loss curve
-x_epoch = []
-y_loss = []
-running_loss = 0
-
-# Train the model
-total_step = len(train_loader)
-for epoch in range(num_epochs):
-    for i, (images, labels) in enumerate(train_loader):
-        images = images.to(device)        
-        labels = labels.to(device)
-        #print(f'images size = {images.size()}')
-        
-        # Forward pass
-        outputs = model(images)
-        #print(labels)
-        loss = criterion(outputs, labels)
-        
-        # Backward and optimize
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-        
-        # statistics
-        running_loss += loss.item() * batch_size
-        
-        y_loss.append(running_loss/(epoch+1))
-        x_epoch.append(epoch)    
-        
-        if (i+1) % 10 == 0:    
-            plt.plot(x_epoch, y_loss)
-            plt.show()
-        
-        if (i+1) % 100 == 0:
-            print ('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}' 
-                   .format(epoch+1, num_epochs, i+1, total_step, loss.item()))
-
-# Test the model
-# model.eval()  # eval mode (batchnorm uses moving mean/variance instead of mini-batch mean/variance)
-# with torch.no_grad():
-#     correct = 0
-#     total = 0
-#     for images, labels in test_loader:
-#         images = images.to(device)
-#         labels = labels.to(device)
-#         outputs = model(images)
-#         _, predicted = torch.max(outputs.data, 1)
-#         total += labels.size(0)
-#         correct += (predicted == labels).sum().item()
-
-#     print('Test Accuracy of the model on the 10000 test images: {} %'.format(100 * correct / total))
-
-# Save the model checkpoint
-torch.save(model.state_dict(), 'model.ckpt')
+def StartTraining():
+    # Device configuration
+    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+    #device = torch.device("cpu")
+    
+    #print(device)
+    #print(torch.version.cuda)
+    
+    # MNIST dataset
+    # train_dataset = torchvision.datasets.MNIST(root='../../data/',
+    #                                              train=True, 
+    #                                              transform=transforms.ToTensor(),
+    #                                              download=True)
+    
+    #train_dataset = GenerateImageDataset(num_recs)
+    train_dataset = FolderDataset(num_epochs*10)
+    #testloader = torch.utils.data.DataLoader(rect_dataset, batch_size=16, shuffle=True)
+    
+    # Data loader
+    train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
+                                               batch_size=batch_size, 
+                                               shuffle=True)
+    #print(next(iter(train_dataset)))
+    print('------------------------------------')
+    print('------------------------------------')
+    print('------------------------------------')
+    #print(train_dataset.img_labels)
+    #sys.exit(0)
+    
+    model = ConvNet(num_classes).to(device)
+    
+    # Loss and optimizer
+    criterion = nn.CrossEntropyLoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+    
+    
+    # variables for drawing loss curve
+    x_epoch = []
+    y_loss = []
+    running_loss = 0
+    
+    # Train the model
+    total_step = len(train_loader)
+    for epoch in range(num_epochs):
+        for i, (images, labels) in enumerate(train_loader):
+            images = images.to(device)        
+            labels = labels.to(device)
+            print(f'images size = {images.size()}')
+            
+            # Forward pass
+            outputs = model(images)
+            #print(labels)
+            loss = criterion(outputs, labels)
+            
+            # Backward and optimize
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+            
+            # statistics
+            running_loss += loss.item() * batch_size
+            
+            y_loss.append(running_loss/(epoch+1))
+            x_epoch.append(epoch)    
+            
+            if (i+1) % 10 == 0:    
+                plt.plot(x_epoch, y_loss)
+                plt.show()
+            
+            #if (i+1) % 100 == 0:
+                print ('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}' 
+                       .format(epoch+1, num_epochs, i+1, total_step, loss.item()))
+    
+    # Test the model
+    # model.eval()  # eval mode (batchnorm uses moving mean/variance instead of mini-batch mean/variance)
+    # with torch.no_grad():
+    #     correct = 0
+    #     total = 0
+    #     for images, labels in test_loader:
+    #         images = images.to(device)
+    #         labels = labels.to(device)
+    #         outputs = model(images)
+    #         _, predicted = torch.max(outputs.data, 1)
+    #         total += labels.size(0)
+    #         correct += (predicted == labels).sum().item()
+    
+    #     print('Test Accuracy of the model on the 10000 test images: {} %'.format(100 * correct / total))
+    
+    # Save the model checkpoint
+    torch.save(model.state_dict(), 'model.ckpt')

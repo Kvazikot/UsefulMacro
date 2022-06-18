@@ -50,9 +50,10 @@ class FolderDataset(Dataset):
                     #self.img_tensors
                     im = Image.open(root+'/'+file) 
                     gray_image = ImageOps.grayscale(im)                    
-                    trs = transforms.ToTensor()
-                    
+                    trs = transforms.ToTensor()                    
                     image_tensor = trs(  (np.asarray(gray_image)) / 255.0).type(torch.FloatTensor)
+                    #print('tensor size ' + str(image_tensor.size()))
+
                     #print(image_tensor.size())
                     self.img_tensors.append(image_tensor)
                     self.img_labels.append(label)
@@ -94,14 +95,14 @@ class FolderDataset(Dataset):
 
 
 def GenerateFolderDataset():
-    test_dataset = FolderDataset()
+    test_dataset = FolderDataset(10)
     grid = torchvision.utils.make_grid(test_dataset.img_tensors, nrow=10, padding=10)
     npimg = grid.numpy()
     plt.imshow(np.transpose(npimg, (1,2,0)), interpolation='nearest')
     return test_dataset
 
 #------------------------------------------------------------------------------
-GenerateFolderDataset()
+#GenerateFolderDataset()
 
 # train_dataset = torchvision.datasets.MNIST(root='../../data/',
 #                                              train=True, 

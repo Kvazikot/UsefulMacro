@@ -26,6 +26,7 @@ import sys
 import random
 import cv2
 import numpy as np
+from page_segmentation import PageSegmentor
 from  cv2 import connectedComponentsWithStats
 from PyQt5.QtWidgets import QWidget, QApplication, QLabel
 from PyQt5.QtGui import QPainter, QColor, QFont, QImage, QPixmap, QCursor, QPainterPath, QPolygonF
@@ -110,7 +111,7 @@ class Dsp:
         canny_output = cv2.dilate(canny_output, rect_kernel)
         #cv2.imshow("w1", canny_output)
         
-        #ret, binary = cv2.threshold(s,40,255,cv2.THRESH_BINARY)
+        #ret, binary = cv2.threshold(1s,40,255,cv2.THRESH_BINARY)
         #
         #(m_gradient.shape[0],m_gradient.shape[1])
                    
@@ -198,9 +199,9 @@ class Dsp:
        
         
 
-color_tab1 = [(255,255,255),(255,0,0),(255,255,0),(255,0,255),(0,0,255)]
-color_tab2 = [(0,255,255),(255,128,0),(128,255,0),(128,0,255),(0,0,128)]
-color_tab1.append(color_tab2)
+color_tab1 = [(255,255,255),(255,0,0),(255,255,0),(255,0,255),(0,0,255),
+              (0,255,255),(255,128,0),(128,255,0),(128,0,255),(0,0,128)]
+print(len(color_tab1))
 
 def clamp(minvalue, value, maxvalue):
     return max(minvalue, min(value, maxvalue))
@@ -257,7 +258,7 @@ class Example(QWidget):
                p[0][1]-=y
         
            countours = [countour]
-           cv2.drawContours(roi, countours, 0, (255,255,255), 2)
+           cv2.drawContours(roi, countours, contourIdx, (255,255,255), 2)
            resized = cv2.resize(roi, self.sample_dim, interpolation = cv2.INTER_AREA)
            
            #cv2.imshow("w0", resized)
@@ -285,6 +286,9 @@ class Example(QWidget):
             self.hide()
             QTimer.singleShot(1000, self.show)
             
+        if event.key() == Qt.Key_F1:
+            self.testSegmentation()
+            
         if event.key() == Qt.Key_Q:
             self.close()
             
@@ -292,6 +296,32 @@ class Example(QWidget):
             self.selected_cntrs.pop()
             self.updateCntrImage()
             #cv2.imshow("w0",tmp)
+
+    def testSegmentation(self):
+        segmentor = PageSegmentor()
+        contourIdx = 0
+        contours_filtred = self.dsp.contours_filtred.copy()
+        for countour in contours_filtred:
+           x,y,w,h = cv2.boundingRect(countour)           
+           print(f'{x} {y} {w} {h}')
+           areaRoi=self.dsp.areaImg[y:y+h,x:x+w]
+           roi = np.zeros((h, w, 3), dtype=np.uint8)
+           for p in countour:
+               p[0][0]-=x
+               p[0][1]-=y        
+           countours = [countour]
+           cv2.drawContours(roi, countours, 0, (255,255,255), 2)
+           for p in countour:
+               p[0][0]+=x
+               p[0][1]+=y        
+           resized = cv2.resize(roi, self.sample_dim, interpolation = cv2.INTER_AREA)
+           gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
+           label = segmentor.predict(gray)
+           colorIdx = label
+           if label == 1:
+               self.selected_cntrs.append((contourIdx, colorIdx))
+           contourIdx+=1
+        self.updateCntrImage()
 
     def updateCntrImage(self):
         tmp = cv2.cvtColor(self.dsp.m_gradient, cv2.COLOR_GRAY2RGB)  
