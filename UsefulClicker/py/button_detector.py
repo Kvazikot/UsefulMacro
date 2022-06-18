@@ -118,7 +118,7 @@ class Dsp:
         #cv2.imshow('w0',m_gradient)
         
         # -------------- CONTOURS         
-        self.contours, self.hierarchy = cv2.findContours(self.m_gradient, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)        
+        im, self.contours, self.hierarchy = cv2.findContours(self.m_gradient, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         self.contours_filtred = []
         print(self.contours[1])
         print(f'contours num = {len(self.contours)}')
@@ -239,7 +239,6 @@ class Example(QWidget):
         self.mpos = QPoint(1,1)
         #sys.exit(0)
         self.show()
-        self.pickCountour(QPoint(-1,-1))
         self.startTimer(100)
         
     def save(self, img, selected_cntrs):
