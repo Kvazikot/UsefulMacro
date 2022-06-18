@@ -8,14 +8,14 @@ from rect_gen_torch import GenerateImageDataset
 from folder_dataset import FolderDataset
 
 # Device configuration
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-#device = torch.device("cpu")
+#device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+device = torch.device("cpu")
 
 #print(device)
 #print(torch.version.cuda)
 # Hyper parameters
 num_epochs = 100
-num_classes = 10
+num_classes = 3
 batch_size = 16
 learning_rate = 0.001
 
@@ -25,20 +25,19 @@ learning_rate = 0.001
 #                                              transform=transforms.ToTensor(),
 #                                              download=True)
 
-num_recs = 16*100
-train_dataset = GenerateImageDataset(num_recs)
-#train_dataset = FolderDataset()
+#train_dataset = GenerateImageDataset(num_recs)
+train_dataset = FolderDataset()
 #testloader = torch.utils.data.DataLoader(rect_dataset, batch_size=16, shuffle=True)
 
 # Data loader
 train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
                                            batch_size=batch_size, 
                                            shuffle=True)
-print(next(iter(train_dataset)))
-print('------------------------------------')
-print('------------------------------------')
-print('------------------------------------')
 #print(next(iter(train_dataset)))
+print('------------------------------------')
+print('------------------------------------')
+print('------------------------------------')
+print(train_dataset.img_labels)
 #sys.exit(0)
 
 # Convolutional neural network (two convolutional layers)
@@ -80,7 +79,7 @@ running_loss = 0
 total_step = len(train_loader)
 for epoch in range(num_epochs):
     for i, (images, labels) in enumerate(train_loader):
-        images = images.to(device)
+        images = images.to(device)        
         labels = labels.to(device)
         #print(f'images size = {images.size()}')
         

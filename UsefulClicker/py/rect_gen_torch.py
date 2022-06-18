@@ -119,4 +119,5 @@ def GenerateImageDataset(n):
 
 
 dataset=GenerateImageDataset(1000)
+print(dataset.img_labels)
 #print(next(iter(dataset)))

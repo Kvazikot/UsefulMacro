@@ -4,6 +4,7 @@ Created on Fri Jun 17 14:35:39 2022
 
 @author: HP
 """
+import random
 import sys
 import torch
 import torchvision
@@ -25,7 +26,7 @@ def is_int(value):
     return False
 #------------------------------------------------------------------------------
 class FolderDataset(Dataset):
-    def __init__(self):
+    def __init__(self, num_extra=400):
         self.img_labels = []
         self.img_tensors = []
         trs = transforms.ToTensor()
@@ -36,21 +37,49 @@ class FolderDataset(Dataset):
             
             if len(path) == 2:
                 if is_int(path[1]):
-                    label = path[1]
+                    label = int(path[1])
+                else:
+                    continue
+            else:
+              continue
                     
             #print((len(path) - 1) * '---', os.path.basename(root))
             for file in files:
                 if label!=-1:
-                    print(str(label) + '---' + str(file))
+                    #print(str(label) + '---' + str(file))
                     #self.img_tensors
                     im = Image.open(root+'/'+file) 
                     gray_image = ImageOps.grayscale(im)                    
                     trs = transforms.ToTensor()
-                    image_tensor = trs( (np.asarray(gray_image)) / 255.0).type(torch.FloatTensor)
+                    
+                    image_tensor = trs(  (np.asarray(gray_image)) / 255.0).type(torch.FloatTensor)
+                    #print(image_tensor.size())
                     self.img_tensors.append(image_tensor)
                     self.img_labels.append(label)
+          
+           # make clones of loaded images with affine transforms
         
-        print(self.img_labels)
+        add_images = []
+        add_labels = []
+        trns_functions = [transforms.GaussianBlur(3), 
+                          transforms.RandomInvert(0.3),
+                          transforms.RandomHorizontalFlip()]
+        
+        for i in range(0,num_extra,1):
+            choice = random.randint(0, len(self.img_labels)-1)
+            l = self.img_labels[choice]
+            im = self.img_tensors[choice]
+            choice2 = random.randint(0,len(trns_functions)-1) 
+            fun = trns_functions[choice2]
+            add_images.append(fun(im))
+            add_labels.append(l)
+           
+        
+        for im,l in zip(add_images, add_labels):
+            self.img_tensors.append(im)       
+            self.img_labels.append(l)
+        
+        print(f'Folder dataset is loaded: {len(self.img_labels)} ' )
 
                 
         # load images fromm 'data' folder
@@ -72,7 +101,7 @@ def GenerateFolderDataset():
     return test_dataset
 
 #------------------------------------------------------------------------------
-
+GenerateFolderDataset()
 
 # train_dataset = torchvision.datasets.MNIST(root='../../data/',
 #                                              train=True, 
