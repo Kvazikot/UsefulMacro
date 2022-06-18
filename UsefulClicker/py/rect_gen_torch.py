@@ -103,8 +103,8 @@ class ImageDataset(Dataset):
             label = self.target_transform(label)
         return image, label
 
-def GenerateImageDataset():
-    num_rects = 100
+def GenerateImageDataset(n):
+    num_rects = n
     image_size = [28,28]
     rect_tensors = []
     labels = []
@@ -118,5 +118,5 @@ def GenerateImageDataset():
     return dataset
 
 
-dataset=GenerateImageDataset()
+dataset=GenerateImageDataset(1000)
 #print(next(iter(dataset)))

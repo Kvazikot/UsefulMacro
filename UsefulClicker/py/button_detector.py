@@ -267,9 +267,9 @@ class Example(QWidget):
            path=f'./data/{label}/{n_str}.png'
            print("saving " + path)
            cv2.imwrite(path, resized)
-           path=f'./data/9/{n_str}.png'
-           resized = cv2.resize(areaRoi, self.sample_dim, interpolation = cv2.INTER_AREA)
-           cv2.imwrite(path, resized)
+           #path=f'./data/{label}/bmp/{n_str}.png'
+           #resized = cv2.resize(areaRoi, self.sample_dim, interpolation = cv2.INTER_AREA)
+           #cv2.imwrite(path, resized)
         
 
     def keyPressEvent(self, event):

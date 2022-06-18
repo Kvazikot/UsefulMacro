@@ -1,39 +1,45 @@
 import sys
+from matplotlib import pyplot as plt
 import torch 
 import torch.nn as nn
 import torchvision
 import torchvision.transforms as transforms
 from rect_gen_torch import GenerateImageDataset
+from folder_dataset import FolderDataset
 
 # Device configuration
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+#device = torch.device("cpu")
+
 #print(device)
 #print(torch.version.cuda)
 # Hyper parameters
 num_epochs = 100
-num_classes = 4
-batch_size = 100
+num_classes = 10
+batch_size = 16
 learning_rate = 0.001
 
 # MNIST dataset
-# train_dataset1 = torchvision.datasets.MNIST(root='../../data/',
-#                                             train=True, 
-#                                             transform=transforms.ToTensor(),
-#                                             download=True)
+# train_dataset = torchvision.datasets.MNIST(root='../../data/',
+#                                              train=True, 
+#                                              transform=transforms.ToTensor(),
+#                                              download=True)
 
-train_dataset = GenerateImageDataset()
+num_recs = 16*100
+train_dataset = GenerateImageDataset(num_recs)
+#train_dataset = FolderDataset()
 #testloader = torch.utils.data.DataLoader(rect_dataset, batch_size=16, shuffle=True)
 
 # Data loader
 train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
                                            batch_size=batch_size, 
                                            shuffle=True)
-#print(next(iter(train_dataset)))
-print('------------------------------------')
-print('------------------------------------')
-print('------------------------------------')
 print(next(iter(train_dataset)))
-sys.exit(0)
+print('------------------------------------')
+print('------------------------------------')
+print('------------------------------------')
+#print(next(iter(train_dataset)))
+#sys.exit(0)
 
 # Convolutional neural network (two convolutional layers)
 class ConvNet(nn.Module):
@@ -64,6 +70,12 @@ model = ConvNet(num_classes).to(device)
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
+
+# variables for drawing loss curve
+x_epoch = []
+y_loss = []
+running_loss = 0
+
 # Train the model
 total_step = len(train_loader)
 for epoch in range(num_epochs):
@@ -81,6 +93,16 @@ for epoch in range(num_epochs):
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
+        
+        # statistics
+        running_loss += loss.item() * batch_size
+        
+        y_loss.append(running_loss/(epoch+1))
+        x_epoch.append(epoch)    
+        
+        if (i+1) % 10 == 0:    
+            plt.plot(x_epoch, y_loss)
+            plt.show()
         
         if (i+1) % 100 == 0:
             print ('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}' 

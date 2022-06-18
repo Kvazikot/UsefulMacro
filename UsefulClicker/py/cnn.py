@@ -22,10 +22,10 @@ from torch.utils.data import DataLoader , TensorDataset
 class Net(nn.Module):
     def __init__(self):
         super().__init__()
-        self.conv1 = nn.Conv2d(1, 1, 5)
+        self.conv1 = nn.Conv2d(1, 16, 7)
         self.pool = nn.MaxPool2d(2, 2)
-        self.conv2 = nn.Conv2d(6, 16, 5)
-        self.fc1 = nn.Linear(16 * 5 * 5, 120)
+        self.conv2 = nn.Conv2d(16, 32, 7)
+        self.fc1 = nn.Linear(32, 120)
         self.fc2 = nn.Linear(120, 84)
         self.fc3 = nn.Linear(84, 10)
 
@@ -43,7 +43,7 @@ net = Net()
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 
-rect_dataset = GenerateImageDataset()
+rect_dataset = GenerateImageDataset(16*100)
 #testloader = torch.utils.data.DataLoader(rect_dataset, batch_size=16, shuffle=True)
 trainloader =  torch.utils.data.DataLoader(rect_dataset, batch_size = 16, shuffle=True)
 
@@ -55,12 +55,6 @@ if __name__ ==  '__main__':
         for i, data in enumerate(rect_dataset, 0):
             # get the inputs; data is a list of [inputs, labels]
             inputs, labels = data
-            print("----input size----")
-            print(inputs.size())
-            print(labels.size())
-            #print(f'labels size = {labels.size()}')
-            #print(f'rects size = {rects.size())}')
-            #inputs = torch.stack([rects, labels])
             
             print(labels)
     
