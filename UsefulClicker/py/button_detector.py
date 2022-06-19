@@ -61,6 +61,26 @@ class Dsp:
         super().__init__()
         self.rects = []
         print("hello DSP!")
+        
+    # TODO create text masks using convolution with long line 
+    def CreateTextMasks(self, m_gradient):
+        underline_kernel = np.array([[0, 0, 0, 0, 0, 0, 0 ,0],
+                                     [11, 11, 11, 11, 11, 11, 11, 11],
+                                     [0, 0, 0, 0, 0, 0, 0, 0]])
+        im_response = cv2.filter2D(src=m_gradient, ddepth=-1, kernel=underline_kernel)
+        im_gray = im_response #cv2.cvtColor(im_response, cv2.COLOR_BGR2GRAY)
+        ret, binary = cv2.threshold(im_response,255,20,cv2.THRESH_BINARY)
+        #------------- PREFILTERING operations        
+        rect_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))        
+        M = cv2.getStructuringElement(cv2.MORPH_CROSS, (3,3))               
+        m_gradient = cv2.morphologyEx(im_gray, cv2.MORPH_GRADIENT, M)      
+        canny_output = cv2.Canny(im_gray, 40, 40 * 2 )
+        canny_output = cv2.dilate(canny_output, rect_kernel)
+        im, contours, hierarchy = cv2.findContours(canny_output, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+        cv2.imshow("w1", im_response)
+        
+        return contours
     
         
     def detectButtons(self, screen_num, kernel_size):
@@ -92,21 +112,24 @@ class Dsp:
         thresh = 40
         
         b.setsize(screenshot.height() * screenshot.width() * channels_count)
-        areaImg = np.frombuffer(b, np.uint8).reshape((screenshot.height(), screenshot.width(), channels_count))
+        areaImg = np.frombuffer(b, np.uint8).reshape((screenshot.height(), screenshot.width(), channels_count))       
+
         self.areaImg = areaImg
+
         # drawing black frame around screenshot to avoid countour damage
         #cv2.rectangle(areaImg,(0,0),(areaImg.shape[1],areaImg.shape[0]),(0,0,0),thickness=20)
         
         # convert to grayscale
         im_gray = cv2.cvtColor(areaImg, cv2.COLOR_BGR2GRAY)
-        im_gray = cv2.blur( im_gray, (3,3) );
+        #im_gray = cv2.blur( im_gray, (3,3) );
         #cv2.imshow("w0", im_gray)
         
         #------------- PREFILTERING operations
         rect_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (kernel_size, kernel_size))        
-        M = cv2.getStructuringElement(cv2.MORPH_CROSS, (3,3))        
+        M = cv2.getStructuringElement(cv2.MORPH_CROSS, (3,3))               
         self.m_gradient = cv2.morphologyEx(im_gray, cv2.MORPH_GRADIENT, M)
-        canny_output = cv2.Canny(self.m_gradient, thresh, thresh * 2 )
+        
+        canny_output = cv2.Canny(im_gray, thresh, thresh * 2 )
         #cv2.imshow("w0", canny_output)
         canny_output = cv2.dilate(canny_output, rect_kernel)
         #cv2.imshow("w1", canny_output)
@@ -117,9 +140,25 @@ class Dsp:
                    
         #print((0,0),(m_gradient.shape[1], m_gradient.shape[0]))
         #cv2.imshow('w0',m_gradient)
+
         
-        # -------------- CONTOURS         
+    
+        # 1. -------------- DETECT CONTOURS         
         im, self.contours, self.hierarchy = cv2.findContours(self.m_gradient, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+        # 2. detect underlined text like hyperlinks
+        c2 = self.CreateTextMasks(self.m_gradient)
+        #print(f'c2 len {len(c2}')
+        #self.contours.append(c2)
+        contourIdx = 0
+        for i in c2:
+            self.contours.append(i)           
+            countour_color = (random.randint(100, 255),random.randint(100, 255),random.randint(100, 255))
+            #cv2.drawContours(self.m_gradient, c2, contourIdx, countour_color,thickness=3)
+            contourIdx+=1
+        
+
+        # 3. --------------  DRAW CONTOURS         
         self.contours_filtred = []
         print(self.contours[1])
         print(f'contours num = {len(self.contours)}')
@@ -130,16 +169,9 @@ class Dsp:
                 #cv2.rectangle(areaImg,(x,y),(x+w,y+h),(255,5,0),1)
                 self.contours_filtred.append(c)
                 countour_color = (random.randint(100, 255),random.randint(100, 255),random.randint(100, 255))
-                cv2.drawContours(self.m_gradient, self.contours, contourIdx, countour_color,thickness=2)
-            contourIdx+=1
-        #cv2.imshow('w1',areaImg)
-        
-        #cv2.imshow("w1", canny_output)
-        
-        #self.m_gradient = m_gradient #mat2img(im_gray, 1)
-        
-        #cv2.imshow("w0", m_gradient)
-        
+                cv2.drawContours(self.m_gradient, self.contours, contourIdx, countour_color,thickness=1)
+            contourIdx+=1       
+    
 
         #cv2.connectedComponentsWithStats(canny_output, labels, stats, centroids)
         labels = np.zeros((screenshot.height(), screenshot.width(), 3), dtype=np.uint8)
@@ -150,51 +182,6 @@ class Dsp:
         #im_gray = cv2.cvtColor(im_gray, cv2.COLOR_GRAY2RGB)
         print('numLabels ' + str(numLabels))
         
-        
-        mapX = {0: set([1,23])}
-        mapY = {0: set([1,23])}
-        
-        
-        for x in range(0, self.m_gradient.shape[1], 1):
-            mapX[x] = set([])
-        for y in range(0, self.m_gradient.shape[0], 1):
-            mapY[y] = set([])  
-
-        n_rect = 0
-        #cv2.imshow("labels", labels)
-        if stats.shape[1] == 5:
-            for i in range(0, numLabels, 1):
-                x = stats[i, cv2.CC_STAT_LEFT]
-                y = stats[i, cv2.CC_STAT_TOP]
-                w = stats[i, cv2.CC_STAT_WIDTH]
-                h = stats[i, cv2.CC_STAT_HEIGHT]
-                #if  ( w < maxRectWidth) and (h < maxRectHeight ) and (w > 0) and (h >0) :
-                r = QRect(x,y,w,h)
-                self.rects.append(r);
-                #for x in range(r.left(), r.right(), 1):
-                #    mapX[x].add(n_rect)
-                #for y in range(r.top(), r.bottom(), 1):
-                #    mapY[y].add(n_rect)                
-                n_rect+=1      
-
-        # filter rects that overlaps
-        # select max area rect in every coordinate
-        # rectsMap = {}
-        # print(mapX.items())
-        # for item in mapX.items():
-        #    a =  0
-        #    maxAreaIndex = 0
-        #    for i in item[1]:
-        #        if area(self.rects[i]) > a:
-        #            a =  area(self.rects[i])
-        #            maxAreaIndex = i
-        #            #print(maxAreaIndex)
-        #    #self.rects2.append(self.rects[maxAreaIndex])
-           
-        #    rectsMap[maxAreaIndex] = 1  
-           
-        # print("rects before filtering: " + str(len(self.rects)) )
-        # print("rects after filtering: " + str(len(rectsMap)) )
         return self.rects   
        
         
@@ -258,8 +245,11 @@ class Example(QWidget):
                p[0][1]-=y
         
            countours = [countour]
-           cv2.drawContours(roi, countours, contourIdx, (255,255,255), 2)
-           resized = cv2.resize(roi, self.sample_dim, interpolation = cv2.INTER_AREA)
+           cv2.drawContours(roi, countours, 0, (255,255,255), 1)
+           w2 = 200
+           if w > w2:
+               w = w2
+           resized = cv2.resize(roi[:, :w], self.sample_dim, interpolation = cv2.INTER_AREA)
            
            #cv2.imshow("w0", resized)
            number = random.randint(0,100000)
@@ -310,7 +300,7 @@ class Example(QWidget):
                p[0][0]-=x
                p[0][1]-=y        
            countours = [countour]
-           cv2.drawContours(roi, countours, 0, (255,255,255), 2)
+           cv2.drawContours(roi, countours, 0, (255,255,255), 1)
            for p in countour:
                p[0][0]+=x
                p[0][1]+=y        
@@ -318,8 +308,7 @@ class Example(QWidget):
            gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
            label = segmentor.predict(gray)
            colorIdx = label
-           if label == 1:
-               self.selected_cntrs.append((contourIdx, colorIdx))
+           self.selected_cntrs.append((contourIdx, colorIdx))
            contourIdx+=1
         self.updateCntrImage()
 
@@ -341,7 +330,7 @@ class Example(QWidget):
            contourIdx = c[0]
            colorIdx = c[1]
            countour_color = color_tab1[colorIdx]
-           cv2.drawContours(img, self.dsp.contours_filtred, contourIdx, countour_color, thickness=2)
+           cv2.drawContours(img, self.dsp.contours_filtred, contourIdx, countour_color, thickness=1)
         
    
     def pickCountour(self,mpos):
