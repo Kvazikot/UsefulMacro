@@ -40,8 +40,6 @@ def mat2img(mat,channels):
     is_success, im_buf_arr = cv2.imencode(".png", mat)
     byte_im = im_buf_arr.tobytes()
     pix.loadFromData(byte_im)
-    print('mat2img mat shape' + str(mat.shape))
-    print('mat2img img size' + str(pix.size().width()))
     return pix.toImage()
 
 def img2mat(qimag, channels_count):
@@ -65,7 +63,7 @@ class Dsp:
     # TODO create text masks using convolution with long line 
     def CreateTextMasks(self, m_gradient):
         underline_kernel = np.array([[0, 0, 0, 0, 0, 0, 0 ,0],
-                                     [11, 11, 11, 11, 11, 11, 11, 11],
+                                     [0, 0, 11, 11, 11, 11, 0, 0],
                                      [0, 0, 0, 0, 0, 0, 0, 0]])
         im_response = cv2.filter2D(src=m_gradient, ddepth=-1, kernel=underline_kernel)
         im_gray = im_response #cv2.cvtColor(im_response, cv2.COLOR_BGR2GRAY)
@@ -73,11 +71,82 @@ class Dsp:
         #------------- PREFILTERING operations        
         rect_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))        
         M = cv2.getStructuringElement(cv2.MORPH_CROSS, (3,3))               
+        im_gray = im_gray[0:im_gray.shape[0]-300,:]
         m_gradient = cv2.morphologyEx(im_gray, cv2.MORPH_GRADIENT, M)      
         canny_output = cv2.Canny(im_gray, 40, 40 * 2 )
         canny_output = cv2.dilate(canny_output, rect_kernel)
-        im, contours, hierarchy = cv2.findContours(canny_output, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
+        output = cv2.connectedComponentsWithStats(canny_output, connectivity=4)
+        (numLabels, labels, stats, centroids) = output
+        
+ 
+        # preparing dict for every point in every rectangle
+        indexesX = {0: set([1,23])}
+        indexesY = {0: set([1,23])}             
+        for x in range(0, m_gradient.shape[1], 1):
+            indexesX[x] = set([])
+        for y in range(0, m_gradient.shape[0], 1):
+            indexesY[y] = set([])  
+        
+        def area(rect):
+            return rect.width() * rect.height()
+
+        # loop over connected components with creating dicts indexesX and     
+        n_rect = 0
+        if stats.shape[1] == 5:
+            for i in range(0, numLabels, 1):
+                x = stats[i, cv2.CC_STAT_LEFT]
+                y = stats[i, cv2.CC_STAT_TOP]
+                w = stats[i, cv2.CC_STAT_WIDTH]
+                h = stats[i, cv2.CC_STAT_HEIGHT]
+                #if  ( w < maxRectWidth) and (h < maxRectHeight ) and (w > 0) and (h >0) :
+                r = QRect(x,y,w,h)
+                self.rects.append(r);
+                for x in range(r.left(), r.right(), 1):
+                   indexesX[x].add(n_rect)
+                for y in range(r.top(), r.bottom(), 1):
+                   indexesY[y].add(n_rect)       
+                n_rect+=1
+        
+        print(indexesY)
+        # filter rects that overlaps
+        # select max area rect in every coordinate
+        rectHistogram = {0: 1, 2: 1}
+        for i in range(0,len(self.rects),1): 
+            rectHistogram[i] = 0
+
+        non_overvlaping_rectangles = set([1,23])
+        for kv in indexesX.items():
+            a =  0
+            minAreaIndex = 0
+            for i in kv[1]:
+                rectHistogram[i]+=1
+              #if area(self.rects[i]) > a:
+              #  a =  area(self.rects[i])
+              #  minAreaIndex = i
+                #print(maxAreaIndex)
+
+       # if rectangle intersect too many other small rectangles
+       # filter it out
+        for key in rectHistogram:
+            if rectHistogram[key] < 1:
+                non_overvlaping_rectangles.add(key)
+            #    non_overvlaping_rectangles.add(minAreaIndex)
+
+                 
+        self.rects2 = []
+        for i in non_overvlaping_rectangles:
+            self.rects2.append(self.rects[i])
+        
+        #self.rects = self.rects2
+        #    rectsMap[maxAreaIndex] = 1  
+        
+        #im, contours, hierarchy = cv2.findContours(canny_output, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        #for c in contours:
+        #   x,y,w,h = cv2.boundingRect(c)            
+        #   self.rects.append(QRect(x,y,w,h))
+        contours = []
+        self.rects.append(QRect(0,0,100,100))
         cv2.imshow("w1", im_response)
         
         return contours
@@ -144,23 +213,14 @@ class Dsp:
         
     
         # 1. -------------- DETECT CONTOURS         
-        im, self.contours, self.hierarchy = cv2.findContours(self.m_gradient, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        im, self.contours, self.hierarchy = cv2.findContours(canny_output, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
         # 2. detect underlined text like hyperlinks
-        c2 = self.CreateTextMasks(self.m_gradient)
-        #print(f'c2 len {len(c2}')
-        #self.contours.append(c2)
-        contourIdx = 0
-        for i in c2:
-            self.contours.append(i)           
-            countour_color = (random.randint(100, 255),random.randint(100, 255),random.randint(100, 255))
-            #cv2.drawContours(self.m_gradient, c2, contourIdx, countour_color,thickness=3)
-            contourIdx+=1
+        self.CreateTextMasks(self.m_gradient)
         
 
         # 3. --------------  DRAW CONTOURS         
         self.contours_filtred = []
-        print(self.contours[1])
         print(f'contours num = {len(self.contours)}')
         contourIdx = 0
         for c in self.contours:
@@ -211,6 +271,7 @@ class Example(QWidget):
         self.selected_contours_image = None
         self.selected_cntr = []
         self.selected_cntrs = deque()
+        self.selected_rects = []
         self.cntr2label_map = {"cntrIndex": -1}
         #self.setWindowOpacity(0.8)
         self.tipLabel = QLabel(self)
@@ -231,36 +292,62 @@ class Example(QWidget):
         
     def save(self, img, selected_cntrs):
         print("saving training samples...")
-        for c in selected_cntrs:
-           contourIdx = c[0]
-           label = c[1]
-           countour = self.dsp.contours_filtred[contourIdx]
-           x,y,w,h = cv2.boundingRect(countour)
-           
-           print(f'{x} {y} {w} {h}')
-           areaRoi=self.dsp.areaImg[y:y+h,x:x+w]
-           roi = np.zeros((h, w, 3), dtype=np.uint8)
-           for p in countour:
-               p[0][0]-=x
-               p[0][1]-=y
+        SELECTION_METHOD = 'RECT'
+        #METHOD = 'CONTOUR'
         
-           countours = [countour]
-           cv2.drawContours(roi, countours, 0, (255,255,255), 1)
-           w2 = 200
-           if w > w2:
-               w = w2
-           resized = cv2.resize(roi[:, :w], self.sample_dim, interpolation = cv2.INTER_AREA)
-           
-           #cv2.imshow("w0", resized)
-           number = random.randint(0,100000)
-           n_str="sample_{:d}_{:0d}".format(label,number)
-           path=f'./data/{label}/{n_str}.png'
-           print("saving " + path)
-           cv2.imwrite(path, resized)
-           #path=f'./data/{label}/bmp/{n_str}.png'
-           #resized = cv2.resize(areaRoi, self.sample_dim, interpolation = cv2.INTER_AREA)
-           #cv2.imwrite(path, resized)
+        # saving part of image that is filtered using TextMask filter 
+        if SELECTION_METHOD == 'RECT':
+            for selected_rect in self.selected_rects:
+                x = selected_rect.x()
+                y = selected_rect.y()
+                h = selected_rect.height()
+                w = selected_rect.width()
+                print(f'saving rect {x} {y} {w} {h}')
+                roi=self.dsp.m_gradient[y:y+h,x:x+w]
+                resized=roi
+                width_max = 200
+                w = min(w, width_max)
+                #resized = cv2.resize(roi, self.sample_dim, interpolation = cv2.INTER_AREA)
+                number = random.randint(0,100000)
+                label = 2
+                n_str="sample_{:d}_{:0d}".format(label,number)
+                path=f'./data/{label}/{n_str}.png'
+                print("saving " + path)
+                cv2.imwrite(path, resized)
+            
         
+        # saving part of a contour as sample
+        if SELECTION_METHOD == 'CONTOUR':            
+            for c in selected_cntrs:
+               contourIdx = c[0]
+               label = c[1]
+               countour = self.dsp.contours_filtred[contourIdx]
+               x,y,w,h = cv2.boundingRect(countour)
+               
+               print(f'saving contour {x} {y} {w} {h}')
+               areaRoi=self.dsp.areaImg[y:y+h,x:x+w]
+               roi = np.zeros((h, w, 3), dtype=np.uint8)
+               for p in countour:
+                   p[0][0]-=x
+                   p[0][1]-=y
+            
+               countours = [countour]
+               cv2.drawContours(roi, countours, 0, (255,255,255), 1)
+               w2 = 200
+               if w > w2:
+                   w = w2
+               resized = cv2.resize(roi[:, :w], self.sample_dim, interpolation = cv2.INTER_AREA)
+               
+               #cv2.imshow("w0", resized)
+               number = random.randint(0,100000)
+               n_str="sample_{:d}_{:0d}".format(label,number)
+               path=f'./data/{label}/{n_str}.png'
+               print("saving " + path)
+               cv2.imwrite(path, resized)
+               #path=f'./data/{label}/bmp/{n_str}.png'
+               #resized = cv2.resize(areaRoi, self.sample_dim, interpolation = cv2.INTER_AREA)
+               #cv2.imwrite(path, resized)
+            
 
     def keyPressEvent(self, event):
         val = event.key() - Qt.Key_0
@@ -284,6 +371,7 @@ class Example(QWidget):
             
         if (event.modifiers() & Qt.ControlModifier) and (event.key() == Qt.Key_Z):
             self.selected_cntrs.pop()
+            self.selected_rects.pop() 
             self.updateCntrImage()
             #cv2.imshow("w0",tmp)
 
@@ -325,7 +413,6 @@ class Example(QWidget):
         self.repaint()
         
     def drawSelectedContours(self, img, selected_cntrs, thickness=2):
-        print(f'selected_cntrs={selected_cntrs}')
         for c in selected_cntrs:
            contourIdx = c[0]
            colorIdx = c[1]
@@ -387,10 +474,14 @@ class Example(QWidget):
     def pickRect(self, mpos):        
         for r in self.dsp.rects:
             if r.contains(mpos):
+                # make bitmap offset
+                #r.setLeft(r.left())
                 return r
     
     def pickSample(self):
         r = self.pickCountour(self.mpos)
+        r = self.pickRect(self.mpos)
+        self.selected_rects.append(r)
         
         
         #cv2.imshow("w1", self.dsp.areaImg)
@@ -442,11 +533,11 @@ class Example(QWidget):
         qp.setPen(Qt.white)
         #qp.drawPath(path)
 
-        # for r in self.rects:
-        #     if r.contains(self.mpos):
-        #         qp.fillRect(r, QColor(244,1,1,110))
-        #     else:
-        #         qp.fillRect(r, QColor(1,244,1,110))
+        for r in self.dsp.rects:
+            if r.contains(self.mpos):
+                qp.fillRect(r, QColor(244,1,1,110))
+            else:
+                qp.fillRect(r, QColor(1,244,1,110))
             
         qp.end()
 
