@@ -65,13 +65,17 @@ class Dsp:
         underline_kernel = np.array([[0, 0, 0, 0, 0, 0, 0 ,0],
                                      [0, 0, 11, 11, 11, 11, 0, 0],
                                      [0, 0, 0, 0, 0, 0, 0, 0]])
+        
+        
+        #underline_kernel =  np.rot90(underline_kernel, 1)
+        
         im_response = cv2.filter2D(src=m_gradient, ddepth=-1, kernel=underline_kernel)
         im_gray = im_response #cv2.cvtColor(im_response, cv2.COLOR_BGR2GRAY)
         ret, binary = cv2.threshold(im_response,255,20,cv2.THRESH_BINARY)
         #------------- PREFILTERING operations        
         rect_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))        
         M = cv2.getStructuringElement(cv2.MORPH_CROSS, (3,3))               
-        im_gray = im_gray[0:im_gray.shape[0]-300,:]
+        #im_gray = im_gray[0:im_gray.shape[0]-300,:]
         m_gradient = cv2.morphologyEx(im_gray, cv2.MORPH_GRADIENT, M)      
         canny_output = cv2.Canny(im_gray, 40, 40 * 2 )
         canny_output = cv2.dilate(canny_output, rect_kernel)
@@ -83,6 +87,8 @@ class Dsp:
         # preparing dict for every point in every rectangle
         indexesX = {0: set([1,23])}
         indexesY = {0: set([1,23])}             
+        minAreaIndexes = {'10,20': set([1])}
+
         for x in range(0, m_gradient.shape[1], 1):
             indexesX[x] = set([])
         for y in range(0, m_gradient.shape[0], 1):
@@ -91,7 +97,12 @@ class Dsp:
         def area(rect):
             return rect.width() * rect.height()
 
+        def areaI(rect_idx):
+            return self.rects[rect_idx].width() * self.rects[rect_idx].height()
+
         # loop over connected components with creating dicts indexesX and     
+        rect_dictX = {}
+        rect_dictY = {}
         n_rect = 0
         if stats.shape[1] == 5:
             for i in range(0, numLabels, 1):
@@ -103,53 +114,52 @@ class Dsp:
                 r = QRect(x,y,w,h)
                 self.rects.append(r);
                 for x in range(r.left(), r.right(), 1):
-                   indexesX[x].add(n_rect)
+                   indexesX[x].add(f'{r.left()},{r.right()}')
+                   rect_dictX[f'{r.left()},{r.right()}'] = n_rect
                 for y in range(r.top(), r.bottom(), 1):
-                   indexesY[y].add(n_rect)       
+                   indexesY[y].add(f'{r.top()},{r.bottom()}')   
+                   rect_dictY[f'{r.top()},{r.bottom()}'] = n_rect
                 n_rect+=1
         
-        print(indexesY)
-        # filter rects that overlaps
-        # select max area rect in every coordinate
-        rectHistogram = {0: 1, 2: 1}
-        for i in range(0,len(self.rects),1): 
-            rectHistogram[i] = 0
+        #print(indexesY)
 
-        non_overvlaping_rectangles = set([1,23])
-        for kv in indexesX.items():
-            a =  0
-            minAreaIndex = 0
-            for i in kv[1]:
-                rectHistogram[i]+=1
-              #if area(self.rects[i]) > a:
-              #  a =  area(self.rects[i])
-              #  minAreaIndex = i
-                #print(maxAreaIndex)
+        non_overvlaping_rectangles = set([])        
+        
+        def take_second(elem):
+            return elem[1]
+        
+        def interval_intersect(i1, i2):
+            A = set(range(i1[0],i1[1]))
+            B = set(range(i2[0],i2[1]))            
+            if (set(A) & set(B)) == set([]):
+                return True
+            else:
+                return False
+            
 
-       # if rectangle intersect too many other small rectangles
-       # filter it out
-        for key in rectHistogram:
-            if rectHistogram[key] < 1:
-                non_overvlaping_rectangles.add(key)
-            #    non_overvlaping_rectangles.add(minAreaIndex)
-
-                 
+        for x_key in indexesX:
+            # select not intersecting intervals in A
+            intervals = indexesX[x_key]            
+            intervalsT = []
+            for interval in intervals:
+               i = interval.split(',')
+               intervalsT.append((int(i[0]),int(i[1])))
+            sorted_list = sorted(intervalsT, key=take_second, reverse=False)
+            for i in range(0, len(sorted_list)-1, 1):
+                if not interval_intersect(sorted_list[i],sorted_list[i+1]):
+                    interval=sorted_list[i]
+                    key = f'{interval[0]},{interval[1]}'
+                    non_overvlaping_rectangles.add(rect_dictX(key))
+                    
+            
+                
+                         
         self.rects2 = []
-        for i in non_overvlaping_rectangles:
-            self.rects2.append(self.rects[i])
+            
+        self.rects = self.rects2 
         
-        #self.rects = self.rects2
-        #    rectsMap[maxAreaIndex] = 1  
         
-        #im, contours, hierarchy = cv2.findContours(canny_output, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-        #for c in contours:
-        #   x,y,w,h = cv2.boundingRect(c)            
-        #   self.rects.append(QRect(x,y,w,h))
-        contours = []
-        self.rects.append(QRect(0,0,100,100))
-        cv2.imshow("w1", im_response)
-        
-        return contours
+        return []
     
         
     def detectButtons(self, screen_num, kernel_size):
@@ -481,7 +491,7 @@ class Example(QWidget):
     def pickSample(self):
         r = self.pickCountour(self.mpos)
         r = self.pickRect(self.mpos)
-        self.selected_rects.append(r)
+        #self.selected_rects.append(r)
         
         
         #cv2.imshow("w1", self.dsp.areaImg)
@@ -520,6 +530,8 @@ class Example(QWidget):
         qp = QPainter()
         qp.begin(self)
         #qp.drawImage(0,0,tmp)
+        tmp = mat2img(self.dsp.m_gradient, 3)
+        qp.drawImage(0,0,tmp)
         if self.selected_contours_image != None:
             qp.drawImage(0,0,self.selected_contours_image)
         qp.fillRect(self.rect(), QColor(1,1,1,110))        
@@ -535,9 +547,9 @@ class Example(QWidget):
 
         for r in self.dsp.rects:
             if r.contains(self.mpos):
-                qp.fillRect(r, QColor(244,1,1,110))
+                qp.fillRect(r, QColor(244,1,1,50))
             else:
-                qp.fillRect(r, QColor(1,244,1,110))
+                qp.fillRect(r, QColor(1,244,1,50))
             
         qp.end()
 
