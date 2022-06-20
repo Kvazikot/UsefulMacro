@@ -63,7 +63,7 @@ class Dsp:
     # TODO create text masks using convolution with long line 
     def CreateTextMasks(self, m_gradient):
         underline_kernel = np.array([[0, 0, 0, 0, 0, 0, 0 ,0],
-                                     [0, 0, 11, 11, 11, 11, 0, 0],
+                                     [0, 0, 61, 61, 61, 61, 61, 0],
                                      [0, 0, 0, 0, 0, 0, 0, 0]])
         
         
@@ -85,8 +85,8 @@ class Dsp:
         
  
         # preparing dict for every point in every rectangle
-        indexesX = {0: set([1,23])}
-        indexesY = {0: set([1,23])}             
+        indexesX = {0: set([])}
+        indexesY = {0: set([])}             
         minAreaIndexes = {'10,20': set([1])}
 
         for x in range(0, m_gradient.shape[1], 1):
@@ -103,60 +103,108 @@ class Dsp:
         # loop over connected components with creating dicts indexesX and     
         rect_dictX = {}
         rect_dictY = {}
+        RectGraf = {}
         n_rect = 0
+        minRectHeight = 20
+        minRectWidth = 20
         if stats.shape[1] == 5:
             for i in range(0, numLabels, 1):
                 x = stats[i, cv2.CC_STAT_LEFT]
                 y = stats[i, cv2.CC_STAT_TOP]
                 w = stats[i, cv2.CC_STAT_WIDTH]
                 h = stats[i, cv2.CC_STAT_HEIGHT]
-                #if  ( w < maxRectWidth) and (h < maxRectHeight ) and (w > 0) and (h >0) :
+                if  ( w*h < minRectWidth*minRectHeight) :
+                    continue
                 r = QRect(x,y,w,h)
                 self.rects.append(r);
                 for x in range(r.left(), r.right(), 1):
-                   indexesX[x].add(f'{r.left()},{r.right()}')
-                   rect_dictX[f'{r.left()},{r.right()}'] = n_rect
+                   if x not in indexesX:
+                       indexesX[x] = set([])
+                   indexesX[x].add(n_rect)
                 for y in range(r.top(), r.bottom(), 1):
-                   indexesY[y].add(f'{r.top()},{r.bottom()}')   
-                   rect_dictY[f'{r.top()},{r.bottom()}'] = n_rect
+                   if y not in indexesY:
+                       indexesY[y] = set([])                    
+                   indexesY[y].add(n_rect)   
                 n_rect+=1
         
+        print(f'rects number = {len(self.rects)}')
         #print(indexesY)
+        #for x in indexesX:
+        #    print(f'{x} =  {len(indexesX[x])}')
+        
+        for x in indexesX:
+            for key in indexesX[x]:
+                if key not in RectGraf:
+                   RectGraf[key] = set([])
+                for irect in indexesX[x]:
+                    RectGraf[key] |= set([irect])
+                    #print(len(RectGraf[key]))
 
-        non_overvlaping_rectangles = set([])        
+        # for y in indexesY:
+        #     for key in indexesY[y]:
+        #         if key not in RectGraf:
+        #            RectGraf[key] = set([])
+        #         for irect in indexesY[y]:
+        #             RectGraf[key] |= set([irect])
+        #             #print(len(RectGraf[key]))
+
         
-        def take_second(elem):
-            return elem[1]
         
-        def interval_intersect(i1, i2):
-            A = set(range(i1[0],i1[1]))
-            B = set(range(i2[0],i2[1]))            
-            if (set(A) & set(B)) == set([]):
-                return True
-            else:
-                return False
+        includedRects = set([])
+        excludedRects = set([])
+        for key in RectGraf:
+            includedRects.add(key)
+            #print(f"key {key} is ")
+            #print(includedRects)
+            
+            if len(RectGraf[key]) > 125:
+                print(f'rect has more then 2 links {key}')
+                excludedRects.add(key)
+        
+            
+        print(excludedRects)
+        non_overvlaping_rectangles = set([])
+        for i in includedRects:
+            if i not in excludedRects:
+                non_overvlaping_rectangles.add(i)
+                
+        print(non_overvlaping_rectangles)
+        rects2 = []
+        for i in  non_overvlaping_rectangles:
+            rects2.append(self.rects[i])
+        
+        self.rects = rects2
+                         
+
+        #print(non_overvlaping_rectangles)
+        
+        # def take_second(elem):
+        #     return elem[1]
+        
+        # def interval_intersect(i1, i2):
+        #     A = set(range(i1[0],i1[1]))
+        #     B = set(range(i2[0],i2[1]))            
+        #     if (set(A) & set(B)) == set([]):
+        #         return True
+        #     else:
+        #         return False
             
 
-        for x_key in indexesX:
-            # select not intersecting intervals in A
-            intervals = indexesX[x_key]            
-            intervalsT = []
-            for interval in intervals:
-               i = interval.split(',')
-               intervalsT.append((int(i[0]),int(i[1])))
-            sorted_list = sorted(intervalsT, key=take_second, reverse=False)
-            for i in range(0, len(sorted_list)-1, 1):
-                if not interval_intersect(sorted_list[i],sorted_list[i+1]):
-                    interval=sorted_list[i]
-                    key = f'{interval[0]},{interval[1]}'
-                    non_overvlaping_rectangles.add(rect_dictX(key))
+        # for x_key in indexesX:
+        #     # select not intersecting intervals in A
+        #     intervals = indexesX[x_key]            
+        #     intervalsT = []
+        #     for interval in intervals:
+        #        i = interval.split(',')
+        #        intervalsT.append((int(i[0]),int(i[1])))
+        #     sorted_list = sorted(intervalsT, key=take_second, reverse=False)
+        #     for i in range(0, len(sorted_list)-1, 1):
+        #         if not interval_intersect(sorted_list[i],sorted_list[i+1]):
+        #             interval=sorted_list[i]
+        #             key = f'{interval[0]},{interval[1]}'
+        #             non_overvlaping_rectangles.add(rect_dictX(key))
                     
             
-                
-                         
-        self.rects2 = []
-            
-        self.rects = self.rects2 
         
         
         return []
@@ -258,7 +306,7 @@ class Dsp:
 
 color_tab1 = [(255,255,255),(255,0,0),(255,255,0),(255,0,255),(0,0,255),
               (0,255,255),(255,128,0),(128,255,0),(128,0,255),(0,0,128)]
-print(len(color_tab1))
+
 
 def clamp(minvalue, value, maxvalue):
     return max(minvalue, min(value, maxvalue))
@@ -547,9 +595,9 @@ class Example(QWidget):
 
         for r in self.dsp.rects:
             if r.contains(self.mpos):
-                qp.fillRect(r, QColor(244,1,1,50))
+                qp.fillRect(r, QColor(244,1,1,20))
             else:
-                qp.fillRect(r, QColor(1,244,1,50))
+                qp.fillRect(r, QColor(1,244,1,20))
             
         qp.end()
 
