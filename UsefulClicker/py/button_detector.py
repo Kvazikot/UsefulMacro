@@ -491,6 +491,12 @@ class Example(QWidget):
         for c in self.dsp.contours_filtred:
             x,y,w,h = cv2.boundingRect(c)
             square = w*h
+            if x < mpos.x() and y < mpos.y() and (x + w) > mpos.x() and (y + h) > mpos.y() :
+               if (contourIdx, colorIndex) in self.selected_cntrs:
+                 removed_items.append((contourIdx,colorIndex))
+               else:
+                 self.selected_cntrs.append((contourIdx, colorIndex))
+
             #if (x+w/2) in range(self.selected_rect.left(), self.selected_rect.right()):
             if (x) in range(self.selected_rect.left(), self.selected_rect.right()):                
                 if (y) in range(self.selected_rect.top(), self.selected_rect.bottom()): 
