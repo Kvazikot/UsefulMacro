@@ -62,25 +62,27 @@ class Dsp:
         
     # TODO create text masks using convolution with long line 
     def CreateTextMasks(self, m_gradient):
-        underline_kernel = np.array([[0, 0, 0, 0, 0, 0, 0 ,0],
-                                     [0, 0, 61, 61, 61, 61, 61, 0],
-                                     [0, 0, 0, 0, 0, 0, 0, 0]])
-        
+        underline_kernel = np.array([[0, 0, 0, 0, 0, 0, 0, ],
+                                     [0, 61, 61, 61, 61, 61, 0],
+                                     [0, 0, 0, 0, 0, 0, 0]])
         
         #underline_kernel =  np.rot90(underline_kernel, 1)
         
         im_response = cv2.filter2D(src=m_gradient, ddepth=-1, kernel=underline_kernel)
+
         im_gray = im_response #cv2.cvtColor(im_response, cv2.COLOR_BGR2GRAY)
-        ret, binary = cv2.threshold(im_response,255,20,cv2.THRESH_BINARY)
+        #ret, binary = cv2.threshold(im_response,255,20,cv2.THRESH_BINARY)
         #------------- PREFILTERING operations        
-        rect_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))        
+        rect_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))
         M = cv2.getStructuringElement(cv2.MORPH_CROSS, (3,3))               
         #im_gray = im_gray[0:im_gray.shape[0]-300,:]
         m_gradient = cv2.morphologyEx(im_gray, cv2.MORPH_GRADIENT, M)      
-        canny_output = cv2.Canny(im_gray, 40, 40 * 2 )
-        canny_output = cv2.dilate(canny_output, rect_kernel)
+        #canny_output = cv2.Canny(im_gray, 40, 40 * 2 )
+        #canny_output = cv2.dilate(canny_output, rect_kernel)
+        #cv2.imshow("w0", m_gradient)
+        
 
-        output = cv2.connectedComponentsWithStats(canny_output, connectivity=4)
+        output = cv2.connectedComponentsWithStats(m_gradient, connectivity=4)
         (numLabels, labels, stats, centroids) = output
         
  
@@ -213,34 +215,32 @@ class Dsp:
     def detectButtons(self, screen_num, kernel_size):
         if len(QApplication.screens()) < screen_num :
            return
+        # take screenshot 
         screen = QApplication.screens()[screen_num]
         screenshot = QImage()
-        #screenshot = screen.grabWindow().toImage()
         desktop = QApplication.desktop()
-#        screenId = desktop.screenNumber(QCursor.pos())
         screen = QApplication.screens()[screen_num]
         geom = screen.geometry()
         x = geom.x()
         y = geom.y()
         screenshot = QApplication.screens()[screen_num].grabWindow(
                  desktop.winId(), x, y, geom.width(), geom.height()).toImage()
-        #areaImg = cv2.Mat((screenshot.height(), screenshot.width()), cv2.CV_8UC4, screenshot.bits())
-        #im_gray = Mat()
-        #canny_output = Mat()
         areaImg = np.zeros((screenshot.height(), screenshot.width() ,3), dtype=np.uint8)
         bufersize = screenshot.height() * screenshot.width() * 4
         self.screenshot = screenshot
         b = screenshot.bits()        
-        # sip.voidptr must know size to support python buffer interface
-        
-        #//---------- PARAMETRES ------------------------------------
         channels_count = 4
         kernel_size = 2
-        thresh = 40
-        
+        thresh = 40       
         b.setsize(screenshot.height() * screenshot.width() * channels_count)
+        
+        # converting QImage to Mat
         areaImg = np.frombuffer(b, np.uint8).reshape((screenshot.height(), screenshot.width(), channels_count))       
-
+        
+        # apply Sobel filtering
+        kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
+        #areaImg = cv2.filter2D(areaImg, -1, kernel)
+        
         self.areaImg = areaImg
 
         # drawing black frame around screenshot to avoid countour damage
@@ -327,6 +327,7 @@ class Example(QWidget):
         self.label = 1
         self.sample_dim = (28, 28)
         self.selected_contours_image = None
+        self.selected_rect = QRect(0,0,1,1)
         self.selected_cntr = []
         self.selected_cntrs = deque()
         self.selected_rects = []
@@ -475,47 +476,36 @@ class Example(QWidget):
            contourIdx = c[0]
            colorIdx = c[1]
            countour_color = color_tab1[colorIdx]
-           cv2.drawContours(img, self.dsp.contours_filtred, contourIdx, countour_color, thickness=1)
+           cv2.drawContours(img, self.dsp.contours_filtred, contourIdx, countour_color, thickness)
         
    
     def pickCountour(self,mpos):
         contourIdx = 0        
         minSquare = 80000*80000
         minSquareIndex = 0
+        colorIndex = clamp(1, self.label, len(color_tab1)) 
+        removed_items = []        
+
+        # select \ deselect contour logic 
+        # loop over all countours         
         for c in self.dsp.contours_filtred:
             x,y,w,h = cv2.boundingRect(c)
             square = w*h
-            if x < mpos.x() and y < mpos.y() and (x + w) > mpos.x() and (y + h) > mpos.y() :
-                if square < minSquare:
-                    minSquare = square
-                    minSquareIndex = contourIdx
-                    print(f'selected = {contourIdx}');
+            #if (x+w/2) in range(self.selected_rect.left(), self.selected_rect.right()):
+            if (x) in range(self.selected_rect.left(), self.selected_rect.right()):                
+                if (y) in range(self.selected_rect.top(), self.selected_rect.bottom()): 
+                    # if countour alredy selected deselect                         
+                    if (contourIdx, colorIndex) in self.selected_cntrs:
+                        removed_items.append((contourIdx,colorIndex))
+                        self.cntr2label_map[contourIdx] = -1
+                    else:
+                        self.selected_cntrs.append((contourIdx, colorIndex))
             contourIdx+=1
 
-        colorIndex = clamp(1, self.label, len(color_tab1)) 
         
-        removed_indexes = []
-        
-        if minSquareIndex==0:
-           self.selected_contours_image = mat2img(self.dsp.m_gradient, 4)
-        else:
-
-          if minSquareIndex not in self.cntr2label_map.keys():
-             self.cntr2label_map[minSquareIndex] = colorIndex
-             self.selected_cntrs.append((minSquareIndex, colorIndex))
-          else: 
-              if self.cntr2label_map[minSquareIndex] == -1:
-                 self.cntr2label_map[minSquareIndex] = colorIndex
-                 self.selected_cntrs.append((minSquareIndex, colorIndex))
-              else:
-                  # if countour alredy selected deselect 
-                  for c in self.selected_cntrs:
-                      if c[0] == minSquareIndex:
-                          removed_indexes.append(c)
-                          self.cntr2label_map[minSquareIndex] = -1
-                          
-        for c in removed_indexes:
-            self.selected_cntrs.remove(c)        
+       # remove countour from selection if it alredy selected  
+        for countourIdx,i in removed_items:
+            self.selected_cntrs.remove((countourIdx,i))
             
         #countour_color = color_tab1[colorIndex]
         #cv2.rectangle(self.dsp.m_gradient, (x,y), (x+w,y+h),(255,255,255),-1)
@@ -535,11 +525,12 @@ class Example(QWidget):
                 # make bitmap offset
                 #r.setLeft(r.left())
                 return r
+        return QRect(1,1,1,1)
     
     def pickSample(self):
+        #self.selected_rect = self.pickRect(self.mpos)
         r = self.pickCountour(self.mpos)
-        r = self.pickRect(self.mpos)
-        #self.selected_rects.append(r)
+        self.selected_rects.append(self.selected_rect)
         
         
         #cv2.imshow("w1", self.dsp.areaImg)
@@ -595,6 +586,7 @@ class Example(QWidget):
 
         for r in self.dsp.rects:
             if r.contains(self.mpos):
+                self.selected_rect = r
                 qp.fillRect(r, QColor(244,1,1,20))
             else:
                 qp.fillRect(r, QColor(1,244,1,20))
@@ -631,8 +623,8 @@ path = "./rect_images"
 
 fname = []
 for root,d_names,f_names in os.walk(path):
-	for f in f_names:
-		fname.append(os.path.join(root, f))
+    for f in f_names:
+        fname.append(os.path.join(root, f))
 
 
 #p = subprocess.Popen("dir", stdout=subprocess.PIPE, shell=True)
