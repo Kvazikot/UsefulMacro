@@ -130,9 +130,6 @@ class Dsp:
                 n_rect+=1
         
         print(f'rects number = {len(self.rects)}')
-        #print(indexesY)
-        #for x in indexesX:
-        #    print(f'{x} =  {len(indexesX[x])}')
         
         for x in indexesX:
             for key in indexesX[x]:
@@ -141,15 +138,6 @@ class Dsp:
                 for irect in indexesX[x]:
                     RectGraf[key] |= set([irect])
                     #print(len(RectGraf[key]))
-
-        # for y in indexesY:
-        #     for key in indexesY[y]:
-        #         if key not in RectGraf:
-        #            RectGraf[key] = set([])
-        #         for irect in indexesY[y]:
-        #             RectGraf[key] |= set([irect])
-        #             #print(len(RectGraf[key]))
-
         
         
         includedRects = set([])
@@ -176,38 +164,6 @@ class Dsp:
             rects2.append(self.rects[i])
         
         self.rects = rects2
-                         
-
-        #print(non_overvlaping_rectangles)
-        
-        # def take_second(elem):
-        #     return elem[1]
-        
-        # def interval_intersect(i1, i2):
-        #     A = set(range(i1[0],i1[1]))
-        #     B = set(range(i2[0],i2[1]))            
-        #     if (set(A) & set(B)) == set([]):
-        #         return True
-        #     else:
-        #         return False
-            
-
-        # for x_key in indexesX:
-        #     # select not intersecting intervals in A
-        #     intervals = indexesX[x_key]            
-        #     intervalsT = []
-        #     for interval in intervals:
-        #        i = interval.split(',')
-        #        intervalsT.append((int(i[0]),int(i[1])))
-        #     sorted_list = sorted(intervalsT, key=take_second, reverse=False)
-        #     for i in range(0, len(sorted_list)-1, 1):
-        #         if not interval_intersect(sorted_list[i],sorted_list[i+1]):
-        #             interval=sorted_list[i]
-        #             key = f'{interval[0]},{interval[1]}'
-        #             non_overvlaping_rectangles.add(rect_dictX(key))
-                    
-            
-        
         
         return []
     
@@ -257,18 +213,8 @@ class Dsp:
         self.m_gradient = cv2.morphologyEx(im_gray, cv2.MORPH_GRADIENT, M)
         
         canny_output = cv2.Canny(im_gray, thresh, thresh * 2 )
-        #cv2.imshow("w0", canny_output)
         canny_output = cv2.dilate(canny_output, rect_kernel)
-        #cv2.imshow("w1", canny_output)
-        
-        #ret, binary = cv2.threshold(1s,40,255,cv2.THRESH_BINARY)
-        #
-        #(m_gradient.shape[0],m_gradient.shape[1])
-                   
-        #print((0,0),(m_gradient.shape[1], m_gradient.shape[0]))
-        #cv2.imshow('w0',m_gradient)
-
-        
+       
     
         # 1. -------------- DETECT CONTOURS         
         im, self.contours, self.hierarchy = cv2.findContours(canny_output, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -291,14 +237,14 @@ class Dsp:
             contourIdx+=1       
     
 
-        #cv2.connectedComponentsWithStats(canny_output, labels, stats, centroids)
-        labels = np.zeros((screenshot.height(), screenshot.width(), 3), dtype=np.uint8)
-        stats = np.zeros((screenshot.height(), screenshot.width(), 3), dtype=np.uint8)
-        centroids = np.zeros((screenshot.height(), screenshot.width(), 3), dtype=np.uint8)
-        output = cv2.connectedComponentsWithStats(canny_output, connectivity=4)
-        (numLabels, labels, stats, centroids) = output
+        # #cv2.connectedComponentsWithStats(canny_output, labels, stats, centroids)
+        # labels = np.zeros((screenshot.height(), screenshot.width(), 3), dtype=np.uint8)
+        # stats = np.zeros((screenshot.height(), screenshot.width(), 3), dtype=np.uint8)
+        # centroids = np.zeros((screenshot.height(), screenshot.width(), 3), dtype=np.uint8)
+        # output = cv2.connectedComponentsWithStats(canny_output, connectivity=4)
+        # (numLabels, labels, stats, centroids) = output
         #im_gray = cv2.cvtColor(im_gray, cv2.COLOR_GRAY2RGB)
-        print('numLabels ' + str(numLabels))
+        #print('numLabels ' + str(numLabels))
         
         return self.rects   
        
@@ -334,14 +280,18 @@ class Example(QWidget):
         self.cntr2label_map = {"cntrIndex": -1}
         #self.setWindowOpacity(0.8)
         self.tipLabel = QLabel(self)
+        self.modeLabel = QLabel(self)
         self.image = QImage('./rect_images\\00.06.36.730.png')
         
         
         self.tipLabel.setStyleSheet("font-size:24pt; color: red; background: white")
         #tip+="F1 - save selected rectangle area to ./square dir"
-        tip="F2 - Confirm saving training samples from current screen. q - quit this window F5 - hide window on 1 sec"
+        tip="F2 - Confirm saving training samples from current screen. F3 - mode q - quit this window F5 - hide window on 1 sec"
         self.tipLabel.setAlignment(Qt.AlignBottom)
         self.tipLabel.setText(tip)
+        modeString="mode(F3): single contour . ctrl - add to selection.  shift - remove m0"
+        self.modeLabel.setText(modeString)
+        self.modeLabel.setStyleSheet("font-size:18pt; color: red; background: #AA2222AA")
         self.setWindowTitle('Drawing')
         self.setMouseTracking(1)
         self.mpos = QPoint(1,1)
@@ -414,9 +364,34 @@ class Example(QWidget):
             self.label = clamp(1,val,10)
         print(f'current label is {self.label}')
         
+        
+        if event.key() == Qt.Key_Delete:
+            self.selected_cntrs.clear()
+            self.updateCntrImage()
+        
+        if event.key() == Qt.Key_F3:
+            modeString=self.modeLabel.text()
+            mode = modeString[len(modeString)-2:len(modeString)]
+            if mode == 'm0':
+                modeString  = modeString.replace("single", "multiple")
+                modeString = modeString.replace(mode,'m1')
+            if mode == 'm1':
+                modeString  = modeString.replace("multiple","rect")
+                modeString = modeString.replace(mode,'m2')
+            if mode == 'm2':
+                modeString  = modeString.replace("rect","single")
+                modeString = modeString.replace(mode,'m0')
+            print(modeString)
+            
+            self.modeLabel.setText(modeString)
+        
         if event.key() == Qt.Key_F2:
             self.save(self.dsp.m_gradient, self.selected_cntrs)
             self.close()
+
+        if event.key() == Qt.Key_F6:
+            mode = self.modeLabel.text()
+            self.modeLabel.setText(mode)
 
         if event.key() == Qt.Key_F5:
             self.hide()
@@ -430,7 +405,6 @@ class Example(QWidget):
             
         if (event.modifiers() & Qt.ControlModifier) and (event.key() == Qt.Key_Z):
             self.selected_cntrs.pop()
-            self.selected_rects.pop() 
             self.updateCntrImage()
             #cv2.imshow("w0",tmp)
 
@@ -479,28 +453,39 @@ class Example(QWidget):
            cv2.drawContours(img, self.dsp.contours_filtred, contourIdx, countour_color, thickness)
         
    
-    def pickCountour(self,mpos):
+    def pickCountour(self,mpos, deselect=False, withCntl=False, withShift=False):
         contourIdx = 0        
-        minSquare = 80000*80000
-        minSquareIndex = 0
+        maxContoursinOneSelection = 1000000
+        num_selected = 0
         colorIndex = clamp(1, self.label, len(color_tab1)) 
         removed_items = []        
 
+        print(f'withCntl={withCntl}')
         # select \ deselect contour logic 
         # loop over all countours         
         for c in self.dsp.contours_filtred:
             x,y,w,h = cv2.boundingRect(c)
-            square = w*h
-            arg1 = x < mpos.x() and y < mpos.y() and (x + w) > mpos.x() and (y + h) > mpos.y()
-            arg3 = ( (x) in range(self.selected_rect.left(), self.selected_rect.right()) ) 
-            arg4 = ( (y) in range(self.selected_rect.top(), self.selected_rect.bottom()) )
-            if arg1 or (arg3 and arg4):
-              # if countour alredy selected deselect                         
-              if (contourIdx, colorIndex) in self.selected_cntrs:
-                  removed_items.append((contourIdx,colorIndex))
-                  self.cntr2label_map[contourIdx] = -1
-              else:
-                  self.selected_cntrs.append((contourIdx, colorIndex))
+            area = w*h
+            mouseInsideContour = x < mpos.x() and y < mpos.y() and (x + w) > mpos.x() and (y + h) > mpos.y()
+            selectionPressure = len(self.selected_cntrs) > maxContoursinOneSelection
+            xInGreenRect = ( (x) in range(self.selected_rect.left(), self.selected_rect.right()) ) 
+            yInGreenREct = ( (y) in range(self.selected_rect.top(), self.selected_rect.bottom()) )
+            
+            # if countour alredy selected deselect                         
+            modeString = self.modeLabel.text()
+            if "single" in modeString:
+                if mouseInsideContour and not withShift and not withCntl:
+                    self.selected_cntrs.clear()
+                    self.selected_cntrs.append((contourIdx, colorIndex))                    
+                if mouseInsideContour and withShift:
+                    self.selected_cntrs.append((contourIdx, colorIndex))
+                if  mouseInsideContour and withCntl:
+                    removed_items.append((contourIdx,colorIndex))
+
+            if "multiple" in modeString:
+                if (xInGreenRect and yInGreenREct):
+                    self.selected_cntrs.append((contourIdx, colorIndex))
+            
             contourIdx+=1
 
         
@@ -508,15 +493,10 @@ class Example(QWidget):
         for countourIdx,i in removed_items:
             self.selected_cntrs.remove((countourIdx,i))
             
-        #countour_color = color_tab1[colorIndex]
-        #cv2.rectangle(self.dsp.m_gradient, (x,y), (x+w,y+h),(255,255,255),-1)
         tmp = cv2.cvtColor(self.dsp.m_gradient, cv2.COLOR_GRAY2RGB)  
         self.drawSelectedContours(tmp, self.selected_cntrs, thickness=2)
         self.selected_contours_image = mat2img(tmp, 4)
 
-        #print(c)
-        self.selected_cntr = self.dsp.contours_filtred[minSquareIndex]
-        #print('pickContour ' + str(QRect(x,y,w,h)))
         #cv2.imshow("w0", tmp)
         return QRect(0,0,100,100)        
         
@@ -528,21 +508,20 @@ class Example(QWidget):
                 return r
         return QRect(1,1,1,1)
     
-    def pickSample(self):
-        #self.selected_rect = self.pickRect(self.mpos)
-        r = self.pickCountour(self.mpos)
-        self.selected_rects.append(self.selected_rect)
-        
-        
-        #cv2.imshow("w1", self.dsp.areaImg)
-        
-        #print('pickSample')
-        #print('pickCountour  ' + str(r))
-        return self.dsp.m_gradient #[r.top():r.bottom(),r.left():r.right()]
+    def pickSample(self,deselect,withCntl,withShift):
+        r = self.pickCountour(self.mpos, deselect, withCntl, withShift)
+        self.selected_rects.append(self.selected_rect)        
+        return self.dsp.m_gradient 
             
     def mousePressEvent(self, event):
+        withCntl  = (event.modifiers() == Qt.ControlModifier)
+        withShift =  (event.modifiers() == Qt.ShiftModifier)
         if event.button() == Qt.LeftButton:
-            m_piece = self.pickSample() 
+            m_piece = self.pickSample(True, withCntl, withShift) 
+            return
+        if event.button() == Qt.RightButton:
+            m_piece = self.pickSample(False, withCntl, withShift) 
+            return
         
     def showEvent(self, a0):
         rect2 = self.rect()
@@ -550,17 +529,10 @@ class Example(QWidget):
         self.updateCntrImage()
         self.repaint()
 
-        #if len(QApplication.screens()) < self.screen_num :
-        #   return
         screen = QApplication.screens()[self.screen_num]
         self.setGeometry(screen.geometry())
         self.tipLabel.move(100, screen.geometry().bottom()-40)
 
-        #rect2.setTopLeft(self.rect().center())
-        #rect2.setTop(rect2.center().y())
-        #rect2.setWidth(rect2.width()/2)
-        #rect2.setHeight(rect2.height()/2)
-        #self.tipLabel.setGeometry(rect2)
     
     def closeEvent(self, a0):        
         cv2.destroyWindow("w0") 
@@ -569,7 +541,6 @@ class Example(QWidget):
     def paintEvent(self, event):
         qp = QPainter()
         qp.begin(self)
-        #qp.drawImage(0,0,tmp)
         tmp = mat2img(self.dsp.m_gradient, 3)
         qp.drawImage(0,0,tmp)
         if self.selected_contours_image != None:
@@ -585,13 +556,24 @@ class Example(QWidget):
         qp.setPen(Qt.white)
         #qp.drawPath(path)
 
+       # get minimal area rect under mouse cursor
+
         for r in self.dsp.rects:
             if r.contains(self.mpos):
+                #self.selected_rects.append(r)
                 self.selected_rect = r
                 qp.fillRect(r, QColor(244,1,1,20))
             else:
                 qp.fillRect(r, QColor(1,244,1,20))
             
+        # def area(r):
+        #     return r.width() * r.height()
+        
+        # minRect = QRect(0,0,100000000000,100000000000)
+        # for r in self.selected_rects:
+        #     if area(r) < area(minRect):
+        #         minRect = r
+        # self.selected_rect = minRect
         qp.end()
 
 
