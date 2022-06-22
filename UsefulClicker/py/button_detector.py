@@ -491,21 +491,16 @@ class Example(QWidget):
         for c in self.dsp.contours_filtred:
             x,y,w,h = cv2.boundingRect(c)
             square = w*h
-            if x < mpos.x() and y < mpos.y() and (x + w) > mpos.x() and (y + h) > mpos.y() :
-               if (contourIdx, colorIndex) in self.selected_cntrs:
-                 removed_items.append((contourIdx,colorIndex))
-               else:
-                 self.selected_cntrs.append((contourIdx, colorIndex))
-
-            #if (x+w/2) in range(self.selected_rect.left(), self.selected_rect.right()):
-            if (x) in range(self.selected_rect.left(), self.selected_rect.right()):                
-                if (y) in range(self.selected_rect.top(), self.selected_rect.bottom()): 
-                    # if countour alredy selected deselect                         
-                    if (contourIdx, colorIndex) in self.selected_cntrs:
-                        removed_items.append((contourIdx,colorIndex))
-                        self.cntr2label_map[contourIdx] = -1
-                    else:
-                        self.selected_cntrs.append((contourIdx, colorIndex))
+            arg1 = x < mpos.x() and y < mpos.y() and (x + w) > mpos.x() and (y + h) > mpos.y()
+            arg3 = ( (x) in range(self.selected_rect.left(), self.selected_rect.right()) ) 
+            arg4 = ( (y) in range(self.selected_rect.top(), self.selected_rect.bottom()) )
+            if arg1 or (arg3 and arg4):
+              # if countour alredy selected deselect                         
+              if (contourIdx, colorIndex) in self.selected_cntrs:
+                  removed_items.append((contourIdx,colorIndex))
+                  self.cntr2label_map[contourIdx] = -1
+              else:
+                  self.selected_cntrs.append((contourIdx, colorIndex))
             contourIdx+=1
 
         
