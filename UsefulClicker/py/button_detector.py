@@ -289,7 +289,7 @@ class Example(QWidget):
         tip="F2 - Confirm saving training samples from current screen. F3 - mode q - quit this window F5 - hide window on 1 sec"
         self.tipLabel.setAlignment(Qt.AlignBottom)
         self.tipLabel.setText(tip)
-        modeString="mode(F3): single contour . ctrl - add to selection.  shift - remove m0"
+        modeString=f"label={self.label} mode(F3): single contour . ctrl - add to selection.  shift - remove m0"
         self.modeLabel.setText(modeString)
         self.modeLabel.setStyleSheet("font-size:18pt; color: red; background: #AA2222AA")
         self.setWindowTitle('Drawing')
@@ -299,11 +299,19 @@ class Example(QWidget):
         self.show()
         self.startTimer(100)
         
+    def write_csv(self, csv_path, lines):
+        print(f"samples writed in {csv_path}")
+        with open(csv_path, 'w') as f:
+            for line in lines:
+                f.write(line)
+                f.write("\n")
+        
     def save(self, img, selected_cntrs):
         print("saving training samples...")
         SELECTION_METHOD = 'RECT'
         #METHOD = 'CONTOUR'
-        
+            
+        csv_lines=[]
         # saving part of image that is filtered using TextMask filter 
         if SELECTION_METHOD == 'RECT':
             for selected_rect in self.selected_rects:
@@ -314,15 +322,20 @@ class Example(QWidget):
                 print(f'saving rect {x} {y} {w} {h}')
                 roi=self.dsp.m_gradient[y:y+h,x:x+w]
                 resized=roi
-                width_max = 200
+                width_max = 28*2
+                offsetX = random.randint(0,int(w/2))
                 w = min(w, width_max)
-                #resized = cv2.resize(roi, self.sample_dim, interpolation = cv2.INTER_AREA)
+                resized = cv2.resize(roi[:,offsetX:offsetX+w], self.sample_dim, interpolation = cv2.INTER_AREA)
                 number = random.randint(0,100000)
                 label = 2
                 n_str="sample_{:d}_{:0d}".format(label,number)
                 path=f'./data/{label}/{n_str}.png'
+                csv_lines.append(f"{label} {path}")
                 print("saving " + path)
                 cv2.imwrite(path, resized)
+       
+            self.csv_path=f'./data/labels.csv'
+            self.write_csv(self.csv_path, csv_lines)
             
         
         # saving part of a contour as sample
@@ -362,7 +375,10 @@ class Example(QWidget):
         val = event.key() - Qt.Key_0
         if val in range(1,10):
             self.label = clamp(1,val,10)
-        print(f'current label is {self.label}')
+        modeString=f"label={self.label} mode(F3): single contour . ctrl - add to selection.  shift - remove m0"
+        self.modeLabel.setText(modeString)
+        #self.label=chr(int(event.key()))
+        #print(f'current label is {self.label}')
         
         
         if event.key() == Qt.Key_Delete:
@@ -395,6 +411,8 @@ class Example(QWidget):
 
         if event.key() == Qt.Key_F5:
             self.hide()
+            self.updateCntrImage()
+            self.clear()
             QTimer.singleShot(1000, self.show)
             
         if event.key() == Qt.Key_F1:
@@ -408,6 +426,11 @@ class Example(QWidget):
             self.updateCntrImage()
             #cv2.imshow("w0",tmp)
 
+    def clear(self):
+        self.rects.clear()
+        self.selected_cntrs.clear()
+        self.selected_rects.clear()
+        
     def testSegmentation(self):
         segmentor = PageSegmentor()
         contourIdx = 0
@@ -579,8 +602,18 @@ class Example(QWidget):
 
 def createDataDirs():
     max_labels = 10
+    eng_alphabet='qwertyuiopasdfghjklzxcvbnm'
+    numbers='1234567890'
+    #special='!?><[];:$$%^&*()-=+#/'
+    for c in eng_alphabet:
+        os.makedirs(f"./data/ocr/eng/{c}", exist_ok = True)
+    #for n in special:
+    #    os.makedirs(f"./data/ocr/special/{n}", exist_ok = True)
+    for n in numbers:
+        os.makedirs(f"./data/ocr/numbers/{n}", exist_ok = True)
     for i in range(1,max_labels,1):
         os.makedirs(f"./data/{i}", exist_ok = True)
+        
 
 
 ex = None
