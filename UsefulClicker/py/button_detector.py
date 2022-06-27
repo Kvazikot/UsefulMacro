@@ -22,13 +22,14 @@ import subprocess
 import datetime
 from collections import deque
 import os
+import re
 import sys
 import random
 import cv2
 import numpy as np
-from page_segmentation import PageSegmentor
+#from page_segmentation import PageSegmentor
 from  cv2 import connectedComponentsWithStats
-from PyQt5.QtWidgets import QWidget, QApplication, QLabel
+from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QTextEdit, QHBoxLayout, QVBoxLayout, QPushButton
 from PyQt5.QtGui import QPainter, QColor, QFont, QImage, QPixmap, QCursor, QPainterPath, QPolygonF
 from PyQt5.QtCore import Qt, QRect, QPoint, QTimer
 
@@ -167,7 +168,7 @@ class Dsp:
         
         return []
     
-        
+
     def detectButtons(self, screen_num, kernel_size):
         if len(QApplication.screens()) < screen_num :
            return
@@ -194,8 +195,14 @@ class Dsp:
         areaImg = np.frombuffer(b, np.uint8).reshape((screenshot.height(), screenshot.width(), channels_count))       
         
         # apply Sobel filtering
-        kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
-        #areaImg = cv2.filter2D(areaImg, -1, kernel)
+        kernel = np.array([[-1,-1,-1], 
+                           [-1,9,-1], [-1,-1,-1]])
+        kernel1 = np.array([[-1,-1,-1,-1,-1], 
+                           [-1,-1,-1,-1,-1], 
+                           [-1,-1, 25,-1,-1], 
+                           [-1,-1,-1,-1,-1], 
+                           [-1,-1,-1,-1,-1]])
+        areaImg = cv2.filter2D(areaImg, -1, kernel)
         
         self.areaImg = areaImg
 
@@ -221,6 +228,14 @@ class Dsp:
 
         # 2. detect underlined text like hyperlinks
         self.CreateTextMasks(self.m_gradient)
+        
+        # 3 Detect symbols
+        #for r in self.rects:
+        r = self.rects[66]
+        roi = areaImg#[r.y():r.y()+r.height(),r.x():r.x()+r.width()]
+        #roi = cv2.resize(roi,(roi.shape[1]*2,roi.shape[0]*2))
+        self.detectSymbols(roi)
+        #self.detectSymbols(areaImg)
         
 
         # 3. --------------  DRAW CONTOURS         
@@ -249,6 +264,61 @@ class Dsp:
         return self.rects   
        
         
+    def detectSymbols(self, src):
+       
+        # take input
+        areaImg = src.copy()       
+        
+        # drawing black frame around screenshot to avoid countour damage
+        #cv2.rectangle(areaImg,(0,0),(areaImg.shape[1],areaImg.shape[0]),(0,0,0),thickness=20)
+        
+        # convert to grayscale
+        im_gray = cv2.cvtColor(areaImg, cv2.COLOR_BGR2GRAY)
+        #kernel1 = cv2.getStructuringElement(cv2.MORPH_RECT, (1,1))
+        #im_gray = cv2.erode(im_gray, kernel1)
+        #qcv2.imshow("w0", im_gray)
+        #im_gray = cv2.blur( im_gray, (3,3) );
+        # #cv2.imshow("w0", im_gray)
+        
+        # #------------- PREFILTERING operations
+        # rect_kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, sett["kernel_size"])        
+        M = cv2.getStructuringElement(cv2.MORPH_CROSS, (3,3))
+        self.m_gradient = cv2.morphologyEx(im_gray, cv2.MORPH_GRADIENT, M)
+        
+        # canny_output = cv2.Canny(im_gray, sett["canny_thresh"][0], sett["canny_thresh"][1] )
+        # #if sett["Dilate"] == 1:
+        # #    canny_output = cv2.dilate(canny_output, rect_kernel)
+        # #else:
+        # #    canny_output = cv2.erode(canny_output, rect_kernel)
+
+        (T, threshInv) = cv2.threshold(self.m_gradient, 20, 255,	cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)
+        #cv2.imshow("w0",threshInv)
+
+        im, self.contours, self.hierarchy = cv2.findContours(threshInv, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+        # 2. detect underlined text like hyperlinks
+        #self.CreateTextMasks(self.m_gradient)
+        
+
+        # 3. --------------  DRAW CONTOURS         
+        self.contours_filtred = []
+        print(f'contours num = {len(self.contours)}')
+        contourIdx = 0
+        for c in self.contours:
+            x,y,w,h = cv2.boundingRect(c)
+            if w>5 and h>10 and w < self.m_gradient.shape[0] and h < self.m_gradient.shape[1]:
+                #cv2.rectangle(areaImg,(x,y),(x+w,y+h),(255,5,0),1)
+                self.contours_filtred.append(c)
+                countour_color = (random.randint(100, 255),random.randint(100, 255),random.randint(100, 255))
+                cv2.drawContours(areaImg, self.contours, contourIdx, countour_color,thickness=1)
+            contourIdx+=1       
+    
+        #cv2.imshow("w0",areaImg)
+        
+        
+        return areaImg   
+       
+        
 
 color_tab1 = [(255,255,255),(255,0,0),(255,255,0),(255,0,255),(0,0,255),
               (0,255,255),(255,128,0),(128,255,0),(128,0,255),(0,0,128)]
@@ -259,6 +329,9 @@ def clamp(minvalue, value, maxvalue):
 
 
 #------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 
 
 class Example(QWidget):
@@ -268,6 +341,10 @@ class Example(QWidget):
         self.initUI()
 
     def initUI(self):
+        self.zoomed_widget = ZommedTextWidget(self.parent())
+        self.zoomed_widget.setGeometry(0,0,300,300)
+        self.zoomed_widget.show()
+        
         self.dsp = Dsp()
         self.screen_num = 0
         self.label = 1
@@ -279,9 +356,23 @@ class Example(QWidget):
         self.selected_rects = []
         self.cntr2label_map = {"cntrIndex": -1}
         #self.setWindowOpacity(0.8)
+        
         self.tipLabel = QLabel(self)
         self.modeLabel = QLabel(self)
         self.image = QImage('./rect_images\\00.06.36.730.png')
+        
+        # widget = QWidget(self)
+        # layout = QVBoxLayout()
+        # # Add widgets to the layout       
+        # self.settings = QTextEdit()        
+        # layout.addWidget(self.settings)
+        # layout.addWidget(QPushButton("Left-Most"))
+        # layout.addWidget(QPushButton("Center"), 1)
+        # layout.addWidget(QPushButton("Right-Most"), 2)
+        # widget.setLayout(layout)        
+        #print(str(sett))
+        #s = str(sett).replace(",",",\n")
+        #self.settings.setText(s)
         
         
         self.tipLabel.setStyleSheet("font-size:24pt; color: red; background: white")
@@ -371,14 +462,10 @@ class Example(QWidget):
                #cv2.imwrite(path, resized)
             
 
+    def keyReleaseEvent(self, event):
+        self.repaint()
+
     def keyPressEvent(self, event):
-        val = event.key() - Qt.Key_0
-        if val in range(1,10):
-            self.label = clamp(1,val,10)
-        modeString=f"label={self.label} mode(F3): single contour . ctrl - add to selection.  shift - remove m0"
-        self.modeLabel.setText(modeString)
-        #self.label=chr(int(event.key()))
-        #print(f'current label is {self.label}')
         
         
         if event.key() == Qt.Key_Delete:
@@ -397,9 +484,9 @@ class Example(QWidget):
             if mode == 'm2':
                 modeString  = modeString.replace("rect","single")
                 modeString = modeString.replace(mode,'m0')
-            print(modeString)
-            
+            print(modeString)            
             self.modeLabel.setText(modeString)
+            return
         
         if event.key() == Qt.Key_F2:
             self.save(self.dsp.m_gradient, self.selected_cntrs)
@@ -425,6 +512,17 @@ class Example(QWidget):
             self.selected_cntrs.pop()
             self.updateCntrImage()
             #cv2.imshow("w0",tmp)
+
+        val = event.key() - Qt.Key_0
+        if val in range(1,10):
+            self.label = clamp(1,val,10)
+        self.label=event.text()
+        modeString=f"label={self.label} mode(F3): single contour . ctrl - add to selection.  shift - remove m0"
+        self.modeLabel.setText(modeString)
+        
+        #print(f'current label is {self.label}')
+        #self.modeLabel.setText(modeString)
+        self.repaint()
 
     def clear(self):
         self.rects.clear()
@@ -480,7 +578,11 @@ class Example(QWidget):
         contourIdx = 0        
         maxContoursinOneSelection = 1000000
         num_selected = 0
-        colorIndex = clamp(1, self.label, len(color_tab1)) 
+        #result = re.match("\d+", self.label)
+        if type(self.label) is int:
+            colorIndex = clamp(1, int(self.label), len(color_tab1)) 
+        else:
+            colorIndex = 9
         removed_items = []        
 
         print(f'withCntl={withCntl}')
@@ -555,6 +657,8 @@ class Example(QWidget):
         screen = QApplication.screens()[self.screen_num]
         self.setGeometry(screen.geometry())
         self.tipLabel.move(100, screen.geometry().bottom()-40)
+        
+
 
     
     def closeEvent(self, a0):        
@@ -615,13 +719,52 @@ def createDataDirs():
         os.makedirs(f"./data/{i}", exist_ok = True)
         
 
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+
+class ZommedTextWidget(QWidget):
+    
+    def __init__(self, im):
+        QWidget.__init__(self)
+        im = cv2.resize(im,(im.shape[1]*4,im.shape[0]*4))
+        self.im = im
+        dsp = Dsp()
+        self.im = dsp.detectSymbols(im)        
+        print(im.shape)
+        super().__init__()
+    
+    def initUI(self):
+        print("")
+
+    def showEvent(self, event):
+        screen = QApplication.screens()[0]
+        sw = screen.geometry().width()
+        sh = screen.geometry().height()
+
+        self.setGeometry(sw/2,sh/2,self.im.shape[1],self.im.shape[0])
+
+    def paintEvent(self, event):
+        qp = QPainter()
+        qp.begin(self)
+        im = np.zeros((300, 300, 3), dtype=np.int8)
+        for i in range(1, 3, 1):
+            for j in range(1, 3, 1):
+                im[i,j,:] = (255,0,255)
+        tmp = mat2img(self.im, 3)
+        qp.drawImage(0,0,tmp)
+        qp.end()
+
 
 ex = None
 
 def main2():
     app = QApplication(sys.argv)
-    ex = Example()
-    ex.showFullScreen()
+    #ex = Example()
+    #ex.showFullScreen()
+    im = cv2.imread("./data/text.png")
+    zm = ZommedTextWidget(im)
+    zm.show()
     createDataDirs()
     sys.exit(app.exec_())
 
