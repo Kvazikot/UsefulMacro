@@ -511,22 +511,63 @@ class Example(QWidget):
             self.testSegmentation()
 
         if event.key() == Qt.Key_F4:
+           sample1=cv2.imread("sampl1.png")
+           sample2=cv2.imread("sampl2.png")
+
            ratio = self.selected_rect.width() / self.selected_rect.width()
            
-           selected_rect = self.selected_rects.pop()
-           w = selected_rect.width()
-           h = selected_rect.height()
-           x = selected_rect.left()
-           y = selected_rect.top()
-           img = self.dsp.areaImg[y:y+h,x:x+w]
-           histogram = cv2.calcHist([img],[0],None,[256],[0,256])           
+           # selected_rect = self.selected_rects.pop()
+           # w = selected_rect.width()
+           # h = selected_rect.height()
+           # x = selected_rect.left()
+           # y = selected_rect.top()
+           #img = self.dsp.areaImg[y:y+h,x:x+w]           
+           #cv2.imwrite("sampl2.png", img)
+           #cv2.imwrite("sampl2.png", img)
+           #hsv_base1 = np.zeros((sample1.shape[1],sample1.shape[0]))
+           hsv_sample1 = cv2.cvtColor( sample1, cv2.COLOR_BGR2HSV )
+           hsv_sample2 = cv2.cvtColor( sample2, cv2.COLOR_BGR2HSV )
+           histogram1 = cv2.calcHist([sample1],[0],None,[256],[0,256])
+           histogram2 = cv2.calcHist([sample2],[0],None,[256],[0,256])
+           histogram1 = cv2.normalize( histogram1, 0, 1, cv2.NORM_MINMAX)
+           histogram2 = cv2.normalize( histogram2, 0, 1, cv2.NORM_MINMAX)
+           #histogram = cv2.calcHist([sample2],[0],None,[256],[0,256])
+           s = "hist="
+           for i in histogram1:
+               s+=format(i[0],".6f")+","
+               
+           print(s)
+               
+           base_base = cv2.compareHist( histogram1, histogram2, 2 )
+           print("comaration result " + str(base_base))
+           
+           class RectangleDescriptor:
+               def __init__(self, w, h, hist):
+                   super().__init__()
+                   self.w = w
+                   self.h = h
+                   self.hist = hist                   
+               def area(self):
+                  return self.w*self.h        
+               def ratio(self):
+                  return float(self.w/self.h);
+               def calculateDifference(self, descr2):
+                  dh = cv2.compareHist( self.hist, descr2.hist, 2 )
+                  da = abs(descr2.area() - self.area())
+                  dr = abs(descr2.ratio() - self.ratio())
+                  d = dh + da + dr
+                  return d
+               
            
            # show the plotting graph of an image
-           plt.subplot(1, 2, 1)
-           plt.imshow(img)
-           plt.subplot(1, 2, 2)
-           plt.hist(histogram, bins = 256)
-           self.dsp.click_rect(ratio, histogram)
+           plt.subplot(1, 3, 1)
+           plt.imshow(sample1)
+           plt.subplot(1, 3, 2)
+           plt.imshow(hsv_sample1)           
+           plt.subplot(1, 3, 3)
+           plt.hist(histogram1, bins = 256)
+           self.dsp.click_rect(ratio, histogram1)
+           self.close()
            
             
         if event.key() == Qt.Key_Q:
