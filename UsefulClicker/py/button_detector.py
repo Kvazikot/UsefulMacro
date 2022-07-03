@@ -27,7 +27,7 @@ import sys
 import random
 import cv2
 import numpy as np
-#from page_segmentation import PageSegmentor
+from page_segmentation import PageSegmentor
 from  cv2 import connectedComponentsWithStats
 from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QTextEdit, QHBoxLayout, QVBoxLayout, QPushButton
 from PyQt5.QtGui import QPainter, QColor, QFont, QImage, QPixmap, QCursor, QPainterPath, QPolygonF
@@ -130,7 +130,7 @@ class Dsp:
                    indexesY[y].add(n_rect)   
                 n_rect+=1
         
-        print(f'rects number = {len(self.rects)}')
+        #print(f'rects number = {len(self.rects)}')
         
         for x in indexesX:
             for key in indexesX[x]:
@@ -149,17 +149,17 @@ class Dsp:
             #print(includedRects)
             
             if len(RectGraf[key]) > 125:
-                print(f'rect has more then 2 links {key}')
+                #print(f'rect has more then 2 links {key}')
                 excludedRects.add(key)
         
             
-        print(excludedRects)
+        #print(excludedRects)
         non_overvlaping_rectangles = set([])
         for i in includedRects:
             if i not in excludedRects:
                 non_overvlaping_rectangles.add(i)
                 
-        print(non_overvlaping_rectangles)
+        #print(non_overvlaping_rectangles)
         rects2 = []
         for i in  non_overvlaping_rectangles:
             rects2.append(self.rects[i])
@@ -194,15 +194,6 @@ class Dsp:
         # converting QImage to Mat
         areaImg = np.frombuffer(b, np.uint8).reshape((screenshot.height(), screenshot.width(), channels_count))       
         
-        # apply Sobel filtering
-        kernel = np.array([[-1,-1,-1], 
-                           [-1,9,-1], [-1,-1,-1]])
-        kernel1 = np.array([[-1,-1,-1,-1,-1], 
-                           [-1,-1,-1,-1,-1], 
-                           [-1,-1, 25,-1,-1], 
-                           [-1,-1,-1,-1,-1], 
-                           [-1,-1,-1,-1,-1]])
-        areaImg = cv2.filter2D(areaImg, -1, kernel)
         
         self.areaImg = areaImg
 
@@ -240,7 +231,7 @@ class Dsp:
 
         # 3. --------------  DRAW CONTOURS         
         self.contours_filtred = []
-        print(f'contours num = {len(self.contours)}')
+        #print(f'contours num = {len(self.contours)}')
         contourIdx = 0
         for c in self.contours:
             x,y,w,h = cv2.boundingRect(c)
@@ -268,6 +259,15 @@ class Dsp:
        
         # take input
         areaImg = src.copy()       
+        # apply Sobel filtering
+        kernel = np.array([[-1,-1,-1], 
+                           [-1,9,-1], [-1,-1,-1]])
+        kernel1 = np.array([[-1,-1,-1,-1,-1], 
+                           [-1,-1,-1,-1,-1], 
+                           [-1,-1, 25,-1,-1], 
+                           [-1,-1,-1,-1,-1], 
+                           [-1,-1,-1,-1,-1]])
+        #areaImg = cv2.filter2D(areaImg, -1, kernel)
         
         # drawing black frame around screenshot to avoid countour damage
         #cv2.rectangle(areaImg,(0,0),(areaImg.shape[1],areaImg.shape[0]),(0,0,0),thickness=20)
@@ -302,7 +302,7 @@ class Dsp:
 
         # 3. --------------  DRAW CONTOURS         
         self.contours_filtred = []
-        print(f'contours num = {len(self.contours)}')
+        #print(f'contours num = {len(self.contours)}')
         contourIdx = 0
         for c in self.contours:
             x,y,w,h = cv2.boundingRect(c)
@@ -341,9 +341,10 @@ class Example(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.zoomed_widget = ZommedTextWidget(self.parent())
+        im = cv2.imread("./data/text.png")
+        self.zoomed_widget = ZommedTextWidget(im)
         self.zoomed_widget.setGeometry(0,0,300,300)
-        self.zoomed_widget.show()
+        #self.zoomed_widget.show()
         
         self.dsp = Dsp()
         self.screen_num = 0
@@ -377,7 +378,7 @@ class Example(QWidget):
         
         self.tipLabel.setStyleSheet("font-size:24pt; color: red; background: white")
         #tip+="F1 - save selected rectangle area to ./square dir"
-        tip="F2 - Confirm saving training samples from current screen. F3 - mode q - quit this window F5 - hide window on 1 sec"
+        tip="F1 - run CNN F2 - Confirm saving training samples from current screen. F3 - mode q - quit this window F5 - hide window 1 sec"
         self.tipLabel.setAlignment(Qt.AlignBottom)
         self.tipLabel.setText(tip)
         modeString=f"label={self.label} mode(F3): single contour . ctrl - add to selection.  shift - remove m0"
@@ -535,7 +536,7 @@ class Example(QWidget):
         contours_filtred = self.dsp.contours_filtred.copy()
         for countour in contours_filtred:
            x,y,w,h = cv2.boundingRect(countour)           
-           print(f'{x} {y} {w} {h}')
+           #print(f'{x} {y} {w} {h}')
            areaRoi=self.dsp.areaImg[y:y+h,x:x+w]
            roi = np.zeros((h, w, 3), dtype=np.uint8)
            for p in countour:
@@ -553,6 +554,7 @@ class Example(QWidget):
            self.selected_cntrs.append((contourIdx, colorIdx))
            contourIdx+=1
         self.updateCntrImage()
+        self.repaint()
 
     def updateCntrImage(self):
         tmp = cv2.cvtColor(self.dsp.m_gradient, cv2.COLOR_GRAY2RGB)  
@@ -684,15 +686,28 @@ class Example(QWidget):
         qp.setPen(Qt.white)
         #qp.drawPath(path)
 
-       # get minimal area rect under mouse cursor
+        # Draw all rectangles
+        # get minimal area rect under mouse cursor
+        # for r in self.dsp.rects:
+        #     if r.contains(self.mpos):
+        #         #self.selected_rects.append(r)
+        #         self.selected_rect = r
+        #         qp.fillRect(r, QColor(244,1,1,20))
+        #     else:
+        #         qp.fillRect(r, QColor(1,244,1,20))
+                
 
-        for r in self.dsp.rects:
-            if r.contains(self.mpos):
-                #self.selected_rects.append(r)
-                self.selected_rect = r
-                qp.fillRect(r, QColor(244,1,1,20))
-            else:
-                qp.fillRect(r, QColor(1,244,1,20))
+        # Draw only thouse that recognized CNN as rectangle
+        idx = 0
+        for c in self.selected_cntrs:
+            label = c[1]
+            if label == 1:
+                contour = self.dsp.contours_filtred[c[0]]
+                x,y,w,h = cv2.boundingRect(contour)
+                qp.fillRect(QRect(x,y,w,h), QColor(244,1,1,20))
+                qp.drawText(x,y,str(idx))
+                print(f"aaaaaaaaaaaaaaaaa")
+            idx+=1
             
         # def area(r):
         #     return r.width() * r.height()
@@ -835,11 +850,11 @@ ex = None
 
 def main2():
     app = QApplication(sys.argv)
-    #ex = Example()
-    #ex.showFullScreen()
-    im = cv2.imread("./data/text.png")
-    zm = ZommedTextWidget(im)
-    zm.show()
+    ex = Example()
+    ex.showFullScreen()
+    #im = cv2.imread("./data/text.png")
+    #zm = ZommedTextWidget(im)
+    #zm.show()
     createDataDirs()
     sys.exit(app.exec_())
 
