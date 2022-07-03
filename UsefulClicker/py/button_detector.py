@@ -21,12 +21,14 @@
 import subprocess
 import datetime
 from collections import deque
+from matplotlib import pyplot as plt
 import os
 import re
 import sys
 import random
 import cv2
 import numpy as np
+#from zommed_text_widget import ZommedTextWidget
 from page_segmentation import PageSegmentor
 from  cv2 import connectedComponentsWithStats
 from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QTextEdit, QHBoxLayout, QVBoxLayout, QPushButton
@@ -168,6 +170,8 @@ class Dsp:
         
         return []
     
+    def click_rect(self, ratio, histogram):
+        print(f"click_rect ratio={ratio} histogram=")
 
     def detectButtons(self, screen_num, kernel_size):
         if len(QApplication.screens()) < screen_num :
@@ -342,8 +346,8 @@ class Example(QWidget):
 
     def initUI(self):
         im = cv2.imread("./data/text.png")
-        self.zoomed_widget = ZommedTextWidget(im)
-        self.zoomed_widget.setGeometry(0,0,300,300)
+        #self.zoomed_widget = ZommedTextWidget(im)
+        #self.zoomed_widget.setGeometry(0,0,300,300)
         #self.zoomed_widget.show()
         
         self.dsp = Dsp()
@@ -505,6 +509,25 @@ class Example(QWidget):
             
         if event.key() == Qt.Key_F1:
             self.testSegmentation()
+
+        if event.key() == Qt.Key_F4:
+           ratio = self.selected_rect.width() / self.selected_rect.width()
+           
+           selected_rect = self.selected_rects.pop()
+           w = selected_rect.width()
+           h = selected_rect.height()
+           x = selected_rect.left()
+           y = selected_rect.top()
+           img = self.dsp.areaImg[y:y+h,x:x+w]
+           histogram = cv2.calcHist([img],[0],None,[256],[0,256])           
+           
+           # show the plotting graph of an image
+           plt.subplot(1, 2, 1)
+           plt.imshow(img)
+           plt.subplot(1, 2, 2)
+           plt.hist(histogram, bins = 256)
+           self.dsp.click_rect(ratio, histogram)
+           
             
         if event.key() == Qt.Key_Q:
             self.close()
@@ -578,6 +601,7 @@ class Example(QWidget):
         contourIdx = 0        
         maxContoursinOneSelection = 1000000
         num_selected = 0
+        selectedContour = self.dsp.contours_filtred[0]
         #result = re.match("\d+", self.label)
         if type(self.label) is int:
             colorIndex = clamp(1, int(self.label), len(color_tab1)) 
@@ -602,6 +626,7 @@ class Example(QWidget):
                 if mouseInsideContour and not withShift and not withCntl:
                     self.selected_cntrs.clear()
                     self.selected_cntrs.append((contourIdx, colorIndex))                    
+                    selectedContour = c
                 if mouseInsideContour and withShift:
                     self.selected_cntrs.append((contourIdx, colorIndex))
                 if  mouseInsideContour and withCntl:
@@ -610,6 +635,7 @@ class Example(QWidget):
             if "multiple" in modeString:
                 if (xInGreenRect and yInGreenREct):
                     self.selected_cntrs.append((contourIdx, colorIndex))
+                    selectedContour = c
             
             contourIdx+=1
 
@@ -623,19 +649,17 @@ class Example(QWidget):
         self.selected_contours_image = mat2img(tmp, 4)
 
         #cv2.imshow("w0", tmp)
-        return QRect(0,0,100,100)        
+        return selectedContour
         
-    def pickRect(self, mpos):        
-        for r in self.dsp.rects:
-            if r.contains(mpos):
-                # make bitmap offset
-                #r.setLeft(r.left())
-                return r
-        return QRect(1,1,1,1)
+    def pickRect(self, contour):        
+        x,y,w,h = cv2.boundingRect(contour)
+        rect = QRect(x,y,w,h)
+        return rect
     
     def pickSample(self,deselect,withCntl,withShift):
-        r = self.pickCountour(self.mpos, deselect, withCntl, withShift)
-        self.selected_rects.append(self.selected_rect)        
+        c = self.pickCountour(self.mpos, deselect, withCntl, withShift)
+        rect = self.pickRect(c)
+        self.selected_rects.append(rect)        
         return self.dsp.m_gradient 
 
     def mouseMoveEvent(self, event):
@@ -734,116 +758,6 @@ def createDataDirs():
     for i in range(1,max_labels,1):
         os.makedirs(f"./data/{i}", exist_ok = True)
         
-
-#------------------------------------------------------------------------------
-#------------------------------------------------------------------------------
-#------------------------------------------------------------------------------
-
-class ZommedTextWidget(QWidget):
-    
-    def __init__(self, im):
-        QWidget.__init__(self)
-        im = cv2.resize(im,(im.shape[1]*4,im.shape[0]*4))
-        self.selected_contours_image = im.copy()        
-        self.im = im        
-        super().__init__()
-        self.initUI()        
-    
-    def initUI(self):
-        self.label = 0
-        self.contours = []
-        self.selected_cntrs = deque()
-        dsp = Dsp()
-        im, self.contours = dsp.detectSymbols(self.im)        
-        self.setMouseTracking(1)
-        self.mpos = QPoint(1,1)        
-        self.startTimer(100)
-
-    def mouseMoveEvent(self, event):
-        self.mpos = event.pos()
-            
-    def mousePressEvent(self, event):
-        withCntl  = (event.modifiers() == Qt.ControlModifier)
-        withShift =  (event.modifiers() == Qt.ShiftModifier)
-        self.mpos = event.pos()
-        if event.button() == Qt.LeftButton:
-            m_piece = self.pickCountour(self.mpos, withCntl, withShift) 
-            self.updateCntrImage()
-            self.repaint()
-            return
-
-    def keyPressEvent(self, event):                
-        if event.key() == Qt.Key_Delete:
-            self.selected_contours.clear()
-            self.updateCntrImage()                
-        if event.key() == Qt.Key_F2:
-            self.save(self.im, self.selected_contours)
-            self.close()
-        if event.key() == Qt.Key_Q:
-            self.close()            
-        if (event.modifiers() & Qt.ControlModifier) and (event.key() == Qt.Key_Z):
-            self.selected_contours.pop()
-            self.updateCntrImage()
-            #cv2.imshow("w0",tmp)
-        val = event.key() - Qt.Key_0
-        if val in range(1,10):
-            self.label = clamp(1,val,10)
-        self.label=event.text()
-        self.repaint()
-
-
-    def pickCountour(self, mpos, deselect=False, withCntl=False, withShift=False):
-        contourIdx = 0        
-        maxContoursinOneSelection = 1000000
-        num_selected = 0
-        #result = re.match("\d+", self.label)
-        if type(self.label) is int:
-            colorIndex = clamp(1, int(self.label), len(color_tab1)) 
-        else:
-            colorIndex = 9
-        # loop over all countours         
-        contourIdx = 0
-        for c in self.contours:
-            x,y,w,h = cv2.boundingRect(c)
-            area = w*h
-            mouseInsideContour = x < mpos.x() and y < mpos.y() and (x + w) > mpos.x() and (y + h) > mpos.y()
-            if mouseInsideContour: 
-                self.selected_cntrs.append((contourIdx, self.label))
-                #print(contourIdx)
-            
-            contourIdx+=1
-
-        #cv2.imshow("w0", tmp)
-        return QRect(0,0,100,100)    
-
-    def drawSelectedContours(self, img, selected_cntrs, thickness=2):
-        for c in selected_cntrs:
-           contourIdx = c[0]
-           colorIdx = c[1]
-           countour_color = color_tab1[colorIdx]
-           #cv2.drawContours(img, self.contours, contourIdx, countour_color, thickness)
-           c = self.contours[contourIdx]
-           x,y,w,h = cv2.boundingRect(c)
-           cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),thickness=2)           
-           print(contourIdx)
-
-    def updateCntrImage(self):
-        #tmp = cv2.cvtColor(self.im, cv2.COLOR_GRAY2RGB)  
-        self.selected_contours_image = self.im.copy()
-        self.drawSelectedContours(self.im, self.selected_cntrs, thickness=2)
-    
-    def showEvent(self, event):
-        screen = QApplication.screens()[0]
-        sw = screen.geometry().width()
-        sh = screen.geometry().height()
-        self.setGeometry(sw/2,sh/2,self.im.shape[1],self.im.shape[0])
-
-    def paintEvent(self, event):
-        qp = QPainter()
-        qp.begin(self)        
-        tmp = mat2img(self.selected_contours_image, 3)
-        qp.drawImage(0,0,tmp)
-        qp.end()
 
 
 ex = None
