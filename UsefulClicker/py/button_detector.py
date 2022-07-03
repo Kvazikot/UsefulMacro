@@ -525,21 +525,22 @@ class Example(QWidget):
            #cv2.imwrite("sampl2.png", img)
            #cv2.imwrite("sampl2.png", img)
            #hsv_base1 = np.zeros((sample1.shape[1],sample1.shape[0]))
+           #sample2 = sample1.copy()
            hsv_sample1 = cv2.cvtColor( sample1, cv2.COLOR_BGR2HSV )
            hsv_sample2 = cv2.cvtColor( sample2, cv2.COLOR_BGR2HSV )
            histogram1 = cv2.calcHist([sample1],[0],None,[256],[0,256])
            histogram2 = cv2.calcHist([sample2],[0],None,[256],[0,256])
-           histogram1 = cv2.normalize( histogram1, 0, 1, cv2.NORM_MINMAX)
-           histogram2 = cv2.normalize( histogram2, 0, 1, cv2.NORM_MINMAX)
+           histogram1 = cv2.normalize( histogram1, 0, 1, cv2.NORM_L1 )
+           histogram2 = cv2.normalize( histogram2, 0, 1, cv2.NORM_L1 )
            #histogram = cv2.calcHist([sample2],[0],None,[256],[0,256])
            s = "hist="
            for i in histogram1:
                s+=format(i[0],".6f")+","
                
-           print(s)
+           #print(s)
                
-           base_base = cv2.compareHist( histogram1, histogram2, 2 )
-           print("comaration result " + str(base_base))
+           base_base = cv2.compareHist( histogram1, histogram2, 0 )
+           #print("comaration result " + str(base_base))
            
            class RectangleDescriptor:
                def __init__(self, w, h, hist):
@@ -552,18 +553,24 @@ class Example(QWidget):
                def ratio(self):
                   return float(self.w/self.h);
                def calculateDifference(self, descr2):
-                  dh = cv2.compareHist( self.hist, descr2.hist, 2 )
-                  da = abs(descr2.area() - self.area())
+                  dh = abs(1 - cv2.compareHist( self.hist, descr2.hist, 0 ))
+                  screen = QApplication.screens()[0]
+                  screen_area = screen.geometry().width() * screen.geometry().height()
+                  da = abs(descr2.area() - self.area()) / screen_area
                   dr = abs(descr2.ratio() - self.ratio())
+                  print(f"dh={dh} da={da} dr={dr}")
                   d = dh + da + dr
                   return d
                
-           
+           rd1 = RectangleDescriptor( sample1.shape[1], sample1.shape[0], histogram1)
+           rd2 = RectangleDescriptor( sample2.shape[1], sample2.shape[0], histogram2)
+           d = rd1.calculateDifference(rd2)
+           print(f"difference = {d}")
            # show the plotting graph of an image
            plt.subplot(1, 3, 1)
            plt.imshow(sample1)
            plt.subplot(1, 3, 2)
-           plt.imshow(hsv_sample1)           
+           plt.imshow(sample2)           
            plt.subplot(1, 3, 3)
            plt.hist(histogram1, bins = 256)
            self.dsp.click_rect(ratio, histogram1)
