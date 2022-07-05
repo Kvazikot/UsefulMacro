@@ -511,8 +511,8 @@ class Example(QWidget):
             self.testSegmentation()
 
         if event.key() == Qt.Key_F4:
-           sample1=cv2.imread("sampl1.png")
-           sample2=cv2.imread("sampl2.png")
+           sample1=cv2.imread("./rect_descriptor_tests/button.png")
+           sample2=cv2.imread("./rect_descriptor_tests/button_half_size.png")
 
            ratio = self.selected_rect.width() / self.selected_rect.width()
            
@@ -528,8 +528,11 @@ class Example(QWidget):
            #sample2 = sample1.copy()
            hsv_sample1 = cv2.cvtColor( sample1, cv2.COLOR_BGR2HSV )
            hsv_sample2 = cv2.cvtColor( sample2, cv2.COLOR_BGR2HSV )
+           channels = cv2.split(hsv_sample1)
+           print(channels[1].shape)
+           
            histogram1 = cv2.calcHist([sample1],[0],None,[256],[0,256])
-           histogram2 = cv2.calcHist([sample2],[0],None,[256],[0,256])
+           histogram2 = cv2.calcHist([sample2],[0],None,[256],[0,256])           
            histogram1 = cv2.normalize( histogram1, 0, 1, cv2.NORM_L1 )
            histogram2 = cv2.normalize( histogram2, 0, 1, cv2.NORM_L1 )
            #histogram = cv2.calcHist([sample2],[0],None,[256],[0,256])
@@ -543,29 +546,75 @@ class Example(QWidget):
            #print("comaration result " + str(base_base))
            
            class RectangleDescriptor:
-               def __init__(self, w, h, hist):
+               def __init__(self, w, h, im):
                    super().__init__()
                    self.w = w
                    self.h = h
-                   self.hist = hist                   
+                   self.hist = self.getHist(im)
+                   
+               def getHist(self,im):
+                   hsv_sample = cv2.cvtColor( im, cv2.COLOR_BGR2HSV )
+                   channels = cv2.split(hsv_sample)
+                   hist = []
+                   for cnael in channels:
+                      chanel_histogram = cv2.calcHist([cnael],[0],None,[256],[0,256])
+                      hist.append(chanel_histogram)
+                   return hist
+                   
                def area(self):
                   return self.w*self.h        
                def ratio(self):
-                  return float(self.w/self.h);
+                   small = min(self.w, self.w)
+                   big = max(self.h, self.h)
+                   return float(small/big)
+               
                def calculateDifference(self, descr2):
-                  dh = abs(1 - cv2.compareHist( self.hist, descr2.hist, 0 ))
+                  dh = abs(1 - cv2.compareHist( self.hist[0], descr2.hist[0], 0 ))
+                  dh+= abs(1 - cv2.compareHist( self.hist[1], descr2.hist[1], 0 ))
+                  dh+= abs(1 - cv2.compareHist( self.hist[2], descr2.hist[2], 0 ))                  
                   screen = QApplication.screens()[0]
                   screen_area = screen.geometry().width() * screen.geometry().height()
                   da = abs(descr2.area() - self.area()) / screen_area
                   dr = abs(descr2.ratio() - self.ratio())
-                  print(f"dh={dh} da={da} dr={dr}")
+                  #print(f"dh={dh} da={da} dr={dr} w={self.w} h={self.h}")
                   d = dh + da + dr
                   return d
-               
-           rd1 = RectangleDescriptor( sample1.shape[1], sample1.shape[0], histogram1)
-           rd2 = RectangleDescriptor( sample2.shape[1], sample2.shape[0], histogram2)
-           d = rd1.calculateDifference(rd2)
-           print(f"difference = {d}")
+          
+           class RectangleDescriptorTest:
+               def __init__(self):
+                   path_to_images = "./rect_descriptor_tests/"
+                   buttons = ["button_cropped.png", "button.png", "button_half_size.png", 
+                             "button_scaled_no_aspect.png", "button_with_drawings.png"]
+                   p = set([])
+                   print("")
+                   for i in range(1,len(buttons),1):
+                       for j in range(1,len(buttons),1):
+                           p.add(i*10+j)
+                           p = p.difference( set([j*10+i]) )
+                   hdr = "difference {} {} "
+                   l = 35
+                   hdr = format("difference ").ljust(l) + format(" file1 ").ljust(l) + format(" file2 ").ljust(l)
+                   print("-----------------------------------------------------------------------------")
+                   print(hdr)
+                   print("-----------------------------------------------------------------------------")
+                           
+                   for i in p:
+                        a = int(i / 10)
+                        b = int(i % 10)
+                        #print(f"{a} - {b}")
+                        sample1=cv2.imread(path_to_images+buttons[a])
+                        sample2=cv2.imread(path_to_images+buttons[b])
+                        rd1 = RectangleDescriptor( sample1.shape[1], sample1.shape[0], sample1)
+                        rd2 = RectangleDescriptor( sample2.shape[1], sample2.shape[0], sample2)
+                        rd1 = RectangleDescriptor( sample1.shape[1], sample1.shape[0], sample1)
+                        rd2 = RectangleDescriptor( sample2.shape[1], sample2.shape[0], sample2)
+                        d = rd1.calculateDifference(rd2)                                               
+                        d = format(d, ".6f").ljust(35)
+                        a = buttons[a].ljust(35)
+                        b = buttons[b].ljust(35)
+                        print ( "{} {} {} ".format(d, a, b) )
+                
+           test = RectangleDescriptorTest()
            # show the plotting graph of an image
            plt.subplot(1, 3, 1)
            plt.imshow(sample1)
@@ -760,13 +809,13 @@ class Example(QWidget):
 
         # Draw all rectangles
         # get minimal area rect under mouse cursor
-        # for r in self.dsp.rects:
-        #     if r.contains(self.mpos):
-        #         #self.selected_rects.append(r)
-        #         self.selected_rect = r
-        #         qp.fillRect(r, QColor(244,1,1,20))
-        #     else:
-        #         qp.fillRect(r, QColor(1,244,1,20))
+        for r in self.dsp.rects:
+            if r.contains(self.mpos):
+                #self.selected_rects.append(r)
+                self.selected_rect = r
+                qp.fillRect(r, QColor(244,1,1,20))
+            else:
+                qp.fillRect(r, QColor(1,244,1,20))
                 
 
         # Draw only thouse that recognized CNN as rectangle
@@ -840,6 +889,5 @@ for root,d_names,f_names in os.walk(path):
 
 #p = subprocess.Popen("dir", stdout=subprocess.PIPE, shell=True)
 #print(p.communicate())
-
 
 
