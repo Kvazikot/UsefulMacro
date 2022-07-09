@@ -70,13 +70,44 @@ from PyQt5.QtWidgets import (QAction, QApplication, QLineEdit, QMainWindow,
 from PyQt5.QtNetwork import QNetworkProxyFactory, QNetworkRequest
 from PyQt5.QtWebEngineWidgets import QWebEnginePage
 #from PyQt5.QtWebKitWidgets import QWebPage, QWebView
-
+import string
 #import jquery_rc
+from xml.dom.minidom import parseString
+
+modes = {'html':0, 'image':1}
+lang_code = {'eng':0, 'ukr': 1, 'jp':2, 'sw':5, 'sp': 4, 'rus': 6, 'can': 7}
+
+def letter_range(start, stop="{", step=1):
+    """Yield a range of lowercase letters.""" 
+    for ord_ in range(ord(start.lower()), ord(stop.lower()), step):
+        yield chr(ord_)
 
 
-class MainWindow(QMainWindow):
+eng_alphabet = string.ascii_lowercase
+rus_aphabet =  letter_range("а", "я")
+print(eng_alphabet)
+print(rus_aphabet)
+
+letter_spacing = 5
+html_code=f"<div style=\"letter-spacing:{letter_spacing}px\">{rus_aphabet}<br/>"
+html_code+=f"<div style=\"letter-spacing:{letter_spacing}px\">{eng_alphabet}<br/>"
+style_block = "<style> hr.new1 {   border-top: 1px solid red; }  </style>"       
+html_template=""
+html_template = f"<!DOCTYPE html><html><head>{style_block}<title>title</title></head><body>{html_code}</body></html>"
+page1 = 'file:///C:/Projects/UsefulClicker/py/saved_web_pages/myfile.html'
+with open(".\saved_web_pages\myfile.html", "w") as html_file:
+    html_file.write(html_template)
+    html_file.close()
+       
+   
+    
+#doc.saveXML(".\saved_web_pages\simple_html.html")
+
+
+
+class OcrWebSpyder(QMainWindow):
     def __init__(self, url):
-        super(MainWindow, self).__init__()
+        super(OcrWebSpyder, self).__init__()
 
         self.progress = 0
 
@@ -150,6 +181,34 @@ class MainWindow(QMainWindow):
 
     def adjustLocation(self):
         self.locationEdit.setText(self.view.url().toString())
+        s = self.view.page().settings()
+        #s.setAttribute("JavascriptEnabled", True)
+        self.store_value = 1
+        self.view.page().runJavaScript("document.getElementsByName('email')[0].value", self.store_value)
+        print(f"self.store_value = {self.store_value}")
+
+        
+        js_code = " loop(document); \
+            function loop(node){ \
+                    // do some thing with the node here \
+                    var nodes = node.childNodes; \
+                    return nodes[0].nodeName; \
+                    for (var i = 0; i <nodes.length; i++){ \
+                                                          \
+                        if(!nodes[i]){ \
+                           continue; \
+                         } \
+                        console.log(nodes[i].nodeName);   \
+                        if(nodes[i].childNodes.length > 0){  \
+                           loop(nodes[i]);  \
+                         } \
+                    } \
+              } "
+        js_code = "console.log(\"Hello!\")"
+        temp = self.view.page().runJavaScript(js_code)
+        #self.evaluateJavaScript(js_code)
+        print(temp)
+
 
     def changeLocation(self):
         url = QUrl.fromUserInput(self.locationEdit.text())
@@ -169,7 +228,6 @@ class MainWindow(QMainWindow):
     def finishLoading(self):
         self.progress = 100
         self.adjustTitle()
-        self.view.page().mainFrame().evaluateJavaScript(self.jQuery)
         self.rotateImages(self.rotateAction.isChecked())
 
     def highlightAllLinks(self):
@@ -198,7 +256,7 @@ class MainWindow(QMainWindow):
                     } 
                 )"""
 
-        self.view.page().mainFrame().evaluateJavaScript(code)
+        #self.view.page().mainFrame().evaluateJavaScript(code)
 
     def removeGifImages(self):
         code = "$('[src*=gif]').remove()"
@@ -222,13 +280,12 @@ if __name__ == '__main__':
     import sys
     
     app = QApplication(sys.argv)
+    url = QUrl(page1)   
 
-    if len(sys.argv) > 1:
-        url = QUrl(sys.argv[1])
-    else:
-        url = QUrl('http://www.google.com/ncr')
+    browser = OcrWebSpyder(url)
+    scr=app.screens()[0]
+    browser.setGeometry(scr.geometry())
 
-    browser = MainWindow(url)
     browser.show()
 
     sys.exit(app.exec_())
