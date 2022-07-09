@@ -84,19 +84,22 @@ def letter_range(start, stop="{", step=1):
 
 
 eng_alphabet = string.ascii_lowercase
-rus_aphabet =  letter_range("а", "я")
+rus_aphabet =  list(letter_range("а", "я"))
+rus_aphabet = "".join(rus_aphabet)
+
 print(eng_alphabet)
 print(rus_aphabet)
 
 letter_spacing = 5
-html_code=f"<div style=\"letter-spacing:{letter_spacing}px\">{rus_aphabet}<br/>"
-html_code+=f"<div style=\"letter-spacing:{letter_spacing}px\">{eng_alphabet}<br/>"
-style_block = "<style> hr.new1 {   border-top: 1px solid red; }  </style>"       
+link_additional_fonts = "<link href=\"https://fonts.googleapis.com/css2?family=Lobster&display=swap\" rel=\"stylesheet\">"
+html_code=f"<div style=\"font-family: 'Lobster'; letter-spacing:{letter_spacing}px\">{rus_aphabet}<br/>"
+#html_code+=f"<div style=\"letter-spacing:{letter_spacing}px\">{eng_alphabet}<br/></div>"
+style_block = "<style>  hr.new1 {   border-top: 1px solid red; }  </style>"       
 html_template=""
-html_template = f"<!DOCTYPE html><html><head>{style_block}<title>title</title></head><body>{html_code}</body></html>"
+html_template = f"<!DOCTYPE html><html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">{link_additional_fonts}{style_block}<title>title</title></head><body>{html_code}</body></html>"
 page1 = 'file:///C:/Projects/UsefulClicker/py/saved_web_pages/myfile.html'
-with open(".\saved_web_pages\myfile.html", "w") as html_file:
-    html_file.write(html_template)
+with open(".\saved_web_pages\myfile.html", "wb") as html_file:
+    html_file.write(html_template.encode("utf-8"))
     html_file.close()
        
    
