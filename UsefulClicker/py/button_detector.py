@@ -82,7 +82,7 @@ class Dsp:
         m_gradient = cv2.morphologyEx(im_gray, cv2.MORPH_GRADIENT, M)      
         #canny_output = cv2.Canny(im_gray, 40, 40 * 2 )
         #canny_output = cv2.dilate(canny_output, rect_kernel)
-        #cv2.imshow("w0", m_gradient)
+        #cv2.imshow("w1", m_gradient)
         
 
         output = cv2.connectedComponentsWithStats(m_gradient, connectivity=4)
@@ -168,7 +168,7 @@ class Dsp:
         
         self.rects = rects2
         
-        return []
+        return rects2
     
     def click_rect(self, ratio, histogram):
         print(f"click_rect ratio={ratio} histogram=")
@@ -271,7 +271,7 @@ class Dsp:
                            [-1,-1, 25,-1,-1], 
                            [-1,-1,-1,-1,-1], 
                            [-1,-1,-1,-1,-1]])
-        #areaImg = cv2.filter2D(areaImg, -1, kernel)
+        areaImg = cv2.filter2D(areaImg, -1, kernel)
         
         # drawing black frame around screenshot to avoid countour damage
         #cv2.rectangle(areaImg,(0,0),(areaImg.shape[1],areaImg.shape[0]),(0,0,0),thickness=20)
