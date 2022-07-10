@@ -63,13 +63,18 @@
 ##
 ###########################################################################
 
+import cv2
 from PyQt5.QtWebEngineWidgets import QWebEngineView 
-from PyQt5.QtCore import QFile, QIODevice, Qt, QTextStream, QUrl
+from PyQt5.QtGui import QFontDatabase, QPainter
+from PyQt5.QtCore import QFile, QIODevice, Qt, QTextStream, QUrl, QTimer
 from PyQt5.QtWidgets import (QAction, QApplication, QLineEdit, QMainWindow,
         QSizePolicy, QStyle, QTextEdit)
 from PyQt5.QtNetwork import QNetworkProxyFactory, QNetworkRequest
 from PyQt5.QtWebEngineWidgets import QWebEnginePage
 #from PyQt5.QtWebKitWidgets import QWebPage, QWebView
+from button_detector import Dsp
+from button_detector import mat2img
+import numpy as np
 import string
 #import jquery_rc
 from xml.dom.minidom import parseString
@@ -91,9 +96,16 @@ print(eng_alphabet)
 print(rus_aphabet)
 
 letter_spacing = 5
+font_size = 24
 link_additional_fonts = "<link href=\"https://fonts.googleapis.com/css2?family=Lobster&display=swap\" rel=\"stylesheet\">"
 html_code=f"<div style=\"font-family: 'Lobster'; letter-spacing:{letter_spacing}px\">{rus_aphabet}<br/>"
-#html_code+=f"<div style=\"letter-spacing:{letter_spacing}px\">{eng_alphabet}<br/></div>"
+database = QFontDatabase()
+html_code=f"<div style=\"font-family: 'Lobster'; letter-spacing:{letter_spacing}px\">{rus_aphabet}<br/>"
+for family in database.families():
+    html_code+=f"<div style=\"font-size:{font_size}px; font-family: '{family}'; letter-spacing:{letter_spacing}px\">{rus_aphabet}<br/>"
+    #print(family)
+html_code+="</div>"
+html_code+=f"<div style=\"letter-spacing:{letter_spacing}px\">{eng_alphabet}<br/></div>"
 style_block = "<style>  hr.new1 {   border-top: 1px solid red; }  </style>"       
 html_template=""
 html_template = f"<!DOCTYPE html><html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">{link_additional_fonts}{style_block}<title>title</title></head><body>{html_code}</body></html>"
@@ -113,6 +125,7 @@ class OcrWebSpyder(QMainWindow):
         super(OcrWebSpyder, self).__init__()
 
         self.progress = 0
+        self.dsp = Dsp()
 
         fd = QFile(":/jquery.min.js")
 
@@ -126,7 +139,6 @@ class OcrWebSpyder(QMainWindow):
 
         self.view = QWebEngineView(self)
         self.view.load(url)
-        self.view.loadFinished.connect(self.adjustLocation)
         self.view.titleChanged.connect(self.adjustTitle)
         self.view.loadProgress.connect(self.setProgress)
         self.view.loadFinished.connect(self.finishLoading)
@@ -149,23 +161,21 @@ class OcrWebSpyder(QMainWindow):
         viewMenu.addAction(viewSourceAction)
 
         effectMenu = self.menuBar().addMenu("&Effect")
-        effectMenu.addAction("Highlight all links", self.highlightAllLinks)
+        effectMenu.addAction("Highlight all links", self.viewSource)
 
         self.rotateAction = QAction(
                 self.style().standardIcon(QStyle.SP_FileDialogDetailedView),
                 "Turn images upside down", self, checkable=True,
-                toggled=self.rotateImages)
-        effectMenu.addAction(self.rotateAction)
+                toggled=self.viewSource)
+        #effectMenu.addAction(self.viewSource)
 
         toolsMenu = self.menuBar().addMenu("&Tools")
-        toolsMenu.addAction("Remove GIF images", self.removeGifImages)
-        toolsMenu.addAction("Remove all inline frames",
-                self.removeInlineFrames)
-        toolsMenu.addAction("Remove all object elements",
-                self.removeObjectElements)
-        toolsMenu.addAction("Remove all embedded elements",
-                self.removeEmbeddedElements)
+        toolsMenu.addAction("Remove GIF images", self.viewSource)
         self.setCentralWidget(self.view)
+    
+    def finishLoading(self):
+        self.progress = 100
+        QTimer.singleShot(1000, self.DrawDetectedContours)
 
     def viewSource(self):
         accessManager = self.view.page().networkAccessManager()
@@ -182,37 +192,6 @@ class OcrWebSpyder(QMainWindow):
         self.textEdit.resize(600, 400)
         reply.deleteLater()
 
-    def adjustLocation(self):
-        self.locationEdit.setText(self.view.url().toString())
-        s = self.view.page().settings()
-        #s.setAttribute("JavascriptEnabled", True)
-        self.store_value = 1
-        self.view.page().runJavaScript("document.getElementsByName('email')[0].value", self.store_value)
-        print(f"self.store_value = {self.store_value}")
-
-        
-        js_code = " loop(document); \
-            function loop(node){ \
-                    // do some thing with the node here \
-                    var nodes = node.childNodes; \
-                    return nodes[0].nodeName; \
-                    for (var i = 0; i <nodes.length; i++){ \
-                                                          \
-                        if(!nodes[i]){ \
-                           continue; \
-                         } \
-                        console.log(nodes[i].nodeName);   \
-                        if(nodes[i].childNodes.length > 0){  \
-                           loop(nodes[i]);  \
-                         } \
-                    } \
-              } "
-        js_code = "console.log(\"Hello!\")"
-        temp = self.view.page().runJavaScript(js_code)
-        #self.evaluateJavaScript(js_code)
-        print(temp)
-
-
     def changeLocation(self):
         url = QUrl.fromUserInput(self.locationEdit.text())
         self.view.load(url)
@@ -227,55 +206,19 @@ class OcrWebSpyder(QMainWindow):
     def setProgress(self, p):
         self.progress = p
         self.adjustTitle()
+    
+    def DrawDetectedContours(self):
+        self.dsp.detectButtons(0, kernel_size=4)
+        w = self.dsp.areaImg.shape[1]
+        h = self.dsp.areaImg.shape[0]
+        img = np.zeros((w,h,3), dtype=np.uint8)
+        for c in self.dsp.contours_filtred:
+            cv2.drawContours(img, [c], 0, (255,0,0), thickness=2)
+        cv2.imshow("w0", img)
 
-    def finishLoading(self):
-        self.progress = 100
-        self.adjustTitle()
-        self.rotateImages(self.rotateAction.isChecked())
-
-    def highlightAllLinks(self):
-        code = """$('a').each(
-                    function () {
-                        $(this).css('background-color', 'yellow') 
-                    } 
-                  )"""
-        self.view.page().mainFrame().evaluateJavaScript(code)
-
-    def rotateImages(self, invert):
-        if invert:
-            code = """
-                $('img').each(
-                    function () {
-                        $(this).css('-webkit-transition', '-webkit-transform 2s'); 
-                        $(this).css('-webkit-transform', 'rotate(180deg)') 
-                    } 
-                )"""
-        else:
-            code = """
-                $('img').each(
-                    function () { 
-                        $(this).css('-webkit-transition', '-webkit-transform 2s'); 
-                        $(this).css('-webkit-transform', 'rotate(0deg)') 
-                    } 
-                )"""
-
-        #self.view.page().mainFrame().evaluateJavaScript(code)
-
-    def removeGifImages(self):
-        code = "$('[src*=gif]').remove()"
-        self.view.page().mainFrame().evaluateJavaScript(code)
-
-    def removeInlineFrames(self):
-        code = "$('iframe').remove()"
-        self.view.page().mainFrame().evaluateJavaScript(code)
-
-    def removeObjectElements(self):
-        code = "$('object').remove()"
-        self.view.page().mainFrame().evaluateJavaScript(code)
-
-    def removeEmbeddedElements(self):
-        code = "$('embed').remove()"
-        self.view.page().mainFrame().evaluateJavaScript(code)
+    def closeEvent(self, a0):        
+        cv2.destroyWindow("w0") 
+        cv2.destroyWindow("w1") 
 
 
 if __name__ == '__main__':
