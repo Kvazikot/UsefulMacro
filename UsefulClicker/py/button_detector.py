@@ -226,8 +226,8 @@ class Dsp:
         
         # 3 Detect symbols
         #for r in self.rects:
-        r = self.rects[66]
-        roi = areaImg#[r.y():r.y()+r.height(),r.x():r.x()+r.width()]
+        #r = self.rects[66]
+        #roi = areaImg#[r.y():r.y()+r.height(),r.x():r.x()+r.width()]
         #roi = cv2.resize(roi,(roi.shape[1]*2,roi.shape[0]*2))
         #self.detectSymbols(roi)
         #self.detectSymbols(areaImg)
@@ -594,9 +594,9 @@ class Example(QWidget):
                    hdr = "difference {} {} "
                    l = 35
                    hdr = format("difference ").ljust(l) + format(" file1 ").ljust(l) + format(" file2 ").ljust(l)
-                   print("-----------------------------------------------------------------------------")
+                   print("-------------------------------------------------------------------------------------")
                    print(hdr)
-                   print("-----------------------------------------------------------------------------")
+                   print("-------------------------------------------------------------------------------------")
                            
                    for i in p:
                         a = int(i / 10)
@@ -604,8 +604,6 @@ class Example(QWidget):
                         #print(f"{a} - {b}")
                         sample1=cv2.imread(path_to_images+buttons[a])
                         sample2=cv2.imread(path_to_images+buttons[b])
-                        rd1 = RectangleDescriptor( sample1.shape[1], sample1.shape[0], sample1)
-                        rd2 = RectangleDescriptor( sample2.shape[1], sample2.shape[0], sample2)
                         rd1 = RectangleDescriptor( sample1.shape[1], sample1.shape[0], sample1)
                         rd2 = RectangleDescriptor( sample2.shape[1], sample2.shape[0], sample2)
                         d = rd1.calculateDifference(rd2)                                               
