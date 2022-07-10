@@ -64,6 +64,7 @@
 ###########################################################################
 
 import cv2
+import random
 from PyQt5.QtWebEngineWidgets import QWebEngineView 
 from PyQt5.QtGui import QFontDatabase, QPainter
 from PyQt5.QtCore import QFile, QIODevice, Qt, QTextStream, QUrl, QTimer
@@ -127,85 +128,94 @@ class OcrWebSpyder(QMainWindow):
         self.progress = 0
         self.dsp = Dsp()
 
-        fd = QFile(":/jquery.min.js")
-
-        if fd.open(QIODevice.ReadOnly | QFile.Text):
-            self.jQuery = QTextStream(fd).readAll()
-            fd.close()
-        else:
-            self.jQuery = ''
-
         QNetworkProxyFactory.setUseSystemConfiguration(True)
 
         self.view = QWebEngineView(self)
         self.view.load(url)
-        self.view.titleChanged.connect(self.adjustTitle)
         self.view.loadProgress.connect(self.setProgress)
         self.view.loadFinished.connect(self.finishLoading)
 
-        self.locationEdit = QLineEdit(self)
-        self.locationEdit.setSizePolicy(QSizePolicy.Expanding,
-                self.locationEdit.sizePolicy().verticalPolicy())
-        self.locationEdit.returnPressed.connect(self.changeLocation)
-
-        toolBar = self.addToolBar("Navigation")
-        toolBar.addAction(self.view.pageAction(QWebEnginePage.Back))
-        toolBar.addAction(self.view.pageAction(QWebEnginePage.Forward))
-        toolBar.addAction(self.view.pageAction(QWebEnginePage.Reload))
-        toolBar.addAction(self.view.pageAction(QWebEnginePage.Stop))
-        toolBar.addWidget(self.locationEdit)
-
-        viewMenu = self.menuBar().addMenu("&View")
-        viewSourceAction = QAction("Page Source", self)
-        viewSourceAction.triggered.connect(self.viewSource)
-        viewMenu.addAction(viewSourceAction)
-
-        effectMenu = self.menuBar().addMenu("&Effect")
-        effectMenu.addAction("Highlight all links", self.viewSource)
-
-        self.rotateAction = QAction(
-                self.style().standardIcon(QStyle.SP_FileDialogDetailedView),
-                "Turn images upside down", self, checkable=True,
-                toggled=self.viewSource)
-        #effectMenu.addAction(self.viewSource)
-
-        toolsMenu = self.menuBar().addMenu("&Tools")
-        toolsMenu.addAction("Remove GIF images", self.viewSource)
         self.setCentralWidget(self.view)
     
     def finishLoading(self):
         self.progress = 100
+        screen = QApplication.screens()[0]
+        windowGeometry = screen.geometry()
+        self.view.move(windowGeometry.topLeft());
+        self.view.resize(windowGeometry.size());
+
         QTimer.singleShot(1000, self.DrawDetectedContours)
-
-    def viewSource(self):
-        accessManager = self.view.page().networkAccessManager()
-        request = QNetworkRequest(self.view.url())
-        reply = accessManager.get(request)
-        reply.finished.connect(self.slotSourceDownloaded)
-
-    def slotSourceDownloaded(self):
-        reply = self.sender()
-        self.textEdit = QTextEdit()
-        self.textEdit.setAttribute(Qt.WA_DeleteOnClose)
-        self.textEdit.show()
-        self.textEdit.setPlainText(QTextStream(reply).readAll())
-        self.textEdit.resize(600, 400)
-        reply.deleteLater()
-
-    def changeLocation(self):
-        url = QUrl.fromUserInput(self.locationEdit.text())
-        self.view.load(url)
-        self.view.setFocus()
-
-    def adjustTitle(self):
-        if 0 < self.progress < 100:
-            self.setWindowTitle("%s (%s%%)" % (self.view.title(), self.progress))
-        else:
-            self.setWindowTitle(self.view.title())
 
     def setProgress(self, p):
         self.progress = p
-        self.adjustTitle()
+    
+    def save(self, img, selected_cntrs, alphabet):
+        print("saving training samples...")
+        SELECTION_METHOD = 'RECT'
+        #METHOD = 'CONTOUR'
+            
+        csv_lines=[]
+        n_letter = 0
+        # saving part of image that is filtered using TextMask filter 
+        if SELECTION_METHOD == 'RECT':
+            for selected_rect in self.selected_rects:
+                x = selected_rect.x()
+                y = selected_rect.y()
+                h = selected_rect.height()
+                w = selected_rect.width()
+                print(f'saving rect {x} {y} {w} {h}')
+                roi=self.dsp.m_gradient[y:y+h,x:x+w]
+                resized=roi
+                width_max = 28*2
+                offsetX = 0
+                w = min(w, width_max)
+                resized = cv2.resize(roi[:,offsetX:offsetX+w], self.sample_dim, interpolation = cv2.INTER_AREA)
+                number = random.randint(0,100000)
+                label = alphabet[n_letter]                             
+                n_str="sample_{label}_{:0d}".format(number)
+                path=f'./data/{label}/{n_str}.png'
+                csv_lines.append(f"{label} {path}")
+                print("saving " + path)
+                #cv2.imwrite(path, resized)
+                n_letter+=1
+       
+            self.csv_path=f'./data/labels.csv'
+            #self.write_csv(self.csv_path, csv_lines)
+            
+        
+        # saving part of a contour as sample
+        if SELECTION_METHOD == 'CONTOUR':            
+            for c in selected_cntrs:
+               contourIdx = c[0]
+               label = c[1]
+               countour = self.dsp.contours_filtred[contourIdx]
+               x,y,w,h = cv2.boundingRect(countour)
+               
+               print(f'saving contour {x} {y} {w} {h}')
+               areaRoi=self.dsp.areaImg[y:y+h,x:x+w]
+               roi = np.zeros((h, w, 3), dtype=np.uint8)
+               for p in countour:
+                   p[0][0]-=x
+                   p[0][1]-=y
+            
+               countours = [countour]
+               cv2.drawContours(roi, countours, 0, (255,255,255), 1)
+               w2 = 200
+               if w > w2:
+                   w = w2
+               resized = cv2.resize(roi[:, :w], self.sample_dim, interpolation = cv2.INTER_AREA)
+               
+               #cv2.imshow("w0", resized)
+               number = random.randint(0,100000)
+               n_str="sample_{:d}_{:0d}".format(label,number)
+               path=f'./data/{label}/{n_str}.png'
+               print("saving " + path)
+               cv2.imwrite(path, resized)
+               #path=f'./data/{label}/bmp/{n_str}.png'
+               #resized = cv2.resize(areaRoi, self.sample_dim, interpolation = cv2.INTER_AREA)
+               #cv2.imwrite(path, resized)
+            
+
     
     def DrawDetectedContours(self):
         self.dsp.detectButtons(0, kernel_size=4)
@@ -213,7 +223,7 @@ class OcrWebSpyder(QMainWindow):
         h = self.dsp.areaImg.shape[0]
         img = np.zeros((w,h,3), dtype=np.uint8)
         for c in self.dsp.contours_filtred:
-            cv2.drawContours(img, [c], 0, (255,0,0), thickness=2)
+            cv2.drawContours(img, [c], 0, (255,0,0), thickness=1)
         cv2.imshow("w0", img)
 
     def closeEvent(self, a0):        
@@ -232,6 +242,6 @@ if __name__ == '__main__':
     scr=app.screens()[0]
     browser.setGeometry(scr.geometry())
 
-    browser.show()
+    browser.showFullScreen()
 
     sys.exit(app.exec_())
