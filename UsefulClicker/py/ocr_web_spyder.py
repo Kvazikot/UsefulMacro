@@ -88,44 +88,7 @@ import string
 from xml.dom.minidom import parseString
 import matplotlib.pyplot as plt
 
-modes = {'html':0, 'image':1}
-lang_code = {'eng':0, 'ukr': 1, 'jp':2, 'sw':5, 'sp': 4, 'rus': 6, 'can': 7}
-
-def letter_range(start, stop="{", step=1):
-    """Yield a range of lowercase letters.""" 
-    for ord_ in range(ord(start.lower()), ord(stop.lower())+1, step):
-        yield chr(ord_)
-
-
-eng_alphabet = string.ascii_lowercase
-rus_aphabet =  list(letter_range("а", "я"))
-rus_aphabet = "".join(rus_aphabet)
-
-print(eng_alphabet)
-print(rus_aphabet)
-
-letter_spacing = 5
-font_size = 24
-link_additional_fonts = "<link href=\"https://fonts.googleapis.com/css2?family=Lobster&display=swap\" rel=\"stylesheet\">"
-html_code=f"<div align=\"left\" style=\"font-family: 'Lobster'; letter-spacing:{letter_spacing}px\">{rus_aphabet}<br/>"
-database = QFontDatabase()
-#html_code=f"<div style=\"font-family: 'Lobster'; letter-spacing:{letter_spacing}px\">{rus_aphabet}<br/>"
-#for family in database.families():
-#    html_code+=f"<div style=\"font-size:{font_size}px; font-family: '{family}'; letter-spacing:{letter_spacing}px\">{rus_aphabet}<br/>"
-    #print(family)
-html_code+="</div>"
-#html_code+=f"<div style=\"letter-spacing:{letter_spacing}px\">{eng_alphabet}<br/></div>"
-style_block = "<style>  hr.new1 {   border-top: 1px solid red; }  </style>"       
-html_template=""
-html_template = f"<!DOCTYPE html><html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">{link_additional_fonts}{style_block}<title>title</title></head><body>{html_code}</body></html>"
-page1 = 'file:///C:/Projects/UsefulClicker/py/saved_web_pages/myfile.html'
-with open(".\saved_web_pages\myfile.html", "wb") as html_file:
-    html_file.write(html_template.encode("utf-8"))
-    html_file.close()
-       
    
-    
-#doc.saveXML(".\saved_web_pages\simple_html.html")
 
 class LettersDataset(Dataset):
     def __init__(self):
@@ -181,13 +144,52 @@ class LettersDataset(Dataset):
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 
+
 class OcrWebSpyder(QMainWindow):
+    def generateHTML(self):
+        modes = {'html':0, 'image':1}
+        lang_code = {'eng':0, 'ukr': 1, 'jp':2, 'sw':5, 'sp': 4, 'rus': 6, 'can': 7}
+    
+        def letter_range(start, stop="{", step=1):
+            """Yield a range of lowercase letters.""" 
+            for ord_ in range(ord(start.lower()), ord(stop.lower())+1, step):
+                yield chr(ord_)
+    
+    
+        self.eng_alphabet = string.ascii_lowercase
+        self.rus_aphabet =  list(letter_range("а", "я"))
+        self.rus_aphabet = "".join(self.rus_aphabet)
+    
+        print(self.eng_alphabet)
+        print(self.rus_aphabet)
+    
+        letter_spacing = 5
+        font_size = 24
+        link_additional_fonts = "<link href=\"https://fonts.googleapis.com/css2?family=Lobster&display=swap\" rel=\"stylesheet\">"
+        html_code=f"<div align=\"left\" style=\"font-family: 'Lobster'; letter-spacing:{letter_spacing}px\">{self.rus_aphabet}<br/>"
+        database = QFontDatabase()
+        #html_code=f"<div style=\"font-family: 'Lobster'; letter-spacing:{letter_spacing}px\">{rus_aphabet}<br/>"
+        #for family in database.families():
+        #    html_code+=f"<div style=\"font-size:{font_size}px; font-family: '{family}'; letter-spacing:{letter_spacing}px\">{rus_aphabet}<br/>"
+            #print(family)
+        html_code+="</div>"
+        #html_code+=f"<div style=\"letter-spacing:{letter_spacing}px\">{eng_alphabet}<br/></div>"
+        style_block = "<style>  hr.new1 {   border-top: 1px solid red; }  </style>"       
+        html_template=""
+        html_template = f"<!DOCTYPE html><html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">{link_additional_fonts}{style_block}<title>title</title></head><body>{html_code}</body></html>"
+        with open(".\saved_web_pages\myfile.html", "wb") as html_file:
+            html_file.write(html_template.encode("utf-8"))
+            html_file.close()
+           
+
+    
     def __init__(self, url):
         super(OcrWebSpyder, self).__init__()
 
         self.progress = 0
         self.dsp = Dsp()
         self.sample_dim = (28, 28)
+        self.generateHTML()
 
         QNetworkProxyFactory.setUseSystemConfiguration(True)
 
@@ -197,6 +199,8 @@ class OcrWebSpyder(QMainWindow):
         self.view.loadFinished.connect(self.finishLoading)
 
         self.setCentralWidget(self.view)
+        
+    
     
     def finishLoading(self):
         self.progress = 100
@@ -222,8 +226,8 @@ class OcrWebSpyder(QMainWindow):
         for c in contours:
             cv2.drawContours(img, [c], 0, (random.randint(1,55),0,random.randint(134,224)), thickness=1)
         test_dataset = LettersDataset()
-        test_dataset.save(self.dsp, rus_aphabet, (28, 28))
-        grid = torchvision.utils.make_grid(test_dataset.img_tensors, nrow=len(rus_aphabet), padding=10)
+        test_dataset.save(self.dsp, self.rus_aphabet, (28, 28))
+        grid = torchvision.utils.make_grid(test_dataset.img_tensors, nrow=len(self.rus_aphabet), padding=10)
         npimg = grid.numpy()
         plt.imshow(np.transpose(npimg, (1,2,0)), interpolation='nearest')
 
@@ -240,7 +244,7 @@ class OcrWebSpyder(QMainWindow):
 
 # Hyper parameters
 num_epochs = 100
-num_classes = len(rus_aphabet)
+num_classes = 33
 batch_size = 16
 learning_rate = 0.01
 
@@ -359,6 +363,7 @@ if __name__ == '__main__':
     import sys
     
     app = QApplication(sys.argv)
+    page1 = 'file:///C:/Projects/UsefulClicker/py/saved_web_pages/myfile.html'
     url = QUrl(page1)   
 
     browser = OcrWebSpyder(url)
